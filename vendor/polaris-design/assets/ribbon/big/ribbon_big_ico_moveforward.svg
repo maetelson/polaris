@@ -1,0 +1,20 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="big/ribbon_big_ico_moveforward">
+<g id="-g-&#236;&#149;&#158;&#236;&#156;&#188;&#235;&#161;&#156; &#235;&#179;&#180;&#235;&#130;&#180;&#234;&#184;&#176;">
+<g id="Group">
+<path id="Combined Shape" fill-rule="evenodd" clip-rule="evenodd" d="M13.6738 23C14.7973 25.365 17.2078 27 20.0002 27C23.8662 27 27.0002 23.866 27.0002 20C27.0002 17.2076 25.3651 14.7971 23.0002 13.6736V23H13.6738Z" fill="white"/>
+<path id="Combined Shape_2" fill-rule="evenodd" clip-rule="evenodd" d="M13.6738 23C14.7973 25.365 17.2078 27 20.0002 27C23.8662 27 27.0002 23.866 27.0002 20C27.0002 17.2076 25.3651 14.7971 23.0002 13.6736V14.8027C24.7936 15.8401 26.0002 17.7792 26.0002 20C26.0002 23.3137 23.3139 26 20.0002 26C17.7793 26 15.8403 24.7934 14.8029 23H13.6738Z" fill="#404040"/>
+</g>
+<g id="Group_2">
+<path id="Combined Shape_3" fill-rule="evenodd" clip-rule="evenodd" d="M12.252 22C13.14 25.4504 16.2722 28 19.9999 28C24.4182 28 27.9999 24.4183 27.9999 20C27.9999 16.2723 25.4504 13.1401 21.9999 12.252V21.5C21.9999 21.7761 21.7761 22 21.4999 22H12.252Z" fill="white"/>
+<path id="Combined Shape_4" fill-rule="evenodd" clip-rule="evenodd" d="M12.252 22C13.14 25.4504 16.2722 28 19.9999 28C24.4182 28 27.9999 24.4183 27.9999 20C27.9999 16.2723 25.4504 13.1401 21.9999 12.252V13.2899C24.8914 14.1504 26.9999 16.829 26.9999 20C26.9999 23.866 23.8659 27 19.9999 27C16.8289 27 14.1503 24.8915 13.2898 22H12.252Z" fill="#404040"/>
+</g>
+<g id="Rectangle">
+<mask id="path-5-inside-1_0_24487" fill="white">
+<rect x="5" y="5" width="16" height="16" rx="0.5"/>
+</mask>
+<rect x="5" y="5" width="16" height="16" rx="0.5" fill="#CAE0FF" stroke="#3D6EC9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" mask="url(#path-5-inside-1_0_24487)"/>
+</g>
+</g>
+</g>
+</svg>

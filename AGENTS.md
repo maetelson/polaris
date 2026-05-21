@@ -51,6 +51,8 @@
 ## 5. 완료 전 확인
 
 - PolarisDesign 동기화: `npm run polaris:validate`가 통과해야 합니다.
+- Design-source snapshot: `npm run polaris:sync -- --check`가 `assets`, `docs`, `packages/ui`, `packages/lint`, `packages/plugin`, `packages/template-next` drift를 확인해야 합니다.
+- Markdown links: `npm run polaris:links:check`가 통과해야 합니다.
 - Brief 계약: `npm run polaris:brief:check`가 통과해야 합니다.
 - Figma 작업: [figma/sync-polaris-figma.js](figma/sync-polaris-figma.js)를 Figma MCP로 실행해 `00 Polaris Output Contract`, token collections, text/effect styles를 갱신합니다.
 - Web 작업: 앱 코드가 생기면 `@polaris/ui`, `@polaris/lint`, `pnpm lint`, `npm run polaris:brand-audit` 흐름을 연결해야 합니다.
@@ -61,5 +63,6 @@
 
 - upstream snapshot 갱신: `npm run polaris:sync`
 - drift 확인: `npm run polaris:sync -- --check`
+- Markdown 링크 확인: `npm run polaris:links:check`
 - Figma MCP용 스크립트 재생성: `npm run polaris:figma:build`
 - 전체 계약 검증: `npm run polaris:validate && npm run polaris:brief:check`

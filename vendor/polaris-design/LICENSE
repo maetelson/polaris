@@ -1,0 +1,36 @@
+Copyright (c) 2025–present Polaris Office Co., Ltd. All rights reserved.
+
+This software and associated assets (the "Polaris Design System") are
+proprietary to Polaris Office Co., Ltd. The source is published publicly
+on GitHub (https://github.com/PolarisOffice/PolarisDesign) for the
+convenience of internal teams and authorized partners; public visibility
+is not a grant of license.
+
+Permitted use:
+
+  - Internal use within Polaris Office Co., Ltd. and its subsidiaries.
+  - Use by partners or contractors under a separate written agreement
+    with Polaris Office Co., Ltd.
+
+Without prior written permission from Polaris Office Co., Ltd., you may
+NOT:
+
+  - Use, copy, modify, merge, publish, distribute, sublicense, or sell
+    copies of this software for any commercial purpose outside of
+    Polaris Office Co., Ltd.
+  - Re-package, re-host, or redistribute the published artifacts
+    (npm tarballs, GitHub Release assets, etc.) under any other name
+    or namespace.
+  - Use the "Polaris", "Polaris Office", or "NOVA" trademarks, logos,
+    or brand assets for any purpose other than referring to the
+    Polaris Office product line.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES, OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT, OR OTHERWISE, ARISING FROM, OUT OF, OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+For licensing inquiries: please contact the Polaris Office design ops team.

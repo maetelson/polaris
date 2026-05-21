@@ -1,0 +1,25 @@
+@import '@polaris/ui/styles/tokens.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body {
+  background: var(--polaris-fill-neutral);
+  color: var(--polaris-label-normal);
+  font-family: var(--polaris-font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  margin: 0;
+}
+
+/* ThemeToggle icon swap — driven by [data-theme] on <html>, no JS state. */
+:root[data-theme="light"] .theme-icon-dark,
+:root:not([data-theme="dark"]) .theme-icon-dark {
+  display: none;
+}
+:root[data-theme="dark"] .theme-icon-light {
+  display: none;
+}

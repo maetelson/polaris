@@ -1,0 +1,33 @@
+{
+  "name": "polaris-template-next",
+  "version": "0.8.0-rc.8",
+  "private": true,
+  "description": "Next.js 15 starter template with @polaris/ui pre-integrated. Use as the target of `npx tiged PolarisOffice/PolarisDesign/packages/template-next <name>` or `/polaris-init`.",
+  "scripts": {
+    "dev": "pnpm prep:ui && next dev --port 3000",
+    "build": "pnpm prep:ui && next build",
+    "start": "next start",
+    "lint": "pnpm prep:ui-sources && eslint . --max-warnings=0",
+    "typecheck": "pnpm prep:ui-sources && tsc --noEmit",
+    "prep:ui-sources": "pnpm --filter @polaris/ui gen:sources",
+    "prep:ui": "pnpm --filter @polaris/ui build"
+  },
+  "dependencies": {
+    "@polaris/ui": "workspace:*",
+    "lucide-react": "^0.469.0",
+    "next": "^15.1.4",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@polaris/lint": "workspace:*",
+    "@types/node": "^22.10.5",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "autoprefixer": "^10.4.20",
+    "eslint": "^9.18.0",
+    "postcss": "^8.5.0",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.7.3"
+  }
+}

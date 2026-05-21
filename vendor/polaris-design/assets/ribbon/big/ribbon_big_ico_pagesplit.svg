@@ -1,0 +1,25 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="big/ribbon_big_ico_pagesplit">
+<g id="-g-&#237;&#142;&#152;&#236;&#157;&#180;&#236;&#167;&#128; &#235;&#130;&#152;&#235;&#136;&#132;&#234;&#184;&#176;">
+<g id="Rectangle">
+<mask id="mask0_0_25649" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="7" y="3" width="22" height="12">
+<path id="Mask" d="M7 3H29V14C29 14.5523 28.5523 15 28 15H8C7.44772 15 7 14.5523 7 14V3Z" fill="white"/>
+</mask>
+<g mask="url(#mask0_0_25649)">
+<rect id="Rectangle_2" x="7.5" y="1.5" width="21" height="13" rx="0.5" fill="white" stroke="#404040"/>
+</g>
+</g>
+<rect id="Rectangle_3" x="11" y="18" width="12" height="1" rx="0.5" fill="#B4B4B4"/>
+<g id="Rectangle_4">
+<mask id="mask1_0_25649" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="7" y="17" width="22" height="12">
+<path id="Mask_2" d="M7 29H29V18C29 17.4477 28.5523 17 28 17H8C7.44772 17 7 17.4477 7 18V29Z" fill="white"/>
+</mask>
+<g mask="url(#mask1_0_25649)">
+<rect id="Rectangle_5" x="0.5" y="-0.5" width="21" height="13" rx="0.5" transform="matrix(1 0 0 -1 7 30)" fill="white" stroke="#404040"/>
+</g>
+</g>
+<path id="Path 11" d="M2 12L6 16L2 20" stroke="#DB4C4C" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Combined Shape" fill-rule="evenodd" clip-rule="evenodd" d="M11.5 6C11.2239 6 11 6.22386 11 6.5C11 6.77614 11.2239 7 11.5 7H24.5C24.7761 7 25 6.77614 25 6.5C25 6.22386 24.7761 6 24.5 6H11.5ZM11 9.5C11 9.22386 11.2239 9 11.5 9H20.5C20.7761 9 21 9.22386 21 9.5C21 9.77614 20.7761 10 20.5 10H11.5C11.2239 10 11 9.77614 11 9.5ZM11.5 21C11.2239 21 11 21.2239 11 21.5C11 21.7761 11.2239 22 11.5 22H24.5C24.7761 22 25 21.7761 25 21.5C25 21.2239 24.7761 21 24.5 21H11.5ZM11.5 24C11.2239 24 11 24.2239 11 24.5C11 24.7761 11.2239 25 11.5 25H20.5C20.7761 25 21 24.7761 21 24.5C21 24.2239 20.7761 24 20.5 24H11.5Z" fill="#B4B4B4"/>
+</g>
+</g>
+</svg>

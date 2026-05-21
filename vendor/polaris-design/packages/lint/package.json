@@ -1,0 +1,46 @@
+{
+  "name": "@polaris/lint",
+  "version": "0.8.0-rc.8",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "bin",
+    "RULES.md"
+  ],
+  "bin": {
+    "polaris-audit": "./bin/polaris-audit.mjs",
+    "polaris-codemod-v07": "./bin/polaris-codemod-v07.mjs",
+    "polaris-codemod-v08": "./bin/polaris-codemod-v08.mjs"
+  },
+  "scripts": {
+    "build": "pnpm build:rules-md && tsup",
+    "build:rules-md": "tsx scripts/build-rules-md.ts",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit",
+    "test": "node test/run-tests.mjs && node --test test/codemod-v07.test.mjs && node --test test/codemod-v08.test.mjs",
+    "clean": "rm -rf dist .turbo"
+  },
+  "dependencies": {
+    "@typescript-eslint/parser": "^8.20.0"
+  },
+  "peerDependencies": {
+    "eslint": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/eslint": "^9.6.1",
+    "eslint": "^9.18.0",
+    "tsup": "^8.3.5",
+    "tsx": "^4.21.0",
+    "typescript": "^5.7.3"
+  }
+}

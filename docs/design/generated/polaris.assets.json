@@ -1,0 +1,1821 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "repo": "https://github.com/PolarisOffice/PolarisDesign",
+    "ref": "1d0e2460de63eb634c979855f183c2b18d688b1e",
+    "commit": "1d0e2460de63eb634c979855f183c2b18d688b1e"
+  },
+  "generatedAt": "2026-05-21T22:30:06.213Z",
+  "counts": {
+    "figmaSpec": 36,
+    "fileIcons": 29,
+    "uiIcons": 196,
+    "logos": 6,
+    "ribbonBig": 57,
+    "ribbonSmall": 34
+  },
+  "assets": {
+    "figmaSpec": [
+      {
+        "source": "assets/figma-spec/components/action-button.png",
+        "destination": "assets/figma-spec/components/action-button.png",
+        "sha256": "3bab7a6493f1cf0fa8b0fba0eba74726281365c7f7d070753f764783d5ca68c2"
+      },
+      {
+        "source": "assets/figma-spec/components/action-checkbox-radio.png",
+        "destination": "assets/figma-spec/components/action-checkbox-radio.png",
+        "sha256": "fb4346cb9439231fd11c371eca622601ddd9877fdae9451d691007fe88b3c1d4"
+      },
+      {
+        "source": "assets/figma-spec/components/action-input.png",
+        "destination": "assets/figma-spec/components/action-input.png",
+        "sha256": "3272e38211afd474188b949af3f9c0cfa93aa12f356beb41db7c7f1e62f47369"
+      },
+      {
+        "source": "assets/figma-spec/components/action-segment-control.png",
+        "destination": "assets/figma-spec/components/action-segment-control.png",
+        "sha256": "df2544045edc63ccbb977e103af5897f45720f559e990ab61dbf927711408387"
+      },
+      {
+        "source": "assets/figma-spec/components/action-tabs.png",
+        "destination": "assets/figma-spec/components/action-tabs.png",
+        "sha256": "ded3a421416785c3ef304a93d8db302db7774d61456e24f442fe646f10607fca"
+      },
+      {
+        "source": "assets/figma-spec/components/action-toggle.png",
+        "destination": "assets/figma-spec/components/action-toggle.png",
+        "sha256": "b61d0881ebc9fcb0546cf196336ddb37d778015aa0157aacc5caff5a44289781"
+      },
+      {
+        "source": "assets/figma-spec/components/contents-table.png",
+        "destination": "assets/figma-spec/components/contents-table.png",
+        "sha256": "1f9dea2dc6ebe0bb36ee85cf2acdcb4ba27c6738f9f18edae2684c114e934c7c"
+      },
+      {
+        "source": "assets/figma-spec/components/feedback-dim.png",
+        "destination": "assets/figma-spec/components/feedback-dim.png",
+        "sha256": "063485ded9c3cefa94be46fc338a2e155c1c26eb81232be974bbef7f14f9a852"
+      },
+      {
+        "source": "assets/figma-spec/components/feedback-toast.png",
+        "destination": "assets/figma-spec/components/feedback-toast.png",
+        "sha256": "39e522b0cc16df715a513e5fffdb3b46840bdb4ba15bb7cedb556da06244e3f0"
+      },
+      {
+        "source": "assets/figma-spec/components/overlay-context-menu.png",
+        "destination": "assets/figma-spec/components/overlay-context-menu.png",
+        "sha256": "4869731934a6a2e1683193ae75a9792886db42c3f4f1aa42d1333edd6a74383b"
+      },
+      {
+        "source": "assets/figma-spec/components/overlay-dropdown.png",
+        "destination": "assets/figma-spec/components/overlay-dropdown.png",
+        "sha256": "ada63f78e47acf1f5619909d5dea513993a4fdfc79861c1d5d93e96a70c657c9"
+      },
+      {
+        "source": "assets/figma-spec/components/overlay-popup.png",
+        "destination": "assets/figma-spec/components/overlay-popup.png",
+        "sha256": "fefb62517334d2995d89953a21b160a606ee842d86fb0e4781327d3286bdf412"
+      },
+      {
+        "source": "assets/figma-spec/components/overlay-tooltip.png",
+        "destination": "assets/figma-spec/components/overlay-tooltip.png",
+        "sha256": "7708ce6865fa61235752a6b6ed98678fe96c642c8a6ec07b99271233dd8f262d"
+      },
+      {
+        "source": "assets/figma-spec/foundation/color.png",
+        "destination": "assets/figma-spec/foundation/color.png",
+        "sha256": "ef5c77942ed5db28ee8f14cfcf952df791d02301988ef225eabb1d3fb0e62423"
+      },
+      {
+        "source": "assets/figma-spec/foundation/grid.png",
+        "destination": "assets/figma-spec/foundation/grid.png",
+        "sha256": "c8c6264c600702336333d5901e64ea2b469d0b4009759941dca930a1e801ed3b"
+      },
+      {
+        "source": "assets/figma-spec/foundation/radius.png",
+        "destination": "assets/figma-spec/foundation/radius.png",
+        "sha256": "d63062511a3783f7206259006aebf86da2fc04ba4c21fdf97267f796a11c54a4"
+      },
+      {
+        "source": "assets/figma-spec/foundation/typography.png",
+        "destination": "assets/figma-spec/foundation/typography.png",
+        "sha256": "343d3a52d412c8ac8cf54ab9fac14ce0742787315278e453bcf5bbe239786b80"
+      },
+      {
+        "source": "assets/figma-spec/theme/iconography.png",
+        "destination": "assets/figma-spec/theme/iconography.png",
+        "sha256": "ec9076d4b700b4bf3a730281bdeaa5387bb3de2d6dd7d8d581f405d0df26e8dc"
+      },
+      {
+        "source": "assets/figma-spec/components/action-button.png",
+        "destination": "vendor/polaris-design/assets/figma-spec/components/action-button.png",
+        "sha256": "3bab7a6493f1cf0fa8b0fba0eba74726281365c7f7d070753f764783d5ca68c2"
+      },
+      {
+        "source": "assets/figma-spec/components/action-checkbox-radio.png",
+        "destination": "vendor/polaris-design/assets/figma-spec/components/action-checkbox-radio.png",
+        "sha256": "fb4346cb9439231fd11c371eca622601ddd9877fdae9451d691007fe88b3c1d4"
+      },
+      {
+        "source": "assets/figma-spec/components/action-input.png",
+        "destination": "vendor/polaris-design/assets/figma-spec/components/action-input.png",
+        "sha256": "3272e38211afd474188b949af3f9c0cfa93aa12f356beb41db7c7f1e62f47369"
+      },
+      {
+        "source": "assets/figma-spec/components/action-segment-control.png",
+        "destination": "vendor/polaris-design/assets/figma-spec/components/action-segment-control.png",
+        "sha256": "df2544045edc63ccbb977e103af5897f45720f559e990ab61dbf927711408387"
+      },
+      {
+        "source": "assets/figma-spec/components/action-tabs.png",
+        "destination": "vendor/polaris-design/assets/figma-spec/components/action-tabs.png",
+        "sha256": "ded3a421416785c3ef304a93d8db302db7774d61456e24f442fe646f10607fca"
+      },
+      {
+        "source": "assets/figma-spec/components/action-toggle.png",
+        "destination": "vendor/polaris-design/assets/figma-spec/components/action-toggle.png",
+        "sha256": "b61d0881ebc9fcb0546cf196336ddb37d778015aa0157aacc5caff5a44289781"
+      },
+      {
+        "source": "assets/figma-spec/components/contents-table.png",
+        "destination": "vendor/polaris-design/assets/figma-spec/components/contents-table.png",
+        "sha256": "1f9dea2dc6ebe0bb36ee85cf2acdcb4ba27c6738f9f18edae2684c114e934c7c"
+      },
+      {
+        "source": "assets/figma-spec/components/feedback-dim.png",
+        "destination": "vendor/polaris-design/assets/figma-spec/components/feedback-dim.png",
+        "sha256": "063485ded9c3cefa94be46fc338a2e155c1c26eb81232be974bbef7f14f9a852"
+      },
+      {
+        "source": "assets/figma-spec/components/feedback-toast.png",
+        "destination": "vendor/polaris-design/assets/figma-spec/components/feedback-toast.png",
+        "sha256": "39e522b0cc16df715a513e5fffdb3b46840bdb4ba15bb7cedb556da06244e3f0"
+      },
+      {
+        "source": "assets/figma-spec/components/overlay-context-menu.png",
+        "destination": "vendor/polaris-design/assets/figma-spec/components/overlay-context-menu.png",
+        "sha256": "4869731934a6a2e1683193ae75a9792886db42c3f4f1aa42d1333edd6a74383b"
+      },
+      {
+        "source": "assets/figma-spec/components/overlay-dropdown.png",
+        "destination": "vendor/polaris-design/assets/figma-spec/components/overlay-dropdown.png",
+        "sha256": "ada63f78e47acf1f5619909d5dea513993a4fdfc79861c1d5d93e96a70c657c9"
+      },
+      {
+        "source": "assets/figma-spec/components/overlay-popup.png",
+        "destination": "vendor/polaris-design/assets/figma-spec/components/overlay-popup.png",
+        "sha256": "fefb62517334d2995d89953a21b160a606ee842d86fb0e4781327d3286bdf412"
+      },
+      {
+        "source": "assets/figma-spec/components/overlay-tooltip.png",
+        "destination": "vendor/polaris-design/assets/figma-spec/components/overlay-tooltip.png",
+        "sha256": "7708ce6865fa61235752a6b6ed98678fe96c642c8a6ec07b99271233dd8f262d"
+      },
+      {
+        "source": "assets/figma-spec/foundation/color.png",
+        "destination": "vendor/polaris-design/assets/figma-spec/foundation/color.png",
+        "sha256": "ef5c77942ed5db28ee8f14cfcf952df791d02301988ef225eabb1d3fb0e62423"
+      },
+      {
+        "source": "assets/figma-spec/foundation/grid.png",
+        "destination": "vendor/polaris-design/assets/figma-spec/foundation/grid.png",
+        "sha256": "c8c6264c600702336333d5901e64ea2b469d0b4009759941dca930a1e801ed3b"
+      },
+      {
+        "source": "assets/figma-spec/foundation/radius.png",
+        "destination": "vendor/polaris-design/assets/figma-spec/foundation/radius.png",
+        "sha256": "d63062511a3783f7206259006aebf86da2fc04ba4c21fdf97267f796a11c54a4"
+      },
+      {
+        "source": "assets/figma-spec/foundation/typography.png",
+        "destination": "vendor/polaris-design/assets/figma-spec/foundation/typography.png",
+        "sha256": "343d3a52d412c8ac8cf54ab9fac14ce0742787315278e453bcf5bbe239786b80"
+      },
+      {
+        "source": "assets/figma-spec/theme/iconography.png",
+        "destination": "vendor/polaris-design/assets/figma-spec/theme/iconography.png",
+        "sha256": "ec9076d4b700b4bf3a730281bdeaa5387bb3de2d6dd7d8d581f405d0df26e8dc"
+      }
+    ],
+    "fileIcons": [
+      {
+        "source": "assets/svg/file-icons/32/app-sheet.svg",
+        "destination": "vendor/polaris-design/assets/svg/file-icons/32/app-sheet.svg",
+        "sha256": "105ad633a7c0a5d5efa5854d3e3ffeec2223151015e252e3a38789393d8a5677"
+      },
+      {
+        "source": "assets/svg/file-icons/32/app-slide.svg",
+        "destination": "vendor/polaris-design/assets/svg/file-icons/32/app-slide.svg",
+        "sha256": "1cdf8ccab28062469d275a13ea657f3fcf2c7826cf92c4b51e03273119422278"
+      },
+      {
+        "source": "assets/svg/file-icons/32/app-word.svg",
+        "destination": "vendor/polaris-design/assets/svg/file-icons/32/app-word.svg",
+        "sha256": "4841aa7e7e940a7e8a6f467b74d46709af012bd280f7f9e45d3920784dcbe63d"
+      },
+      {
+        "source": "assets/svg/file-icons/32/csv.svg",
+        "destination": "vendor/polaris-design/assets/svg/file-icons/32/csv.svg",
+        "sha256": "20237888b7bc62b87fbe4d8f673b0dd01cf9c41b81895732839b9cf4de0232ce"
+      },
+      {
+        "source": "assets/svg/file-icons/32/docx.svg",
+        "destination": "vendor/polaris-design/assets/svg/file-icons/32/docx.svg",
+        "sha256": "c24b29e1c5aac02bcff9b593601cfba1cb08b0a2fc5fe3746b3998a6bea116b4"
+      },
+      {
+        "source": "assets/svg/file-icons/32/dotx.svg",
+        "destination": "vendor/polaris-design/assets/svg/file-icons/32/dotx.svg",
+        "sha256": "726f7d850ccf5a2f50d14bea36bbcd78b0e113476f611466a9a2575f6afb1509"
+      },
+      {
+        "source": "assets/svg/file-icons/32/folder-team.svg",
+        "destination": "vendor/polaris-design/assets/svg/file-icons/32/folder-team.svg",
+        "sha256": "3331e4e580daa3f130795a69d24405e25d8cd248514c201ed8b9429eea1726dc"
+      },
+      {
+        "source": "assets/svg/file-icons/32/folder.svg",
+        "destination": "vendor/polaris-design/assets/svg/file-icons/32/folder.svg",
+        "sha256": "576744871630e233fed98df8b44c5a05d8add92f676bad2dcc10923c12a92416"
+      },
+      {
+        "source": "assets/svg/file-icons/32/hwp.svg",
+        "destination": "vendor/polaris-design/assets/svg/file-icons/32/hwp.svg",
+        "sha256": "e995d88a3a9a2d0c6bfb3170d637d5779ad4841599bf3360cd4f19e4c7f41a0b"
+      },
+      {
+        "source": "assets/svg/file-icons/32/hwt.svg",
+        "destination": "vendor/polaris-design/assets/svg/file-icons/32/hwt.svg",
+        "sha256": "25808ad1532b04fd79e6c07595b808fd9c09c52e0fe0b2cfb02b581349cab1b5"
+      },
+      {
+        "source": "assets/svg/file-icons/32/image.svg",
+        "destination": "vendor/polaris-design/assets/svg/file-icons/32/image.svg",
+        "sha256": "2fae6bf0b520c0588c4dd6344f05baa12d75212bd977134d23e87a04a952d7bb"
+      },
+      {
+        "source": "assets/svg/file-icons/32/inbox.svg",
+        "destination": "vendor/polaris-design/assets/svg/file-icons/32/inbox.svg",
+        "sha256": "30a2f7c7cbb54134afbab33e6dc3a6da1fec7f99d92a29cd4472f96bc2eb74ce"
+      },
+      {
+        "source": "assets/svg/file-icons/32/music.svg",
+        "destination": "vendor/polaris-design/assets/svg/file-icons/32/music.svg",
+        "sha256": "ec9a37ae49a0d35dacf607ca3c50f9b588318ea5c6ca74f3238e3d1bd07aac47"
+      },
+      {
+        "source": "assets/svg/file-icons/32/my-template.svg",
+        "destination": "vendor/polaris-design/assets/svg/file-icons/32/my-template.svg",
+        "sha256": "e9c4a2e5bab32f05209a2da2acd21159d4149ae96313ba46a84b1bbb607bb27b"
+      },
+      {
+        "source": "assets/svg/file-icons/32/note-pnt.svg",
+        "destination": "vendor/polaris-design/assets/svg/file-icons/32/note-pnt.svg",
+        "sha256": "e6ff87f6f40d060e8bc6f13c0345191a5d75dbf9a91d948b6e09195d555039e9"
+      },
+      {
+        "source": "assets/svg/file-icons/32/odt.svg",
+        "destination": "vendor/polaris-design/assets/svg/file-icons/32/odt.svg",
+        "sha256": "0fba9705e2d6b7bc61c96fb066d0e790f566aaf41e7fa2cd10886dca249a162b"
+      },
+      {
+        "source": "assets/svg/file-icons/32/pdf.svg",
+        "destination": "vendor/polaris-design/assets/svg/file-icons/32/pdf.svg",
+        "sha256": "ce4b10b976f25f80cc2510055a5a6ba9f2752f074f07ee6f92cd7f6a55ccafa7"
+      },
+      {
+        "source": "assets/svg/file-icons/32/potx.svg",
+        "destination": "vendor/polaris-design/assets/svg/file-icons/32/potx.svg",
+        "sha256": "dc047540e912872a21d7a3fde9932bf2f66ff0290d507687b12c3b271c1a2126"
+      },
+      {
+        "source": "assets/svg/file-icons/32/ppsx.svg",
+        "destination": "vendor/polaris-design/assets/svg/file-icons/32/ppsx.svg",
+        "sha256": "fad11e6c511646cd8e87227bf18b73c55428c8bbd4e7622b91bd349a28d2d9ba"
+      },
+      {
+        "source": "assets/svg/file-icons/32/pptx.svg",
+        "destination": "vendor/polaris-design/assets/svg/file-icons/32/pptx.svg",
+        "sha256": "b281c1ad95c778b7e5612ab815d1159ed8e8a3b9a4b0a1bca37bb3f9918c4820"
+      },
+      {
+        "source": "assets/svg/file-icons/32/rtf.svg",
+        "destination": "vendor/polaris-design/assets/svg/file-icons/32/rtf.svg",
+        "sha256": "6a9295b01057eacbfaf677d60ef6a22ff181c035324321f6fe3a424e36592ea7"
+      },
+      {
+        "source": "assets/svg/file-icons/32/template.svg",
+        "destination": "vendor/polaris-design/assets/svg/file-icons/32/template.svg",
+        "sha256": "5d0ce0e96b4f96ed4e37755cd9e59f0d5c3501a4bf64fec7b66269b792f4b8a8"
+      },
+      {
+        "source": "assets/svg/file-icons/32/txt.svg",
+        "destination": "vendor/polaris-design/assets/svg/file-icons/32/txt.svg",
+        "sha256": "0f96c422f2f340c1c5fdb0c3c6ff4385b28dff9a24c22aa48dfd73d465918014"
+      },
+      {
+        "source": "assets/svg/file-icons/32/unknown.svg",
+        "destination": "vendor/polaris-design/assets/svg/file-icons/32/unknown.svg",
+        "sha256": "8ec6a51b858796445d42fe9bdcfe4130a021318a4f0ba4d50d9ec486153b2811"
+      },
+      {
+        "source": "assets/svg/file-icons/32/video.svg",
+        "destination": "vendor/polaris-design/assets/svg/file-icons/32/video.svg",
+        "sha256": "d6787a559d22206c733e48b853bedfeb2cb8ce421b4c1c699f4787b752a458af"
+      },
+      {
+        "source": "assets/svg/file-icons/32/voc.svg",
+        "destination": "vendor/polaris-design/assets/svg/file-icons/32/voc.svg",
+        "sha256": "1dffc66ba6979dd8c9335a2d24b5635ffca36cdef947aea3edffe676de075d48"
+      },
+      {
+        "source": "assets/svg/file-icons/32/xlsx.svg",
+        "destination": "vendor/polaris-design/assets/svg/file-icons/32/xlsx.svg",
+        "sha256": "946f6034d5c192dccbef8307663a9216a88af318f4fb857e46543d5b9ef14484"
+      },
+      {
+        "source": "assets/svg/file-icons/32/xltx.svg",
+        "destination": "vendor/polaris-design/assets/svg/file-icons/32/xltx.svg",
+        "sha256": "35e1c762f59be349d34e9d845dc44671610b54dd27a3723940635426b8bb1c46"
+      },
+      {
+        "source": "assets/svg/file-icons/32/zip.svg",
+        "destination": "vendor/polaris-design/assets/svg/file-icons/32/zip.svg",
+        "sha256": "d5f02dff6d33afe3af6ceb67f93b559894790d6eae0e14b34855fe8a11aa2e0d"
+      }
+    ],
+    "uiIcons": [
+      {
+        "source": "assets/svg/icons/18/arrow-down.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/18/arrow-down.svg",
+        "sha256": "44302bd7c73b4b393acd4822959e06460b29d0c27d91c6cf77ed060f2ee191ac"
+      },
+      {
+        "source": "assets/svg/icons/18/arrow-left.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/18/arrow-left.svg",
+        "sha256": "2ebbc2c04a86cbfaf8f18c3d37b3a6a1547be67f3acf75345893d66150b13ab1"
+      },
+      {
+        "source": "assets/svg/icons/18/arrow-right.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/18/arrow-right.svg",
+        "sha256": "b79dcbe286774de4e5b6ba8a27dbf66e8ebfa2a9dad8d1c6b27d6a5ebe973858"
+      },
+      {
+        "source": "assets/svg/icons/18/arrow-up.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/18/arrow-up.svg",
+        "sha256": "28afe03a5f496192c3af1e1f9f6767cf6a4a3f1737f2d9d00f7b8a6f384330ae"
+      },
+      {
+        "source": "assets/svg/icons/18/bell.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/18/bell.svg",
+        "sha256": "e64d4f1ff58b9242af20bf25d3537fd28f03656d880bde24423d237c21d0ce53"
+      },
+      {
+        "source": "assets/svg/icons/18/book-open-01.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/18/book-open-01.svg",
+        "sha256": "0925393175a17f0df03d5416cc6208d92fb94e260800783fdc112b5ba973c0b0"
+      },
+      {
+        "source": "assets/svg/icons/18/box.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/18/box.svg",
+        "sha256": "5b9f2f6fcf04160b474c190eeb7d350e956b01ffc2e47039e15831f898bdde0b"
+      },
+      {
+        "source": "assets/svg/icons/18/chat.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/18/chat.svg",
+        "sha256": "87c56857cb0b45ba0ac14253b900163c9b9106e16c5d8ba5720bf12e187aa60c"
+      },
+      {
+        "source": "assets/svg/icons/18/check.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/18/check.svg",
+        "sha256": "7adfadf070d981304ac95db38c0969221a559371a48809666dc653f9a84c60c1"
+      },
+      {
+        "source": "assets/svg/icons/18/chevron-down-circle.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/18/chevron-down-circle.svg",
+        "sha256": "1b8447cc24c21f81abdc9aba8e2a32b25c6555d03ba2df8db52f3c40a0cb871b"
+      },
+      {
+        "source": "assets/svg/icons/18/chevron-down.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/18/chevron-down.svg",
+        "sha256": "224c715384ab1101b6ea2c8019828c96ef30bd1927fd13384b008f0d9ce816c4"
+      },
+      {
+        "source": "assets/svg/icons/18/chevron-left-circle.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/18/chevron-left-circle.svg",
+        "sha256": "316152f07fce446bb8282bf1742c4867d833a98af3b2260b3fa463b49522edf1"
+      },
+      {
+        "source": "assets/svg/icons/18/chevron-left.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/18/chevron-left.svg",
+        "sha256": "36c8ab7ac35fcb1edbfd02eb949ce9d1555b2e522a9fd248b2ea53ada6828506"
+      },
+      {
+        "source": "assets/svg/icons/18/chevron-right-circle.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/18/chevron-right-circle.svg",
+        "sha256": "dc2c49723e06361f9bb2e4f86f2a6434942746f48b61777ed2eff8b33b558722"
+      },
+      {
+        "source": "assets/svg/icons/18/chevron-right.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/18/chevron-right.svg",
+        "sha256": "4f831f2149fc5e13f1a2ad8ea977e5369378ff46a87b80cff443fa653be60a85"
+      },
+      {
+        "source": "assets/svg/icons/18/chevron-up-circle.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/18/chevron-up-circle.svg",
+        "sha256": "a3040b8437914c8b005521463f1f29bc06736deac3dc701dce555f77c50a2ca9"
+      },
+      {
+        "source": "assets/svg/icons/18/chevron-up.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/18/chevron-up.svg",
+        "sha256": "c18f5a18abd298bb5564a7c78830b186033d41d930e1b5481d493b9b515dad3e"
+      },
+      {
+        "source": "assets/svg/icons/18/circle-check-circle.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/18/circle-check-circle.svg",
+        "sha256": "c4534e502e64b908de290aae886f149da8e4306cde2b4c43157222875b0f309b"
+      },
+      {
+        "source": "assets/svg/icons/18/circle-x.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/18/circle-x.svg",
+        "sha256": "a7087c07e4f5bd305a041f89e2f9e5cdc804d620ed0f9ed0f7b121e78421609d"
+      },
+      {
+        "source": "assets/svg/icons/18/close-box.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/18/close-box.svg",
+        "sha256": "db62be69121c08b950161abf605204fdad81caa62d545ff1ad13ec8119ed7dd4"
+      },
+      {
+        "source": "assets/svg/icons/18/close.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/18/close.svg",
+        "sha256": "418b78dd08de56261bdc60b16ebafa51c5892258b234a256a4bee5fae7977f18"
+      },
+      {
+        "source": "assets/svg/icons/18/cloud.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/18/cloud.svg",
+        "sha256": "851a05995ac2724be57777c244c734c308d77b0e26b5f334809762360ccbcf90"
+      },
+      {
+        "source": "assets/svg/icons/18/computer.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/18/computer.svg",
+        "sha256": "8450bc52f17dbe435f766d9cfb70f0017bd12206fc982a74ae08a35bcd4c8c86"
+      },
+      {
+        "source": "assets/svg/icons/18/crown.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/18/crown.svg",
+        "sha256": "32d5dc2032ede18ca973361fa5665cea5c051195184de40c80136fda64bf9aa5"
+      },
+      {
+        "source": "assets/svg/icons/18/delete.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/18/delete.svg",
+        "sha256": "ee48496624a3f7ad922f54a91be13ec517f98912e282a8e1650e8f35ab277aed"
+      },
+      {
+        "source": "assets/svg/icons/18/download.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/18/download.svg",
+        "sha256": "1160d9878720d64453d49534643069da211fa28dca74450c450d04c18dc566bc"
+      },
+      {
+        "source": "assets/svg/icons/18/earth.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/18/earth.svg",
+        "sha256": "649b48ef17cc9ae100688597719fbdf87dc9065d1dde6f337c7948c0446f2dc6"
+      },
+      {
+        "source": "assets/svg/icons/18/enter.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/18/enter.svg",
+        "sha256": "29caf120378aa365be156ba6a72f9df9694d86b543e460ab54b430b473d2ac94"
+      },
+      {
+        "source": "assets/svg/icons/18/error.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/18/error.svg",
+        "sha256": "27e209efbb38e3378b7ddf57044a0755ec60c449d8e7729c7cbf8ebe112100de"
+      },
+      {
+        "source": "assets/svg/icons/18/expand.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/18/expand.svg",
+        "sha256": "53b3209b4c846b7592b643f1f33594fb75aa7f7c38f6bb127ea50d08012ac3ba"
+      },
+      {
+        "source": "assets/svg/icons/18/external-link.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/18/external-link.svg",
+        "sha256": "564c44d9e0baa167827862c9ab6337849d6cc31a94cf8ecd1e0059f397bc882a"
+      },
+      {
+        "source": "assets/svg/icons/18/file-link.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/18/file-link.svg",
+        "sha256": "7a12bee0a28b7e4d7059330a8ac584c94286414ef6d0a0e94209000846c51cc4"
+      },
+      {
+        "source": "assets/svg/icons/18/file-out.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/18/file-out.svg",
+        "sha256": "094e107eb2c1dfb947d1a549819fd49b4dad098ab3d9ab1ef5c9979f054b4d6e"
+      },
+      {
+        "source": "assets/svg/icons/18/file-plus.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/18/file-plus.svg",
+        "sha256": "e60f5cdde8b5378646743482dbec3fb6847a727fe9973518e4bacb100fa7df39"
+      },
+      {
+        "source": "assets/svg/icons/18/file.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/18/file.svg",
+        "sha256": "8be477aea8e50f7ac21ab42a3b01ac85d6a28c2c981f84219f4bcc743a33b1b5"
+      },
+      {
+        "source": "assets/svg/icons/18/filter.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/18/filter.svg",
+        "sha256": "77d024e64e14de904c587d74dae9772fb1cc50fc0d6692e67c64c16e2ece670a"
+      },
+      {
+        "source": "assets/svg/icons/18/folder.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/18/folder.svg",
+        "sha256": "9293a9a6e72d2b632f692006fd74339b4cec654b891ae87cbd237bdaf22ea41e"
+      },
+      {
+        "source": "assets/svg/icons/18/gift.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/18/gift.svg",
+        "sha256": "45c36521430d1447a484031aaa33c3b04a13676e712fdb4336dc4f1eda0172ff"
+      },
+      {
+        "source": "assets/svg/icons/18/hardware.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/18/hardware.svg",
+        "sha256": "fb829c57c931b3cb1692970fb3577e10befd72c4c7528267d81a49f7b6de49bd"
+      },
+      {
+        "source": "assets/svg/icons/18/history.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/18/history.svg",
+        "sha256": "d6d519582a30bf6f364abf76825172086ed47b2a319c343bc0b0b5871f0fbceb"
+      },
+      {
+        "source": "assets/svg/icons/18/image-remove-n.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/18/image-remove-n.svg",
+        "sha256": "223a40ec3e2ebbed8ce1109aa6c70cce480385e9079028b17a20cb9158b0c688"
+      },
+      {
+        "source": "assets/svg/icons/18/image.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/18/image.svg",
+        "sha256": "c362670ae6d84e2717bed71336e666604d2996f3507b8030dfa79939f00d9298"
+      },
+      {
+        "source": "assets/svg/icons/18/info-circle.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/18/info-circle.svg",
+        "sha256": "3701db6a34e6d219770139986ce1c405e61bb8eb221150f8989054ab3aa08ee5"
+      },
+      {
+        "source": "assets/svg/icons/18/menu.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/18/menu.svg",
+        "sha256": "03855fb10e623dba28276be171f988a80dbd8da2c8cac41de3b86fd6c2473580"
+      },
+      {
+        "source": "assets/svg/icons/18/message.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/18/message.svg",
+        "sha256": "4ba6037b4ee1d993fd756541d48dcac0b029a411cf65f1e6fa3ab03a9ce23168"
+      },
+      {
+        "source": "assets/svg/icons/18/minus.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/18/minus.svg",
+        "sha256": "a600b19be1c328f6dd71c7ea859e8e2aff2b0f9d381dd2c7f33212ddc03f875c"
+      },
+      {
+        "source": "assets/svg/icons/18/panel-left-open.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/18/panel-left-open.svg",
+        "sha256": "3bc3d0d1ea96ee18e9c3a75f3d5c77c5b9174a694ae2fc80582f22a668e5c999"
+      },
+      {
+        "source": "assets/svg/icons/18/panel-right-open.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/18/panel-right-open.svg",
+        "sha256": "e5f099fdcd018898c26c140e0345187525fe6d4cc1fc5942e35ef3b0ddebd263"
+      },
+      {
+        "source": "assets/svg/icons/18/paragraph-spacing.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/18/paragraph-spacing.svg",
+        "sha256": "75be38dc2b65656afd94fbe6d151d56e89f4a88341cf1dedf66f95e075f8f8b9"
+      },
+      {
+        "source": "assets/svg/icons/18/pencil-line.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/18/pencil-line.svg",
+        "sha256": "48698b2d1be4424d89f691f7768d26720523e7cbbd1d741afe597ad15ae29ebe"
+      },
+      {
+        "source": "assets/svg/icons/18/plus-bubble.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/18/plus-bubble.svg",
+        "sha256": "e6e507d2afd7e7520cda54f70d4b871d44585b97f7912c9c2dcca6d30402a2ee"
+      },
+      {
+        "source": "assets/svg/icons/18/plus-circle.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/18/plus-circle.svg",
+        "sha256": "688d531d0ab2ecbb96035d014fbc66e0708ef620e8d2d9629f06f535aafa77d9"
+      },
+      {
+        "source": "assets/svg/icons/18/plus.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/18/plus.svg",
+        "sha256": "6c75bc09d80f13e67ddcbf8aae2803eea255688dda3411d8348917bbea94feed"
+      },
+      {
+        "source": "assets/svg/icons/18/redo.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/18/redo.svg",
+        "sha256": "26bf98bb6e2bbf1019071fb3fb1d042bd85b0264a0334150a9b3fbff4ae39356"
+      },
+      {
+        "source": "assets/svg/icons/18/reduction.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/18/reduction.svg",
+        "sha256": "38f4611cc366f634bcd899ddc5fcc2ad1422bd19fba87d31010ed49f607ef4c2"
+      },
+      {
+        "source": "assets/svg/icons/18/refresh.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/18/refresh.svg",
+        "sha256": "94b6ddb3584a91244ae6336ecb85a73558973f8fd8a84577900c782153c9ae12"
+      },
+      {
+        "source": "assets/svg/icons/18/repeat.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/18/repeat.svg",
+        "sha256": "c380c94093344da8dff2b0aaccbfb8c72f65f43655dec8a2ba058fc3d34ac805"
+      },
+      {
+        "source": "assets/svg/icons/18/search.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/18/search.svg",
+        "sha256": "0f151ee29787c99be49d5bfead271a9ed758bcec0ee0182e322f064bfa82264f"
+      },
+      {
+        "source": "assets/svg/icons/18/send-fill.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/18/send-fill.svg",
+        "sha256": "e4288aa876634753b7f195c942ded7a9eeeddb26f7aceb29e54b52a47918264c"
+      },
+      {
+        "source": "assets/svg/icons/18/send.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/18/send.svg",
+        "sha256": "c82b218176e27d16c6e593dbdd25ae54f3ef9bba05cd0d87ffb39fc47dcd5b92"
+      },
+      {
+        "source": "assets/svg/icons/18/settings.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/18/settings.svg",
+        "sha256": "903db9b51d22bced15fe1f7633d95c0b26a93fc0a1ad83f367dd58914b6087f7"
+      },
+      {
+        "source": "assets/svg/icons/18/share.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/18/share.svg",
+        "sha256": "c6e0f1e73ce9937626ae76c23c0ff53d881f54b93b7d7651ba639787e6c52c3b"
+      },
+      {
+        "source": "assets/svg/icons/18/translate.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/18/translate.svg",
+        "sha256": "a662a0e012b37f750f1aede8167a2a80eedc3960d936531095a908458d57bf37"
+      },
+      {
+        "source": "assets/svg/icons/18/undo.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/18/undo.svg",
+        "sha256": "bc6a3b1a1e7f316c156dc9b6c8f4f02ab063bc81100c7a400688722d81146567"
+      },
+      {
+        "source": "assets/svg/icons/18/upload.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/18/upload.svg",
+        "sha256": "1255b1289d2c7303545a0b976e3fb2e3fd818d5e87857c898183866d2a171a89"
+      },
+      {
+        "source": "assets/svg/icons/18/user.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/18/user.svg",
+        "sha256": "ecc8fc8143272f0e0abb7bd357abd08de0ddeed976908e7e6915b718ff697a60"
+      },
+      {
+        "source": "assets/svg/icons/24/arrow-down.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/24/arrow-down.svg",
+        "sha256": "a563afa0b2e55003aa685331675c21e1cf69b721092124072254f1ec998386e0"
+      },
+      {
+        "source": "assets/svg/icons/24/arrow-left.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/24/arrow-left.svg",
+        "sha256": "37749d01da83cac5fbef6733073927d8c98c4f865f87da02dfcd029c182605ef"
+      },
+      {
+        "source": "assets/svg/icons/24/arrow-right.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/24/arrow-right.svg",
+        "sha256": "911b3d62b99fd513088e57f08088dbfdb2a8e452c6c22cb8097cdef9a896fc65"
+      },
+      {
+        "source": "assets/svg/icons/24/arrow-up.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/24/arrow-up.svg",
+        "sha256": "e6c65020e50a85c59b045b2bf0052c6a8fdefa1307d501367c9bb28eaec882f4"
+      },
+      {
+        "source": "assets/svg/icons/24/bell.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/24/bell.svg",
+        "sha256": "9d40a0c7fc74447538091e276e0b658b369396621b426bc8e43e2470983abdbe"
+      },
+      {
+        "source": "assets/svg/icons/24/book-open-01.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/24/book-open-01.svg",
+        "sha256": "1655e4c707b7bf4b6a04bb8e1b7351948186e79887ef9612d678889d88e9c040"
+      },
+      {
+        "source": "assets/svg/icons/24/box.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/24/box.svg",
+        "sha256": "0de8839a5e3fef7b0a2d2104aedbbdc0700e3f2a7df66bd24b19a25fb6ff05de"
+      },
+      {
+        "source": "assets/svg/icons/24/chat.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/24/chat.svg",
+        "sha256": "a2744763c91e314d50e242e6fff0d951f0e86e6f1cde93590f2c448b8cf12fa6"
+      },
+      {
+        "source": "assets/svg/icons/24/check.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/24/check.svg",
+        "sha256": "5901b5cc0bd6f86742474eeb4c5569f43e85d4153af9346670ae82775ddf3924"
+      },
+      {
+        "source": "assets/svg/icons/24/chevron-down-circle.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/24/chevron-down-circle.svg",
+        "sha256": "daa54ff0c59bea0e3f9316dd896de0eb6a986907deb93bc531f65176b6ab8e35"
+      },
+      {
+        "source": "assets/svg/icons/24/chevron-down.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/24/chevron-down.svg",
+        "sha256": "5ea37a53d40399359d17152d55ab6c9fd2277d5fe3cf48d801b6244444c77482"
+      },
+      {
+        "source": "assets/svg/icons/24/chevron-left-circle.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/24/chevron-left-circle.svg",
+        "sha256": "d3a0cdada61d4319cc2cab5cc5b4fe73897daeeea03e7e8a91580f3aad586cdb"
+      },
+      {
+        "source": "assets/svg/icons/24/chevron-left.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/24/chevron-left.svg",
+        "sha256": "9ce15f6e3308282b7176ae5814a5774c37d8683fd96ae87c333d3662644b6b9e"
+      },
+      {
+        "source": "assets/svg/icons/24/chevron-right-circle.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/24/chevron-right-circle.svg",
+        "sha256": "aedac3c3de51608b83b6db2c4f3bc385975c7038f89032f8fb2369fe8782e95d"
+      },
+      {
+        "source": "assets/svg/icons/24/chevron-right.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/24/chevron-right.svg",
+        "sha256": "792f813a32b9754bbdef1458c5791f55ca7262fe62e6b30e5e55d6888ded575f"
+      },
+      {
+        "source": "assets/svg/icons/24/chevron-up-circle.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/24/chevron-up-circle.svg",
+        "sha256": "e77d8aa6296cf2f7f89f2b682b0747dc961085d04ecb042af9ec52843c3ef6fd"
+      },
+      {
+        "source": "assets/svg/icons/24/chevron-up.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/24/chevron-up.svg",
+        "sha256": "3b65af00c29a95bf2aef347c27e9af8a8af645679e1307ee00c8d5ef2f206e2f"
+      },
+      {
+        "source": "assets/svg/icons/24/circle-check-circle.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/24/circle-check-circle.svg",
+        "sha256": "6861cb8d313c74bc721088ee67187b843634d8d2941cfc49601df5f66a1764ba"
+      },
+      {
+        "source": "assets/svg/icons/24/circle-x.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/24/circle-x.svg",
+        "sha256": "113ff1f824dd2dad283e99ab2461b1553a9713dfcc9d1cc575221da7cb432205"
+      },
+      {
+        "source": "assets/svg/icons/24/close-box.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/24/close-box.svg",
+        "sha256": "870079be32c1924e67dc9c45433b3907b1a2359125f760682de677ab682d6908"
+      },
+      {
+        "source": "assets/svg/icons/24/close.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/24/close.svg",
+        "sha256": "cded0f5a878e14e0ebb08d61366f5a4802e7d0d30c33c9a66db63845b49b9f63"
+      },
+      {
+        "source": "assets/svg/icons/24/cloud.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/24/cloud.svg",
+        "sha256": "f14bf8d52f65018e2286494d853c1d8ee4599de76d59036e1aae505a51eff8ce"
+      },
+      {
+        "source": "assets/svg/icons/24/computer.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/24/computer.svg",
+        "sha256": "e2d3370c06fd023fd9964907fbcf9affaa5c722c5c24e9fb019816f6319df2d1"
+      },
+      {
+        "source": "assets/svg/icons/24/crown.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/24/crown.svg",
+        "sha256": "a453e8125954ba1992ab24ce6bb064030602d9da1ff806b496888946a55a0bab"
+      },
+      {
+        "source": "assets/svg/icons/24/delete.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/24/delete.svg",
+        "sha256": "dc8817ba5d4362d6769328393b750c736772ba984594ad32004fab60af03b671"
+      },
+      {
+        "source": "assets/svg/icons/24/download.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/24/download.svg",
+        "sha256": "fa380205719aff171ecc7bb8cb1aedf689a7b0d5caec0e6e668e0509b94fa74f"
+      },
+      {
+        "source": "assets/svg/icons/24/earth.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/24/earth.svg",
+        "sha256": "5d50d590cab223c32139c5b5d3733321b896c32f13c202d6ee369de114db64e8"
+      },
+      {
+        "source": "assets/svg/icons/24/enter.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/24/enter.svg",
+        "sha256": "6ed8d564c9b5ca1568202f8ba1e3f306c6645ba52fb867b0ad64f4c53b2ac4d0"
+      },
+      {
+        "source": "assets/svg/icons/24/expand.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/24/expand.svg",
+        "sha256": "1fa6476271499edff787d89e24b2fd31c5dbcb1dc1e56152296fa65c3574a99c"
+      },
+      {
+        "source": "assets/svg/icons/24/external-link.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/24/external-link.svg",
+        "sha256": "834c8111ad7baffd70bf0bb515c268df0da0f18813192c93ca8349b611850cd0"
+      },
+      {
+        "source": "assets/svg/icons/24/file-link.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/24/file-link.svg",
+        "sha256": "83814831f653ededf371f4e65b43bd5595c10db4ee61b97a5340f8c2e5053d1c"
+      },
+      {
+        "source": "assets/svg/icons/24/file-out.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/24/file-out.svg",
+        "sha256": "47fcb6f0d31a6416696126303a4956702bc7189c7d65577d6f64d6a5c8bfea98"
+      },
+      {
+        "source": "assets/svg/icons/24/file-plus.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/24/file-plus.svg",
+        "sha256": "5e0ce39ae273095691a3e5d8de4447d320830001d59904d717996660f72e0e48"
+      },
+      {
+        "source": "assets/svg/icons/24/file.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/24/file.svg",
+        "sha256": "7015a39cfa31d4d24079a45c58817baae5fd29411314a20ea4df6bdf85aab4ca"
+      },
+      {
+        "source": "assets/svg/icons/24/filter.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/24/filter.svg",
+        "sha256": "47e4e32687e16cebf297f2976f0bd59a53f4a1376370e1a3b7fd804a4a9a3189"
+      },
+      {
+        "source": "assets/svg/icons/24/folder.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/24/folder.svg",
+        "sha256": "b0d358a8cca5041f87f11843cefc6d5ec7f007a0663d6a8bf735f2a66401075e"
+      },
+      {
+        "source": "assets/svg/icons/24/gift.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/24/gift.svg",
+        "sha256": "5fb01f08353af7c65668779303fe9279aa83a4e8f90d58873054b29685d0cd60"
+      },
+      {
+        "source": "assets/svg/icons/24/hardware.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/24/hardware.svg",
+        "sha256": "b8eaba6f9ddfc6a69499309d90a82998feb5c07c14df15a240da288a64c4d633"
+      },
+      {
+        "source": "assets/svg/icons/24/history.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/24/history.svg",
+        "sha256": "90d57aaf21c66c4aba2d5af94d37577ee66ab1b8cba23928cf36b74d69203107"
+      },
+      {
+        "source": "assets/svg/icons/24/image-remove-n.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/24/image-remove-n.svg",
+        "sha256": "1e4db662fa03ed8e83bbeca4b4dcd4392cecdca2b20f7500369a0a4974639904"
+      },
+      {
+        "source": "assets/svg/icons/24/image.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/24/image.svg",
+        "sha256": "96fa147a1267ec7de25d7b1fc03b6136ab34de107b10403b548f74ec218d11da"
+      },
+      {
+        "source": "assets/svg/icons/24/info-circle.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/24/info-circle.svg",
+        "sha256": "b7c50baee3a93acc8270ad42254a57018cc234e7f3dd085f1c14bdf2793f8b9e"
+      },
+      {
+        "source": "assets/svg/icons/24/menu.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/24/menu.svg",
+        "sha256": "26314fa30f83a0f8796773b222102f7c01b44e7d08a1983833a33533fdba7849"
+      },
+      {
+        "source": "assets/svg/icons/24/message.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/24/message.svg",
+        "sha256": "6cbd858fab6f1f74e123034b6ea6146ea5043601701802d0d72cb00b1353be7a"
+      },
+      {
+        "source": "assets/svg/icons/24/minus.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/24/minus.svg",
+        "sha256": "5cebad1f32b965719371d32dc912621fc1d281710841fd7ce4cc02f9a6254cc2"
+      },
+      {
+        "source": "assets/svg/icons/24/panel-left-open.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/24/panel-left-open.svg",
+        "sha256": "ef39a696c50d40bc599abcc617c6c783ff0aad1038233be2ba346cf4146ef6ca"
+      },
+      {
+        "source": "assets/svg/icons/24/panel-right-open.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/24/panel-right-open.svg",
+        "sha256": "3c14a55e95b0d2a7b5f1f704414b80567bed4597b8224b9042cfe49fd8a88585"
+      },
+      {
+        "source": "assets/svg/icons/24/paragraph-spacing.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/24/paragraph-spacing.svg",
+        "sha256": "b49a3cf878c40d59809bb759322fd2c8efd95ab5ad6e059329da7f86c53c0116"
+      },
+      {
+        "source": "assets/svg/icons/24/pencil-line.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/24/pencil-line.svg",
+        "sha256": "680c3f74508b4b88b7506390b53fa4ab16479542bf0ee29bc74edd225d9b0091"
+      },
+      {
+        "source": "assets/svg/icons/24/plus-bubble.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/24/plus-bubble.svg",
+        "sha256": "be3ba0bff1ae18265153f5ad63635a5a6d709e047b03e47d1a3be66d679dc6c2"
+      },
+      {
+        "source": "assets/svg/icons/24/plus-circle.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/24/plus-circle.svg",
+        "sha256": "50ee394614465ab2e4f21d924ef0e20763debfcae7b4e1056bbbcf0fd8e80a75"
+      },
+      {
+        "source": "assets/svg/icons/24/plus.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/24/plus.svg",
+        "sha256": "f8f7ab6699cead034282a1e8170be5e29aac47ef067774c02918157a34601725"
+      },
+      {
+        "source": "assets/svg/icons/24/redo.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/24/redo.svg",
+        "sha256": "6885597dc7d9d9d3c80d75dfc34d4410c6ce1e95009824172b3b47d51bafca44"
+      },
+      {
+        "source": "assets/svg/icons/24/reduction.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/24/reduction.svg",
+        "sha256": "058c2b314ecb229e108d7a6102207f8bb120ad6a34db4cdea7bed3275aae03c0"
+      },
+      {
+        "source": "assets/svg/icons/24/refresh.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/24/refresh.svg",
+        "sha256": "00898fff7f5875f4071a847977b3d3aef7ac475039cfc7db41fdd78e6c1a8502"
+      },
+      {
+        "source": "assets/svg/icons/24/repeat.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/24/repeat.svg",
+        "sha256": "9b8d2c0b2714c2889ea5e49492fca2bd2206ad4e30065dde32672e30fc6eded9"
+      },
+      {
+        "source": "assets/svg/icons/24/search.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/24/search.svg",
+        "sha256": "ba57ec3c26c56db77b6acfc87e70655d2be426674ab368c22ccfd89c25ef8685"
+      },
+      {
+        "source": "assets/svg/icons/24/send-fill.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/24/send-fill.svg",
+        "sha256": "31ab4f8a52378d6bce5f3f67f1bbc12077162ddbdd92d7f0d505f7c63d02405f"
+      },
+      {
+        "source": "assets/svg/icons/24/send.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/24/send.svg",
+        "sha256": "4df84138f0433c33020dc166a5be12259e4ff923458088570d8a411046dfd28b"
+      },
+      {
+        "source": "assets/svg/icons/24/settings.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/24/settings.svg",
+        "sha256": "6fbc9e16dc4b46da247973a19b31a2e3c08fffb3a41982129a750a1834205195"
+      },
+      {
+        "source": "assets/svg/icons/24/share.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/24/share.svg",
+        "sha256": "35836c845053fc98cd70c8e8b167bfda8f293099e086e205fb9d3092c24c3e03"
+      },
+      {
+        "source": "assets/svg/icons/24/translate.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/24/translate.svg",
+        "sha256": "0fa27efd7bac4fd7f3043068bc01ab3ca4c5a3d9194a948444e21c0c7936db3e"
+      },
+      {
+        "source": "assets/svg/icons/24/undo.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/24/undo.svg",
+        "sha256": "98410722545da1dbbc9e169d062c4affef825d1fb7ed2d353acd923d5284ecaa"
+      },
+      {
+        "source": "assets/svg/icons/24/upload.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/24/upload.svg",
+        "sha256": "8cc9d5ca0ef58874499004be937af7bd1e9852027719166136ee3f7f48817eec"
+      },
+      {
+        "source": "assets/svg/icons/24/user.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/24/user.svg",
+        "sha256": "d2225f91358a2dd5af6cff0a0fa5999b5ddd53d83c1e53dffa700f10e1f14597"
+      },
+      {
+        "source": "assets/svg/icons/32/arrow-down.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/32/arrow-down.svg",
+        "sha256": "446d9510fa839fcc69fdc70c4cc45c8027321fb1fad974104379aec54e148bab"
+      },
+      {
+        "source": "assets/svg/icons/32/arrow-left.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/32/arrow-left.svg",
+        "sha256": "5709e084ebcec322c2dd7d094a80ac7750ea3c2923b30cedd71c189c18b4e97e"
+      },
+      {
+        "source": "assets/svg/icons/32/arrow-right.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/32/arrow-right.svg",
+        "sha256": "430d2d16772efb969cfbd721144da8931874040e86ae9d1dd64a98f344a684f6"
+      },
+      {
+        "source": "assets/svg/icons/32/arrow-up.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/32/arrow-up.svg",
+        "sha256": "fd5c3c437341545cf6d920d4a07daf3ec1c355a8958fee4e275aeb2125e71d9a"
+      },
+      {
+        "source": "assets/svg/icons/32/bell.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/32/bell.svg",
+        "sha256": "d6fb2e7de989bb7316731e9e66c78cb2928fa923d92304a9cac7a12a5c71ad95"
+      },
+      {
+        "source": "assets/svg/icons/32/book-open-01.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/32/book-open-01.svg",
+        "sha256": "a37facc9cb4cac183babbab4cc45493e303f1b7bfa4c3b48dab1081f16a2fb21"
+      },
+      {
+        "source": "assets/svg/icons/32/box.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/32/box.svg",
+        "sha256": "0a962a927dbf9d43bf12ae489c7b07b4a6ddde03d382557449755ab45a40b10b"
+      },
+      {
+        "source": "assets/svg/icons/32/chat.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/32/chat.svg",
+        "sha256": "53b0532ce57c07e674b9cca0e4c65eb6d95b167d418ee63361b0f52d7be10b64"
+      },
+      {
+        "source": "assets/svg/icons/32/check.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/32/check.svg",
+        "sha256": "9db0ff7811aeb18e058da0e11ff3e49144a22c4ca90b91c0a9bd2a85ece2d928"
+      },
+      {
+        "source": "assets/svg/icons/32/chevron-down-circle.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/32/chevron-down-circle.svg",
+        "sha256": "ce0b3bc2f0dc1c737b0f6d7671d7c8d3fed396d82756b5f43ebcb19ed3400969"
+      },
+      {
+        "source": "assets/svg/icons/32/chevron-down.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/32/chevron-down.svg",
+        "sha256": "17ce7cb077a45b686f3a723dc11899d746051cd3fb55b7f00ad660e995db5ce2"
+      },
+      {
+        "source": "assets/svg/icons/32/chevron-left-circle.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/32/chevron-left-circle.svg",
+        "sha256": "8607614067197cdad8187cd5a97450ef37eff267854173fa84442c8b6c7b6dc8"
+      },
+      {
+        "source": "assets/svg/icons/32/chevron-left.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/32/chevron-left.svg",
+        "sha256": "14fd8f15a54d180698659ec5d73badef44404d9f6f3334f8a53d1e7bb35e3d5a"
+      },
+      {
+        "source": "assets/svg/icons/32/chevron-right-circle.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/32/chevron-right-circle.svg",
+        "sha256": "fe9022e264435244efd7f882f0917adc0590a19aace8fa3b5cb87cdef7cba85a"
+      },
+      {
+        "source": "assets/svg/icons/32/chevron-right.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/32/chevron-right.svg",
+        "sha256": "7a373cfc6219ab5d17744fd4c6a933a2cab6e7fab68ba7eb6af1a646fab9dda5"
+      },
+      {
+        "source": "assets/svg/icons/32/chevron-up-circle.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/32/chevron-up-circle.svg",
+        "sha256": "efa28386f0f6c15c6167c89e3d63540a7d06e47aaec0574897ea3dce833f2edc"
+      },
+      {
+        "source": "assets/svg/icons/32/chevron-up.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/32/chevron-up.svg",
+        "sha256": "2c21cc30d21d4c3e6f597103224be43746c9060112863b5f8ab3c9be185975cf"
+      },
+      {
+        "source": "assets/svg/icons/32/circle-check-circle.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/32/circle-check-circle.svg",
+        "sha256": "3499c37c5d320233e61d1d3b05fc4b58fa948e7019a5ba538e30751ec5f46229"
+      },
+      {
+        "source": "assets/svg/icons/32/circle-x.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/32/circle-x.svg",
+        "sha256": "ab088a7c9676fb02495232b4448de7c2741cf1aaab2000888eadb43b93391424"
+      },
+      {
+        "source": "assets/svg/icons/32/close-box.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/32/close-box.svg",
+        "sha256": "5c86af46de0ff966c93c4ffa1de590ffda29abb140273065dbde7c04341667e3"
+      },
+      {
+        "source": "assets/svg/icons/32/close.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/32/close.svg",
+        "sha256": "80d4d3ae574e23220a590063d240a3fe26799a842640890667c7e3156bb223fb"
+      },
+      {
+        "source": "assets/svg/icons/32/cloud.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/32/cloud.svg",
+        "sha256": "2ef57ffaa365c62b8addd9a483b326a7d4c5caf9532b557cf423f6eef8386b4c"
+      },
+      {
+        "source": "assets/svg/icons/32/computer.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/32/computer.svg",
+        "sha256": "2cb9a5aed7fee49ce753d3576a6c597c25330e55e33e43c6f82b7d2f73d82a6e"
+      },
+      {
+        "source": "assets/svg/icons/32/crown.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/32/crown.svg",
+        "sha256": "0d6471bb03eb9b18628bff4bb677248084122fb818d4b8b1e31f40ab513acba9"
+      },
+      {
+        "source": "assets/svg/icons/32/delete.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/32/delete.svg",
+        "sha256": "2cea0e66b170364bfe0a782bd2d6516ed59db50dd0610cc6dcbcff5d8d0f282f"
+      },
+      {
+        "source": "assets/svg/icons/32/download.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/32/download.svg",
+        "sha256": "df590cb260918142c6167ba1771d43ee362f934aa91a1eadeb7f7aee6011433f"
+      },
+      {
+        "source": "assets/svg/icons/32/earth.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/32/earth.svg",
+        "sha256": "88427de94405a6627d50097c40883857dab1a90df04baad7cc17462b89f0240e"
+      },
+      {
+        "source": "assets/svg/icons/32/enter.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/32/enter.svg",
+        "sha256": "7728a2053b2f438c3621b381f27f79ceaa63b58521eac0d6354e9d4ce4347316"
+      },
+      {
+        "source": "assets/svg/icons/32/expand.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/32/expand.svg",
+        "sha256": "f4f4e60e7e4d231411bcbf2eadd47915e8599589ab450fd23b7f5e4f43b1e187"
+      },
+      {
+        "source": "assets/svg/icons/32/external-link.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/32/external-link.svg",
+        "sha256": "c6dd734b47d37dd1baedba579a44b2f13e119255882d1fef21d10beb08bc6fc7"
+      },
+      {
+        "source": "assets/svg/icons/32/file-link.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/32/file-link.svg",
+        "sha256": "872c1dd4fc8572eee77f2260aec8746f0d8f94288cf842175124bf33e8ef8c90"
+      },
+      {
+        "source": "assets/svg/icons/32/file-out.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/32/file-out.svg",
+        "sha256": "0765f31a949d9c72ede42c6589e95ca849c7dbcf730c18dfa21002535c6dac99"
+      },
+      {
+        "source": "assets/svg/icons/32/file-plus.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/32/file-plus.svg",
+        "sha256": "116e34e86191df79d4f4ae8630b28731b6cbd3c79989dd1758d30e9407bc81f6"
+      },
+      {
+        "source": "assets/svg/icons/32/file.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/32/file.svg",
+        "sha256": "e9a18787ed6f4170e590c27b30df156ceb39dfa13980c7d953fa7d6831be3707"
+      },
+      {
+        "source": "assets/svg/icons/32/filter.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/32/filter.svg",
+        "sha256": "c6e38de344c0e9156a1d22e07daf80b2d5c6447e56425180fd8a4b5c9d9ff349"
+      },
+      {
+        "source": "assets/svg/icons/32/folder.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/32/folder.svg",
+        "sha256": "52e7dfb32fd065e4b926b5b67003b8afb07cd4167741e844966e5daa91dd8231"
+      },
+      {
+        "source": "assets/svg/icons/32/gift.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/32/gift.svg",
+        "sha256": "626f0c344908fb8c0a3102a3c7e10da968eae9220e53099ecabe484083db8112"
+      },
+      {
+        "source": "assets/svg/icons/32/hardware.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/32/hardware.svg",
+        "sha256": "b82eb6e96698f3cf16a2a3c8179a7c04d669873718e4711c7c8433cfcef1439c"
+      },
+      {
+        "source": "assets/svg/icons/32/history.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/32/history.svg",
+        "sha256": "dc5386258f2470ba510f3d6a337912dc0104c14c6e87545cf56509897b2c5847"
+      },
+      {
+        "source": "assets/svg/icons/32/image-remove-n.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/32/image-remove-n.svg",
+        "sha256": "041a61b20834ce546a7cacfeb7bca662ac5922c333f6b5a3c88b6566153588fb"
+      },
+      {
+        "source": "assets/svg/icons/32/image.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/32/image.svg",
+        "sha256": "5f1b095a8ed9357eb4334d4412fd5d5bdcf0e8fa851fe64e323bfca0cb2e5d5a"
+      },
+      {
+        "source": "assets/svg/icons/32/info-circle.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/32/info-circle.svg",
+        "sha256": "19d99dd51ba32f93b2b26e79fc0e573ad36ae98bfeddab5f7b1965289445fd89"
+      },
+      {
+        "source": "assets/svg/icons/32/menu.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/32/menu.svg",
+        "sha256": "1bff26c05dfbe15e549b9db023390d96f6530b7334e7a06ec0910bd03a4fc2cc"
+      },
+      {
+        "source": "assets/svg/icons/32/message.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/32/message.svg",
+        "sha256": "f4de87cb8edd07800719bbffa4285696cd63d452969ac274891724d60f608495"
+      },
+      {
+        "source": "assets/svg/icons/32/minus.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/32/minus.svg",
+        "sha256": "a2611eb48cc006a33a1b4d7ab86519be52cac1d763021ec9b6c21fd6f7bcde9d"
+      },
+      {
+        "source": "assets/svg/icons/32/panel-left-open.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/32/panel-left-open.svg",
+        "sha256": "93668a572ec3f4e16b555dedb0fec7fb4e279791a00188726e6318bddf19b77d"
+      },
+      {
+        "source": "assets/svg/icons/32/panel-right-open.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/32/panel-right-open.svg",
+        "sha256": "a187f11b3aa694a308388ad3a34756fad4afc7804d9f7ece37046cbe936af095"
+      },
+      {
+        "source": "assets/svg/icons/32/paragraph-spacing.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/32/paragraph-spacing.svg",
+        "sha256": "869371d448b07da4112291fa15a71fccb72271167428e7251ba1c339b9b9af21"
+      },
+      {
+        "source": "assets/svg/icons/32/pencil-line.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/32/pencil-line.svg",
+        "sha256": "5b18458ac500fdd28036320e2773ac1382c72049655e332dfb12c435038bf073"
+      },
+      {
+        "source": "assets/svg/icons/32/plus-bubble.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/32/plus-bubble.svg",
+        "sha256": "0462554a07d02671dd580da10072ec7b7f78e9c9dfc045db52e4cf36a01429cf"
+      },
+      {
+        "source": "assets/svg/icons/32/plus-circle.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/32/plus-circle.svg",
+        "sha256": "7582a65c46436744d1c574ddec8f1364c4351d2d0c4645b6d8cb063a827f46e7"
+      },
+      {
+        "source": "assets/svg/icons/32/plus.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/32/plus.svg",
+        "sha256": "149370c1110f77365cf58b7692a40742c7d51cece43eea3fb848dd882e9ac0f5"
+      },
+      {
+        "source": "assets/svg/icons/32/redo.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/32/redo.svg",
+        "sha256": "3054e642751d4c9f5046ecf8d257acbe6b112a0be5f81d4176cc43d6031d428d"
+      },
+      {
+        "source": "assets/svg/icons/32/reduction.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/32/reduction.svg",
+        "sha256": "d2840e2e688982194c086c02c45f34588d68ae7e31ba5ffc87f44762338582d7"
+      },
+      {
+        "source": "assets/svg/icons/32/refresh.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/32/refresh.svg",
+        "sha256": "3d5581e05c7fa447861687de3bccdfe82d58d4594518ebc78d655b7cf7def3d0"
+      },
+      {
+        "source": "assets/svg/icons/32/repeat.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/32/repeat.svg",
+        "sha256": "f28d8a5adbaa3e0e0db0e2d8729c8ed412df6ac8b9e0256f9096fb00524dba2e"
+      },
+      {
+        "source": "assets/svg/icons/32/search.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/32/search.svg",
+        "sha256": "0a02dd97f004317e599642b6287928196d84016e708d2e6e103bbba744e34fbb"
+      },
+      {
+        "source": "assets/svg/icons/32/send-fill.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/32/send-fill.svg",
+        "sha256": "94cd254c719ed19e6c2b3e3c6e5ff55cb169ac48cef89cd0321c6d23da1b7e53"
+      },
+      {
+        "source": "assets/svg/icons/32/send.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/32/send.svg",
+        "sha256": "a4f687bad6af5ac443f97a306afe1fc44c2206cbd59f509c7b4646e3944faf63"
+      },
+      {
+        "source": "assets/svg/icons/32/settings.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/32/settings.svg",
+        "sha256": "4e882cf1f3ef0eb3cdb3a32b2a461959fc60ab90774632250e4c9689b70b847c"
+      },
+      {
+        "source": "assets/svg/icons/32/share.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/32/share.svg",
+        "sha256": "45a28808ad52325199a32a94bd7145cec79ebb587624e6d5165127eb4e4b35b8"
+      },
+      {
+        "source": "assets/svg/icons/32/translate.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/32/translate.svg",
+        "sha256": "a4c30ab3984cb2c4a972b4e98e6d6ea1ff775be76f0c8a58a7cd8367062aa934"
+      },
+      {
+        "source": "assets/svg/icons/32/undo.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/32/undo.svg",
+        "sha256": "1076b0992291c8a85d7d82ad8ed87081649e1c734714aaf6c584158a7f057566"
+      },
+      {
+        "source": "assets/svg/icons/32/upload.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/32/upload.svg",
+        "sha256": "d4c238587b49bd24dab072a0c5b48b7a127cef3e854a428279af6cc7f2c7fa0a"
+      },
+      {
+        "source": "assets/svg/icons/32/user.svg",
+        "destination": "vendor/polaris-design/assets/svg/icons/32/user.svg",
+        "sha256": "19dc5f926c2fa39287e30875fa4ac400ba829cc7829b9addad00c7b0781b2dec"
+      }
+    ],
+    "logos": [
+      {
+        "source": "assets/svg/logos/nova/original.svg",
+        "destination": "vendor/polaris-design/assets/svg/logos/nova/original.svg",
+        "sha256": "952b9c17c2baf0f475fba8a49480b603d4f2f875d564927f0cb1f73a2302800b"
+      },
+      {
+        "source": "assets/svg/logos/nova/white.svg",
+        "destination": "vendor/polaris-design/assets/svg/logos/nova/white.svg",
+        "sha256": "72426cdb5bd1f97d9b4056fb97ae6be48ed095182b61f37d5bd51ab06a15b410"
+      },
+      {
+        "source": "assets/svg/logos/polaris-office/favicon.svg",
+        "destination": "vendor/polaris-design/assets/svg/logos/polaris-office/favicon.svg",
+        "sha256": "e3fdeeac880a10deb824b0a68712fb299e7ccc024caae428dfabdc8f8a08837c"
+      },
+      {
+        "source": "assets/svg/logos/polaris-office/horizontal-negative.svg",
+        "destination": "vendor/polaris-design/assets/svg/logos/polaris-office/horizontal-negative.svg",
+        "sha256": "60daf49fa778cb917005d30e3607141dffa03e51d80be1c4e0b935c42049ee04"
+      },
+      {
+        "source": "assets/svg/logos/polaris-office/horizontal.svg",
+        "destination": "vendor/polaris-design/assets/svg/logos/polaris-office/horizontal.svg",
+        "sha256": "672c57d5c874f134490b592daf1c4134c81c82068ca43ba2ad8814afe2672294"
+      },
+      {
+        "source": "assets/svg/logos/polaris-office/symbol-144.svg",
+        "destination": "vendor/polaris-design/assets/svg/logos/polaris-office/symbol-144.svg",
+        "sha256": "585fc7469d5f2b886c6af056da861dcf66055130999469e06eac920408b32ead"
+      }
+    ],
+    "ribbonBig": [
+      {
+        "source": "assets/ribbon/big/ribbon_big_ico_ai_2dto3d.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_ai_2dto3d.svg",
+        "sha256": "5e34de0c715d78a80d6a84e3aaa7acf8a030e9c7c77150d6b28889a421bd58eb"
+      },
+      {
+        "source": "assets/ribbon/big/ribbon_big_ico_ai_bgchange.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_ai_bgchange.svg",
+        "sha256": "2aa2887eca7339b2d426b68899933fbde6ca8973e6e6c760130ea08ee3699c1d"
+      },
+      {
+        "source": "assets/ribbon/big/ribbon_big_ico_ai_bgdelete.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_ai_bgdelete.svg",
+        "sha256": "f4f4476acfc88032288e39ca3dfb057b55893d676e13d52a2194e5ca81523ad2"
+      },
+      {
+        "source": "assets/ribbon/big/ribbon_big_ico_ai_chat.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_ai_chat.svg",
+        "sha256": "4b899f0c7b3f644fc109b9f43c36ccbc7a060148ab54d13c64e52599639031e4"
+      },
+      {
+        "source": "assets/ribbon/big/ribbon_big_ico_ai_expansion.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_ai_expansion.svg",
+        "sha256": "3e47ddac2e87c04e184f864015c1adc5aaabe366d6ec2cb1adf0cbe4bcf90b98"
+      },
+      {
+        "source": "assets/ribbon/big/ribbon_big_ico_ai_guide.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_ai_guide.svg",
+        "sha256": "cb34b9e117aee8101f7a540f798baf0139a47b1cf3c94ebf361a848dc09cdef8"
+      },
+      {
+        "source": "assets/ribbon/big/ribbon_big_ico_ai_quality.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_ai_quality.svg",
+        "sha256": "dafd125280f5c42c9adb2fc1b97092e88ce3acbbe71aa27bcbfb5298972c2add"
+      },
+      {
+        "source": "assets/ribbon/big/ribbon_big_ico_ai_record.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_ai_record.svg",
+        "sha256": "e0acd1e8ba9e3be3c978f187a844fb11bcf3c41247107309df49decf9b47db15"
+      },
+      {
+        "source": "assets/ribbon/big/ribbon_big_ico_ai_remake.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_ai_remake.svg",
+        "sha256": "dba312b87cddba5ed9f3c87ffd858f30864d5f9bbb7d9595bbf55a9218ffcb1e"
+      },
+      {
+        "source": "assets/ribbon/big/ribbon_big_ico_ai_style.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_ai_style.svg",
+        "sha256": "30749d0c7dc81a149405f4d5741735501fb5160bd372a60d5ead25b52f7aea72"
+      },
+      {
+        "source": "assets/ribbon/big/ribbon_big_ico_ai_template.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_ai_template.svg",
+        "sha256": "113983a0a81ca57c07b06d90ab7b10f14390dedccd18bf090012643b10edaa7b"
+      },
+      {
+        "source": "assets/ribbon/big/ribbon_big_ico_ai_text_to_image.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_ai_text_to_image.svg",
+        "sha256": "df5e3f5e8ea638e54c9fd027037579a1e1a7d9d52157338079d074911e9ae5a5"
+      },
+      {
+        "source": "assets/ribbon/big/ribbon_big_ico_ai_video.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_ai_video.svg",
+        "sha256": "6a15b447eee78ce6d92920e229dc839edc376e116b172c8243c3ce9a7b1d0c31"
+      },
+      {
+        "source": "assets/ribbon/big/ribbon_big_ico_ai_wordcloud.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_ai_wordcloud.svg",
+        "sha256": "ac805d235f9422a8c0eabbeb4927de0f9d8bb710893658d269cbf9e3f7a6a213"
+      },
+      {
+        "source": "assets/ribbon/big/ribbon_big_ico_ai_write.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_ai_write.svg",
+        "sha256": "973d816fba0fa9f5eaa83d2f3812c7c0974e703ccbda9ccefffbe3e0b1a880c9"
+      },
+      {
+        "source": "assets/ribbon/big/ribbon_big_ico_alignleft01.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_alignleft01.svg",
+        "sha256": "52f1b63dbfe65e4d73fdbd9be3f8b321d896cdf0ccc879685e67b9b81c38a540"
+      },
+      {
+        "source": "assets/ribbon/big/ribbon_big_ico_apply.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_apply.svg",
+        "sha256": "926c5ece1616ebde53048197bc2ec246233e3ec35a14fcb44335d21a0d5ad8ee"
+      },
+      {
+        "source": "assets/ribbon/big/ribbon_big_ico_bookmark.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_bookmark.svg",
+        "sha256": "15b0743a0f9261a36e9605aba0e51cc8b70b05889a38503fe717e40ec413b408"
+      },
+      {
+        "source": "assets/ribbon/big/ribbon_big_ico_change_next.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_change_next.svg",
+        "sha256": "e6438c05d2e5954492529d0b83f805aea2c6e3e13aa83ca1201406d5bb428993"
+      },
+      {
+        "source": "assets/ribbon/big/ribbon_big_ico_change_previous.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_change_previous.svg",
+        "sha256": "280224ce838117b93f5bb63ea3cc678d7277efe94c58c1ebfd116e118ebbb8c0"
+      },
+      {
+        "source": "assets/ribbon/big/ribbon_big_ico_direction.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_direction.svg",
+        "sha256": "acb8e4264b77966d5b662805771f914eca3d2b619f1d193890515df923523f83"
+      },
+      {
+        "source": "assets/ribbon/big/ribbon_big_ico_docuprotection.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_docuprotection.svg",
+        "sha256": "41d285bce14c19584b0e042eb087412b2ab41bb51a7018192d0e830fd7591ff0"
+      },
+      {
+        "source": "assets/ribbon/big/ribbon_big_ico_group.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_group.svg",
+        "sha256": "b6acaff689fab56839b84f88525c802e2d22555d0789b1661cacdafa31ded62c"
+      },
+      {
+        "source": "assets/ribbon/big/ribbon_big_ico_horizontaltextbox.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_horizontaltextbox.svg",
+        "sha256": "5a13b26181868b57d5e0609dfcddee96341d1a7fd6c9dfff2c2b95d205e34abd"
+      },
+      {
+        "source": "assets/ribbon/big/ribbon_big_ico_hyperlink.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_hyperlink.svg",
+        "sha256": "dc729ba6f43c1bbee97b26a13067c27933818b214bfa85d9ee9b21e3c0414df6"
+      },
+      {
+        "source": "assets/ribbon/big/ribbon_big_ico_image_online.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_image_online.svg",
+        "sha256": "d21385188a54783047c7e5d5603b868169b4d8d560f8b59b80bdf5dc134900ea"
+      },
+      {
+        "source": "assets/ribbon/big/ribbon_big_ico_image_position.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_image_position.svg",
+        "sha256": "88a849568f26c77d1e2bac2989b9be282b47b877d1251bc4efaf5d9b202e7895"
+      },
+      {
+        "source": "assets/ribbon/big/ribbon_big_ico_image.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_image.svg",
+        "sha256": "6b4016d80fb12f03e0e13af3bb1bda28ad907cd6637b8a49917736211b644c0b"
+      },
+      {
+        "source": "assets/ribbon/big/ribbon_big_ico_linebreak.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_linebreak.svg",
+        "sha256": "2d38b8e5544b33f8cc3edd400a56be8c19bb96ece237d43e57910cdd821f27bc"
+      },
+      {
+        "source": "assets/ribbon/big/ribbon_big_ico_margin.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_margin.svg",
+        "sha256": "35f183e1f7c1fea0e72a6d63b73651136fa7250f95a6eeb23b52f356d2f8c5a5"
+      },
+      {
+        "source": "assets/ribbon/big/ribbon_big_ico_memo_delete.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_memo_delete.svg",
+        "sha256": "1c5704b2ad814ce3d3593d85718d5ee81cfb00bfc5964eaf1325aeae0a8a2373"
+      },
+      {
+        "source": "assets/ribbon/big/ribbon_big_ico_memo_new.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_memo_new.svg",
+        "sha256": "c366094a7e91d5e46a2ef8fe924c0067ae491c3de8b967b19c82bc0943cebe5d"
+      },
+      {
+        "source": "assets/ribbon/big/ribbon_big_ico_memo_next.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_memo_next.svg",
+        "sha256": "3e72f60b03c5b7bf092011800bcf7e12fd7f04513fe12a2c5cc456575e566a91"
+      },
+      {
+        "source": "assets/ribbon/big/ribbon_big_ico_memo_pane.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_memo_pane.svg",
+        "sha256": "19fb101ba3f61c942eed5f29ca3ce3ea1e99c58e9aab4e9c58cdc8801a0ad04c"
+      },
+      {
+        "source": "assets/ribbon/big/ribbon_big_ico_memo_previous.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_memo_previous.svg",
+        "sha256": "42bbe54a69f83260b0b2bd4340b9b46b3f88ae8d9705ae6cd2ef2d67b02554a4"
+      },
+      {
+        "source": "assets/ribbon/big/ribbon_big_ico_movebackward.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_movebackward.svg",
+        "sha256": "fc63c47fc3c4d11d39cf5d06da0b31c1f29b57c27ac756ced316f76f82b13801"
+      },
+      {
+        "source": "assets/ribbon/big/ribbon_big_ico_moveforward.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_moveforward.svg",
+        "sha256": "206ef49eec755e782befe5a52b43e0944e483cf215bfcb5335f588f5097184fe"
+      },
+      {
+        "source": "assets/ribbon/big/ribbon_big_ico_newpage.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_newpage.svg",
+        "sha256": "c2d8408bbf714903a885a8bfff0f4d535843d2d2d4dd4110243720af87b57c70"
+      },
+      {
+        "source": "assets/ribbon/big/ribbon_big_ico_noapply.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_noapply.svg",
+        "sha256": "234fdd3dbe1364ed684f9659c15761f0d70b319c4bef18f9108fb513b17b9bbc"
+      },
+      {
+        "source": "assets/ribbon/big/ribbon_big_ico_page_column.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_page_column.svg",
+        "sha256": "29123d0f05b43d57479695b5029e993da0394ae3c30b0afc111fa0ac16b33639"
+      },
+      {
+        "source": "assets/ribbon/big/ribbon_big_ico_pagescale.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_pagescale.svg",
+        "sha256": "fce5b4ae36b4e5be814fb629798a93076bfef60f284bdb02e5f6fde8ef4c39e7"
+      },
+      {
+        "source": "assets/ribbon/big/ribbon_big_ico_pagesplit_sheet.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_pagesplit_sheet.svg",
+        "sha256": "f198fff15362fa766857ad70c127d7a01e12ffca6a696ad73de1565f6883082e"
+      },
+      {
+        "source": "assets/ribbon/big/ribbon_big_ico_pagesplit.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_pagesplit.svg",
+        "sha256": "766975e8e60c534f129ff78ecbe365dab7783e87bcf9de6697abc4d0f4adad91"
+      },
+      {
+        "source": "assets/ribbon/big/ribbon_big_ico_paste.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_paste.svg",
+        "sha256": "3c88479465b09705f3d68087511f3e8372988836f6c4dec64dd92758357ac3d5"
+      },
+      {
+        "source": "assets/ribbon/big/ribbon_big_ico_rotateright90.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_rotateright90.svg",
+        "sha256": "76771b9a60adf368c37bd954391613b51cd798530b18a10dcfa8e8f633c7dd1d"
+      },
+      {
+        "source": "assets/ribbon/big/ribbon_big_ico_setlayout.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_setlayout.svg",
+        "sha256": "e046924cc247cdcdc0005d0e3f1cae368b6f308de58dc400213c3a0f743ae14b"
+      },
+      {
+        "source": "assets/ribbon/big/ribbon_big_ico_setpage.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_setpage.svg",
+        "sha256": "4e92e596aeece18a22e42f83fc0457131ec46c7f752ede99bb36f4fcd167d9cd"
+      },
+      {
+        "source": "assets/ribbon/big/ribbon_big_ico_shape.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_shape.svg",
+        "sha256": "a4aab073160a90d85e2c18f4fe40678b47ae766eb0f7063ce3cd496424efdc65"
+      },
+      {
+        "source": "assets/ribbon/big/ribbon_big_ico_spellingcheck.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_spellingcheck.svg",
+        "sha256": "e026cb4594de56a8d59d68492904734ab5a898c1ccabda622b84c595fcd1800f"
+      },
+      {
+        "source": "assets/ribbon/big/ribbon_big_ico_symbol.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_symbol.svg",
+        "sha256": "2d012ca7683ac8fe6b8019cfc5476831390161c26b6995fa6aa9e58cc22e3fe8"
+      },
+      {
+        "source": "assets/ribbon/big/ribbon_big_ico_table.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_table.svg",
+        "sha256": "182be1d53d84fbb52b009fc8a4ce1c79471a54ea98e55fbab0958a5e9b250e07"
+      },
+      {
+        "source": "assets/ribbon/big/ribbon_big_ico_text_format.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_text_format.svg",
+        "sha256": "1d5a428c33391cceab83bedc0790f993bd8a5be861afe75f7c792dad7559b6af"
+      },
+      {
+        "source": "assets/ribbon/big/ribbon_big_ico_track_changes.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_track_changes.svg",
+        "sha256": "f64e31681452aa7fc8434cef2f2a09b0d94d476ec444cbd85a326550882396cb"
+      },
+      {
+        "source": "assets/ribbon/big/ribbon_big_ico_track_showmarkup.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_track_showmarkup.svg",
+        "sha256": "f8906dfd86c905d360cfd3c93bec8ea5cfdcb1aa7c408776a5ea971f7745a0af"
+      },
+      {
+        "source": "assets/ribbon/big/ribbon_big_ico_translate.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_translate.svg",
+        "sha256": "3eb57e631238b4387282c564762ae35e15f40c53490a4c3edf22343bcf96070d"
+      },
+      {
+        "source": "assets/ribbon/big/ribbon_big_ico_web_search.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_web_search.svg",
+        "sha256": "9e2e4bbfbdd6b8385bafde0cd4c518976b51ad84b1a149bb21de3966a0359a27"
+      },
+      {
+        "source": "assets/ribbon/big/ribbon_big_ico_wordcount.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_wordcount.svg",
+        "sha256": "71cad549e2e58f5c8d26792f3673e5756d0895b8323f744e25186c8685752fd5"
+      }
+    ],
+    "ribbonSmall": [
+      {
+        "source": "assets/ribbon/small/ribbon_ico_aligncenter.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/small/ribbon_ico_aligncenter.svg",
+        "sha256": "4af24c83aef085eb20dd49ee8bf455225dc7cf0215230f2c18df2484d22b9623"
+      },
+      {
+        "source": "assets/ribbon/small/ribbon_ico_alignleft.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/small/ribbon_ico_alignleft.svg",
+        "sha256": "a02b32d9365daac716ec25a5ff1ba29f17b72d0c8e1e4ce937e5ef59330fdece"
+      },
+      {
+        "source": "assets/ribbon/small/ribbon_ico_alignment.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/small/ribbon_ico_alignment.svg",
+        "sha256": "947a1bca63f247a8d9cb23ecb79853c16070fe5b9379b53a7bf8ff1138e7056e"
+      },
+      {
+        "source": "assets/ribbon/small/ribbon_ico_alignright.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/small/ribbon_ico_alignright.svg",
+        "sha256": "54e2c3fbc25e0a4365f0a8e337b2e5dab0e6202e98f373bdc6cd8be9950f8ae1"
+      },
+      {
+        "source": "assets/ribbon/small/ribbon_ico_bold.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/small/ribbon_ico_bold.svg",
+        "sha256": "7f0931e16c97bcc80b00a666c2fb2c58a154d27448718990ebc6c134f94f243c"
+      },
+      {
+        "source": "assets/ribbon/small/ribbon_ico_bullet.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/small/ribbon_ico_bullet.svg",
+        "sha256": "5fdea8c5feabcc253ea9d24dc235b642c7c56aa91c66db276f9da8529e610c27"
+      },
+      {
+        "source": "assets/ribbon/small/ribbon_ico_changecase.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/small/ribbon_ico_changecase.svg",
+        "sha256": "0a120cf6dea9153d6458f25047d0b3a8d09e9dd44f07e44a12fbfbe87bf42a61"
+      },
+      {
+        "source": "assets/ribbon/small/ribbon_ico_clearformat.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/small/ribbon_ico_clearformat.svg",
+        "sha256": "435fc69386b3e97ac9e3083c10f5afc38e1d57cca2d0154065b72faff041231b"
+      },
+      {
+        "source": "assets/ribbon/small/ribbon_ico_copy_format.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/small/ribbon_ico_copy_format.svg",
+        "sha256": "a95cdb5241e1374aa6e4d7b4850be0eca0da13c0bb690371f65303f6b1648061"
+      },
+      {
+        "source": "assets/ribbon/small/ribbon_ico_copy.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/small/ribbon_ico_copy.svg",
+        "sha256": "d9514486d73e288365c267580408e3c2ae59798bb4d4d148dfb332eb7407ae76"
+      },
+      {
+        "source": "assets/ribbon/small/ribbon_ico_cut.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/small/ribbon_ico_cut.svg",
+        "sha256": "17086fb3a6404f1c56d037b72672c5e393163b539da919e17230d5eb19ef0438"
+      },
+      {
+        "source": "assets/ribbon/small/ribbon_ico_dent.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/small/ribbon_ico_dent.svg",
+        "sha256": "83bfac824c338074f1258621a428808d039bbc4c1ad43c65e3deb9a025bec162"
+      },
+      {
+        "source": "assets/ribbon/small/ribbon_ico_fillcolor.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/small/ribbon_ico_fillcolor.svg",
+        "sha256": "ab2401fea4ae21b67caacf45d8b448dea9d2d4e881b6efa541b1830b5a3ac55a"
+      },
+      {
+        "source": "assets/ribbon/small/ribbon_ico_find.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/small/ribbon_ico_find.svg",
+        "sha256": "644c5c2a6639ebe92a83c4a66f8f3ab4007e93864f67ac7c6985eec289abb4cb"
+      },
+      {
+        "source": "assets/ribbon/small/ribbon_ico_font_size_large.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/small/ribbon_ico_font_size_large.svg",
+        "sha256": "453033acf510730d8574b9fb7f592b75595f906b212f3eb8379084b8ace93821"
+      },
+      {
+        "source": "assets/ribbon/small/ribbon_ico_font_size_small.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/small/ribbon_ico_font_size_small.svg",
+        "sha256": "f076412efa8d72f420f14029e7bfaea1d864a5eaeed2c317ba720dc874e92408"
+      },
+      {
+        "source": "assets/ribbon/small/ribbon_ico_indent.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/small/ribbon_ico_indent.svg",
+        "sha256": "c08162505ee9dada978fa0e84ed37dab03edcebdce8559befce8f5fa1d07a495"
+      },
+      {
+        "source": "assets/ribbon/small/ribbon_ico_italic.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/small/ribbon_ico_italic.svg",
+        "sha256": "0dd02fe1cfbfbf6bee5a0ef7962e2a51c227ebfc3cd8889eca9ab872aacf2f38"
+      },
+      {
+        "source": "assets/ribbon/small/ribbon_ico_justify.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/small/ribbon_ico_justify.svg",
+        "sha256": "639896b834540e96a1222065538977a843ffaaae36d40cce734219b3259eeb42"
+      },
+      {
+        "source": "assets/ribbon/small/ribbon_ico_linespacing.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/small/ribbon_ico_linespacing.svg",
+        "sha256": "246c8021fcf1d2f3a7c6f69a0f6cce250d6cd11df7503e012e9aa953c1f5f7c2"
+      },
+      {
+        "source": "assets/ribbon/small/ribbon_ico_multilevel.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/small/ribbon_ico_multilevel.svg",
+        "sha256": "44b8dca11c17295c4e3d5ac82d9c11654d8839e23c494662e882eace950fc99a"
+      },
+      {
+        "source": "assets/ribbon/small/ribbon_ico_numbering.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/small/ribbon_ico_numbering.svg",
+        "sha256": "02dd80c60aa2b5f1df9fc84e2d40f5256bcfa5f99ca780ebd177f0b94531e12e"
+      },
+      {
+        "source": "assets/ribbon/small/ribbon_ico_orientationsheet.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/small/ribbon_ico_orientationsheet.svg",
+        "sha256": "2025ffffc81039607aa8cf82a212835a3d965f29c047c5997e6d6efc6f62a158"
+      },
+      {
+        "source": "assets/ribbon/small/ribbon_ico_paragraph_narrow.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/small/ribbon_ico_paragraph_narrow.svg",
+        "sha256": "6977b666cd019fd4ce4b2245330cc1d7bace9d833b28fec082891f47200ffc81"
+      },
+      {
+        "source": "assets/ribbon/small/ribbon_ico_paragraph_wide.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/small/ribbon_ico_paragraph_wide.svg",
+        "sha256": "599880df265d23d8bc753ce1e1c86a14a2a582ede96d02732158db0cadcd20b0"
+      },
+      {
+        "source": "assets/ribbon/small/ribbon_ico_shade new.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/small/ribbon_ico_shade new.svg",
+        "sha256": "cdde437e1e57d96e67cf94ac3d7700cec41251c101b8dce54208d8895c1fad3d"
+      },
+      {
+        "source": "assets/ribbon/small/ribbon_ico_strikethrough.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/small/ribbon_ico_strikethrough.svg",
+        "sha256": "7e2d7e4cce5742eeb18a5ce3eebbf83471f0cd06ee25df468a6c443d98f4c025"
+      },
+      {
+        "source": "assets/ribbon/small/ribbon_ico_subscript.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/small/ribbon_ico_subscript.svg",
+        "sha256": "19a66da1c34f13b25238049a091044f8d2a5d088e0d7bced0e1b39b57b559d74"
+      },
+      {
+        "source": "assets/ribbon/small/ribbon_ico_superscript.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/small/ribbon_ico_superscript.svg",
+        "sha256": "09a1d67c2ebd98376e501d4861be21cc23be81a3521a398f903dd40ff862cd26"
+      },
+      {
+        "source": "assets/ribbon/small/ribbon_ico_text_accentcolour new.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/small/ribbon_ico_text_accentcolour new.svg",
+        "sha256": "01f7e212467a42db200f4bdfb79585a21615696d65fa40333c19b17a0e697bef"
+      },
+      {
+        "source": "assets/ribbon/small/ribbon_ico_text_replace.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/small/ribbon_ico_text_replace.svg",
+        "sha256": "c57c365fcd4957ad419bc7a2b89812f7f5f84eddaeb605871079f66b2885f3e2"
+      },
+      {
+        "source": "assets/ribbon/small/ribbon_ico_textcolor.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/small/ribbon_ico_textcolor.svg",
+        "sha256": "fcce1799d3440ace76f0aa6c84b78deb856ef53ab77070b367f34eefacf6f3a5"
+      },
+      {
+        "source": "assets/ribbon/small/ribbon_ico_textoutline.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/small/ribbon_ico_textoutline.svg",
+        "sha256": "0646760b928522f25a5cd6d0e5024c8e330c28f2ebd4333e0cf43d63322ff3a0"
+      },
+      {
+        "source": "assets/ribbon/small/ribbon_ico_underline_01.svg",
+        "destination": "vendor/polaris-design/assets/ribbon/small/ribbon_ico_underline_01.svg",
+        "sha256": "648709c38b25569901e6b46590da3286049ab905beade8a05506b7267c7df0a9"
+      }
+    ]
+  }
+}

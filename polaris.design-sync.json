@@ -1,5 +1,6 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
+  "syncProfile": "design-source",
   "upstream": {
     "repo": "https://github.com/PolarisOffice/PolarisDesign",
     "ref": "1d0e2460de63eb634c979855f183c2b18d688b1e",
@@ -11,125 +12,3494 @@
       "lint": "https://github.com/PolarisOffice/PolarisDesign/releases/download/v0.8.0-rc.8/polaris-lint-0.8.0-rc.8.tgz"
     }
   },
-  "syncedAt": "2026-05-21T15:01:42.718Z",
+  "includedRootFiles": [
+    "AGENTS.md",
+    "CHANGELOG.md",
+    "DESIGN.md",
+    "LICENSE",
+    "README.md",
+    "package.json",
+    "pnpm-lock.yaml",
+    "pnpm-workspace.yaml",
+    "tokens.md",
+    "tsconfig.base.json",
+    "turbo.json"
+  ],
+  "includedPrefixes": [
+    "assets/figma-spec/",
+    ".claude-plugin/",
+    "assets/",
+    "docs/",
+    "packages/ui/",
+    "packages/lint/",
+    "packages/plugin/",
+    "packages/template-next/"
+  ],
+  "excludedPrefixes": [
+    "apps/",
+    "e2e/",
+    ".github/",
+    ".changeset/"
+  ],
+  "managedPrefixes": [
+    "assets/figma-spec/",
+    "vendor/polaris-design/"
+  ],
+  "syncedAt": "2026-05-21T22:30:06.213Z",
   "syncedFiles": [
+    {
+      "source": "assets/figma-spec/components/action-button.png",
+      "destination": "assets/figma-spec/components/action-button.png",
+      "size": 132148,
+      "sha256": "3bab7a6493f1cf0fa8b0fba0eba74726281365c7f7d070753f764783d5ca68c2"
+    },
+    {
+      "source": "assets/figma-spec/components/action-checkbox-radio.png",
+      "destination": "assets/figma-spec/components/action-checkbox-radio.png",
+      "size": 18302,
+      "sha256": "fb4346cb9439231fd11c371eca622601ddd9877fdae9451d691007fe88b3c1d4"
+    },
+    {
+      "source": "assets/figma-spec/components/action-input.png",
+      "destination": "assets/figma-spec/components/action-input.png",
+      "size": 72820,
+      "sha256": "3272e38211afd474188b949af3f9c0cfa93aa12f356beb41db7c7f1e62f47369"
+    },
+    {
+      "source": "assets/figma-spec/components/action-segment-control.png",
+      "destination": "assets/figma-spec/components/action-segment-control.png",
+      "size": 38251,
+      "sha256": "df2544045edc63ccbb977e103af5897f45720f559e990ab61dbf927711408387"
+    },
+    {
+      "source": "assets/figma-spec/components/action-tabs.png",
+      "destination": "assets/figma-spec/components/action-tabs.png",
+      "size": 27463,
+      "sha256": "ded3a421416785c3ef304a93d8db302db7774d61456e24f442fe646f10607fca"
+    },
+    {
+      "source": "assets/figma-spec/components/action-toggle.png",
+      "destination": "assets/figma-spec/components/action-toggle.png",
+      "size": 15301,
+      "sha256": "b61d0881ebc9fcb0546cf196336ddb37d778015aa0157aacc5caff5a44289781"
+    },
+    {
+      "source": "assets/figma-spec/components/contents-table.png",
+      "destination": "assets/figma-spec/components/contents-table.png",
+      "size": 37130,
+      "sha256": "1f9dea2dc6ebe0bb36ee85cf2acdcb4ba27c6738f9f18edae2684c114e934c7c"
+    },
+    {
+      "source": "assets/figma-spec/components/feedback-dim.png",
+      "destination": "assets/figma-spec/components/feedback-dim.png",
+      "size": 10839,
+      "sha256": "063485ded9c3cefa94be46fc338a2e155c1c26eb81232be974bbef7f14f9a852"
+    },
+    {
+      "source": "assets/figma-spec/components/feedback-toast.png",
+      "destination": "assets/figma-spec/components/feedback-toast.png",
+      "size": 69138,
+      "sha256": "39e522b0cc16df715a513e5fffdb3b46840bdb4ba15bb7cedb556da06244e3f0"
+    },
+    {
+      "source": "assets/figma-spec/components/overlay-context-menu.png",
+      "destination": "assets/figma-spec/components/overlay-context-menu.png",
+      "size": 30623,
+      "sha256": "4869731934a6a2e1683193ae75a9792886db42c3f4f1aa42d1333edd6a74383b"
+    },
+    {
+      "source": "assets/figma-spec/components/overlay-dropdown.png",
+      "destination": "assets/figma-spec/components/overlay-dropdown.png",
+      "size": 12145,
+      "sha256": "ada63f78e47acf1f5619909d5dea513993a4fdfc79861c1d5d93e96a70c657c9"
+    },
+    {
+      "source": "assets/figma-spec/components/overlay-popup.png",
+      "destination": "assets/figma-spec/components/overlay-popup.png",
+      "size": 103871,
+      "sha256": "fefb62517334d2995d89953a21b160a606ee842d86fb0e4781327d3286bdf412"
+    },
+    {
+      "source": "assets/figma-spec/components/overlay-tooltip.png",
+      "destination": "assets/figma-spec/components/overlay-tooltip.png",
+      "size": 24226,
+      "sha256": "7708ce6865fa61235752a6b6ed98678fe96c642c8a6ec07b99271233dd8f262d"
+    },
+    {
+      "source": "assets/figma-spec/foundation/color.png",
+      "destination": "assets/figma-spec/foundation/color.png",
+      "size": 955116,
+      "sha256": "ef5c77942ed5db28ee8f14cfcf952df791d02301988ef225eabb1d3fb0e62423"
+    },
+    {
+      "source": "assets/figma-spec/foundation/grid.png",
+      "destination": "assets/figma-spec/foundation/grid.png",
+      "size": 362709,
+      "sha256": "c8c6264c600702336333d5901e64ea2b469d0b4009759941dca930a1e801ed3b"
+    },
+    {
+      "source": "assets/figma-spec/foundation/radius.png",
+      "destination": "assets/figma-spec/foundation/radius.png",
+      "size": 384589,
+      "sha256": "d63062511a3783f7206259006aebf86da2fc04ba4c21fdf97267f796a11c54a4"
+    },
+    {
+      "source": "assets/figma-spec/foundation/typography.png",
+      "destination": "assets/figma-spec/foundation/typography.png",
+      "size": 377285,
+      "sha256": "343d3a52d412c8ac8cf54ab9fac14ce0742787315278e453bcf5bbe239786b80"
+    },
+    {
+      "source": "assets/figma-spec/theme/iconography.png",
+      "destination": "assets/figma-spec/theme/iconography.png",
+      "size": 386906,
+      "sha256": "ec9076d4b700b4bf3a730281bdeaa5387bb3de2d6dd7d8d581f405d0df26e8dc"
+    },
     {
       "source": "DESIGN.md",
       "destination": "DESIGN.md",
+      "size": 14322,
       "sha256": "6b511a88305f37b2735d5aba5af0b95b50a0e66f1bcfd3c0e2e540227f0de5e9"
+    },
+    {
+      "source": ".claude-plugin/marketplace.json",
+      "destination": "vendor/polaris-design/.claude-plugin/marketplace.json",
+      "size": 619,
+      "sha256": "e20e0df9ba980da2a71bb4eb7f0a60385aa4806c8c8286e3cf6e7a4da48dcab5"
+    },
+    {
+      "source": "AGENTS.md",
+      "destination": "vendor/polaris-design/AGENTS.md",
+      "size": 13913,
+      "sha256": "b9c55e3f5d053c5543a0bb1519f3a5f4f15609b2cee90568bec3e604e1a34f96"
+    },
+    {
+      "source": "assets/figma-spec/components/action-button.png",
+      "destination": "vendor/polaris-design/assets/figma-spec/components/action-button.png",
+      "size": 132148,
+      "sha256": "3bab7a6493f1cf0fa8b0fba0eba74726281365c7f7d070753f764783d5ca68c2"
+    },
+    {
+      "source": "assets/figma-spec/components/action-checkbox-radio.png",
+      "destination": "vendor/polaris-design/assets/figma-spec/components/action-checkbox-radio.png",
+      "size": 18302,
+      "sha256": "fb4346cb9439231fd11c371eca622601ddd9877fdae9451d691007fe88b3c1d4"
+    },
+    {
+      "source": "assets/figma-spec/components/action-input.png",
+      "destination": "vendor/polaris-design/assets/figma-spec/components/action-input.png",
+      "size": 72820,
+      "sha256": "3272e38211afd474188b949af3f9c0cfa93aa12f356beb41db7c7f1e62f47369"
+    },
+    {
+      "source": "assets/figma-spec/components/action-segment-control.png",
+      "destination": "vendor/polaris-design/assets/figma-spec/components/action-segment-control.png",
+      "size": 38251,
+      "sha256": "df2544045edc63ccbb977e103af5897f45720f559e990ab61dbf927711408387"
+    },
+    {
+      "source": "assets/figma-spec/components/action-tabs.png",
+      "destination": "vendor/polaris-design/assets/figma-spec/components/action-tabs.png",
+      "size": 27463,
+      "sha256": "ded3a421416785c3ef304a93d8db302db7774d61456e24f442fe646f10607fca"
+    },
+    {
+      "source": "assets/figma-spec/components/action-toggle.png",
+      "destination": "vendor/polaris-design/assets/figma-spec/components/action-toggle.png",
+      "size": 15301,
+      "sha256": "b61d0881ebc9fcb0546cf196336ddb37d778015aa0157aacc5caff5a44289781"
+    },
+    {
+      "source": "assets/figma-spec/components/contents-table.png",
+      "destination": "vendor/polaris-design/assets/figma-spec/components/contents-table.png",
+      "size": 37130,
+      "sha256": "1f9dea2dc6ebe0bb36ee85cf2acdcb4ba27c6738f9f18edae2684c114e934c7c"
+    },
+    {
+      "source": "assets/figma-spec/components/feedback-dim.png",
+      "destination": "vendor/polaris-design/assets/figma-spec/components/feedback-dim.png",
+      "size": 10839,
+      "sha256": "063485ded9c3cefa94be46fc338a2e155c1c26eb81232be974bbef7f14f9a852"
+    },
+    {
+      "source": "assets/figma-spec/components/feedback-toast.png",
+      "destination": "vendor/polaris-design/assets/figma-spec/components/feedback-toast.png",
+      "size": 69138,
+      "sha256": "39e522b0cc16df715a513e5fffdb3b46840bdb4ba15bb7cedb556da06244e3f0"
+    },
+    {
+      "source": "assets/figma-spec/components/overlay-context-menu.png",
+      "destination": "vendor/polaris-design/assets/figma-spec/components/overlay-context-menu.png",
+      "size": 30623,
+      "sha256": "4869731934a6a2e1683193ae75a9792886db42c3f4f1aa42d1333edd6a74383b"
+    },
+    {
+      "source": "assets/figma-spec/components/overlay-dropdown.png",
+      "destination": "vendor/polaris-design/assets/figma-spec/components/overlay-dropdown.png",
+      "size": 12145,
+      "sha256": "ada63f78e47acf1f5619909d5dea513993a4fdfc79861c1d5d93e96a70c657c9"
+    },
+    {
+      "source": "assets/figma-spec/components/overlay-popup.png",
+      "destination": "vendor/polaris-design/assets/figma-spec/components/overlay-popup.png",
+      "size": 103871,
+      "sha256": "fefb62517334d2995d89953a21b160a606ee842d86fb0e4781327d3286bdf412"
+    },
+    {
+      "source": "assets/figma-spec/components/overlay-tooltip.png",
+      "destination": "vendor/polaris-design/assets/figma-spec/components/overlay-tooltip.png",
+      "size": 24226,
+      "sha256": "7708ce6865fa61235752a6b6ed98678fe96c642c8a6ec07b99271233dd8f262d"
+    },
+    {
+      "source": "assets/figma-spec/foundation/color.png",
+      "destination": "vendor/polaris-design/assets/figma-spec/foundation/color.png",
+      "size": 955116,
+      "sha256": "ef5c77942ed5db28ee8f14cfcf952df791d02301988ef225eabb1d3fb0e62423"
+    },
+    {
+      "source": "assets/figma-spec/foundation/grid.png",
+      "destination": "vendor/polaris-design/assets/figma-spec/foundation/grid.png",
+      "size": 362709,
+      "sha256": "c8c6264c600702336333d5901e64ea2b469d0b4009759941dca930a1e801ed3b"
+    },
+    {
+      "source": "assets/figma-spec/foundation/radius.png",
+      "destination": "vendor/polaris-design/assets/figma-spec/foundation/radius.png",
+      "size": 384589,
+      "sha256": "d63062511a3783f7206259006aebf86da2fc04ba4c21fdf97267f796a11c54a4"
+    },
+    {
+      "source": "assets/figma-spec/foundation/typography.png",
+      "destination": "vendor/polaris-design/assets/figma-spec/foundation/typography.png",
+      "size": 377285,
+      "sha256": "343d3a52d412c8ac8cf54ab9fac14ce0742787315278e453bcf5bbe239786b80"
+    },
+    {
+      "source": "assets/figma-spec/theme/iconography.png",
+      "destination": "vendor/polaris-design/assets/figma-spec/theme/iconography.png",
+      "size": 386906,
+      "sha256": "ec9076d4b700b4bf3a730281bdeaa5387bb3de2d6dd7d8d581f405d0df26e8dc"
+    },
+    {
+      "source": "assets/README.md",
+      "destination": "vendor/polaris-design/assets/README.md",
+      "size": 3948,
+      "sha256": "bca89ad399fdde30430e070552f9ca2d60ac657a0f3c949bcedbb1cc84918795"
+    },
+    {
+      "source": "assets/ribbon/big/ribbon_big_ico_ai_2dto3d.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_ai_2dto3d.svg",
+      "size": 3077,
+      "sha256": "5e34de0c715d78a80d6a84e3aaa7acf8a030e9c7c77150d6b28889a421bd58eb"
+    },
+    {
+      "source": "assets/ribbon/big/ribbon_big_ico_ai_bgchange.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_ai_bgchange.svg",
+      "size": 2666,
+      "sha256": "2aa2887eca7339b2d426b68899933fbde6ca8973e6e6c760130ea08ee3699c1d"
+    },
+    {
+      "source": "assets/ribbon/big/ribbon_big_ico_ai_bgdelete.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_ai_bgdelete.svg",
+      "size": 2436,
+      "sha256": "f4f4476acfc88032288e39ca3dfb057b55893d676e13d52a2194e5ca81523ad2"
+    },
+    {
+      "source": "assets/ribbon/big/ribbon_big_ico_ai_chat.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_ai_chat.svg",
+      "size": 4050,
+      "sha256": "4b899f0c7b3f644fc109b9f43c36ccbc7a060148ab54d13c64e52599639031e4"
+    },
+    {
+      "source": "assets/ribbon/big/ribbon_big_ico_ai_expansion.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_ai_expansion.svg",
+      "size": 5411,
+      "sha256": "3e47ddac2e87c04e184f864015c1adc5aaabe366d6ec2cb1adf0cbe4bcf90b98"
+    },
+    {
+      "source": "assets/ribbon/big/ribbon_big_ico_ai_guide.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_ai_guide.svg",
+      "size": 4381,
+      "sha256": "cb34b9e117aee8101f7a540f798baf0139a47b1cf3c94ebf361a848dc09cdef8"
+    },
+    {
+      "source": "assets/ribbon/big/ribbon_big_ico_ai_quality.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_ai_quality.svg",
+      "size": 5118,
+      "sha256": "dafd125280f5c42c9adb2fc1b97092e88ce3acbbe71aa27bcbfb5298972c2add"
+    },
+    {
+      "source": "assets/ribbon/big/ribbon_big_ico_ai_record.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_ai_record.svg",
+      "size": 2990,
+      "sha256": "e0acd1e8ba9e3be3c978f187a844fb11bcf3c41247107309df49decf9b47db15"
+    },
+    {
+      "source": "assets/ribbon/big/ribbon_big_ico_ai_remake.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_ai_remake.svg",
+      "size": 4235,
+      "sha256": "dba312b87cddba5ed9f3c87ffd858f30864d5f9bbb7d9595bbf55a9218ffcb1e"
+    },
+    {
+      "source": "assets/ribbon/big/ribbon_big_ico_ai_style.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_ai_style.svg",
+      "size": 7296,
+      "sha256": "30749d0c7dc81a149405f4d5741735501fb5160bd372a60d5ead25b52f7aea72"
+    },
+    {
+      "source": "assets/ribbon/big/ribbon_big_ico_ai_template.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_ai_template.svg",
+      "size": 4044,
+      "sha256": "113983a0a81ca57c07b06d90ab7b10f14390dedccd18bf090012643b10edaa7b"
+    },
+    {
+      "source": "assets/ribbon/big/ribbon_big_ico_ai_text_to_image.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_ai_text_to_image.svg",
+      "size": 2501,
+      "sha256": "df5e3f5e8ea638e54c9fd027037579a1e1a7d9d52157338079d074911e9ae5a5"
+    },
+    {
+      "source": "assets/ribbon/big/ribbon_big_ico_ai_video.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_ai_video.svg",
+      "size": 5545,
+      "sha256": "6a15b447eee78ce6d92920e229dc839edc376e116b172c8243c3ce9a7b1d0c31"
+    },
+    {
+      "source": "assets/ribbon/big/ribbon_big_ico_ai_wordcloud.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_ai_wordcloud.svg",
+      "size": 2180,
+      "sha256": "ac805d235f9422a8c0eabbeb4927de0f9d8bb710893658d269cbf9e3f7a6a213"
+    },
+    {
+      "source": "assets/ribbon/big/ribbon_big_ico_ai_write.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_ai_write.svg",
+      "size": 5189,
+      "sha256": "973d816fba0fa9f5eaa83d2f3812c7c0974e703ccbda9ccefffbe3e0b1a880c9"
+    },
+    {
+      "source": "assets/ribbon/big/ribbon_big_ico_alignleft01.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_alignleft01.svg",
+      "size": 792,
+      "sha256": "52f1b63dbfe65e4d73fdbd9be3f8b321d896cdf0ccc879685e67b9b81c38a540"
+    },
+    {
+      "source": "assets/ribbon/big/ribbon_big_ico_apply.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_apply.svg",
+      "size": 2057,
+      "sha256": "926c5ece1616ebde53048197bc2ec246233e3ec35a14fcb44335d21a0d5ad8ee"
+    },
+    {
+      "source": "assets/ribbon/big/ribbon_big_ico_bookmark.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_bookmark.svg",
+      "size": 1299,
+      "sha256": "15b0743a0f9261a36e9605aba0e51cc8b70b05889a38503fe717e40ec413b408"
+    },
+    {
+      "source": "assets/ribbon/big/ribbon_big_ico_change_next.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_change_next.svg",
+      "size": 1896,
+      "sha256": "e6438c05d2e5954492529d0b83f805aea2c6e3e13aa83ca1201406d5bb428993"
+    },
+    {
+      "source": "assets/ribbon/big/ribbon_big_ico_change_previous.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_change_previous.svg",
+      "size": 1896,
+      "sha256": "280224ce838117b93f5bb63ea3cc678d7277efe94c58c1ebfd116e118ebbb8c0"
+    },
+    {
+      "source": "assets/ribbon/big/ribbon_big_ico_direction.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_direction.svg",
+      "size": 2004,
+      "sha256": "acb8e4264b77966d5b662805771f914eca3d2b619f1d193890515df923523f83"
+    },
+    {
+      "source": "assets/ribbon/big/ribbon_big_ico_docuprotection.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_docuprotection.svg",
+      "size": 1992,
+      "sha256": "41d285bce14c19584b0e042eb087412b2ab41bb51a7018192d0e830fd7591ff0"
+    },
+    {
+      "source": "assets/ribbon/big/ribbon_big_ico_group.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_group.svg",
+      "size": 3211,
+      "sha256": "b6acaff689fab56839b84f88525c802e2d22555d0789b1661cacdafa31ded62c"
+    },
+    {
+      "source": "assets/ribbon/big/ribbon_big_ico_horizontaltextbox.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_horizontaltextbox.svg",
+      "size": 1110,
+      "sha256": "5a13b26181868b57d5e0609dfcddee96341d1a7fd6c9dfff2c2b95d205e34abd"
+    },
+    {
+      "source": "assets/ribbon/big/ribbon_big_ico_hyperlink.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_hyperlink.svg",
+      "size": 2120,
+      "sha256": "dc729ba6f43c1bbee97b26a13067c27933818b214bfa85d9ee9b21e3c0414df6"
+    },
+    {
+      "source": "assets/ribbon/big/ribbon_big_ico_image_online.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_image_online.svg",
+      "size": 4941,
+      "sha256": "d21385188a54783047c7e5d5603b868169b4d8d560f8b59b80bdf5dc134900ea"
+    },
+    {
+      "source": "assets/ribbon/big/ribbon_big_ico_image_position.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_image_position.svg",
+      "size": 5006,
+      "sha256": "88a849568f26c77d1e2bac2989b9be282b47b877d1251bc4efaf5d9b202e7895"
+    },
+    {
+      "source": "assets/ribbon/big/ribbon_big_ico_image.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_image.svg",
+      "size": 2607,
+      "sha256": "6b4016d80fb12f03e0e13af3bb1bda28ad907cd6637b8a49917736211b644c0b"
+    },
+    {
+      "source": "assets/ribbon/big/ribbon_big_ico_linebreak.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_linebreak.svg",
+      "size": 1808,
+      "sha256": "2d38b8e5544b33f8cc3edd400a56be8c19bb96ece237d43e57910cdd821f27bc"
+    },
+    {
+      "source": "assets/ribbon/big/ribbon_big_ico_margin.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_margin.svg",
+      "size": 584,
+      "sha256": "35f183e1f7c1fea0e72a6d63b73651136fa7250f95a6eeb23b52f356d2f8c5a5"
+    },
+    {
+      "source": "assets/ribbon/big/ribbon_big_ico_memo_delete.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_memo_delete.svg",
+      "size": 2186,
+      "sha256": "1c5704b2ad814ce3d3593d85718d5ee81cfb00bfc5964eaf1325aeae0a8a2373"
+    },
+    {
+      "source": "assets/ribbon/big/ribbon_big_ico_memo_new.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_memo_new.svg",
+      "size": 1601,
+      "sha256": "c366094a7e91d5e46a2ef8fe924c0067ae491c3de8b967b19c82bc0943cebe5d"
+    },
+    {
+      "source": "assets/ribbon/big/ribbon_big_ico_memo_next.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_memo_next.svg",
+      "size": 1881,
+      "sha256": "3e72f60b03c5b7bf092011800bcf7e12fd7f04513fe12a2c5cc456575e566a91"
+    },
+    {
+      "source": "assets/ribbon/big/ribbon_big_ico_memo_pane.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_memo_pane.svg",
+      "size": 2090,
+      "sha256": "19fb101ba3f61c942eed5f29ca3ce3ea1e99c58e9aab4e9c58cdc8801a0ad04c"
+    },
+    {
+      "source": "assets/ribbon/big/ribbon_big_ico_memo_previous.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_memo_previous.svg",
+      "size": 1813,
+      "sha256": "42bbe54a69f83260b0b2bd4340b9b46b3f88ae8d9705ae6cd2ef2d67b02554a4"
+    },
+    {
+      "source": "assets/ribbon/big/ribbon_big_ico_movebackward.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_movebackward.svg",
+      "size": 1416,
+      "sha256": "fc63c47fc3c4d11d39cf5d06da0b31c1f29b57c27ac756ced316f76f82b13801"
+    },
+    {
+      "source": "assets/ribbon/big/ribbon_big_ico_moveforward.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_moveforward.svg",
+      "size": 1849,
+      "sha256": "206ef49eec755e782befe5a52b43e0944e483cf215bfcb5335f588f5097184fe"
+    },
+    {
+      "source": "assets/ribbon/big/ribbon_big_ico_newpage.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_newpage.svg",
+      "size": 1709,
+      "sha256": "c2d8408bbf714903a885a8bfff0f4d535843d2d2d4dd4110243720af87b57c70"
+    },
+    {
+      "source": "assets/ribbon/big/ribbon_big_ico_noapply.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_noapply.svg",
+      "size": 2281,
+      "sha256": "234fdd3dbe1364ed684f9659c15761f0d70b319c4bef18f9108fb513b17b9bbc"
+    },
+    {
+      "source": "assets/ribbon/big/ribbon_big_ico_page_column.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_page_column.svg",
+      "size": 2089,
+      "sha256": "29123d0f05b43d57479695b5029e993da0394ae3c30b0afc111fa0ac16b33639"
+    },
+    {
+      "source": "assets/ribbon/big/ribbon_big_ico_pagescale.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_pagescale.svg",
+      "size": 1969,
+      "sha256": "fce5b4ae36b4e5be814fb629798a93076bfef60f284bdb02e5f6fde8ef4c39e7"
+    },
+    {
+      "source": "assets/ribbon/big/ribbon_big_ico_pagesplit_sheet.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_pagesplit_sheet.svg",
+      "size": 983,
+      "sha256": "f198fff15362fa766857ad70c127d7a01e12ffca6a696ad73de1565f6883082e"
+    },
+    {
+      "source": "assets/ribbon/big/ribbon_big_ico_pagesplit.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_pagesplit.svg",
+      "size": 1918,
+      "sha256": "766975e8e60c534f129ff78ecbe365dab7783e87bcf9de6697abc4d0f4adad91"
+    },
+    {
+      "source": "assets/ribbon/big/ribbon_big_ico_paste.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_paste.svg",
+      "size": 3254,
+      "sha256": "3c88479465b09705f3d68087511f3e8372988836f6c4dec64dd92758357ac3d5"
+    },
+    {
+      "source": "assets/ribbon/big/ribbon_big_ico_rotateright90.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_rotateright90.svg",
+      "size": 859,
+      "sha256": "76771b9a60adf368c37bd954391613b51cd798530b18a10dcfa8e8f633c7dd1d"
+    },
+    {
+      "source": "assets/ribbon/big/ribbon_big_ico_setlayout.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_setlayout.svg",
+      "size": 26254,
+      "sha256": "e046924cc247cdcdc0005d0e3f1cae368b6f308de58dc400213c3a0f743ae14b"
+    },
+    {
+      "source": "assets/ribbon/big/ribbon_big_ico_setpage.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_setpage.svg",
+      "size": 10209,
+      "sha256": "4e92e596aeece18a22e42f83fc0457131ec46c7f752ede99bb36f4fcd167d9cd"
+    },
+    {
+      "source": "assets/ribbon/big/ribbon_big_ico_shape.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_shape.svg",
+      "size": 985,
+      "sha256": "a4aab073160a90d85e2c18f4fe40678b47ae766eb0f7063ce3cd496424efdc65"
+    },
+    {
+      "source": "assets/ribbon/big/ribbon_big_ico_spellingcheck.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_spellingcheck.svg",
+      "size": 1638,
+      "sha256": "e026cb4594de56a8d59d68492904734ab5a898c1ccabda622b84c595fcd1800f"
+    },
+    {
+      "source": "assets/ribbon/big/ribbon_big_ico_symbol.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_symbol.svg",
+      "size": 575,
+      "sha256": "2d012ca7683ac8fe6b8019cfc5476831390161c26b6995fa6aa9e58cc22e3fe8"
+    },
+    {
+      "source": "assets/ribbon/big/ribbon_big_ico_table.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_table.svg",
+      "size": 482,
+      "sha256": "182be1d53d84fbb52b009fc8a4ce1c79471a54ea98e55fbab0958a5e9b250e07"
+    },
+    {
+      "source": "assets/ribbon/big/ribbon_big_ico_text_format.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_text_format.svg",
+      "size": 1477,
+      "sha256": "1d5a428c33391cceab83bedc0790f993bd8a5be861afe75f7c792dad7559b6af"
+    },
+    {
+      "source": "assets/ribbon/big/ribbon_big_ico_track_changes.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_track_changes.svg",
+      "size": 4869,
+      "sha256": "f64e31681452aa7fc8434cef2f2a09b0d94d476ec444cbd85a326550882396cb"
+    },
+    {
+      "source": "assets/ribbon/big/ribbon_big_ico_track_showmarkup.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_track_showmarkup.svg",
+      "size": 2640,
+      "sha256": "f8906dfd86c905d360cfd3c93bec8ea5cfdcb1aa7c408776a5ea971f7745a0af"
+    },
+    {
+      "source": "assets/ribbon/big/ribbon_big_ico_translate.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_translate.svg",
+      "size": 1773,
+      "sha256": "3eb57e631238b4387282c564762ae35e15f40c53490a4c3edf22343bcf96070d"
+    },
+    {
+      "source": "assets/ribbon/big/ribbon_big_ico_web_search.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_web_search.svg",
+      "size": 3423,
+      "sha256": "9e2e4bbfbdd6b8385bafde0cd4c518976b51ad84b1a149bb21de3966a0359a27"
+    },
+    {
+      "source": "assets/ribbon/big/ribbon_big_ico_wordcount.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/big/ribbon_big_ico_wordcount.svg",
+      "size": 2815,
+      "sha256": "71cad549e2e58f5c8d26792f3673e5756d0895b8323f744e25186c8685752fd5"
+    },
+    {
+      "source": "assets/ribbon/small/ribbon_ico_aligncenter.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/small/ribbon_ico_aligncenter.svg",
+      "size": 809,
+      "sha256": "4af24c83aef085eb20dd49ee8bf455225dc7cf0215230f2c18df2484d22b9623"
+    },
+    {
+      "source": "assets/ribbon/small/ribbon_ico_alignleft.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/small/ribbon_ico_alignleft.svg",
+      "size": 802,
+      "sha256": "a02b32d9365daac716ec25a5ff1ba29f17b72d0c8e1e4ce937e5ef59330fdece"
+    },
+    {
+      "source": "assets/ribbon/small/ribbon_ico_alignment.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/small/ribbon_ico_alignment.svg",
+      "size": 1263,
+      "sha256": "947a1bca63f247a8d9cb23ecb79853c16070fe5b9379b53a7bf8ff1138e7056e"
+    },
+    {
+      "source": "assets/ribbon/small/ribbon_ico_alignright.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/small/ribbon_ico_alignright.svg",
+      "size": 814,
+      "sha256": "54e2c3fbc25e0a4365f0a8e337b2e5dab0e6202e98f373bdc6cd8be9950f8ae1"
+    },
+    {
+      "source": "assets/ribbon/small/ribbon_ico_bold.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/small/ribbon_ico_bold.svg",
+      "size": 967,
+      "sha256": "7f0931e16c97bcc80b00a666c2fb2c58a154d27448718990ebc6c134f94f243c"
+    },
+    {
+      "source": "assets/ribbon/small/ribbon_ico_bullet.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/small/ribbon_ico_bullet.svg",
+      "size": 453,
+      "sha256": "5fdea8c5feabcc253ea9d24dc235b642c7c56aa91c66db276f9da8529e610c27"
+    },
+    {
+      "source": "assets/ribbon/small/ribbon_ico_changecase.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/small/ribbon_ico_changecase.svg",
+      "size": 1796,
+      "sha256": "0a120cf6dea9153d6458f25047d0b3a8d09e9dd44f07e44a12fbfbe87bf42a61"
+    },
+    {
+      "source": "assets/ribbon/small/ribbon_ico_clearformat.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/small/ribbon_ico_clearformat.svg",
+      "size": 1274,
+      "sha256": "435fc69386b3e97ac9e3083c10f5afc38e1d57cca2d0154065b72faff041231b"
+    },
+    {
+      "source": "assets/ribbon/small/ribbon_ico_copy_format.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/small/ribbon_ico_copy_format.svg",
+      "size": 3929,
+      "sha256": "a95cdb5241e1374aa6e4d7b4850be0eca0da13c0bb690371f65303f6b1648061"
+    },
+    {
+      "source": "assets/ribbon/small/ribbon_ico_copy.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/small/ribbon_ico_copy.svg",
+      "size": 1812,
+      "sha256": "d9514486d73e288365c267580408e3c2ae59798bb4d4d148dfb332eb7407ae76"
+    },
+    {
+      "source": "assets/ribbon/small/ribbon_ico_cut.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/small/ribbon_ico_cut.svg",
+      "size": 2035,
+      "sha256": "17086fb3a6404f1c56d037b72672c5e393163b539da919e17230d5eb19ef0438"
+    },
+    {
+      "source": "assets/ribbon/small/ribbon_ico_dent.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/small/ribbon_ico_dent.svg",
+      "size": 999,
+      "sha256": "83bfac824c338074f1258621a428808d039bbc4c1ad43c65e3deb9a025bec162"
+    },
+    {
+      "source": "assets/ribbon/small/ribbon_ico_fillcolor.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/small/ribbon_ico_fillcolor.svg",
+      "size": 1432,
+      "sha256": "ab2401fea4ae21b67caacf45d8b448dea9d2d4e881b6efa541b1830b5a3ac55a"
+    },
+    {
+      "source": "assets/ribbon/small/ribbon_ico_find.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/small/ribbon_ico_find.svg",
+      "size": 436,
+      "sha256": "644c5c2a6639ebe92a83c4a66f8f3ab4007e93864f67ac7c6985eec289abb4cb"
+    },
+    {
+      "source": "assets/ribbon/small/ribbon_ico_font_size_large.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/small/ribbon_ico_font_size_large.svg",
+      "size": 627,
+      "sha256": "453033acf510730d8574b9fb7f592b75595f906b212f3eb8379084b8ace93821"
+    },
+    {
+      "source": "assets/ribbon/small/ribbon_ico_font_size_small.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/small/ribbon_ico_font_size_small.svg",
+      "size": 626,
+      "sha256": "f076412efa8d72f420f14029e7bfaea1d864a5eaeed2c317ba720dc874e92408"
+    },
+    {
+      "source": "assets/ribbon/small/ribbon_ico_indent.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/small/ribbon_ico_indent.svg",
+      "size": 999,
+      "sha256": "c08162505ee9dada978fa0e84ed37dab03edcebdce8559befce8f5fa1d07a495"
+    },
+    {
+      "source": "assets/ribbon/small/ribbon_ico_italic.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/small/ribbon_ico_italic.svg",
+      "size": 291,
+      "sha256": "0dd02fe1cfbfbf6bee5a0ef7962e2a51c227ebfc3cd8889eca9ab872aacf2f38"
+    },
+    {
+      "source": "assets/ribbon/small/ribbon_ico_justify.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/small/ribbon_ico_justify.svg",
+      "size": 814,
+      "sha256": "639896b834540e96a1222065538977a843ffaaae36d40cce734219b3259eeb42"
+    },
+    {
+      "source": "assets/ribbon/small/ribbon_ico_linespacing.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/small/ribbon_ico_linespacing.svg",
+      "size": 1179,
+      "sha256": "246c8021fcf1d2f3a7c6f69a0f6cce250d6cd11df7503e012e9aa953c1f5f7c2"
+    },
+    {
+      "source": "assets/ribbon/small/ribbon_ico_multilevel.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/small/ribbon_ico_multilevel.svg",
+      "size": 843,
+      "sha256": "44b8dca11c17295c4e3d5ac82d9c11654d8839e23c494662e882eace950fc99a"
+    },
+    {
+      "source": "assets/ribbon/small/ribbon_ico_numbering.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/small/ribbon_ico_numbering.svg",
+      "size": 1006,
+      "sha256": "02dd80c60aa2b5f1df9fc84e2d40f5256bcfa5f99ca780ebd177f0b94531e12e"
+    },
+    {
+      "source": "assets/ribbon/small/ribbon_ico_orientationsheet.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/small/ribbon_ico_orientationsheet.svg",
+      "size": 1118,
+      "sha256": "2025ffffc81039607aa8cf82a212835a3d965f29c047c5997e6d6efc6f62a158"
+    },
+    {
+      "source": "assets/ribbon/small/ribbon_ico_paragraph_narrow.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/small/ribbon_ico_paragraph_narrow.svg",
+      "size": 1379,
+      "sha256": "6977b666cd019fd4ce4b2245330cc1d7bace9d833b28fec082891f47200ffc81"
+    },
+    {
+      "source": "assets/ribbon/small/ribbon_ico_paragraph_wide.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/small/ribbon_ico_paragraph_wide.svg",
+      "size": 1378,
+      "sha256": "599880df265d23d8bc753ce1e1c86a14a2a582ede96d02732158db0cadcd20b0"
+    },
+    {
+      "source": "assets/ribbon/small/ribbon_ico_shade new.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/small/ribbon_ico_shade new.svg",
+      "size": 450,
+      "sha256": "cdde437e1e57d96e67cf94ac3d7700cec41251c101b8dce54208d8895c1fad3d"
+    },
+    {
+      "source": "assets/ribbon/small/ribbon_ico_strikethrough.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/small/ribbon_ico_strikethrough.svg",
+      "size": 388,
+      "sha256": "7e2d7e4cce5742eeb18a5ce3eebbf83471f0cd06ee25df468a6c443d98f4c025"
+    },
+    {
+      "source": "assets/ribbon/small/ribbon_ico_subscript.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/small/ribbon_ico_subscript.svg",
+      "size": 609,
+      "sha256": "19a66da1c34f13b25238049a091044f8d2a5d088e0d7bced0e1b39b57b559d74"
+    },
+    {
+      "source": "assets/ribbon/small/ribbon_ico_superscript.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/small/ribbon_ico_superscript.svg",
+      "size": 605,
+      "sha256": "09a1d67c2ebd98376e501d4861be21cc23be81a3521a398f903dd40ff862cd26"
+    },
+    {
+      "source": "assets/ribbon/small/ribbon_ico_text_accentcolour new.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/small/ribbon_ico_text_accentcolour new.svg",
+      "size": 762,
+      "sha256": "01f7e212467a42db200f4bdfb79585a21615696d65fa40333c19b17a0e697bef"
+    },
+    {
+      "source": "assets/ribbon/small/ribbon_ico_text_replace.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/small/ribbon_ico_text_replace.svg",
+      "size": 1424,
+      "sha256": "c57c365fcd4957ad419bc7a2b89812f7f5f84eddaeb605871079f66b2885f3e2"
+    },
+    {
+      "source": "assets/ribbon/small/ribbon_ico_textcolor.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/small/ribbon_ico_textcolor.svg",
+      "size": 307,
+      "sha256": "fcce1799d3440ace76f0aa6c84b78deb856ef53ab77070b367f34eefacf6f3a5"
+    },
+    {
+      "source": "assets/ribbon/small/ribbon_ico_textoutline.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/small/ribbon_ico_textoutline.svg",
+      "size": 458,
+      "sha256": "0646760b928522f25a5cd6d0e5024c8e330c28f2ebd4333e0cf43d63322ff3a0"
+    },
+    {
+      "source": "assets/ribbon/small/ribbon_ico_underline_01.svg",
+      "destination": "vendor/polaris-design/assets/ribbon/small/ribbon_ico_underline_01.svg",
+      "size": 361,
+      "sha256": "648709c38b25569901e6b46590da3286049ab905beade8a05506b7267c7df0a9"
+    },
+    {
+      "source": "assets/svg/file-icons/32/app-sheet.svg",
+      "destination": "vendor/polaris-design/assets/svg/file-icons/32/app-sheet.svg",
+      "size": 2776,
+      "sha256": "105ad633a7c0a5d5efa5854d3e3ffeec2223151015e252e3a38789393d8a5677"
+    },
+    {
+      "source": "assets/svg/file-icons/32/app-slide.svg",
+      "destination": "vendor/polaris-design/assets/svg/file-icons/32/app-slide.svg",
+      "size": 2782,
+      "sha256": "1cdf8ccab28062469d275a13ea657f3fcf2c7826cf92c4b51e03273119422278"
+    },
+    {
+      "source": "assets/svg/file-icons/32/app-word.svg",
+      "destination": "vendor/polaris-design/assets/svg/file-icons/32/app-word.svg",
+      "size": 2524,
+      "sha256": "4841aa7e7e940a7e8a6f467b74d46709af012bd280f7f9e45d3920784dcbe63d"
+    },
+    {
+      "source": "assets/svg/file-icons/32/csv.svg",
+      "destination": "vendor/polaris-design/assets/svg/file-icons/32/csv.svg",
+      "size": 1812,
+      "sha256": "20237888b7bc62b87fbe4d8f673b0dd01cf9c41b81895732839b9cf4de0232ce"
+    },
+    {
+      "source": "assets/svg/file-icons/32/docx.svg",
+      "destination": "vendor/polaris-design/assets/svg/file-icons/32/docx.svg",
+      "size": 629,
+      "sha256": "c24b29e1c5aac02bcff9b593601cfba1cb08b0a2fc5fe3746b3998a6bea116b4"
+    },
+    {
+      "source": "assets/svg/file-icons/32/dotx.svg",
+      "destination": "vendor/polaris-design/assets/svg/file-icons/32/dotx.svg",
+      "size": 1190,
+      "sha256": "726f7d850ccf5a2f50d14bea36bbcd78b0e113476f611466a9a2575f6afb1509"
+    },
+    {
+      "source": "assets/svg/file-icons/32/folder-team.svg",
+      "destination": "vendor/polaris-design/assets/svg/file-icons/32/folder-team.svg",
+      "size": 2386,
+      "sha256": "3331e4e580daa3f130795a69d24405e25d8cd248514c201ed8b9429eea1726dc"
+    },
+    {
+      "source": "assets/svg/file-icons/32/folder.svg",
+      "destination": "vendor/polaris-design/assets/svg/file-icons/32/folder.svg",
+      "size": 1153,
+      "sha256": "576744871630e233fed98df8b44c5a05d8add92f676bad2dcc10923c12a92416"
+    },
+    {
+      "source": "assets/svg/file-icons/32/hwp.svg",
+      "destination": "vendor/polaris-design/assets/svg/file-icons/32/hwp.svg",
+      "size": 2180,
+      "sha256": "e995d88a3a9a2d0c6bfb3170d637d5779ad4841599bf3360cd4f19e4c7f41a0b"
+    },
+    {
+      "source": "assets/svg/file-icons/32/hwt.svg",
+      "destination": "vendor/polaris-design/assets/svg/file-icons/32/hwt.svg",
+      "size": 1943,
+      "sha256": "25808ad1532b04fd79e6c07595b808fd9c09c52e0fe0b2cfb02b581349cab1b5"
+    },
+    {
+      "source": "assets/svg/file-icons/32/image.svg",
+      "destination": "vendor/polaris-design/assets/svg/file-icons/32/image.svg",
+      "size": 1138,
+      "sha256": "2fae6bf0b520c0588c4dd6344f05baa12d75212bd977134d23e87a04a952d7bb"
+    },
+    {
+      "source": "assets/svg/file-icons/32/inbox.svg",
+      "destination": "vendor/polaris-design/assets/svg/file-icons/32/inbox.svg",
+      "size": 1652,
+      "sha256": "30a2f7c7cbb54134afbab33e6dc3a6da1fec7f99d92a29cd4472f96bc2eb74ce"
+    },
+    {
+      "source": "assets/svg/file-icons/32/music.svg",
+      "destination": "vendor/polaris-design/assets/svg/file-icons/32/music.svg",
+      "size": 1376,
+      "sha256": "ec9a37ae49a0d35dacf607ca3c50f9b588318ea5c6ca74f3238e3d1bd07aac47"
+    },
+    {
+      "source": "assets/svg/file-icons/32/my-template.svg",
+      "destination": "vendor/polaris-design/assets/svg/file-icons/32/my-template.svg",
+      "size": 1153,
+      "sha256": "e9c4a2e5bab32f05209a2da2acd21159d4149ae96313ba46a84b1bbb607bb27b"
+    },
+    {
+      "source": "assets/svg/file-icons/32/note-pnt.svg",
+      "destination": "vendor/polaris-design/assets/svg/file-icons/32/note-pnt.svg",
+      "size": 822,
+      "sha256": "e6ff87f6f40d060e8bc6f13c0345191a5d75dbf9a91d948b6e09195d555039e9"
+    },
+    {
+      "source": "assets/svg/file-icons/32/odt.svg",
+      "destination": "vendor/polaris-design/assets/svg/file-icons/32/odt.svg",
+      "size": 1640,
+      "sha256": "0fba9705e2d6b7bc61c96fb066d0e790f566aaf41e7fa2cd10886dca249a162b"
+    },
+    {
+      "source": "assets/svg/file-icons/32/pdf.svg",
+      "destination": "vendor/polaris-design/assets/svg/file-icons/32/pdf.svg",
+      "size": 3902,
+      "sha256": "ce4b10b976f25f80cc2510055a5a6ba9f2752f074f07ee6f92cd7f6a55ccafa7"
+    },
+    {
+      "source": "assets/svg/file-icons/32/potx.svg",
+      "destination": "vendor/polaris-design/assets/svg/file-icons/32/potx.svg",
+      "size": 1488,
+      "sha256": "dc047540e912872a21d7a3fde9932bf2f66ff0290d507687b12c3b271c1a2126"
+    },
+    {
+      "source": "assets/svg/file-icons/32/ppsx.svg",
+      "destination": "vendor/polaris-design/assets/svg/file-icons/32/ppsx.svg",
+      "size": 1192,
+      "sha256": "fad11e6c511646cd8e87227bf18b73c55428c8bbd4e7622b91bd349a28d2d9ba"
+    },
+    {
+      "source": "assets/svg/file-icons/32/pptx.svg",
+      "destination": "vendor/polaris-design/assets/svg/file-icons/32/pptx.svg",
+      "size": 759,
+      "sha256": "b281c1ad95c778b7e5612ab815d1159ed8e8a3b9a4b0a1bca37bb3f9918c4820"
+    },
+    {
+      "source": "assets/svg/file-icons/32/rtf.svg",
+      "destination": "vendor/polaris-design/assets/svg/file-icons/32/rtf.svg",
+      "size": 1656,
+      "sha256": "6a9295b01057eacbfaf677d60ef6a22ff181c035324321f6fe3a424e36592ea7"
+    },
+    {
+      "source": "assets/svg/file-icons/32/template.svg",
+      "destination": "vendor/polaris-design/assets/svg/file-icons/32/template.svg",
+      "size": 1266,
+      "sha256": "5d0ce0e96b4f96ed4e37755cd9e59f0d5c3501a4bf64fec7b66269b792f4b8a8"
+    },
+    {
+      "source": "assets/svg/file-icons/32/txt.svg",
+      "destination": "vendor/polaris-design/assets/svg/file-icons/32/txt.svg",
+      "size": 862,
+      "sha256": "0f96c422f2f340c1c5fdb0c3c6ff4385b28dff9a24c22aa48dfd73d465918014"
+    },
+    {
+      "source": "assets/svg/file-icons/32/unknown.svg",
+      "destination": "vendor/polaris-design/assets/svg/file-icons/32/unknown.svg",
+      "size": 1366,
+      "sha256": "8ec6a51b858796445d42fe9bdcfe4130a021318a4f0ba4d50d9ec486153b2811"
+    },
+    {
+      "source": "assets/svg/file-icons/32/video.svg",
+      "destination": "vendor/polaris-design/assets/svg/file-icons/32/video.svg",
+      "size": 1207,
+      "sha256": "d6787a559d22206c733e48b853bedfeb2cb8ce421b4c1c699f4787b752a458af"
+    },
+    {
+      "source": "assets/svg/file-icons/32/voc.svg",
+      "destination": "vendor/polaris-design/assets/svg/file-icons/32/voc.svg",
+      "size": 1454,
+      "sha256": "1dffc66ba6979dd8c9335a2d24b5635ffca36cdef947aea3edffe676de075d48"
+    },
+    {
+      "source": "assets/svg/file-icons/32/xlsx.svg",
+      "destination": "vendor/polaris-design/assets/svg/file-icons/32/xlsx.svg",
+      "size": 885,
+      "sha256": "946f6034d5c192dccbef8307663a9216a88af318f4fb857e46543d5b9ef14484"
+    },
+    {
+      "source": "assets/svg/file-icons/32/xltx.svg",
+      "destination": "vendor/polaris-design/assets/svg/file-icons/32/xltx.svg",
+      "size": 1397,
+      "sha256": "35e1c762f59be349d34e9d845dc44671610b54dd27a3723940635426b8bb1c46"
+    },
+    {
+      "source": "assets/svg/file-icons/32/zip.svg",
+      "destination": "vendor/polaris-design/assets/svg/file-icons/32/zip.svg",
+      "size": 1635,
+      "sha256": "d5f02dff6d33afe3af6ceb67f93b559894790d6eae0e14b34855fe8a11aa2e0d"
+    },
+    {
+      "source": "assets/svg/icons/18/arrow-down.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/18/arrow-down.svg",
+      "size": 216,
+      "sha256": "44302bd7c73b4b393acd4822959e06460b29d0c27d91c6cf77ed060f2ee191ac"
+    },
+    {
+      "source": "assets/svg/icons/18/arrow-left.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/18/arrow-left.svg",
+      "size": 215,
+      "sha256": "2ebbc2c04a86cbfaf8f18c3d37b3a6a1547be67f3acf75345893d66150b13ab1"
+    },
+    {
+      "source": "assets/svg/icons/18/arrow-right.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/18/arrow-right.svg",
+      "size": 216,
+      "sha256": "b79dcbe286774de4e5b6ba8a27dbf66e8ebfa2a9dad8d1c6b27d6a5ebe973858"
+    },
+    {
+      "source": "assets/svg/icons/18/arrow-up.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/18/arrow-up.svg",
+      "size": 215,
+      "sha256": "28afe03a5f496192c3af1e1f9f6767cf6a4a3f1737f2d9d00f7b8a6f384330ae"
+    },
+    {
+      "source": "assets/svg/icons/18/bell.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/18/bell.svg",
+      "size": 1039,
+      "sha256": "e64d4f1ff58b9242af20bf25d3537fd28f03656d880bde24423d237c21d0ce53"
+    },
+    {
+      "source": "assets/svg/icons/18/book-open-01.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/18/book-open-01.svg",
+      "size": 3191,
+      "sha256": "0925393175a17f0df03d5416cc6208d92fb94e260800783fdc112b5ba973c0b0"
+    },
+    {
+      "source": "assets/svg/icons/18/box.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/18/box.svg",
+      "size": 608,
+      "sha256": "5b9f2f6fcf04160b474c190eeb7d350e956b01ffc2e47039e15831f898bdde0b"
+    },
+    {
+      "source": "assets/svg/icons/18/chat.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/18/chat.svg",
+      "size": 802,
+      "sha256": "87c56857cb0b45ba0ac14253b900163c9b9106e16c5d8ba5720bf12e187aa60c"
+    },
+    {
+      "source": "assets/svg/icons/18/check.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/18/check.svg",
+      "size": 200,
+      "sha256": "7adfadf070d981304ac95db38c0969221a559371a48809666dc653f9a84c60c1"
+    },
+    {
+      "source": "assets/svg/icons/18/chevron-down-circle.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/18/chevron-down-circle.svg",
+      "size": 312,
+      "sha256": "1b8447cc24c21f81abdc9aba8e2a32b25c6555d03ba2df8db52f3c40a0cb871b"
+    },
+    {
+      "source": "assets/svg/icons/18/chevron-down.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/18/chevron-down.svg",
+      "size": 207,
+      "sha256": "224c715384ab1101b6ea2c8019828c96ef30bd1927fd13384b008f0d9ce816c4"
+    },
+    {
+      "source": "assets/svg/icons/18/chevron-left-circle.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/18/chevron-left-circle.svg",
+      "size": 312,
+      "sha256": "316152f07fce446bb8282bf1742c4867d833a98af3b2260b3fa463b49522edf1"
+    },
+    {
+      "source": "assets/svg/icons/18/chevron-left.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/18/chevron-left.svg",
+      "size": 208,
+      "sha256": "36c8ab7ac35fcb1edbfd02eb949ce9d1555b2e522a9fd248b2ea53ada6828506"
+    },
+    {
+      "source": "assets/svg/icons/18/chevron-right-circle.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/18/chevron-right-circle.svg",
+      "size": 313,
+      "sha256": "dc2c49723e06361f9bb2e4f86f2a6434942746f48b61777ed2eff8b33b558722"
+    },
+    {
+      "source": "assets/svg/icons/18/chevron-right.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/18/chevron-right.svg",
+      "size": 207,
+      "sha256": "4f831f2149fc5e13f1a2ad8ea977e5369378ff46a87b80cff443fa653be60a85"
+    },
+    {
+      "source": "assets/svg/icons/18/chevron-up-circle.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/18/chevron-up-circle.svg",
+      "size": 313,
+      "sha256": "a3040b8437914c8b005521463f1f29bc06736deac3dc701dce555f77c50a2ca9"
+    },
+    {
+      "source": "assets/svg/icons/18/chevron-up.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/18/chevron-up.svg",
+      "size": 208,
+      "sha256": "c18f5a18abd298bb5564a7c78830b186033d41d930e1b5481d493b9b515dad3e"
+    },
+    {
+      "source": "assets/svg/icons/18/circle-check-circle.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/18/circle-check-circle.svg",
+      "size": 312,
+      "sha256": "c4534e502e64b908de290aae886f149da8e4306cde2b4c43157222875b0f309b"
+    },
+    {
+      "source": "assets/svg/icons/18/circle-x.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/18/circle-x.svg",
+      "size": 324,
+      "sha256": "a7087c07e4f5bd305a041f89e2f9e5cdc804d620ed0f9ed0f7b121e78421609d"
+    },
+    {
+      "source": "assets/svg/icons/18/close-box.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/18/close-box.svg",
+      "size": 365,
+      "sha256": "db62be69121c08b950161abf605204fdad81caa62d545ff1ad13ec8119ed7dd4"
+    },
+    {
+      "source": "assets/svg/icons/18/close.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/18/close.svg",
+      "size": 216,
+      "sha256": "418b78dd08de56261bdc60b16ebafa51c5892258b234a256a4bee5fae7977f18"
+    },
+    {
+      "source": "assets/svg/icons/18/cloud.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/18/cloud.svg",
+      "size": 574,
+      "sha256": "851a05995ac2724be57777c244c734c308d77b0e26b5f334809762360ccbcf90"
+    },
+    {
+      "source": "assets/svg/icons/18/computer.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/18/computer.svg",
+      "size": 449,
+      "sha256": "8450bc52f17dbe435f766d9cfb70f0017bd12206fc982a74ae08a35bcd4c8c86"
+    },
+    {
+      "source": "assets/svg/icons/18/crown.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/18/crown.svg",
+      "size": 1447,
+      "sha256": "32d5dc2032ede18ca973361fa5665cea5c051195184de40c80136fda64bf9aa5"
+    },
+    {
+      "source": "assets/svg/icons/18/delete.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/18/delete.svg",
+      "size": 618,
+      "sha256": "ee48496624a3f7ad922f54a91be13ec517f98912e282a8e1650e8f35ab277aed"
+    },
+    {
+      "source": "assets/svg/icons/18/download.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/18/download.svg",
+      "size": 242,
+      "sha256": "1160d9878720d64453d49534643069da211fa28dca74450c450d04c18dc566bc"
+    },
+    {
+      "source": "assets/svg/icons/18/earth.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/18/earth.svg",
+      "size": 957,
+      "sha256": "649b48ef17cc9ae100688597719fbdf87dc9065d1dde6f337c7948c0446f2dc6"
+    },
+    {
+      "source": "assets/svg/icons/18/enter.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/18/enter.svg",
+      "size": 449,
+      "sha256": "29caf120378aa365be156ba6a72f9df9694d86b543e460ab54b430b473d2ac94"
+    },
+    {
+      "source": "assets/svg/icons/18/error.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/18/error.svg",
+      "size": 700,
+      "sha256": "27e209efbb38e3378b7ddf57044a0755ec60c449d8e7729c7cbf8ebe112100de"
+    },
+    {
+      "source": "assets/svg/icons/18/expand.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/18/expand.svg",
+      "size": 242,
+      "sha256": "53b3209b4c846b7592b643f1f33594fb75aa7f7c38f6bb127ea50d08012ac3ba"
+    },
+    {
+      "source": "assets/svg/icons/18/external-link.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/18/external-link.svg",
+      "size": 223,
+      "sha256": "564c44d9e0baa167827862c9ab6337849d6cc31a94cf8ecd1e0059f397bc882a"
+    },
+    {
+      "source": "assets/svg/icons/18/file-link.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/18/file-link.svg",
+      "size": 16502,
+      "sha256": "7a12bee0a28b7e4d7059330a8ac584c94286414ef6d0a0e94209000846c51cc4"
+    },
+    {
+      "source": "assets/svg/icons/18/file-out.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/18/file-out.svg",
+      "size": 691,
+      "sha256": "094e107eb2c1dfb947d1a549819fd49b4dad098ab3d9ab1ef5c9979f054b4d6e"
+    },
+    {
+      "source": "assets/svg/icons/18/file-plus.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/18/file-plus.svg",
+      "size": 5906,
+      "sha256": "e60f5cdde8b5378646743482dbec3fb6847a727fe9973518e4bacb100fa7df39"
+    },
+    {
+      "source": "assets/svg/icons/18/file.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/18/file.svg",
+      "size": 562,
+      "sha256": "8be477aea8e50f7ac21ab42a3b01ac85d6a28c2c981f84219f4bcc743a33b1b5"
+    },
+    {
+      "source": "assets/svg/icons/18/filter.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/18/filter.svg",
+      "size": 1026,
+      "sha256": "77d024e64e14de904c587d74dae9772fb1cc50fc0d6692e67c64c16e2ece670a"
+    },
+    {
+      "source": "assets/svg/icons/18/folder.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/18/folder.svg",
+      "size": 769,
+      "sha256": "9293a9a6e72d2b632f692006fd74339b4cec654b891ae87cbd237bdaf22ea41e"
+    },
+    {
+      "source": "assets/svg/icons/18/gift.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/18/gift.svg",
+      "size": 1179,
+      "sha256": "45c36521430d1447a484031aaa33c3b04a13676e712fdb4336dc4f1eda0172ff"
+    },
+    {
+      "source": "assets/svg/icons/18/hardware.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/18/hardware.svg",
+      "size": 748,
+      "sha256": "fb829c57c931b3cb1692970fb3577e10befd72c4c7528267d81a49f7b6de49bd"
+    },
+    {
+      "source": "assets/svg/icons/18/history.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/18/history.svg",
+      "size": 687,
+      "sha256": "d6d519582a30bf6f364abf76825172086ed47b2a319c343bc0b0b5871f0fbceb"
+    },
+    {
+      "source": "assets/svg/icons/18/image-remove-n.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/18/image-remove-n.svg",
+      "size": 550,
+      "sha256": "223a40ec3e2ebbed8ce1109aa6c70cce480385e9079028b17a20cb9158b0c688"
+    },
+    {
+      "source": "assets/svg/icons/18/image.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/18/image.svg",
+      "size": 345,
+      "sha256": "c362670ae6d84e2717bed71336e666604d2996f3507b8030dfa79939f00d9298"
+    },
+    {
+      "source": "assets/svg/icons/18/info-circle.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/18/info-circle.svg",
+      "size": 322,
+      "sha256": "3701db6a34e6d219770139986ce1c405e61bb8eb221150f8989054ab3aa08ee5"
+    },
+    {
+      "source": "assets/svg/icons/18/menu.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/18/menu.svg",
+      "size": 206,
+      "sha256": "03855fb10e623dba28276be171f988a80dbd8da2c8cac41de3b86fd6c2473580"
+    },
+    {
+      "source": "assets/svg/icons/18/message.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/18/message.svg",
+      "size": 493,
+      "sha256": "4ba6037b4ee1d993fd756541d48dcac0b029a411cf65f1e6fa3ab03a9ce23168"
+    },
+    {
+      "source": "assets/svg/icons/18/minus.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/18/minus.svg",
+      "size": 193,
+      "sha256": "a600b19be1c328f6dd71c7ea859e8e2aff2b0f9d381dd2c7f33212ddc03f875c"
+    },
+    {
+      "source": "assets/svg/icons/18/panel-left-open.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/18/panel-left-open.svg",
+      "size": 383,
+      "sha256": "3bc3d0d1ea96ee18e9c3a75f3d5c77c5b9174a694ae2fc80582f22a668e5c999"
+    },
+    {
+      "source": "assets/svg/icons/18/panel-right-open.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/18/panel-right-open.svg",
+      "size": 384,
+      "sha256": "e5f099fdcd018898c26c140e0345187525fe6d4cc1fc5942e35ef3b0ddebd263"
+    },
+    {
+      "source": "assets/svg/icons/18/paragraph-spacing.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/18/paragraph-spacing.svg",
+      "size": 2876,
+      "sha256": "75be38dc2b65656afd94fbe6d151d56e89f4a88341cf1dedf66f95e075f8f8b9"
+    },
+    {
+      "source": "assets/svg/icons/18/pencil-line.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/18/pencil-line.svg",
+      "size": 988,
+      "sha256": "48698b2d1be4424d89f691f7768d26720523e7cbbd1d741afe597ad15ae29ebe"
+    },
+    {
+      "source": "assets/svg/icons/18/plus-bubble.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/18/plus-bubble.svg",
+      "size": 658,
+      "sha256": "e6e507d2afd7e7520cda54f70d4b871d44585b97f7912c9c2dcca6d30402a2ee"
+    },
+    {
+      "source": "assets/svg/icons/18/plus-circle.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/18/plus-circle.svg",
+      "size": 310,
+      "sha256": "688d531d0ab2ecbb96035d014fbc66e0708ef620e8d2d9629f06f535aafa77d9"
+    },
+    {
+      "source": "assets/svg/icons/18/plus.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/18/plus.svg",
+      "size": 206,
+      "sha256": "6c75bc09d80f13e67ddcbf8aae2803eea255688dda3411d8348917bbea94feed"
+    },
+    {
+      "source": "assets/svg/icons/18/redo.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/18/redo.svg",
+      "size": 444,
+      "sha256": "26bf98bb6e2bbf1019071fb3fb1d042bd85b0264a0334150a9b3fbff4ae39356"
+    },
+    {
+      "source": "assets/svg/icons/18/reduction.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/18/reduction.svg",
+      "size": 286,
+      "sha256": "38f4611cc366f634bcd899ddc5fcc2ad1422bd19fba87d31010ed49f607ef4c2"
+    },
+    {
+      "source": "assets/svg/icons/18/refresh.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/18/refresh.svg",
+      "size": 535,
+      "sha256": "94b6ddb3584a91244ae6336ecb85a73558973f8fd8a84577900c782153c9ae12"
+    },
+    {
+      "source": "assets/svg/icons/18/repeat.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/18/repeat.svg",
+      "size": 431,
+      "sha256": "c380c94093344da8dff2b0aaccbfb8c72f65f43655dec8a2ba058fc3d34ac805"
+    },
+    {
+      "source": "assets/svg/icons/18/search.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/18/search.svg",
+      "size": 375,
+      "sha256": "0f151ee29787c99be49d5bfead271a9ed758bcec0ee0182e322f064bfa82264f"
+    },
+    {
+      "source": "assets/svg/icons/18/send-fill.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/18/send-fill.svg",
+      "size": 599,
+      "sha256": "e4288aa876634753b7f195c942ded7a9eeeddb26f7aceb29e54b52a47918264c"
+    },
+    {
+      "source": "assets/svg/icons/18/send.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/18/send.svg",
+      "size": 545,
+      "sha256": "c82b218176e27d16c6e593dbdd25ae54f3ef9bba05cd0d87ffb39fc47dcd5b92"
+    },
+    {
+      "source": "assets/svg/icons/18/settings.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/18/settings.svg",
+      "size": 2607,
+      "sha256": "903db9b51d22bced15fe1f7633d95c0b26a93fc0a1ad83f367dd58914b6087f7"
+    },
+    {
+      "source": "assets/svg/icons/18/share.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/18/share.svg",
+      "size": 708,
+      "sha256": "c6e0f1e73ce9937626ae76c23c0ff53d881f54b93b7d7651ba639787e6c52c3b"
+    },
+    {
+      "source": "assets/svg/icons/18/translate.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/18/translate.svg",
+      "size": 516,
+      "sha256": "a662a0e012b37f750f1aede8167a2a80eedc3960d936531095a908458d57bf37"
+    },
+    {
+      "source": "assets/svg/icons/18/undo.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/18/undo.svg",
+      "size": 445,
+      "sha256": "bc6a3b1a1e7f316c156dc9b6c8f4f02ab063bc81100c7a400688722d81146567"
+    },
+    {
+      "source": "assets/svg/icons/18/upload.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/18/upload.svg",
+      "size": 419,
+      "sha256": "1255b1289d2c7303545a0b976e3fb2e3fd818d5e87857c898183866d2a171a89"
+    },
+    {
+      "source": "assets/svg/icons/18/user.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/18/user.svg",
+      "size": 601,
+      "sha256": "ecc8fc8143272f0e0abb7bd357abd08de0ddeed976908e7e6915b718ff697a60"
+    },
+    {
+      "source": "assets/svg/icons/24/arrow-down.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/24/arrow-down.svg",
+      "size": 224,
+      "sha256": "a563afa0b2e55003aa685331675c21e1cf69b721092124072254f1ec998386e0"
+    },
+    {
+      "source": "assets/svg/icons/24/arrow-left.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/24/arrow-left.svg",
+      "size": 223,
+      "sha256": "37749d01da83cac5fbef6733073927d8c98c4f865f87da02dfcd029c182605ef"
+    },
+    {
+      "source": "assets/svg/icons/24/arrow-right.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/24/arrow-right.svg",
+      "size": 224,
+      "sha256": "911b3d62b99fd513088e57f08088dbfdb2a8e452c6c22cb8097cdef9a896fc65"
+    },
+    {
+      "source": "assets/svg/icons/24/arrow-up.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/24/arrow-up.svg",
+      "size": 223,
+      "sha256": "e6c65020e50a85c59b045b2bf0052c6a8fdefa1307d501367c9bb28eaec882f4"
+    },
+    {
+      "source": "assets/svg/icons/24/bell.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/24/bell.svg",
+      "size": 1057,
+      "sha256": "9d40a0c7fc74447538091e276e0b658b369396621b426bc8e43e2470983abdbe"
+    },
+    {
+      "source": "assets/svg/icons/24/book-open-01.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/24/book-open-01.svg",
+      "size": 3158,
+      "sha256": "1655e4c707b7bf4b6a04bb8e1b7351948186e79887ef9612d678889d88e9c040"
+    },
+    {
+      "source": "assets/svg/icons/24/box.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/24/box.svg",
+      "size": 618,
+      "sha256": "0de8839a5e3fef7b0a2d2104aedbbdc0700e3f2a7df66bd24b19a25fb6ff05de"
+    },
+    {
+      "source": "assets/svg/icons/24/chat.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/24/chat.svg",
+      "size": 823,
+      "sha256": "a2744763c91e314d50e242e6fff0d951f0e86e6f1cde93590f2c448b8cf12fa6"
+    },
+    {
+      "source": "assets/svg/icons/24/check.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/24/check.svg",
+      "size": 215,
+      "sha256": "5901b5cc0bd6f86742474eeb4c5569f43e85d4153af9346670ae82775ddf3924"
+    },
+    {
+      "source": "assets/svg/icons/24/chevron-down-circle.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/24/chevron-down-circle.svg",
+      "size": 339,
+      "sha256": "daa54ff0c59bea0e3f9316dd896de0eb6a986907deb93bc531f65176b6ab8e35"
+    },
+    {
+      "source": "assets/svg/icons/24/chevron-down.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/24/chevron-down.svg",
+      "size": 214,
+      "sha256": "5ea37a53d40399359d17152d55ab6c9fd2277d5fe3cf48d801b6244444c77482"
+    },
+    {
+      "source": "assets/svg/icons/24/chevron-left-circle.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/24/chevron-left-circle.svg",
+      "size": 337,
+      "sha256": "d3a0cdada61d4319cc2cab5cc5b4fe73897daeeea03e7e8a91580f3aad586cdb"
+    },
+    {
+      "source": "assets/svg/icons/24/chevron-left.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/24/chevron-left.svg",
+      "size": 215,
+      "sha256": "9ce15f6e3308282b7176ae5814a5774c37d8683fd96ae87c333d3662644b6b9e"
+    },
+    {
+      "source": "assets/svg/icons/24/chevron-right-circle.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/24/chevron-right-circle.svg",
+      "size": 360,
+      "sha256": "aedac3c3de51608b83b6db2c4f3bc385975c7038f89032f8fb2369fe8782e95d"
+    },
+    {
+      "source": "assets/svg/icons/24/chevron-right.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/24/chevron-right.svg",
+      "size": 214,
+      "sha256": "792f813a32b9754bbdef1458c5791f55ca7262fe62e6b30e5e55d6888ded575f"
+    },
+    {
+      "source": "assets/svg/icons/24/chevron-up-circle.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/24/chevron-up-circle.svg",
+      "size": 339,
+      "sha256": "e77d8aa6296cf2f7f89f2b682b0747dc961085d04ecb042af9ec52843c3ef6fd"
+    },
+    {
+      "source": "assets/svg/icons/24/chevron-up.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/24/chevron-up.svg",
+      "size": 215,
+      "sha256": "3b65af00c29a95bf2aef347c27e9af8a8af645679e1307ee00c8d5ef2f206e2f"
+    },
+    {
+      "source": "assets/svg/icons/24/circle-check-circle.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/24/circle-check-circle.svg",
+      "size": 339,
+      "sha256": "6861cb8d313c74bc721088ee67187b843634d8d2941cfc49601df5f66a1764ba"
+    },
+    {
+      "source": "assets/svg/icons/24/circle-x.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/24/circle-x.svg",
+      "size": 348,
+      "sha256": "113ff1f824dd2dad283e99ab2461b1553a9713dfcc9d1cc575221da7cb432205"
+    },
+    {
+      "source": "assets/svg/icons/24/close-box.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/24/close-box.svg",
+      "size": 432,
+      "sha256": "870079be32c1924e67dc9c45433b3907b1a2359125f760682de677ab682d6908"
+    },
+    {
+      "source": "assets/svg/icons/24/close.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/24/close.svg",
+      "size": 219,
+      "sha256": "cded0f5a878e14e0ebb08d61366f5a4802e7d0d30c33c9a66db63845b49b9f63"
+    },
+    {
+      "source": "assets/svg/icons/24/cloud.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/24/cloud.svg",
+      "size": 569,
+      "sha256": "f14bf8d52f65018e2286494d853c1d8ee4599de76d59036e1aae505a51eff8ce"
+    },
+    {
+      "source": "assets/svg/icons/24/computer.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/24/computer.svg",
+      "size": 389,
+      "sha256": "e2d3370c06fd023fd9964907fbcf9affaa5c722c5c24e9fb019816f6319df2d1"
+    },
+    {
+      "source": "assets/svg/icons/24/crown.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/24/crown.svg",
+      "size": 1457,
+      "sha256": "a453e8125954ba1992ab24ce6bb064030602d9da1ff806b496888946a55a0bab"
+    },
+    {
+      "source": "assets/svg/icons/24/delete.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/24/delete.svg",
+      "size": 641,
+      "sha256": "dc8817ba5d4362d6769328393b750c736772ba984594ad32004fab60af03b671"
+    },
+    {
+      "source": "assets/svg/icons/24/download.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/24/download.svg",
+      "size": 261,
+      "sha256": "fa380205719aff171ecc7bb8cb1aedf689a7b0d5caec0e6e668e0509b94fa74f"
+    },
+    {
+      "source": "assets/svg/icons/24/earth.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/24/earth.svg",
+      "size": 997,
+      "sha256": "5d50d590cab223c32139c5b5d3733321b896c32f13c202d6ee369de114db64e8"
+    },
+    {
+      "source": "assets/svg/icons/24/enter.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/24/enter.svg",
+      "size": 438,
+      "sha256": "6ed8d564c9b5ca1568202f8ba1e3f306c6645ba52fb867b0ad64f4c53b2ac4d0"
+    },
+    {
+      "source": "assets/svg/icons/24/expand.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/24/expand.svg",
+      "size": 283,
+      "sha256": "1fa6476271499edff787d89e24b2fd31c5dbcb1dc1e56152296fa65c3574a99c"
+    },
+    {
+      "source": "assets/svg/icons/24/external-link.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/24/external-link.svg",
+      "size": 230,
+      "sha256": "834c8111ad7baffd70bf0bb515c268df0da0f18813192c93ca8349b611850cd0"
+    },
+    {
+      "source": "assets/svg/icons/24/file-link.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/24/file-link.svg",
+      "size": 3293,
+      "sha256": "83814831f653ededf371f4e65b43bd5595c10db4ee61b97a5340f8c2e5053d1c"
+    },
+    {
+      "source": "assets/svg/icons/24/file-out.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/24/file-out.svg",
+      "size": 709,
+      "sha256": "47fcb6f0d31a6416696126303a4956702bc7189c7d65577d6f64d6a5c8bfea98"
+    },
+    {
+      "source": "assets/svg/icons/24/file-plus.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/24/file-plus.svg",
+      "size": 7337,
+      "sha256": "5e0ce39ae273095691a3e5d8de4447d320830001d59904d717996660f72e0e48"
+    },
+    {
+      "source": "assets/svg/icons/24/file.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/24/file.svg",
+      "size": 552,
+      "sha256": "7015a39cfa31d4d24079a45c58817baae5fd29411314a20ea4df6bdf85aab4ca"
+    },
+    {
+      "source": "assets/svg/icons/24/filter.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/24/filter.svg",
+      "size": 1035,
+      "sha256": "47e4e32687e16cebf297f2976f0bd59a53f4a1376370e1a3b7fd804a4a9a3189"
+    },
+    {
+      "source": "assets/svg/icons/24/folder.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/24/folder.svg",
+      "size": 770,
+      "sha256": "b0d358a8cca5041f87f11843cefc6d5ec7f007a0663d6a8bf735f2a66401075e"
+    },
+    {
+      "source": "assets/svg/icons/24/gift.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/24/gift.svg",
+      "size": 1200,
+      "sha256": "5fb01f08353af7c65668779303fe9279aa83a4e8f90d58873054b29685d0cd60"
+    },
+    {
+      "source": "assets/svg/icons/24/hardware.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/24/hardware.svg",
+      "size": 754,
+      "sha256": "b8eaba6f9ddfc6a69499309d90a82998feb5c07c14df15a240da288a64c4d633"
+    },
+    {
+      "source": "assets/svg/icons/24/history.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/24/history.svg",
+      "size": 705,
+      "sha256": "90d57aaf21c66c4aba2d5af94d37577ee66ab1b8cba23928cf36b74d69203107"
+    },
+    {
+      "source": "assets/svg/icons/24/image-remove-n.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/24/image-remove-n.svg",
+      "size": 503,
+      "sha256": "1e4db662fa03ed8e83bbeca4b4dcd4392cecdca2b20f7500369a0a4974639904"
+    },
+    {
+      "source": "assets/svg/icons/24/image.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/24/image.svg",
+      "size": 389,
+      "sha256": "96fa147a1267ec7de25d7b1fc03b6136ab34de107b10403b548f74ec218d11da"
+    },
+    {
+      "source": "assets/svg/icons/24/info-circle.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/24/info-circle.svg",
+      "size": 349,
+      "sha256": "b7c50baee3a93acc8270ad42254a57018cc234e7f3dd085f1c14bdf2793f8b9e"
+    },
+    {
+      "source": "assets/svg/icons/24/menu.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/24/menu.svg",
+      "size": 222,
+      "sha256": "26314fa30f83a0f8796773b222102f7c01b44e7d08a1983833a33533fdba7849"
+    },
+    {
+      "source": "assets/svg/icons/24/message.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/24/message.svg",
+      "size": 497,
+      "sha256": "6cbd858fab6f1f74e123034b6ea6146ea5043601701802d0d72cb00b1353be7a"
+    },
+    {
+      "source": "assets/svg/icons/24/minus.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/24/minus.svg",
+      "size": 207,
+      "sha256": "5cebad1f32b965719371d32dc912621fc1d281710841fd7ce4cc02f9a6254cc2"
+    },
+    {
+      "source": "assets/svg/icons/24/panel-left-open.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/24/panel-left-open.svg",
+      "size": 424,
+      "sha256": "ef39a696c50d40bc599abcc617c6c783ff0aad1038233be2ba346cf4146ef6ca"
+    },
+    {
+      "source": "assets/svg/icons/24/panel-right-open.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/24/panel-right-open.svg",
+      "size": 424,
+      "sha256": "3c14a55e95b0d2a7b5f1f704414b80567bed4597b8224b9042cfe49fd8a88585"
+    },
+    {
+      "source": "assets/svg/icons/24/paragraph-spacing.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/24/paragraph-spacing.svg",
+      "size": 2990,
+      "sha256": "b49a3cf878c40d59809bb759322fd2c8efd95ab5ad6e059329da7f86c53c0116"
+    },
+    {
+      "source": "assets/svg/icons/24/pencil-line.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/24/pencil-line.svg",
+      "size": 976,
+      "sha256": "680c3f74508b4b88b7506390b53fa4ab16479542bf0ee29bc74edd225d9b0091"
+    },
+    {
+      "source": "assets/svg/icons/24/plus-bubble.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/24/plus-bubble.svg",
+      "size": 677,
+      "sha256": "be3ba0bff1ae18265153f5ad63635a5a6d709e047b03e47d1a3be66d679dc6c2"
+    },
+    {
+      "source": "assets/svg/icons/24/plus-circle.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/24/plus-circle.svg",
+      "size": 336,
+      "sha256": "50ee394614465ab2e4f21d924ef0e20763debfcae7b4e1056bbbcf0fd8e80a75"
+    },
+    {
+      "source": "assets/svg/icons/24/plus.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/24/plus.svg",
+      "size": 215,
+      "sha256": "f8f7ab6699cead034282a1e8170be5e29aac47ef067774c02918157a34601725"
+    },
+    {
+      "source": "assets/svg/icons/24/redo.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/24/redo.svg",
+      "size": 482,
+      "sha256": "6885597dc7d9d9d3c80d75dfc34d4410c6ce1e95009824172b3b47d51bafca44"
+    },
+    {
+      "source": "assets/svg/icons/24/reduction.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/24/reduction.svg",
+      "size": 305,
+      "sha256": "058c2b314ecb229e108d7a6102207f8bb120ad6a34db4cdea7bed3275aae03c0"
+    },
+    {
+      "source": "assets/svg/icons/24/refresh.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/24/refresh.svg",
+      "size": 559,
+      "sha256": "00898fff7f5875f4071a847977b3d3aef7ac475039cfc7db41fdd78e6c1a8502"
+    },
+    {
+      "source": "assets/svg/icons/24/repeat.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/24/repeat.svg",
+      "size": 457,
+      "sha256": "9b8d2c0b2714c2889ea5e49492fca2bd2206ad4e30065dde32672e30fc6eded9"
+    },
+    {
+      "source": "assets/svg/icons/24/search.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/24/search.svg",
+      "size": 394,
+      "sha256": "ba57ec3c26c56db77b6acfc87e70655d2be426674ab368c22ccfd89c25ef8685"
+    },
+    {
+      "source": "assets/svg/icons/24/send-fill.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/24/send-fill.svg",
+      "size": 683,
+      "sha256": "31ab4f8a52378d6bce5f3f67f1bbc12077162ddbdd92d7f0d505f7c63d02405f"
+    },
+    {
+      "source": "assets/svg/icons/24/send.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/24/send.svg",
+      "size": 583,
+      "sha256": "4df84138f0433c33020dc166a5be12259e4ff923458088570d8a411046dfd28b"
+    },
+    {
+      "source": "assets/svg/icons/24/settings.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/24/settings.svg",
+      "size": 2636,
+      "sha256": "6fbc9e16dc4b46da247973a19b31a2e3c08fffb3a41982129a750a1834205195"
+    },
+    {
+      "source": "assets/svg/icons/24/share.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/24/share.svg",
+      "size": 670,
+      "sha256": "35836c845053fc98cd70c8e8b167bfda8f293099e086e205fb9d3092c24c3e03"
+    },
+    {
+      "source": "assets/svg/icons/24/translate.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/24/translate.svg",
+      "size": 541,
+      "sha256": "0fa27efd7bac4fd7f3043068bc01ab3ca4c5a3d9194a948444e21c0c7936db3e"
+    },
+    {
+      "source": "assets/svg/icons/24/undo.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/24/undo.svg",
+      "size": 464,
+      "sha256": "98410722545da1dbbc9e169d062c4affef825d1fb7ed2d353acd923d5284ecaa"
+    },
+    {
+      "source": "assets/svg/icons/24/upload.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/24/upload.svg",
+      "size": 441,
+      "sha256": "8cc9d5ca0ef58874499004be937af7bd1e9852027719166136ee3f7f48817eec"
+    },
+    {
+      "source": "assets/svg/icons/24/user.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/24/user.svg",
+      "size": 633,
+      "sha256": "d2225f91358a2dd5af6cff0a0fa5999b5ddd53d83c1e53dffa700f10e1f14597"
+    },
+    {
+      "source": "assets/svg/icons/32/arrow-down.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/32/arrow-down.svg",
+      "size": 268,
+      "sha256": "446d9510fa839fcc69fdc70c4cc45c8027321fb1fad974104379aec54e148bab"
+    },
+    {
+      "source": "assets/svg/icons/32/arrow-left.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/32/arrow-left.svg",
+      "size": 268,
+      "sha256": "5709e084ebcec322c2dd7d094a80ac7750ea3c2923b30cedd71c189c18b4e97e"
+    },
+    {
+      "source": "assets/svg/icons/32/arrow-right.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/32/arrow-right.svg",
+      "size": 268,
+      "sha256": "430d2d16772efb969cfbd721144da8931874040e86ae9d1dd64a98f344a684f6"
+    },
+    {
+      "source": "assets/svg/icons/32/arrow-up.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/32/arrow-up.svg",
+      "size": 267,
+      "sha256": "fd5c3c437341545cf6d920d4a07daf3ec1c355a8958fee4e275aeb2125e71d9a"
+    },
+    {
+      "source": "assets/svg/icons/32/bell.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/32/bell.svg",
+      "size": 1091,
+      "sha256": "d6fb2e7de989bb7316731e9e66c78cb2928fa923d92304a9cac7a12a5c71ad95"
+    },
+    {
+      "source": "assets/svg/icons/32/book-open-01.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/32/book-open-01.svg",
+      "size": 3160,
+      "sha256": "a37facc9cb4cac183babbab4cc45493e303f1b7bfa4c3b48dab1081f16a2fb21"
+    },
+    {
+      "source": "assets/svg/icons/32/box.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/32/box.svg",
+      "size": 729,
+      "sha256": "0a962a927dbf9d43bf12ae489c7b07b4a6ddde03d382557449755ab45a40b10b"
+    },
+    {
+      "source": "assets/svg/icons/32/chat.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/32/chat.svg",
+      "size": 817,
+      "sha256": "53b0532ce57c07e674b9cca0e4c65eb6d95b167d418ee63361b0f52d7be10b64"
+    },
+    {
+      "source": "assets/svg/icons/32/check.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/32/check.svg",
+      "size": 243,
+      "sha256": "9db0ff7811aeb18e058da0e11ff3e49144a22c4ca90b91c0a9bd2a85ece2d928"
+    },
+    {
+      "source": "assets/svg/icons/32/chevron-down-circle.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/32/chevron-down-circle.svg",
+      "size": 450,
+      "sha256": "ce0b3bc2f0dc1c737b0f6d7671d7c8d3fed396d82756b5f43ebcb19ed3400969"
+    },
+    {
+      "source": "assets/svg/icons/32/chevron-down.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/32/chevron-down.svg",
+      "size": 214,
+      "sha256": "17ce7cb077a45b686f3a723dc11899d746051cd3fb55b7f00ad660e995db5ce2"
+    },
+    {
+      "source": "assets/svg/icons/32/chevron-left-circle.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/32/chevron-left-circle.svg",
+      "size": 451,
+      "sha256": "8607614067197cdad8187cd5a97450ef37eff267854173fa84442c8b6c7b6dc8"
+    },
+    {
+      "source": "assets/svg/icons/32/chevron-left.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/32/chevron-left.svg",
+      "size": 214,
+      "sha256": "14fd8f15a54d180698659ec5d73badef44404d9f6f3334f8a53d1e7bb35e3d5a"
+    },
+    {
+      "source": "assets/svg/icons/32/chevron-right-circle.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/32/chevron-right-circle.svg",
+      "size": 451,
+      "sha256": "fe9022e264435244efd7f882f0917adc0590a19aace8fa3b5cb87cdef7cba85a"
+    },
+    {
+      "source": "assets/svg/icons/32/chevron-right.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/32/chevron-right.svg",
+      "size": 214,
+      "sha256": "7a373cfc6219ab5d17744fd4c6a933a2cab6e7fab68ba7eb6af1a646fab9dda5"
+    },
+    {
+      "source": "assets/svg/icons/32/chevron-up-circle.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/32/chevron-up-circle.svg",
+      "size": 450,
+      "sha256": "efa28386f0f6c15c6167c89e3d63540a7d06e47aaec0574897ea3dce833f2edc"
+    },
+    {
+      "source": "assets/svg/icons/32/chevron-up.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/32/chevron-up.svg",
+      "size": 214,
+      "sha256": "2c21cc30d21d4c3e6f597103224be43746c9060112863b5f8ab3c9be185975cf"
+    },
+    {
+      "source": "assets/svg/icons/32/circle-check-circle.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/32/circle-check-circle.svg",
+      "size": 450,
+      "sha256": "3499c37c5d320233e61d1d3b05fc4b58fa948e7019a5ba538e30751ec5f46229"
+    },
+    {
+      "source": "assets/svg/icons/32/circle-x.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/32/circle-x.svg",
+      "size": 467,
+      "sha256": "ab088a7c9676fb02495232b4448de7c2741cf1aaab2000888eadb43b93391424"
+    },
+    {
+      "source": "assets/svg/icons/32/close-box.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/32/close-box.svg",
+      "size": 496,
+      "sha256": "5c86af46de0ff966c93c4ffa1de590ffda29abb140273065dbde7c04341667e3"
+    },
+    {
+      "source": "assets/svg/icons/32/close.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/32/close.svg",
+      "size": 217,
+      "sha256": "80d4d3ae574e23220a590063d240a3fe26799a842640890667c7e3156bb223fb"
+    },
+    {
+      "source": "assets/svg/icons/32/cloud.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/32/cloud.svg",
+      "size": 599,
+      "sha256": "2ef57ffaa365c62b8addd9a483b326a7d4c5caf9532b557cf423f6eef8386b4c"
+    },
+    {
+      "source": "assets/svg/icons/32/computer.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/32/computer.svg",
+      "size": 482,
+      "sha256": "2cb9a5aed7fee49ce753d3576a6c597c25330e55e33e43c6f82b7d2f73d82a6e"
+    },
+    {
+      "source": "assets/svg/icons/32/crown.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/32/crown.svg",
+      "size": 1483,
+      "sha256": "0d6471bb03eb9b18628bff4bb677248084122fb818d4b8b1e31f40ab513acba9"
+    },
+    {
+      "source": "assets/svg/icons/32/delete.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/32/delete.svg",
+      "size": 722,
+      "sha256": "2cea0e66b170364bfe0a782bd2d6516ed59db50dd0610cc6dcbcff5d8d0f282f"
+    },
+    {
+      "source": "assets/svg/icons/32/download.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/32/download.svg",
+      "size": 291,
+      "sha256": "df590cb260918142c6167ba1771d43ee362f934aa91a1eadeb7f7aee6011433f"
+    },
+    {
+      "source": "assets/svg/icons/32/earth.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/32/earth.svg",
+      "size": 1264,
+      "sha256": "88427de94405a6627d50097c40883857dab1a90df04baad7cc17462b89f0240e"
+    },
+    {
+      "source": "assets/svg/icons/32/enter.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/32/enter.svg",
+      "size": 427,
+      "sha256": "7728a2053b2f438c3621b381f27f79ceaa63b58521eac0d6354e9d4ce4347316"
+    },
+    {
+      "source": "assets/svg/icons/32/expand.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/32/expand.svg",
+      "size": 321,
+      "sha256": "f4f4e60e7e4d231411bcbf2eadd47915e8599589ab450fd23b7f5e4f43b1e187"
+    },
+    {
+      "source": "assets/svg/icons/32/external-link.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/32/external-link.svg",
+      "size": 228,
+      "sha256": "c6dd734b47d37dd1baedba579a44b2f13e119255882d1fef21d10beb08bc6fc7"
+    },
+    {
+      "source": "assets/svg/icons/32/file-link.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/32/file-link.svg",
+      "size": 3301,
+      "sha256": "872c1dd4fc8572eee77f2260aec8746f0d8f94288cf842175124bf33e8ef8c90"
+    },
+    {
+      "source": "assets/svg/icons/32/file-out.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/32/file-out.svg",
+      "size": 743,
+      "sha256": "0765f31a949d9c72ede42c6589e95ca849c7dbcf730c18dfa21002535c6dac99"
+    },
+    {
+      "source": "assets/svg/icons/32/file-plus.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/32/file-plus.svg",
+      "size": 7526,
+      "sha256": "116e34e86191df79d4f4ae8630b28731b6cbd3c79989dd1758d30e9407bc81f6"
+    },
+    {
+      "source": "assets/svg/icons/32/file.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/32/file.svg",
+      "size": 598,
+      "sha256": "e9a18787ed6f4170e590c27b30df156ceb39dfa13980c7d953fa7d6831be3707"
+    },
+    {
+      "source": "assets/svg/icons/32/filter.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/32/filter.svg",
+      "size": 1039,
+      "sha256": "c6e38de344c0e9156a1d22e07daf80b2d5c6447e56425180fd8a4b5c9d9ff349"
+    },
+    {
+      "source": "assets/svg/icons/32/folder.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/32/folder.svg",
+      "size": 811,
+      "sha256": "52e7dfb32fd065e4b926b5b67003b8afb07cd4167741e844966e5daa91dd8231"
+    },
+    {
+      "source": "assets/svg/icons/32/gift.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/32/gift.svg",
+      "size": 1288,
+      "sha256": "626f0c344908fb8c0a3102a3c7e10da968eae9220e53099ecabe484083db8112"
+    },
+    {
+      "source": "assets/svg/icons/32/hardware.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/32/hardware.svg",
+      "size": 816,
+      "sha256": "b82eb6e96698f3cf16a2a3c8179a7c04d669873718e4711c7c8433cfcef1439c"
+    },
+    {
+      "source": "assets/svg/icons/32/history.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/32/history.svg",
+      "size": 721,
+      "sha256": "dc5386258f2470ba510f3d6a337912dc0104c14c6e87545cf56509897b2c5847"
+    },
+    {
+      "source": "assets/svg/icons/32/image-remove-n.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/32/image-remove-n.svg",
+      "size": 464,
+      "sha256": "041a61b20834ce546a7cacfeb7bca662ac5922c333f6b5a3c88b6566153588fb"
+    },
+    {
+      "source": "assets/svg/icons/32/image.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/32/image.svg",
+      "size": 403,
+      "sha256": "5f1b095a8ed9357eb4334d4412fd5d5bdcf0e8fa851fe64e323bfca0cb2e5d5a"
+    },
+    {
+      "source": "assets/svg/icons/32/info-circle.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/32/info-circle.svg",
+      "size": 449,
+      "sha256": "19d99dd51ba32f93b2b26e79fc0e573ad36ae98bfeddab5f7b1965289445fd89"
+    },
+    {
+      "source": "assets/svg/icons/32/menu.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/32/menu.svg",
+      "size": 253,
+      "sha256": "1bff26c05dfbe15e549b9db023390d96f6530b7334e7a06ec0910bd03a4fc2cc"
+    },
+    {
+      "source": "assets/svg/icons/32/message.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/32/message.svg",
+      "size": 542,
+      "sha256": "f4de87cb8edd07800719bbffa4285696cd63d452969ac274891724d60f608495"
+    },
+    {
+      "source": "assets/svg/icons/32/minus.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/32/minus.svg",
+      "size": 216,
+      "sha256": "a2611eb48cc006a33a1b4d7ab86519be52cac1d763021ec9b6c21fd6f7bcde9d"
+    },
+    {
+      "source": "assets/svg/icons/32/panel-left-open.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/32/panel-left-open.svg",
+      "size": 499,
+      "sha256": "93668a572ec3f4e16b555dedb0fec7fb4e279791a00188726e6318bddf19b77d"
+    },
+    {
+      "source": "assets/svg/icons/32/panel-right-open.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/32/panel-right-open.svg",
+      "size": 503,
+      "sha256": "a187f11b3aa694a308388ad3a34756fad4afc7804d9f7ece37046cbe936af095"
+    },
+    {
+      "source": "assets/svg/icons/32/paragraph-spacing.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/32/paragraph-spacing.svg",
+      "size": 3137,
+      "sha256": "869371d448b07da4112291fa15a71fccb72271167428e7251ba1c339b9b9af21"
+    },
+    {
+      "source": "assets/svg/icons/32/pencil-line.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/32/pencil-line.svg",
+      "size": 987,
+      "sha256": "5b18458ac500fdd28036320e2773ac1382c72049655e332dfb12c435038bf073"
+    },
+    {
+      "source": "assets/svg/icons/32/plus-bubble.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/32/plus-bubble.svg",
+      "size": 674,
+      "sha256": "0462554a07d02671dd580da10072ec7b7f78e9c9dfc045db52e4cf36a01429cf"
+    },
+    {
+      "source": "assets/svg/icons/32/plus-circle.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/32/plus-circle.svg",
+      "size": 450,
+      "sha256": "7582a65c46436744d1c574ddec8f1364c4351d2d0c4645b6d8cb063a827f46e7"
+    },
+    {
+      "source": "assets/svg/icons/32/plus.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/32/plus.svg",
+      "size": 244,
+      "sha256": "149370c1110f77365cf58b7692a40742c7d51cece43eea3fb848dd882e9ac0f5"
+    },
+    {
+      "source": "assets/svg/icons/32/redo.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/32/redo.svg",
+      "size": 479,
+      "sha256": "3054e642751d4c9f5046ecf8d257acbe6b112a0be5f81d4176cc43d6031d428d"
+    },
+    {
+      "source": "assets/svg/icons/32/reduction.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/32/reduction.svg",
+      "size": 320,
+      "sha256": "d2840e2e688982194c086c02c45f34588d68ae7e31ba5ffc87f44762338582d7"
+    },
+    {
+      "source": "assets/svg/icons/32/refresh.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/32/refresh.svg",
+      "size": 611,
+      "sha256": "3d5581e05c7fa447861687de3bccdfe82d58d4594518ebc78d655b7cf7def3d0"
+    },
+    {
+      "source": "assets/svg/icons/32/repeat.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/32/repeat.svg",
+      "size": 467,
+      "sha256": "f28d8a5adbaa3e0e0db0e2d8729c8ed412df6ac8b9e0256f9096fb00524dba2e"
+    },
+    {
+      "source": "assets/svg/icons/32/search.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/32/search.svg",
+      "size": 430,
+      "sha256": "0a02dd97f004317e599642b6287928196d84016e708d2e6e103bbba744e34fbb"
+    },
+    {
+      "source": "assets/svg/icons/32/send-fill.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/32/send-fill.svg",
+      "size": 676,
+      "sha256": "94cd254c719ed19e6c2b3e3c6e5ff55cb169ac48cef89cd0321c6d23da1b7e53"
+    },
+    {
+      "source": "assets/svg/icons/32/send.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/32/send.svg",
+      "size": 570,
+      "sha256": "a4f687bad6af5ac443f97a306afe1fc44c2206cbd59f509c7b4646e3944faf63"
+    },
+    {
+      "source": "assets/svg/icons/32/settings.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/32/settings.svg",
+      "size": 2687,
+      "sha256": "4e882cf1f3ef0eb3cdb3a32b2a461959fc60ab90774632250e4c9689b70b847c"
+    },
+    {
+      "source": "assets/svg/icons/32/share.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/32/share.svg",
+      "size": 821,
+      "sha256": "45a28808ad52325199a32a94bd7145cec79ebb587624e6d5165127eb4e4b35b8"
+    },
+    {
+      "source": "assets/svg/icons/32/translate.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/32/translate.svg",
+      "size": 601,
+      "sha256": "a4c30ab3984cb2c4a972b4e98e6d6ea1ff775be76f0c8a58a7cd8367062aa934"
+    },
+    {
+      "source": "assets/svg/icons/32/undo.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/32/undo.svg",
+      "size": 480,
+      "sha256": "1076b0992291c8a85d7d82ad8ed87081649e1c734714aaf6c584158a7f057566"
+    },
+    {
+      "source": "assets/svg/icons/32/upload.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/32/upload.svg",
+      "size": 494,
+      "sha256": "d4c238587b49bd24dab072a0c5b48b7a127cef3e854a428279af6cc7f2c7fa0a"
+    },
+    {
+      "source": "assets/svg/icons/32/user.svg",
+      "destination": "vendor/polaris-design/assets/svg/icons/32/user.svg",
+      "size": 838,
+      "sha256": "19dc5f926c2fa39287e30875fa4ac400ba829cc7829b9addad00c7b0781b2dec"
+    },
+    {
+      "source": "assets/svg/logos/nova/original.svg",
+      "destination": "vendor/polaris-design/assets/svg/logos/nova/original.svg",
+      "size": 7523,
+      "sha256": "952b9c17c2baf0f475fba8a49480b603d4f2f875d564927f0cb1f73a2302800b"
+    },
+    {
+      "source": "assets/svg/logos/nova/white.svg",
+      "destination": "vendor/polaris-design/assets/svg/logos/nova/white.svg",
+      "size": 6757,
+      "sha256": "72426cdb5bd1f97d9b4056fb97ae6be48ed095182b61f37d5bd51ab06a15b410"
+    },
+    {
+      "source": "assets/svg/logos/polaris-office/favicon.svg",
+      "destination": "vendor/polaris-design/assets/svg/logos/polaris-office/favicon.svg",
+      "size": 3208,
+      "sha256": "e3fdeeac880a10deb824b0a68712fb299e7ccc024caae428dfabdc8f8a08837c"
+    },
+    {
+      "source": "assets/svg/logos/polaris-office/horizontal-negative.svg",
+      "destination": "vendor/polaris-design/assets/svg/logos/polaris-office/horizontal-negative.svg",
+      "size": 11764,
+      "sha256": "60daf49fa778cb917005d30e3607141dffa03e51d80be1c4e0b935c42049ee04"
+    },
+    {
+      "source": "assets/svg/logos/polaris-office/horizontal.svg",
+      "destination": "vendor/polaris-design/assets/svg/logos/polaris-office/horizontal.svg",
+      "size": 11783,
+      "sha256": "672c57d5c874f134490b592daf1c4134c81c82068ca43ba2ad8814afe2672294"
+    },
+    {
+      "source": "assets/svg/logos/polaris-office/symbol-144.svg",
+      "destination": "vendor/polaris-design/assets/svg/logos/polaris-office/symbol-144.svg",
+      "size": 3355,
+      "sha256": "585fc7469d5f2b886c6af056da861dcf66055130999469e06eac920408b32ead"
+    },
+    {
+      "source": "CHANGELOG.md",
+      "destination": "vendor/polaris-design/CHANGELOG.md",
+      "size": 109710,
+      "sha256": "5d95caef05137d4846c8985b578dda7507a4055d8cfba5e7fc4e6b7c7d0bd3ff"
     },
     {
       "source": "DESIGN.md",
       "destination": "vendor/polaris-design/DESIGN.md",
+      "size": 14322,
       "sha256": "6b511a88305f37b2735d5aba5af0b95b50a0e66f1bcfd3c0e2e540227f0de5e9"
     },
     {
-      "source": "tokens.md",
-      "destination": "vendor/polaris-design/tokens.md",
-      "sha256": "17cf7150189ba882ab9e2c4ac810393e4520e44354e9059a81aa0d5919b531f2"
+      "source": "docs/archive/design-assets-v07.md",
+      "destination": "vendor/polaris-design/docs/archive/design-assets-v07.md",
+      "size": 9072,
+      "sha256": "afd37370faf1c8fbd4f1ddfb5b9c746f89f1eca1fdd49453c1187495feed1e75"
     },
     {
-      "source": "packages/ui/COMPONENTS.md",
-      "destination": "vendor/polaris-design/packages/ui/COMPONENTS.md",
-      "sha256": "1fc9c258f0b05a4f8871c4dc29f3201b05f5b49c8880563949798af015367727"
+      "source": "docs/archive/migration-checklist.md",
+      "destination": "vendor/polaris-design/docs/archive/migration-checklist.md",
+      "size": 6691,
+      "sha256": "ff9b99a0bee2b290e78911896ff6dcc6f2e03d637697a9a31ac3113d31cc0164"
+    },
+    {
+      "source": "docs/archive/patterns.md",
+      "destination": "vendor/polaris-design/docs/archive/patterns.md",
+      "size": 7325,
+      "sha256": "d8ba69a01ff87fa572f9119f73adbc2158da0c83b2a54ad43e09d92a052e0e68"
+    },
+    {
+      "source": "docs/archive/recipes.md",
+      "destination": "vendor/polaris-design/docs/archive/recipes.md",
+      "size": 11089,
+      "sha256": "e2c98023d71d673d807c5847282ad3b1df32ec6344ea3f7eb76c04465b433ab4"
+    },
+    {
+      "source": "docs/for-consumers/component-use-cases/badge.md",
+      "destination": "vendor/polaris-design/docs/for-consumers/component-use-cases/badge.md",
+      "size": 8736,
+      "sha256": "2e44e47eec3b63253797e2a6ad6358023e4dbc1ca7f5ee539afeb825df38c6cf"
+    },
+    {
+      "source": "docs/for-consumers/component-use-cases/README.md",
+      "destination": "vendor/polaris-design/docs/for-consumers/component-use-cases/README.md",
+      "size": 2274,
+      "sha256": "57aa1893e0ecb69f036c90b02179677e8baa5f75e5c1de65a5146687c0710f45"
+    },
+    {
+      "source": "docs/for-consumers/getting-started.md",
+      "destination": "vendor/polaris-design/docs/for-consumers/getting-started.md",
+      "size": 10617,
+      "sha256": "73b0dda66282159f3bbf7a10681cdc08a2684e8fe0f17a96c79ad823e42ebd0a"
+    },
+    {
+      "source": "docs/for-consumers/install.md",
+      "destination": "vendor/polaris-design/docs/for-consumers/install.md",
+      "size": 9399,
+      "sha256": "91204c9aadb805e1477a4d4a5e28ab6478171bb4953046d91074df80a2dffe9b"
+    },
+    {
+      "source": "docs/for-consumers/migration/legacy-css-patterns.md",
+      "destination": "vendor/polaris-design/docs/for-consumers/migration/legacy-css-patterns.md",
+      "size": 12662,
+      "sha256": "3e259de38ea835cd9ec6c71e902d43859106b5066cde1933c85b21e5f4b3ed9f"
+    },
+    {
+      "source": "docs/for-consumers/migration/README.md",
+      "destination": "vendor/polaris-design/docs/for-consumers/migration/README.md",
+      "size": 3130,
+      "sha256": "9fcb9d4abd76746c1a0417500658d376b8bf0a8a6043271e33e474eb3e792245"
+    },
+    {
+      "source": "docs/for-consumers/migration/rsc-patterns.md",
+      "destination": "vendor/polaris-design/docs/for-consumers/migration/rsc-patterns.md",
+      "size": 15197,
+      "sha256": "75748e027bdd96a1a94b38ed8ecb018ae55b2d86312c1b59ee95168b99cdf042"
+    },
+    {
+      "source": "docs/for-consumers/migration/v0.6-to-v0.7.md",
+      "destination": "vendor/polaris-design/docs/for-consumers/migration/v0.6-to-v0.7.md",
+      "size": 15821,
+      "sha256": "4029896b0f27060f9c07b87d77951fc98eff52e2191602b1915ad58a2b3503a1"
+    },
+    {
+      "source": "docs/for-consumers/migration/v0.7-to-v0.8.md",
+      "destination": "vendor/polaris-design/docs/for-consumers/migration/v0.7-to-v0.8.md",
+      "size": 13414,
+      "sha256": "79eb2688889c69c9e36c021a1c2b3a98b4d22aa7a0ccbc1650521a6ed9019f4a"
+    },
+    {
+      "source": "docs/for-consumers/migration/visual-diff.md",
+      "destination": "vendor/polaris-design/docs/for-consumers/migration/visual-diff.md",
+      "size": 10476,
+      "sha256": "3105846dbf5a611acb697b2d9cd10b0cfc5bee5b01d308e47e29577e2f3daaa2"
+    },
+    {
+      "source": "docs/for-consumers/README.md",
+      "destination": "vendor/polaris-design/docs/for-consumers/README.md",
+      "size": 3490,
+      "sha256": "53d12022543c1f6fcce52bacb2ce9064acefb6988f12409b54e53447fc0fcd60"
+    },
+    {
+      "source": "docs/for-contributors/architecture/app-shell-layout.md",
+      "destination": "vendor/polaris-design/docs/for-contributors/architecture/app-shell-layout.md",
+      "size": 5745,
+      "sha256": "3df3d505f4a76e963cb65a93f10ff27cf689759f30cf10ca77c3175fe31bfeb6"
+    },
+    {
+      "source": "docs/for-contributors/architecture/nextjs-app-router.md",
+      "destination": "vendor/polaris-design/docs/for-contributors/architecture/nextjs-app-router.md",
+      "size": 9419,
+      "sha256": "760508092b595898548881832c422338e894019e2ecaf1e997a0bfd646bf3eb6"
+    },
+    {
+      "source": "docs/for-contributors/architecture/tailwind-v4.md",
+      "destination": "vendor/polaris-design/docs/for-contributors/architecture/tailwind-v4.md",
+      "size": 4076,
+      "sha256": "3e97a3cd58b1fab76bf44fdb2ed2ab57af4342e7b74359cf08649ce30c90d02e"
+    },
+    {
+      "source": "docs/for-contributors/component-history.md",
+      "destination": "vendor/polaris-design/docs/for-contributors/component-history.md",
+      "size": 12904,
+      "sha256": "899fdd85f1c140e6ef20edae487ef30861eab3ff4b577914965c984c0dfb9545"
+    },
+    {
+      "source": "docs/for-contributors/docs-architecture.md",
+      "destination": "vendor/polaris-design/docs/for-contributors/docs-architecture.md",
+      "size": 15341,
+      "sha256": "a7d8adb61e6ca78ff8508a50be2cce6c9868de5b77634b2e355d61f7977766e5"
+    },
+    {
+      "source": "docs/for-contributors/README.md",
+      "destination": "vendor/polaris-design/docs/for-contributors/README.md",
+      "size": 3473,
+      "sha256": "2baa2d3e8b735ab9e49931b95cf8368699e70477c3c33f38da2a3c38b0b449e2"
+    },
+    {
+      "source": "docs/for-contributors/roadmap.md",
+      "destination": "vendor/polaris-design/docs/for-contributors/roadmap.md",
+      "size": 25892,
+      "sha256": "af6d1a846441a7791ccb8a7cbae5d288bf7563332dd1d0b0a556eaae2bd94494"
+    },
+    {
+      "source": "docs/for-contributors/variant-axes.md",
+      "destination": "vendor/polaris-design/docs/for-contributors/variant-axes.md",
+      "size": 3441,
+      "sha256": "7ef237788d23b8b44c6a8cbaacc82844fa10c77bc150698b61d233c008fb31a6"
+    },
+    {
+      "source": "docs/for-design-team/followup.md",
+      "destination": "vendor/polaris-design/docs/for-design-team/followup.md",
+      "size": 37751,
+      "sha256": "8ec4fd7eca4b5a74506b2b7ff57def61d99efa82c814de26cb8c5366bccd9aea"
+    },
+    {
+      "source": "docs/for-design-team/README.md",
+      "destination": "vendor/polaris-design/docs/for-design-team/README.md",
+      "size": 3161,
+      "sha256": "d4de2d2df0b4cb1842657eaf2daf37425508a62d32e4a092101f3deb2dadcd50"
+    },
+    {
+      "source": "docs/README.md",
+      "destination": "vendor/polaris-design/docs/README.md",
+      "size": 3575,
+      "sha256": "72da65d7b639589e756e67ae6685614e2ed6412c4634c17a98c3bc0e6a245cfd"
+    },
+    {
+      "source": "LICENSE",
+      "destination": "vendor/polaris-design/LICENSE",
+      "size": 1685,
+      "sha256": "0d66abcf21da14ec432bd5bec0f3403ac8c53232105afaf4aecf6ea887486e87"
+    },
+    {
+      "source": "package.json",
+      "destination": "vendor/polaris-design/package.json",
+      "size": 923,
+      "sha256": "6814f936e972f6b1ad4f0ebfa91a60915beb7b6f32d45768d29b04d85ccf4e8a"
+    },
+    {
+      "source": "packages/lint/bin/polaris-audit.mjs",
+      "destination": "vendor/polaris-design/packages/lint/bin/polaris-audit.mjs",
+      "size": 7762,
+      "sha256": "6fde397cbd0c003be38690c1743a73460745c21e5d386962b132bc64948f5cee"
+    },
+    {
+      "source": "packages/lint/bin/polaris-codemod-v07.mjs",
+      "destination": "vendor/polaris-design/packages/lint/bin/polaris-codemod-v07.mjs",
+      "size": 14303,
+      "sha256": "9240968e87341ae532719e1dd6cb39d6678a215fc378d968ddade26b771db885"
+    },
+    {
+      "source": "packages/lint/bin/polaris-codemod-v08.mjs",
+      "destination": "vendor/polaris-design/packages/lint/bin/polaris-codemod-v08.mjs",
+      "size": 43842,
+      "sha256": "aa9d37b3851455b56ef941e8b287dc1d6a8096a471a47782149a4ad7f5b53135"
+    },
+    {
+      "source": "packages/lint/CHANGELOG.md",
+      "destination": "vendor/polaris-design/packages/lint/CHANGELOG.md",
+      "size": 47867,
+      "sha256": "23b3236663611433f209c0c7307010638ae9b443a101ed9bd3390737f6d65bbd"
+    },
+    {
+      "source": "packages/lint/package.json",
+      "destination": "vendor/polaris-design/packages/lint/package.json",
+      "size": 1162,
+      "sha256": "88b6c56d918f5213126c6db30838a9d072c211a2c7b04bdb87c597f060e4d4e9"
+    },
+    {
+      "source": "packages/lint/README.md",
+      "destination": "vendor/polaris-design/packages/lint/README.md",
+      "size": 4420,
+      "sha256": "54af68242d8c12aebd64b44c091500c678770642f9f3c2b0422cd3f29eb0a51d"
     },
     {
       "source": "packages/lint/RULES.md",
       "destination": "vendor/polaris-design/packages/lint/RULES.md",
+      "size": 2256,
       "sha256": "9096ac3297e5f33a277212d89ab70a5fc3914a899abb7da26f8c0f6c32a0a99d"
     },
     {
-      "source": "packages/plugin/skills/polaris-web/SKILL.md",
-      "destination": "vendor/polaris-design/packages/plugin/skills/polaris-web/SKILL.md",
-      "sha256": "8c7cf3c0196126534c700956b1e856d67bfd344798854fb9a74c39d862b8f48f"
+      "source": "packages/lint/scripts/build-rules-md.ts",
+      "destination": "vendor/polaris-design/packages/lint/scripts/build-rules-md.ts",
+      "size": 3693,
+      "sha256": "f0b43087470ee5239b00849705f974962d73f5b2e47293d92dedd588dea8d3f4"
+    },
+    {
+      "source": "packages/lint/src/index.ts",
+      "destination": "vendor/polaris-design/packages/lint/src/index.ts",
+      "size": 3500,
+      "sha256": "b0278b57736fef5a5559b932df08fa442636c1b7216efcf88dee15a0791b1b66"
+    },
+    {
+      "source": "packages/lint/src/rules/no-arbitrary-tailwind.ts",
+      "destination": "vendor/polaris-design/packages/lint/src/rules/no-arbitrary-tailwind.ts",
+      "size": 1954,
+      "sha256": "c68f40572fb5b8bdd6cd615c8fa82983d9c59f9fb747570b051d21ebd72e90ed"
+    },
+    {
+      "source": "packages/lint/src/rules/no-deprecated-polaris-token.ts",
+      "destination": "vendor/polaris-design/packages/lint/src/rules/no-deprecated-polaris-token.ts",
+      "size": 12467,
+      "sha256": "f434995ea7b1abc8a91f988941f1d4d97b78b98ddf85db70a50187d04bac3656"
+    },
+    {
+      "source": "packages/lint/src/rules/no-direct-font-family.ts",
+      "destination": "vendor/polaris-design/packages/lint/src/rules/no-direct-font-family.ts",
+      "size": 2149,
+      "sha256": "6f3e3643391a58d4cb929d04da4ee92bb6ff45c031f1c4ee45d1fea8090e94eb"
+    },
+    {
+      "source": "packages/lint/src/rules/no-hardcoded-color.ts",
+      "destination": "vendor/polaris-design/packages/lint/src/rules/no-hardcoded-color.ts",
+      "size": 3097,
+      "sha256": "abf482f741c8ffa656618fc2e4e344761d66d2654b190e950eb7add7439ac19f"
+    },
+    {
+      "source": "packages/lint/src/rules/no-non-polaris-css-var.ts",
+      "destination": "vendor/polaris-design/packages/lint/src/rules/no-non-polaris-css-var.ts",
+      "size": 4148,
+      "sha256": "f744550fda2665ac3ba5d69e9193643513f0e7cba50f172dadc6612e0453ca55"
+    },
+    {
+      "source": "packages/lint/src/rules/no-tailwind-default-color.ts",
+      "destination": "vendor/polaris-design/packages/lint/src/rules/no-tailwind-default-color.ts",
+      "size": 7966,
+      "sha256": "c6ac281b4cf4ccb657af9202855572915cee382e722dab318c0b325d71a4609c"
+    },
+    {
+      "source": "packages/lint/src/rules/prefer-polaris-component.ts",
+      "destination": "vendor/polaris-design/packages/lint/src/rules/prefer-polaris-component.ts",
+      "size": 2678,
+      "sha256": "b6466f62b97c2a857640eec72c9d5ea55f86c14184c6d85da79967d311fd2ceb"
+    },
+    {
+      "source": "packages/lint/src/rules/prefer-polaris-icon.ts",
+      "destination": "vendor/polaris-design/packages/lint/src/rules/prefer-polaris-icon.ts",
+      "size": 3717,
+      "sha256": "6b26af3f14ee3154aa3bdda5fc0818faba4b03d9dc9cc0f17fa11c85f0e7ee7c"
+    },
+    {
+      "source": "packages/lint/src/rules/state-color-with-icon.ts",
+      "destination": "vendor/polaris-design/packages/lint/src/rules/state-color-with-icon.ts",
+      "size": 4695,
+      "sha256": "a98a0a77c0bd32a49710573ad310ce14cb359932f5aef873d6fec7d2ad6fede4"
+    },
+    {
+      "source": "packages/lint/test/codemod-v07.test.mjs",
+      "destination": "vendor/polaris-design/packages/lint/test/codemod-v07.test.mjs",
+      "size": 9288,
+      "sha256": "da20f9b84c005aa5c1e9eeb6d0918bfa76610c428b9ea4b8aba73c87dc39203e"
+    },
+    {
+      "source": "packages/lint/test/codemod-v08.test.mjs",
+      "destination": "vendor/polaris-design/packages/lint/test/codemod-v08.test.mjs",
+      "size": 36956,
+      "sha256": "4e4ec6879cedf1d2e8a1edc1ef90a8da84abd304e4142851277855fea22603a9"
+    },
+    {
+      "source": "packages/lint/test/fixtures/bad.tsx",
+      "destination": "vendor/polaris-design/packages/lint/test/fixtures/bad.tsx",
+      "size": 495,
+      "sha256": "d6aac4db294419f9755f4be908626b6abf5e3f93b69aca45a9c88cf87b65b09b"
+    },
+    {
+      "source": "packages/lint/test/fixtures/eslint.config.mjs",
+      "destination": "vendor/polaris-design/packages/lint/test/fixtures/eslint.config.mjs",
+      "size": 278,
+      "sha256": "6d66d90e644b9a266e078a0da3eed362041cdc9a217b0adb6db73395ecb85309"
+    },
+    {
+      "source": "packages/lint/test/fixtures/good.tsx",
+      "destination": "vendor/polaris-design/packages/lint/test/fixtures/good.tsx",
+      "size": 805,
+      "sha256": "74ceaa4ca6966a7ac82e0ecf1260db1705ef6e8630ec3a1460c824fd48c79d6b"
+    },
+    {
+      "source": "packages/lint/test/run-tests.mjs",
+      "destination": "vendor/polaris-design/packages/lint/test/run-tests.mjs",
+      "size": 16819,
+      "sha256": "a2c5d9391da4b31c556d21e1648ece4aa1d504fa22032a74ba62f9d9159d348e"
+    },
+    {
+      "source": "packages/lint/tsconfig.json",
+      "destination": "vendor/polaris-design/packages/lint/tsconfig.json",
+      "size": 142,
+      "sha256": "4ff3c3ff7b881a8901ce304478be85ee8d38d5b680d50cd740d3b794da7d8383"
+    },
+    {
+      "source": "packages/lint/tsup.config.ts",
+      "destination": "vendor/polaris-design/packages/lint/tsup.config.ts",
+      "size": 211,
+      "sha256": "fd529b30deecd1f34f6f80de9f0f5266137ee96af42bef1b29b1fa5fae820b4d"
+    },
+    {
+      "source": "packages/plugin/.claude-plugin/plugin.json",
+      "destination": "vendor/polaris-design/packages/plugin/.claude-plugin/plugin.json",
+      "size": 732,
+      "sha256": "5473ab152f332c590e05083a7844ea2ab69b2be2a792dab0f44dad1426d378f9"
+    },
+    {
+      "source": "packages/plugin/CHANGELOG.md",
+      "destination": "vendor/polaris-design/packages/plugin/CHANGELOG.md",
+      "size": 48919,
+      "sha256": "c596e729ac4c97e49eeaaaf8113b03f317b0262cdc5bc2da9bad0de7ed732808"
+    },
+    {
+      "source": "packages/plugin/commands/polaris-brand-audit.md",
+      "destination": "vendor/polaris-design/packages/plugin/commands/polaris-brand-audit.md",
+      "size": 4680,
+      "sha256": "34bd11cc0616175f8a10320dd4227bca247d1eaba8ab9ae79ef16ef84836ee7c"
     },
     {
       "source": "packages/plugin/commands/polaris-check.md",
       "destination": "vendor/polaris-design/packages/plugin/commands/polaris-check.md",
+      "size": 4201,
       "sha256": "dfcfa20b384bb71cceeb4759e0c4049874fcb6370869c8c897f9476765693f5b"
     },
     {
       "source": "packages/plugin/commands/polaris-component.md",
       "destination": "vendor/polaris-design/packages/plugin/commands/polaris-component.md",
+      "size": 4348,
       "sha256": "8199c309d96a17473774ddefded94c25c521df32d799b999d075b5881949d912"
     },
     {
-      "source": "packages/plugin/commands/polaris-brand-audit.md",
-      "destination": "vendor/polaris-design/packages/plugin/commands/polaris-brand-audit.md",
-      "sha256": "34bd11cc0616175f8a10320dd4227bca247d1eaba8ab9ae79ef16ef84836ee7c"
+      "source": "packages/plugin/commands/polaris-init.md",
+      "destination": "vendor/polaris-design/packages/plugin/commands/polaris-init.md",
+      "size": 5469,
+      "sha256": "93d0798d5df62b46879334f467dfa4d7f0eb2680ba7c9d6b1eb100443a7e7f13"
     },
     {
-      "source": "packages/ui/src/tokens/index.ts",
-      "destination": "vendor/polaris-design/packages/ui/src/tokens/index.ts",
-      "sha256": "12532babe728eec5bc142808c8cc5af51d9b375eae9852cdfee130faa2d2000f"
+      "source": "packages/plugin/commands/polaris-migrate.md",
+      "destination": "vendor/polaris-design/packages/plugin/commands/polaris-migrate.md",
+      "size": 7698,
+      "sha256": "760fe7cc7e486a46dc5bbcd0a84021ff5cac924897158fea08821772b8c5215f"
     },
     {
-      "source": "packages/ui/src/tokens/colors.ts",
-      "destination": "vendor/polaris-design/packages/ui/src/tokens/colors.ts",
-      "sha256": "efa21c73937f8d9258bc89d37c4bcd7c78880638b0be7fd3e134192a00e7a1f7"
+      "source": "packages/plugin/package.json",
+      "destination": "vendor/polaris-design/packages/plugin/package.json",
+      "size": 267,
+      "sha256": "258518555d10fe33fa3bc2381b12432df21bf1fa0d3a4e80c72eb4b501481c1e"
     },
     {
-      "source": "packages/ui/src/tokens/typography.ts",
-      "destination": "vendor/polaris-design/packages/ui/src/tokens/typography.ts",
-      "sha256": "c57c8f0b47db41bdecf62cc70bef6f165f4cb5f78dbee2c8479db0e208b44dd4"
+      "source": "packages/plugin/README.md",
+      "destination": "vendor/polaris-design/packages/plugin/README.md",
+      "size": 4805,
+      "sha256": "cabab94e7a901b4b4c60f371362015bca340a769b3422834efe80ca4a2fa8637"
     },
     {
-      "source": "packages/ui/src/tokens/spacing.ts",
-      "destination": "vendor/polaris-design/packages/ui/src/tokens/spacing.ts",
-      "sha256": "aae4563660a1b7851f37224ab3ef7e689cc45824e37dc3070b567e06473a56ce"
+      "source": "packages/plugin/scripts/post-edit-lint.mjs",
+      "destination": "vendor/polaris-design/packages/plugin/scripts/post-edit-lint.mjs",
+      "size": 5425,
+      "sha256": "b6c7eb625ed3e624ea7019808547c337863d6fd9eae93be43ace9e038a145211"
     },
     {
-      "source": "packages/ui/src/tokens/radius.ts",
-      "destination": "vendor/polaris-design/packages/ui/src/tokens/radius.ts",
-      "sha256": "336d2bb706215eba7e6d7de113270f8a26086eed12b144d03a96343bdf8e09e2"
+      "source": "packages/plugin/skills/polaris-web/SKILL.md",
+      "destination": "vendor/polaris-design/packages/plugin/skills/polaris-web/SKILL.md",
+      "size": 23454,
+      "sha256": "8c7cf3c0196126534c700956b1e856d67bfd344798854fb9a74c39d862b8f48f"
     },
     {
-      "source": "packages/ui/src/tokens/shadow.ts",
-      "destination": "vendor/polaris-design/packages/ui/src/tokens/shadow.ts",
-      "sha256": "d018e2ad24f07e2132c69a36380db8656029944e703888367ce93c099d8ebdf4"
+      "source": "packages/plugin/test/hook-smoke.mjs",
+      "destination": "vendor/polaris-design/packages/plugin/test/hook-smoke.mjs",
+      "size": 3570,
+      "sha256": "da48412e559deb459224637c21e0be60e50668a59af9d68cf41fbcb28e353817"
     },
     {
-      "source": "packages/ui/src/tokens/motion.ts",
-      "destination": "vendor/polaris-design/packages/ui/src/tokens/motion.ts",
-      "sha256": "7e25625473e7153f0070f30b3f1bb4b16a69c36a70c58a2860abbe2b0ce6618a"
+      "source": "packages/template-next/.gitignore",
+      "destination": "vendor/polaris-design/packages/template-next/.gitignore",
+      "size": 49,
+      "sha256": "d001f8331e4d3edde2dfb50644e05c16b5e32def184a2b892d52551dde1ae984"
     },
     {
-      "source": "packages/ui/src/tokens/zIndex.ts",
-      "destination": "vendor/polaris-design/packages/ui/src/tokens/zIndex.ts",
-      "sha256": "f9f4128ee30b3b0bdcf10c2ddd8996f176ade6d49947c205c3cd1ba32f87083f"
+      "source": "packages/template-next/AGENTS.md",
+      "destination": "vendor/polaris-design/packages/template-next/AGENTS.md",
+      "size": 7553,
+      "sha256": "65bbf1ab8e6b9a5dd5e039f027142bde91ffe6223efe3f4d68fed3e010901e54"
+    },
+    {
+      "source": "packages/template-next/app/globals.css",
+      "destination": "vendor/polaris-design/packages/template-next/app/globals.css",
+      "size": 558,
+      "sha256": "85f2e162cbcd6ee480a49200bf30d66be5f1e4737cd3c1c180fc025fca738c22"
+    },
+    {
+      "source": "packages/template-next/app/layout.tsx",
+      "destination": "vendor/polaris-design/packages/template-next/app/layout.tsx",
+      "size": 1261,
+      "sha256": "3ea674cc1425ccfa1129513530b11ed3dbc3b8e1bef352ee30cba59184cfceee"
+    },
+    {
+      "source": "packages/template-next/app/page.tsx",
+      "destination": "vendor/polaris-design/packages/template-next/app/page.tsx",
+      "size": 5186,
+      "sha256": "be56886c83706d202c6302916cd401d22b829f2599dd22d065c56bffba5afc7a"
+    },
+    {
+      "source": "packages/template-next/CHANGELOG.md",
+      "destination": "vendor/polaris-design/packages/template-next/CHANGELOG.md",
+      "size": 48681,
+      "sha256": "8dfd25efa35438121ceca199749c959b80822d4f5d48ccfc0643c90f573014d9"
+    },
+    {
+      "source": "packages/template-next/components/theme-toggle.tsx",
+      "destination": "vendor/polaris-design/packages/template-next/components/theme-toggle.tsx",
+      "size": 1175,
+      "sha256": "c73fbac7204836e0f23f9d282d1ec968bcc803673191b59c25488477924f279c"
+    },
+    {
+      "source": "packages/template-next/DESIGN.md",
+      "destination": "vendor/polaris-design/packages/template-next/DESIGN.md",
+      "size": 6248,
+      "sha256": "2b87d43dc99080432e1aa6ee1e9cfa6229a23583ab088c91aeee6ae6588869a4"
+    },
+    {
+      "source": "packages/template-next/eslint.config.mjs",
+      "destination": "vendor/polaris-design/packages/template-next/eslint.config.mjs",
+      "size": 344,
+      "sha256": "6e2f76a003f33d77b9467f2aff6c18b9651c0d2b3e66b50b83f2fbe9b2e39dce"
+    },
+    {
+      "source": "packages/template-next/next-env.d.ts",
+      "destination": "vendor/polaris-design/packages/template-next/next-env.d.ts",
+      "size": 262,
+      "sha256": "85ae5aee75f011967cf2d25cbc342f62d69314e9d925f7f4aa3456fc2cffcca6"
+    },
+    {
+      "source": "packages/template-next/next.config.ts",
+      "destination": "vendor/polaris-design/packages/template-next/next.config.ts",
+      "size": 160,
+      "sha256": "945354b3cc9b11f0b44a2c0111d55d23fb8b6162882766f23ec5c26d410f2de6"
+    },
+    {
+      "source": "packages/template-next/package.json",
+      "destination": "vendor/polaris-design/packages/template-next/package.json",
+      "size": 1118,
+      "sha256": "ca644ac37347de361b96718e606b4dfd1deadb62d0de266cdaaba938c4740ede"
+    },
+    {
+      "source": "packages/template-next/postcss.config.js",
+      "destination": "vendor/polaris-design/packages/template-next/postcss.config.js",
+      "size": 83,
+      "sha256": "fa650b380adfabb151a0b352f7135e107e6352345f899060f1c5c231228f94bf"
+    },
+    {
+      "source": "packages/template-next/README.md",
+      "destination": "vendor/polaris-design/packages/template-next/README.md",
+      "size": 4026,
+      "sha256": "474e5b7eb77cf0e744d99485ef50d85f9e812362a9d84b943aa4f8d2157470c4"
+    },
+    {
+      "source": "packages/template-next/tailwind.config.ts",
+      "destination": "vendor/polaris-design/packages/template-next/tailwind.config.ts",
+      "size": 281,
+      "sha256": "f8e66daefbffb20469c1cf3075dd9b9152421d12d80d628db2588e1574d9b9a4"
+    },
+    {
+      "source": "packages/template-next/tsconfig.json",
+      "destination": "vendor/polaris-design/packages/template-next/tsconfig.json",
+      "size": 573,
+      "sha256": "815ebf9c7a37f68fcf17816595bd0fdd3050964ef5dd71a97fe2209bf39a9e8b"
+    },
+    {
+      "source": "packages/ui/CHANGELOG.md",
+      "destination": "vendor/polaris-design/packages/ui/CHANGELOG.md",
+      "size": 51574,
+      "sha256": "50a16f1da6d2cabead69127e4ce8cd4d5a5dea2ee4492eb5bec0a0c2a7a9c742"
+    },
+    {
+      "source": "packages/ui/COMPONENTS.md",
+      "destination": "vendor/polaris-design/packages/ui/COMPONENTS.md",
+      "size": 4967,
+      "sha256": "1fc9c258f0b05a4f8871c4dc29f3201b05f5b49c8880563949798af015367727"
+    },
+    {
+      "source": "packages/ui/package.json",
+      "destination": "vendor/polaris-design/packages/ui/package.json",
+      "size": 4863,
+      "sha256": "bda4a534f262e4b8497de686d31a528b4180d71a9970b2a3e99ac004d942637b"
+    },
+    {
+      "source": "packages/ui/README.md",
+      "destination": "vendor/polaris-design/packages/ui/README.md",
+      "size": 27352,
+      "sha256": "fbc0284f43e01eb5901a320202bcdabeee9054a86d86afefbc7f6820410e24be"
+    },
+    {
+      "source": "packages/ui/scripts/_svg-utils.ts",
+      "destination": "vendor/polaris-design/packages/ui/scripts/_svg-utils.ts",
+      "size": 3081,
+      "sha256": "de05f79a2fe8d81b204c10d33c6a4e911e14c8022f7e5230aad38e05ace7e574"
+    },
+    {
+      "source": "packages/ui/scripts/build-component-catalog.ts",
+      "destination": "vendor/polaris-design/packages/ui/scripts/build-component-catalog.ts",
+      "size": 6627,
+      "sha256": "aee8bfc69cadf102a4653e37244f7db48f822385714a11965238a271d5500e26"
+    },
+    {
+      "source": "packages/ui/scripts/build-design-md.ts",
+      "destination": "vendor/polaris-design/packages/ui/scripts/build-design-md.ts",
+      "size": 15386,
+      "sha256": "a8119487a893ef5dd2c6cf63a4a74eb18adbca86b92f777fe28254261e32b34a"
+    },
+    {
+      "source": "packages/ui/scripts/build-file-icons.ts",
+      "destination": "vendor/polaris-design/packages/ui/scripts/build-file-icons.ts",
+      "size": 6677,
+      "sha256": "885212d54f685d720949bc3dd7b868edd147d17f471d00d556e8b1cd2ae4f537"
+    },
+    {
+      "source": "packages/ui/scripts/build-icons.ts",
+      "destination": "vendor/polaris-design/packages/ui/scripts/build-icons.ts",
+      "size": 10283,
+      "sha256": "6c679205809ff1a17dd7e6c3aac21232b407a1d1575bbd5e0671da3423d5b94f"
+    },
+    {
+      "source": "packages/ui/scripts/build-logos.ts",
+      "destination": "vendor/polaris-design/packages/ui/scripts/build-logos.ts",
+      "size": 9683,
+      "sha256": "f9d30036b136636415c14eebd3cbf0037fd46a794dff9b71d4fc2972bff7e65f"
+    },
+    {
+      "source": "packages/ui/scripts/build-ribbon-icons.ts",
+      "destination": "vendor/polaris-design/packages/ui/scripts/build-ribbon-icons.ts",
+      "size": 12936,
+      "sha256": "02513da4c6d3ca77a6e70cac5c9d07abd2e72bcbc0b3915782dcd6258c50e3e1"
+    },
+    {
+      "source": "packages/ui/scripts/build-tokens.ts",
+      "destination": "vendor/polaris-design/packages/ui/scripts/build-tokens.ts",
+      "size": 7814,
+      "sha256": "b91d3f65148ecb1be0f292434bdc3ca207329cf9f28b74357b06a1bb7fb4e4c9"
+    },
+    {
+      "source": "packages/ui/scripts/normalize-icon-names.ts",
+      "destination": "vendor/polaris-design/packages/ui/scripts/normalize-icon-names.ts",
+      "size": 3071,
+      "sha256": "99bb713afd8307de445d87d2991af3698d64c779ca97701aa760fa0b1b559f6a"
+    },
+    {
+      "source": "packages/ui/src/components/Accordion.test.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/Accordion.test.tsx",
+      "size": 3412,
+      "sha256": "801357a797e7571d82103720560e7305224fc73ecc6ac5e42f7e4f51b5cb99ce"
+    },
+    {
+      "source": "packages/ui/src/components/Accordion.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/Accordion.tsx",
+      "size": 4083,
+      "sha256": "17593f070ea68db248a2e8721b4e9ffe0cc205de779d81ec0fb8b734c217be7f"
+    },
+    {
+      "source": "packages/ui/src/components/Alert.test.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/Alert.test.tsx",
+      "size": 2178,
+      "sha256": "a8939e169c5dfa4b212de004cbcd8667eb172d60779680646ed870cf10023b48"
+    },
+    {
+      "source": "packages/ui/src/components/Alert.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/Alert.tsx",
+      "size": 4477,
+      "sha256": "405a44fb79881cde55aa1fd870aff0afa73dc19c7953a1711dad7bcde601a614"
+    },
+    {
+      "source": "packages/ui/src/components/Avatar.test.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/Avatar.test.tsx",
+      "size": 2442,
+      "sha256": "a50aff857629b34b9560f0f1ef0b1febe7ae6cc711f2ac954e735117cf5ac321"
+    },
+    {
+      "source": "packages/ui/src/components/Avatar.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/Avatar.tsx",
+      "size": 4647,
+      "sha256": "ab314cec2d8b9929598fc11256f8a8a85996d7663050dafe7998088f7f2647a8"
+    },
+    {
+      "source": "packages/ui/src/components/Badge.test.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/Badge.test.tsx",
+      "size": 4609,
+      "sha256": "0b4a02691e344ce4e225e19087e37db4286b91f843e0013545433b737e62cfaa"
+    },
+    {
+      "source": "packages/ui/src/components/Badge.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/Badge.tsx",
+      "size": 8409,
+      "sha256": "fc7fa87f6cf0f8ced007f300fea1bc877dce75258ae829cb40bc9fac105c9686"
+    },
+    {
+      "source": "packages/ui/src/components/Breadcrumb.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/Breadcrumb.tsx",
+      "size": 2405,
+      "sha256": "1df18fd4f434a0ca9b4f236092338bb8f397a5665ba5f04b6d0f20aa5ad29944"
+    },
+    {
+      "source": "packages/ui/src/components/Button.test.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/Button.test.tsx",
+      "size": 1812,
+      "sha256": "23ce167335618b2988b5b9e85bc06eeca2d718dfcbed3f67c40f0645b1b7418b"
+    },
+    {
+      "source": "packages/ui/src/components/Button.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/Button.tsx",
+      "size": 6431,
+      "sha256": "f58f34904c6dcd289ba64ad43db47059e40be6279e208a898ab042c277995daf"
+    },
+    {
+      "source": "packages/ui/src/components/Calendar.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/Calendar.tsx",
+      "size": 3274,
+      "sha256": "689e20f7f521b2adc53b2090f606b745d035d9785b9e2465ad2edc75d1fdf7f5"
+    },
+    {
+      "source": "packages/ui/src/components/Card.test.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/Card.test.tsx",
+      "size": 1685,
+      "sha256": "89b620c66ce288209a8694964b2cd15b084ab381e4624e72f6d3defe11baf7c0"
+    },
+    {
+      "source": "packages/ui/src/components/Card.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/Card.tsx",
+      "size": 3246,
+      "sha256": "3738635b7108f83195c30ddd5f7f1c609bf1437d8da5ed1bc0480faa60346474"
+    },
+    {
+      "source": "packages/ui/src/components/Checkbox.test.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/Checkbox.test.tsx",
+      "size": 1236,
+      "sha256": "d1a208025203c52ad61cb3abf30b6d07c18dc486030bd3dc1e3058c63a91e7d4"
+    },
+    {
+      "source": "packages/ui/src/components/Checkbox.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/Checkbox.tsx",
+      "size": 4240,
+      "sha256": "d0680ac9ffd0bdd7b5eacc86bfd26649fb47e6f452b428a1991fc19b926a6b8c"
+    },
+    {
+      "source": "packages/ui/src/components/CircularProgress.test.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/CircularProgress.test.tsx",
+      "size": 1825,
+      "sha256": "e0e85e5b120b8a9a3ab0b329d2aef6b10248978d8c292354b05e8d246a27c189"
+    },
+    {
+      "source": "packages/ui/src/components/CircularProgress.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/CircularProgress.tsx",
+      "size": 4706,
+      "sha256": "de97904124e39e6c728efc26b10f16516f6f39c700f8640a5be40e9c68c6ef74"
+    },
+    {
+      "source": "packages/ui/src/components/Combobox.test.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/Combobox.test.tsx",
+      "size": 4484,
+      "sha256": "17d39a96a73811f8ff1cfa4fc4a89f6910bc5a3f6253e8c606f4a53f81c877e8"
+    },
+    {
+      "source": "packages/ui/src/components/Combobox.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/Combobox.tsx",
+      "size": 9753,
+      "sha256": "7ee1f61ad92ebd43793619672aa4abeba90e19dc9df72c83ee0524fcbc371dfd"
+    },
+    {
+      "source": "packages/ui/src/components/Command.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/Command.tsx",
+      "size": 6759,
+      "sha256": "90e0a8a31ab7750410a54300611d948715e7fe32dc4a3690f2f37c381e3fab00"
+    },
+    {
+      "source": "packages/ui/src/components/Container.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/Container.tsx",
+      "size": 1178,
+      "sha256": "7ed555c1e53d1f5d2da079c148b8d1391e674bcfa19c4d4352263bdb4d88a53c"
+    },
+    {
+      "source": "packages/ui/src/components/CopyButton.test.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/CopyButton.test.tsx",
+      "size": 3719,
+      "sha256": "a16bd87b98b3fb23ff9146691afdd32b06e1f66c16992780a6fd4dec3342ae4c"
+    },
+    {
+      "source": "packages/ui/src/components/CopyButton.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/CopyButton.tsx",
+      "size": 5197,
+      "sha256": "958c6d040bbaaa39e3b0d7b2cd151da9b81a1855f3ded5eab07c0438e6bdda19"
+    },
+    {
+      "source": "packages/ui/src/components/DatePicker.test.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/DatePicker.test.tsx",
+      "size": 2807,
+      "sha256": "415d299163e93fb54bc4dbac6a5b0e769ed0115c7e5ee088a542e6164c5c4733"
+    },
+    {
+      "source": "packages/ui/src/components/DatePicker.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/DatePicker.tsx",
+      "size": 6496,
+      "sha256": "57caba2f8c8294b8a4b0f0a19f1fe88e95a112526c55af57a92a7288d586e1a3"
+    },
+    {
+      "source": "packages/ui/src/components/DateTimeInput.test.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/DateTimeInput.test.tsx",
+      "size": 2198,
+      "sha256": "86bf7931fa0256a942e3c0af4d6d4a230b46493dc650ddf53d351aa68c07f06e"
+    },
+    {
+      "source": "packages/ui/src/components/DateTimeInput.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/DateTimeInput.tsx",
+      "size": 8138,
+      "sha256": "22f876c137dd4359544204483d867d024c2cdd1657ec8cda2923e8b9a7ef56ab"
+    },
+    {
+      "source": "packages/ui/src/components/DescriptionList.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/DescriptionList.tsx",
+      "size": 2018,
+      "sha256": "679f71bb6be5437201ed2e14c410acc328e9282bd4b81be87de4b5bfbe8cb275"
+    },
+    {
+      "source": "packages/ui/src/components/Dialog.test.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/Dialog.test.tsx",
+      "size": 1857,
+      "sha256": "423b5b4c57532f4dd094a4e9c9b1eefaefb5eca1f024ae869228d6faab8201d9"
+    },
+    {
+      "source": "packages/ui/src/components/Dialog.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/Dialog.tsx",
+      "size": 4911,
+      "sha256": "b82a5b7985ed8e1f66ca9634c133560d6107672c18b4526bc02b3c26dd552c39"
+    },
+    {
+      "source": "packages/ui/src/components/Disclosure.test.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/Disclosure.test.tsx",
+      "size": 4206,
+      "sha256": "b30affc31a280a060d0e664a92fc344e76a8567c5f20b01d0904e7dcad19cd5f"
+    },
+    {
+      "source": "packages/ui/src/components/Disclosure.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/Disclosure.tsx",
+      "size": 7507,
+      "sha256": "8f357343e9ed9c51e98ce74e577f034de13e3d8a687caef8abb3d8c98c4b61a2"
+    },
+    {
+      "source": "packages/ui/src/components/Drawer.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/Drawer.tsx",
+      "size": 4834,
+      "sha256": "d97dc4a6902064dcaf712d20f55ebdf72c3ed5af2ea34fe4e1125c210a8bc3fc"
+    },
+    {
+      "source": "packages/ui/src/components/DropdownMenu.test.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/DropdownMenu.test.tsx",
+      "size": 2437,
+      "sha256": "50011b0c1bf66dc4de2ff4081db62a1994706888445d93f9b1c45e39c9c1887d"
+    },
+    {
+      "source": "packages/ui/src/components/DropdownMenu.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/DropdownMenu.tsx",
+      "size": 9372,
+      "sha256": "97316f0a3882a59aba71b7a09b010b3905d8e8f9b7c2668b2baa99ddc14d72c3"
+    },
+    {
+      "source": "packages/ui/src/components/EmptyState.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/EmptyState.tsx",
+      "size": 1554,
+      "sha256": "fe83c959f7d92763319c7a84d345c331f6293813c76c2f9ef85d28fef63ff05f"
+    },
+    {
+      "source": "packages/ui/src/components/FileCard.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/FileCard.tsx",
+      "size": 2083,
+      "sha256": "561fc8c690ea57748eacd1630df4c4ff38361bd27520e30df3c59fda1931de5d"
+    },
+    {
+      "source": "packages/ui/src/components/FileIcon.test.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/FileIcon.test.tsx",
+      "size": 1886,
+      "sha256": "08c1e612eafadd2187ff08bb4cc01ed5846580d8697c5b8293228237afc6e08b"
+    },
+    {
+      "source": "packages/ui/src/components/FileIcon.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/FileIcon.tsx",
+      "size": 2020,
+      "sha256": "618d9c20434e00dd607153224553db9f2df37d630661597fcb5f972d04d9a926"
+    },
+    {
+      "source": "packages/ui/src/components/FileInput.test.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/FileInput.test.tsx",
+      "size": 7456,
+      "sha256": "e7cec82f6a082deaf00edb58d7c7c6854dec2519dd05f3896945adbfe460a071"
+    },
+    {
+      "source": "packages/ui/src/components/FileInput.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/FileInput.tsx",
+      "size": 15873,
+      "sha256": "3e40334476353f880e5456e9ac1abdbfb70b5fc138ab3beb6b5934baaa49ed9f"
+    },
+    {
+      "source": "packages/ui/src/components/Form.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/Form.tsx",
+      "size": 6613,
+      "sha256": "18dc6ab87c6217ebebe1d11d50cd187e8a1b77be9994793b15da6e29697632b5"
+    },
+    {
+      "source": "packages/ui/src/components/index.ts",
+      "destination": "vendor/polaris-design/packages/ui/src/components/index.ts",
+      "size": 1734,
+      "sha256": "975f6ee3d2e09fd095954bd4d0b6ef3fff32aa4a9f649c7e4dd9558bf80bd330"
+    },
+    {
+      "source": "packages/ui/src/components/Input.test.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/Input.test.tsx",
+      "size": 5327,
+      "sha256": "7760565710cb03483b109ba2c8fb0e9f6f390cc65d5c03df20256e4b4fa02f42"
+    },
+    {
+      "source": "packages/ui/src/components/Input.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/Input.tsx",
+      "size": 10819,
+      "sha256": "84ad88ed22484bc05afb7f08f962a9279a4b9c91260185a2de824f06bdd40e6b"
+    },
+    {
+      "source": "packages/ui/src/components/Navbar.test.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/Navbar.test.tsx",
+      "size": 2827,
+      "sha256": "6b38401fe1e2dea0ae19d68b0effb8240c2bad12deb8dca431c0d10fa307c7f0"
+    },
+    {
+      "source": "packages/ui/src/components/Navbar.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/Navbar.tsx",
+      "size": 7755,
+      "sha256": "d0e54801b133903d49d81b87b3de2ef17933852540e1495a27300e3881c95060"
+    },
+    {
+      "source": "packages/ui/src/components/NovaInput.test.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/NovaInput.test.tsx",
+      "size": 1696,
+      "sha256": "d45455f83bf9060ea2fabab54015776c74db68a65f887d60d3b4ffb44d135b38"
+    },
+    {
+      "source": "packages/ui/src/components/NovaInput.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/NovaInput.tsx",
+      "size": 4629,
+      "sha256": "5d39cb40d91552803edb16cb49f76765de5c144ed78bdaa97a42a24c19cb2fba"
+    },
+    {
+      "source": "packages/ui/src/components/PageHeader.test.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/PageHeader.test.tsx",
+      "size": 1995,
+      "sha256": "a5efeaf71a1310a2215b0674443c59fbd8365bc011a247b6ec9761ee998d103f"
+    },
+    {
+      "source": "packages/ui/src/components/PageHeader.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/PageHeader.tsx",
+      "size": 5425,
+      "sha256": "f496d41f91a1026c3c3ef11a63e98daf8a146520bd5dba4c3f2058078a3de4c6"
+    },
+    {
+      "source": "packages/ui/src/components/Pagination.test.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/Pagination.test.tsx",
+      "size": 10514,
+      "sha256": "60e1ddeb1d9f88f0557e7383baecce366e452a22c4671b0d384983727f39a681"
+    },
+    {
+      "source": "packages/ui/src/components/Pagination.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/Pagination.tsx",
+      "size": 17757,
+      "sha256": "39d1beb43cc8bbe03f646bef24470f8f2807f93b3f7137f12439b431b22bd544"
+    },
+    {
+      "source": "packages/ui/src/components/Popover.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/Popover.tsx",
+      "size": 1061,
+      "sha256": "cab3de14a131e21ddb9e664eea2848398f75b14efc2f719e34a948c9d1d2da1f"
+    },
+    {
+      "source": "packages/ui/src/components/Progress.test.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/Progress.test.tsx",
+      "size": 2308,
+      "sha256": "1fd13be8a140afce84bb21835067d6b070b8abcd24536f6d9fe236c627538f79"
+    },
+    {
+      "source": "packages/ui/src/components/Progress.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/Progress.tsx",
+      "size": 3751,
+      "sha256": "8c01af4f63eda5488bb99c2187e453740767ca487019b399db74879d846bf2f5"
+    },
+    {
+      "source": "packages/ui/src/components/PromptChip.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/PromptChip.tsx",
+      "size": 1605,
+      "sha256": "f95865ac543d89e47341010e6ebf206d08dcbdc73093d5c027cb81210b7aed1c"
+    },
+    {
+      "source": "packages/ui/src/components/Select.test.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/Select.test.tsx",
+      "size": 1118,
+      "sha256": "02c52929d1cd2dd2ee54ad31967744726cc94ba986c4417a1b78a603285b9d39"
+    },
+    {
+      "source": "packages/ui/src/components/Select.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/Select.tsx",
+      "size": 4450,
+      "sha256": "740c27f91cb930b35467cf7a87ac0d86a69cf0ec4eb88c97eff3021b0df4d820"
+    },
+    {
+      "source": "packages/ui/src/components/Sidebar.test.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/Sidebar.test.tsx",
+      "size": 1753,
+      "sha256": "10b73fa2dbe6babc77941c88fa4c315992a50229e000e4c4149fb0799357c7d8"
+    },
+    {
+      "source": "packages/ui/src/components/Sidebar.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/Sidebar.tsx",
+      "size": 4675,
+      "sha256": "45be04aa2221791688475bb7db6f8c60bb57ea04448a394e43912d63ae98958f"
+    },
+    {
+      "source": "packages/ui/src/components/Skeleton.test.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/Skeleton.test.tsx",
+      "size": 1522,
+      "sha256": "3bc9f6f10ec2390f4677fa8272a8eb89c95b30c931cd2ab664995eb6b4271f32"
+    },
+    {
+      "source": "packages/ui/src/components/Skeleton.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/Skeleton.tsx",
+      "size": 2867,
+      "sha256": "d280bfc5042455748dedd2a554f04ed09fd234bb9b9a6879de27a9e13575433e"
+    },
+    {
+      "source": "packages/ui/src/components/Stack.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/Stack.tsx",
+      "size": 2027,
+      "sha256": "5f88c773cd86ad620dd75adaa9b7707729cab867b40c728470a0b260c0471af1"
+    },
+    {
+      "source": "packages/ui/src/components/Stat.test.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/Stat.test.tsx",
+      "size": 3763,
+      "sha256": "4c0e58af4af6138f47842a875276914ca17cbf666a5d611d4210a7c5eba7d131"
+    },
+    {
+      "source": "packages/ui/src/components/Stat.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/Stat.tsx",
+      "size": 10215,
+      "sha256": "518bd9ea3e28743151b51e6840b50b7ca79e262b49c477c95d48727d8205e491"
+    },
+    {
+      "source": "packages/ui/src/components/Switch.test.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/Switch.test.tsx",
+      "size": 1981,
+      "sha256": "0b3360e4504fa21de581759555bea48b328e1cd589070bfa561a5dca7f8e6681"
+    },
+    {
+      "source": "packages/ui/src/components/Switch.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/Switch.tsx",
+      "size": 4195,
+      "sha256": "a42c469ac622b503d7eb462395512f0f4cee36952e87bc7d9b483fa8654de38a"
+    },
+    {
+      "source": "packages/ui/src/components/Table.test.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/Table.test.tsx",
+      "size": 9830,
+      "sha256": "2269a7c6f5f7e1220234551dfb9a1c2d044a6e300cf43f2da4a198e374a2e1ce"
+    },
+    {
+      "source": "packages/ui/src/components/Table.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/Table.tsx",
+      "size": 13658,
+      "sha256": "70fd64f41dcf9d4d74cc8f48acf308cf89e2fbab3890a79a656acfb62810c6b8"
+    },
+    {
+      "source": "packages/ui/src/components/TableHelpers.test.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/TableHelpers.test.tsx",
+      "size": 7988,
+      "sha256": "b82b263f969574826abd29137b67f23701b40518f97c6dd5f589804835a2a865"
+    },
+    {
+      "source": "packages/ui/src/components/TableHelpers.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/TableHelpers.tsx",
+      "size": 17895,
+      "sha256": "4645e7b20db311de7d7b2a7a5f3a2c9b4f15b4e99e6621ab1d5e497b312bdaed"
+    },
+    {
+      "source": "packages/ui/src/components/Tabs.test.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/Tabs.test.tsx",
+      "size": 1445,
+      "sha256": "36ab808c65167ba2ff17030b673fd8d526c868c41b91f3ab7ec149312ff20193"
+    },
+    {
+      "source": "packages/ui/src/components/Tabs.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/Tabs.tsx",
+      "size": 4808,
+      "sha256": "dcddead3279a6779b886eccbc9d30e961a2917e3f7428d8e0557e5bba9b67e55"
+    },
+    {
+      "source": "packages/ui/src/components/Textarea.test.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/Textarea.test.tsx",
+      "size": 2886,
+      "sha256": "7637e69df2c57976b5a4cfbd05614dcbd1b9a06f0d6bd9696aeff6381d65e77e"
+    },
+    {
+      "source": "packages/ui/src/components/Textarea.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/Textarea.tsx",
+      "size": 8175,
+      "sha256": "744017ec1817548182c953a7df1b6c2a115ed1c3130e1abed2e1b1589f73824d"
+    },
+    {
+      "source": "packages/ui/src/components/Toast.test.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/Toast.test.tsx",
+      "size": 1591,
+      "sha256": "667701023308a879bdf486a1593e9db09b4257b8cad4e49dcc03af0a7b3b8a5d"
+    },
+    {
+      "source": "packages/ui/src/components/Toast.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/Toast.tsx",
+      "size": 8483,
+      "sha256": "60b731984907a4dd0ee790798149df8a7c04b23d9cbe823ccd73c64164bf4935"
+    },
+    {
+      "source": "packages/ui/src/components/Tooltip.test.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/Tooltip.test.tsx",
+      "size": 1200,
+      "sha256": "c5c87b5b2ba6b85f5e039386c00a760c974cbf84237f174f432657435507db35"
+    },
+    {
+      "source": "packages/ui/src/components/Tooltip.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/components/Tooltip.tsx",
+      "size": 1522,
+      "sha256": "c636d58210c32b20bb41ffe641349327109223a24979723b43d3547aaae9f236"
+    },
+    {
+      "source": "packages/ui/src/form/Form.test.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/form/Form.test.tsx",
+      "size": 2418,
+      "sha256": "3cfc8700a3413084fd05500c17cc73ab63ed2259fdeff634200597e6dc917307"
+    },
+    {
+      "source": "packages/ui/src/form/index.ts",
+      "destination": "vendor/polaris-design/packages/ui/src/form/index.ts",
+      "size": 412,
+      "sha256": "46d6e78bbef14ff69ad8d63b304ef396bde9565c43c274781639c44e45238610"
+    },
+    {
+      "source": "packages/ui/src/index.ts",
+      "destination": "vendor/polaris-design/packages/ui/src/index.ts",
+      "size": 99,
+      "sha256": "68a3764925578746ba2dc5f26db26dd768e29b75b643e82045833e56f53fffdf"
+    },
+    {
+      "source": "packages/ui/src/lib/cn.ts",
+      "destination": "vendor/polaris-design/packages/ui/src/lib/cn.ts",
+      "size": 2075,
+      "sha256": "82d8651e40c12bf9724c263ff0a3376f001567b850ff23ea2980c49f083f2000"
+    },
+    {
+      "source": "packages/ui/src/ribbon/index.ts",
+      "destination": "vendor/polaris-design/packages/ui/src/ribbon/index.ts",
+      "size": 576,
+      "sha256": "a78bc9674816edd1fbce431fd09af7d1b73c874faf4f95c0d538571acb75c268"
+    },
+    {
+      "source": "packages/ui/src/ribbon/Ribbon.test.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/ribbon/Ribbon.test.tsx",
+      "size": 8845,
+      "sha256": "7757c8aae1cda449c2500515fd7b272144259e97f8e5a2faf5764cc07e53ca97"
+    },
+    {
+      "source": "packages/ui/src/ribbon/Ribbon.tsx",
+      "destination": "vendor/polaris-design/packages/ui/src/ribbon/Ribbon.tsx",
+      "size": 22591,
+      "sha256": "f55c8a9929f8e8e0c039abfcdd22bf7a8988a3684797973a1a02d5a771f4ea7a"
     },
     {
       "source": "packages/ui/src/styles/tokens.css",
       "destination": "vendor/polaris-design/packages/ui/src/styles/tokens.css",
+      "size": 12028,
       "sha256": "ccaccdb2da681e458f4285fa2b604d19760df7ef3b9579b64c00fdabeccb1b46"
     },
     {
       "source": "packages/ui/src/styles/v4-theme.css",
       "destination": "vendor/polaris-design/packages/ui/src/styles/v4-theme.css",
+      "size": 10297,
       "sha256": "4e2256323dcc05578b80670f9fc1b74ae88bcb7666c15eb9e1ecfdaa6035917b"
     },
     {
       "source": "packages/ui/src/tailwind/index.ts",
       "destination": "vendor/polaris-design/packages/ui/src/tailwind/index.ts",
+      "size": 17258,
       "sha256": "c7a07d4ff0f9e7d7efd608e4d892c82dfbf2d5aaac211bb14e81a47fe38fcb46"
+    },
+    {
+      "source": "packages/ui/src/tailwind/preset.test.ts",
+      "destination": "vendor/polaris-design/packages/ui/src/tailwind/preset.test.ts",
+      "size": 5055,
+      "sha256": "d77d5b9b36b07a6f05aae82188a13d8bd49182aa322d97573890301355d5f608"
+    },
+    {
+      "source": "packages/ui/src/test/setup.ts",
+      "destination": "vendor/polaris-design/packages/ui/src/test/setup.ts",
+      "size": 1436,
+      "sha256": "b3180dffbf4c6592a3f8ba6c723875cb3b76550794cd6c5d005f0b66d782ed75"
+    },
+    {
+      "source": "packages/ui/src/test/vitest.d.ts",
+      "destination": "vendor/polaris-design/packages/ui/src/test/vitest.d.ts",
+      "size": 93,
+      "sha256": "975699a0b211f59b9188106ccbbcc07ba52e67ad223bb5d93ead7c92742da34b"
+    },
+    {
+      "source": "packages/ui/src/tokens/colors.ts",
+      "destination": "vendor/polaris-design/packages/ui/src/tokens/colors.ts",
+      "size": 18962,
+      "sha256": "efa21c73937f8d9258bc89d37c4bcd7c78880638b0be7fd3e134192a00e7a1f7"
+    },
+    {
+      "source": "packages/ui/src/tokens/index.ts",
+      "destination": "vendor/polaris-design/packages/ui/src/tokens/index.ts",
+      "size": 187,
+      "sha256": "12532babe728eec5bc142808c8cc5af51d9b375eae9852cdfee130faa2d2000f"
+    },
+    {
+      "source": "packages/ui/src/tokens/motion.ts",
+      "destination": "vendor/polaris-design/packages/ui/src/tokens/motion.ts",
+      "size": 1248,
+      "sha256": "7e25625473e7153f0070f30b3f1bb4b16a69c36a70c58a2860abbe2b0ce6618a"
+    },
+    {
+      "source": "packages/ui/src/tokens/radius.ts",
+      "destination": "vendor/polaris-design/packages/ui/src/tokens/radius.ts",
+      "size": 918,
+      "sha256": "336d2bb706215eba7e6d7de113270f8a26086eed12b144d03a96343bdf8e09e2"
+    },
+    {
+      "source": "packages/ui/src/tokens/shadow.ts",
+      "destination": "vendor/polaris-design/packages/ui/src/tokens/shadow.ts",
+      "size": 2092,
+      "sha256": "d018e2ad24f07e2132c69a36380db8656029944e703888367ce93c099d8ebdf4"
+    },
+    {
+      "source": "packages/ui/src/tokens/spacing.ts",
+      "destination": "vendor/polaris-design/packages/ui/src/tokens/spacing.ts",
+      "size": 2470,
+      "sha256": "aae4563660a1b7851f37224ab3ef7e689cc45824e37dc3070b567e06473a56ce"
+    },
+    {
+      "source": "packages/ui/src/tokens/typography.ts",
+      "destination": "vendor/polaris-design/packages/ui/src/tokens/typography.ts",
+      "size": 3898,
+      "sha256": "c57c8f0b47db41bdecf62cc70bef6f165f4cb5f78dbee2c8479db0e208b44dd4"
+    },
+    {
+      "source": "packages/ui/src/tokens/zIndex.ts",
+      "destination": "vendor/polaris-design/packages/ui/src/tokens/zIndex.ts",
+      "size": 822,
+      "sha256": "f9f4128ee30b3b0bdcf10c2ddd8996f176ade6d49947c205c3cd1ba32f87083f"
+    },
+    {
+      "source": "packages/ui/src/utils/index.ts",
+      "destination": "vendor/polaris-design/packages/ui/src/utils/index.ts",
+      "size": 3316,
+      "sha256": "f571decc4f8187ed26aed5a4ef10fae7d60d631105b7e863a5879604c279dbba"
+    },
+    {
+      "source": "packages/ui/test/cn.test.mjs",
+      "destination": "vendor/polaris-design/packages/ui/test/cn.test.mjs",
+      "size": 610,
+      "sha256": "b2278fe1c0f6f4abf535865ef7bcc87f69208e281e14886b808b6a89fbc4171a"
+    },
+    {
+      "source": "packages/ui/tsconfig.json",
+      "destination": "vendor/polaris-design/packages/ui/tsconfig.json",
+      "size": 166,
+      "sha256": "fd5dfb3132fef50acacb3a49eff587fface38218fb482e4553cb8a725fc80f04"
+    },
+    {
+      "source": "packages/ui/tsup.config.ts",
+      "destination": "vendor/polaris-design/packages/ui/tsup.config.ts",
+      "size": 1652,
+      "sha256": "03882fbe64db5b47e7da622ff17e51017f59fe050af8dd0d89e6a6cc33db54c1"
+    },
+    {
+      "source": "packages/ui/vitest.config.ts",
+      "destination": "vendor/polaris-design/packages/ui/vitest.config.ts",
+      "size": 287,
+      "sha256": "787edfc3813844dd03bcd6f6b30d9a62e07dfe47456ab1cf22f85fc3ae3031fe"
+    },
+    {
+      "source": "pnpm-lock.yaml",
+      "destination": "vendor/polaris-design/pnpm-lock.yaml",
+      "size": 235585,
+      "sha256": "c1b84c12604a805514ff11519a0fab6b151c3231599a26a386dc281450fb69e7"
+    },
+    {
+      "source": "pnpm-workspace.yaml",
+      "destination": "vendor/polaris-design/pnpm-workspace.yaml",
+      "size": 40,
+      "sha256": "316f2a0038d464f103abd64d7338dacefc35d0d09e57c8296defa0d5ddb898fe"
+    },
+    {
+      "source": "README.md",
+      "destination": "vendor/polaris-design/README.md",
+      "size": 13793,
+      "sha256": "d72c5df7236c6fae01d8e1fad2b3b9cb0caeb46d1fa14234398b08d71d156e95"
+    },
+    {
+      "source": "tokens.md",
+      "destination": "vendor/polaris-design/tokens.md",
+      "size": 13483,
+      "sha256": "17cf7150189ba882ab9e2c4ac810393e4520e44354e9059a81aa0d5919b531f2"
+    },
+    {
+      "source": "tsconfig.base.json",
+      "destination": "vendor/polaris-design/tsconfig.base.json",
+      "size": 408,
+      "sha256": "bdc2efbb853cbc90042eb16f7a8d1f83b0dd22e00d7d554beb94db357ad8938c"
+    },
+    {
+      "source": "turbo.json",
+      "destination": "vendor/polaris-design/turbo.json",
+      "size": 392,
+      "sha256": "639cc9eef0e58ae71d201ab742be430352047e5008380a7b4967317c7b8e6527"
     }
   ],
   "generatedArtifacts": [
     {
       "destination": "docs/design/generated/polaris.tokens.json",
-      "sha256": "d71778899dfdaf3618bbec25197faf5befb288d431fe55e5ec70959de8e60874"
+      "sha256": "38d2670cf1fcc3af535062df49ce34b9c13d52c3e3d3ed8dee78349bd7a3d0ff"
     },
     {
       "destination": "docs/design/generated/polaris.components.json",
-      "sha256": "a786bbbbc8866c23ae61e985aa578ec1a17267832aee2095fbd32265c023640e"
+      "sha256": "6cc26f8a0fd62800ef3d07459a4a74aa9dbde20b44a48a5ebb5b507b45305076"
     },
     {
       "destination": "docs/design/generated/polaris.lint-rules.json",
-      "sha256": "a8c437101512d8e3abcce600ec041ff6bc4e05ceda4d39dd841e99ddf9b71055"
+      "sha256": "d745fccd32e5ce9fd741409add621da6811613c0f58e72307ea64c339d50a671"
+    },
+    {
+      "destination": "docs/design/generated/polaris.assets.json",
+      "sha256": "6467f5bd703135e9d4868bc7143648f09bfd249e962d49bc925212d81e97acb9"
     },
     {
       "destination": "docs/design/generated/polaris.signature-assets.json",
-      "sha256": "f4c097cde2108f1c1c8144836d096f11d14f7f6d0bd4534e4ece751620651764"
+      "sha256": "22943f30a35b8344e0f27c38bf42794895669c431ca07bd1151d4cdb23feadfa"
     }
   ]
 }

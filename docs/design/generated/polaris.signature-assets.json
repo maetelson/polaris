@@ -6,11 +6,11 @@
     "commit": "1d0e2460de63eb634c979855f183c2b18d688b1e",
     "file": "packages/plugin/commands/polaris-brand-audit.md"
   },
-  "generatedAt": "2026-05-21T15:01:42.718Z",
+  "generatedAt": "2026-05-21T22:30:06.213Z",
   "requiredAssets": [
     {
       "id": "ai-cta",
-      "signal": "AI, NOVA, 자동화, 생성, 분석, 요약",
+      "signal": "AI, NOVA, automation, generation, analysis, summary",
       "requiredExpression": "ai.* token, NOVA purple, NovaLogo, Button variant=\"ai\""
     },
     {
@@ -20,12 +20,12 @@
     },
     {
       "id": "document-ribbon",
-      "signal": "문서 편집, 보고서, 제안서, 문서 작성",
+      "signal": "document editing, proposal, report, office tools",
       "requiredExpression": "@polaris/ui/ribbon and ribbon-icons"
     },
     {
       "id": "prompt-chip",
-      "signal": "필터, 카테고리, 빠른 액션, 추천 질문",
+      "signal": "filter, category, quick action, suggested prompt",
       "requiredExpression": "PromptChip"
     },
     {
@@ -35,7 +35,7 @@
     },
     {
       "id": "nova-gradient",
-      "signal": "AI, 자동, NOVA headline emphasis",
+      "signal": "AI, automation, NOVA headline emphasis",
       "requiredExpression": "NOVA gradient text for one keyword only"
     },
     {
@@ -46,39 +46,33 @@
   ],
   "heuristics": [
     {
-      "name": "AI 기능 버튼인데 `variant=\"ai\"` 미사용",
-      "command": "grep -rnE '<Button[^>]*>[^<]*(AI|NOVA|자동|생성|분석|요약|챗|Chat|Analyze)[^<]*' src --include=\"*.tsx\" \\\n  | grep -v 'variant=\"ai\"' | grep -v 'variant=\\\\\"ai\\\\\"'",
-      "suggestion": "`<Button variant=\"ai\"><NovaLogo tone=\"white\" size={16} /> {label}</Button>`"
+      "name": "AI 기능 버튼인데 `variant=\"ai\"` 미사용"
     },
     {
-      "name": "파일 형식 텍스트인데 `<FileIcon>` 미사용",
-      "command": "grep -rnE '\\b(DOCX|HWP|PDF|XLSX|PPTX|TXT|CSV|ZIP|HWPX)\\b' src --include=\"*.tsx\" \\\n  | grep -v \"<FileIcon\" | grep -v \"import.*FileIcon\"",
-      "suggestion": "텍스트 옆 또는 대신 `<FileIcon type=\"docx|hwp|pdf|xlsx|pptx|txt|csv|zip\" size={20|32} />`. 29종 사용 가능."
+      "name": "파일 형식 텍스트인데 `<FileIcon>` 미사용"
     },
     {
-      "name": "문서 편집 페이지인데 `<Ribbon>` 미사용",
-      "command": "grep -rlE '에디터|편집|보고서|제안서|문서.*작성|에디터' src --include=\"*.tsx\" \\\n  | xargs grep -L 'from .@polaris/ui/ribbon.'",
-      "suggestion": "Office 스타일 ribbon 도입. `/polaris-office`, `/proposal-platform` 데모 페이지 참고. Polaris의 가장 큰 차별 자산."
+      "name": "문서 편집 페이지인데 `<Ribbon>` 미사용"
     },
     {
-      "name": "평범 chip / button 그룹 → `<PromptChip>` 후보",
-      "command": "grep -rnE 'rounded-polaris-(pill|full)[^\"]*\"[^>]*>[^<]+</button>' src --include=\"*.tsx\"",
-      "suggestion": "`<PromptChip onClick={...}>{label}</PromptChip>` — NOVA hover 효과 / AI 친화 디자인."
+      "name": "평범 chip / button 그룹 → `<PromptChip>` 후보"
     },
     {
-      "name": "사이드바 active state에 `bg-accent-brand-bg` 미사용",
-      "command": "grep -rnE 'active.*text-accent-brand|active.*text-brand' src --include=\"*.tsx\" \\\n  | grep -v 'bg-accent-brand-bg'",
-      "suggestion": "active 상태에 `bg-accent-brand-bg text-accent-brand-normal` 페어 (DESIGN.md §4 Navigation)."
+      "name": "사이드바 active state에 `bg-accent-brand-bg` 미사용"
     },
     {
-      "name": "NOVA 그라디언트 적용 후보 텍스트",
-      "command": "grep -rnE '<(h1|h2)[^>]*>[^<]*(AI|NOVA|자동)' src --include=\"*.tsx\"",
-      "suggestion": "키워드 한 단어만 NOVA 그라디언트 (`linear-gradient(135deg, var(--polaris-purple-40), var(--polaris-ai-normal))` + `bg-clip-text text-transparent`)."
+      "name": "NOVA 그라디언트 적용 후보 텍스트"
     },
     {
-      "name": "브랜드 마크 미노출",
-      "command": "grep -rL \"PolarisLogo\\|NovaLogo\" src --include=\"*.tsx\"",
-      "suggestion": "Footer에 `<PolarisLogo variant=\"horizontal\" size={16} />` \"Powered by Polaris\" 또는 NOVA 영역 헤더에 `<NovaLogo>`."
+      "name": "브랜드 마크 미노출"
     }
-  ]
+  ],
+  "assetCatalog": {
+    "figmaSpec": 36,
+    "fileIcons": 29,
+    "uiIcons": 196,
+    "logos": 6,
+    "ribbonBig": 57,
+    "ribbonSmall": 34
+  }
 }

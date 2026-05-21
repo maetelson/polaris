@@ -26,6 +26,9 @@ jobs:
       - name: Validate UI brief contract
         run: npm run polaris:brief:check
 
+      - name: Validate Markdown links
+        run: npm run polaris:links:check
+
       - name: Brand audit
         run: npm run polaris:brand-audit
 

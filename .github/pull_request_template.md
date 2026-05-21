@@ -15,8 +15,10 @@
 
 - [ ] UI 작업 전에 `Polaris UI Brief`를 작성했다.
 - [ ] root `DESIGN.md`와 `docs/design/generated/*`가 upstream PolarisDesign snapshot과 일치한다.
+- [ ] `polaris.design-sync.json`의 `design-source` snapshot이 `assets`, `docs`, `packages/ui`, `packages/lint`, `packages/plugin`, `packages/template-next` drift를 막는다.
 - [ ] `npm run polaris:validate`를 실행했다.
 - [ ] `npm run polaris:brief:check`를 실행했다.
+- [ ] `npm run polaris:links:check`를 실행했다.
 - [ ] Figma 작업이면 `00 Polaris Output Contract` 페이지와 주요 프레임 brief note를 확인했다.
 - [ ] Figma 작업이면 `figma/sync-polaris-figma.js`를 Figma MCP로 실행하고 upstream checksum을 확인했다.
 - [ ] Web 작업이면 `@polaris/ui` 컴포넌트와 Polaris token을 우선 사용했다.

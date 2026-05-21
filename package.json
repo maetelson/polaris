@@ -9,6 +9,7 @@
     "polaris:figma:build": "node scripts/build-polaris-figma-sync.mjs",
     "polaris:brand-audit": "node scripts/polaris-brand-audit.mjs",
     "polaris:brand-audit:fixtures": "node scripts/polaris-brand-audit.mjs --fixtures",
-    "polaris:brief:check": "node scripts/check-polaris-brief.mjs"
+    "polaris:brief:check": "node scripts/check-polaris-brief.mjs",
+    "polaris:links:check": "node scripts/check-md-links.mjs"
   }
 }

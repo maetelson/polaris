@@ -1,13 +1,14 @@
 #!/usr/bin/env node
 
 import { createHash } from 'node:crypto';
-import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, readdir, rm, unlink, writeFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 import process from 'node:process';
 
 const UPSTREAM_REPO = 'https://github.com/PolarisOffice/PolarisDesign';
 const RAW_REPO = 'https://raw.githubusercontent.com/PolarisOffice/PolarisDesign';
+const API_REPO = 'https://api.github.com/repos/PolarisOffice/PolarisDesign';
 const DEFAULT_REF = '1d0e2460de63eb634c979855f183c2b18d688b1e';
 const DEFAULT_RELEASE_TAG = 'v0.8.0-rc.8';
 const UI_TARBALL =
@@ -15,56 +16,56 @@ const UI_TARBALL =
 const LINT_TARBALL =
   'https://github.com/PolarisOffice/PolarisDesign/releases/download/v0.8.0-rc.8/polaris-lint-0.8.0-rc.8.tgz';
 
-const SYNC_FILES = [
-  { source: 'DESIGN.md', destinations: ['DESIGN.md', 'vendor/polaris-design/DESIGN.md'] },
-  { source: 'tokens.md', destinations: ['vendor/polaris-design/tokens.md'] },
-  { source: 'packages/ui/COMPONENTS.md', destinations: ['vendor/polaris-design/packages/ui/COMPONENTS.md'] },
-  { source: 'packages/lint/RULES.md', destinations: ['vendor/polaris-design/packages/lint/RULES.md'] },
-  {
-    source: 'packages/plugin/skills/polaris-web/SKILL.md',
-    destinations: ['vendor/polaris-design/packages/plugin/skills/polaris-web/SKILL.md'],
-  },
-  {
-    source: 'packages/plugin/commands/polaris-check.md',
-    destinations: ['vendor/polaris-design/packages/plugin/commands/polaris-check.md'],
-  },
-  {
-    source: 'packages/plugin/commands/polaris-component.md',
-    destinations: ['vendor/polaris-design/packages/plugin/commands/polaris-component.md'],
-  },
-  {
-    source: 'packages/plugin/commands/polaris-brand-audit.md',
-    destinations: ['vendor/polaris-design/packages/plugin/commands/polaris-brand-audit.md'],
-  },
-  { source: 'packages/ui/src/tokens/index.ts', destinations: ['vendor/polaris-design/packages/ui/src/tokens/index.ts'] },
-  { source: 'packages/ui/src/tokens/colors.ts', destinations: ['vendor/polaris-design/packages/ui/src/tokens/colors.ts'] },
-  {
-    source: 'packages/ui/src/tokens/typography.ts',
-    destinations: ['vendor/polaris-design/packages/ui/src/tokens/typography.ts'],
-  },
-  { source: 'packages/ui/src/tokens/spacing.ts', destinations: ['vendor/polaris-design/packages/ui/src/tokens/spacing.ts'] },
-  { source: 'packages/ui/src/tokens/radius.ts', destinations: ['vendor/polaris-design/packages/ui/src/tokens/radius.ts'] },
-  { source: 'packages/ui/src/tokens/shadow.ts', destinations: ['vendor/polaris-design/packages/ui/src/tokens/shadow.ts'] },
-  { source: 'packages/ui/src/tokens/motion.ts', destinations: ['vendor/polaris-design/packages/ui/src/tokens/motion.ts'] },
-  { source: 'packages/ui/src/tokens/zIndex.ts', destinations: ['vendor/polaris-design/packages/ui/src/tokens/zIndex.ts'] },
-  {
-    source: 'packages/ui/src/styles/tokens.css',
-    destinations: ['vendor/polaris-design/packages/ui/src/styles/tokens.css'],
-  },
-  {
-    source: 'packages/ui/src/styles/v4-theme.css',
-    destinations: ['vendor/polaris-design/packages/ui/src/styles/v4-theme.css'],
-  },
-  {
-    source: 'packages/ui/src/tailwind/index.ts',
-    destinations: ['vendor/polaris-design/packages/ui/src/tailwind/index.ts'],
-  },
+const ROOT_DESIGN_FILE = 'DESIGN.md';
+const ROOT_ASSET_PREFIXES = ['assets/figma-spec/'];
+const VENDOR_ROOT = 'vendor/polaris-design';
+const VENDOR_ROOT_FILES = [
+  'AGENTS.md',
+  'CHANGELOG.md',
+  'DESIGN.md',
+  'LICENSE',
+  'README.md',
+  'package.json',
+  'pnpm-lock.yaml',
+  'pnpm-workspace.yaml',
+  'tokens.md',
+  'tsconfig.base.json',
+  'turbo.json',
+];
+const VENDOR_PREFIXES = [
+  '.claude-plugin/',
+  'assets/',
+  'docs/',
+  'packages/ui/',
+  'packages/lint/',
+  'packages/plugin/',
+  'packages/template-next/',
+];
+const EXCLUDED_PREFIXES = ['apps/', 'e2e/', '.github/', '.changeset/'];
+const MANAGED_PREFIXES = ['assets/figma-spec/', 'vendor/polaris-design/'];
+
+const REQUIRED_SOURCE_FILES = [
+  'DESIGN.md',
+  'tokens.md',
+  'packages/ui/COMPONENTS.md',
+  'packages/lint/RULES.md',
+  'packages/plugin/commands/polaris-brand-audit.md',
+  'packages/ui/src/styles/tokens.css',
+  'packages/ui/src/styles/v4-theme.css',
+  'packages/ui/src/tailwind/index.ts',
+  'packages/ui/src/tokens/colors.ts',
+  'packages/ui/src/tokens/typography.ts',
+  'packages/ui/src/tokens/spacing.ts',
+  'packages/ui/src/tokens/radius.ts',
+  'packages/ui/src/tokens/shadow.ts',
+  'packages/ui/src/tokens/motion.ts',
+  'packages/ui/src/tokens/zIndex.ts',
 ];
 
 const SIGNATURE_ASSET_FALLBACK = [
   {
     id: 'ai-cta',
-    signal: 'AI, NOVA, 자동화, 생성, 분석, 요약',
+    signal: 'AI, NOVA, automation, generation, analysis, summary',
     requiredExpression: 'ai.* token, NOVA purple, NovaLogo, Button variant="ai"',
   },
   {
@@ -74,12 +75,12 @@ const SIGNATURE_ASSET_FALLBACK = [
   },
   {
     id: 'document-ribbon',
-    signal: '문서 편집, 보고서, 제안서, 문서 작성',
+    signal: 'document editing, proposal, report, office tools',
     requiredExpression: '@polaris/ui/ribbon and ribbon-icons',
   },
   {
     id: 'prompt-chip',
-    signal: '필터, 카테고리, 빠른 액션, 추천 질문',
+    signal: 'filter, category, quick action, suggested prompt',
     requiredExpression: 'PromptChip',
   },
   {
@@ -89,7 +90,7 @@ const SIGNATURE_ASSET_FALLBACK = [
   },
   {
     id: 'nova-gradient',
-    signal: 'AI, 자동, NOVA headline emphasis',
+    signal: 'AI, automation, NOVA headline emphasis',
     requiredExpression: 'NOVA gradient text for one keyword only',
   },
   {
@@ -115,40 +116,156 @@ function sha256(value) {
   return createHash('sha256').update(value).digest('hex');
 }
 
+function normalizePath(filePath) {
+  return filePath.replaceAll('\\', '/');
+}
+
+function encodeSourcePath(source) {
+  return source.split('/').map(encodeURIComponent).join('/');
+}
+
+function isIncludedSource(source) {
+  if (VENDOR_ROOT_FILES.includes(source)) return true;
+  if (ROOT_ASSET_PREFIXES.some((prefix) => source.startsWith(prefix))) return true;
+  return VENDOR_PREFIXES.some((prefix) => source.startsWith(prefix));
+}
+
+function destinationsForSource(source) {
+  const destinations = [];
+  if (source === ROOT_DESIGN_FILE) destinations.push(ROOT_DESIGN_FILE);
+  if (ROOT_ASSET_PREFIXES.some((prefix) => source.startsWith(prefix))) destinations.push(source);
+  if (VENDOR_ROOT_FILES.includes(source) || VENDOR_PREFIXES.some((prefix) => source.startsWith(prefix))) {
+    destinations.push(`${VENDOR_ROOT}/${source}`);
+  }
+  return destinations;
+}
+
+function normalizeVendorMarkdown(source, textValue) {
+  if (!source.endsWith('.md')) return textValue;
+  let text = textValue;
+  if (source === 'README.md') {
+    text = text.replaceAll('(docs/migration/)', '(docs/for-consumers/migration/)');
+  }
+  if (source === 'docs/archive/migration-checklist.md') {
+    text = text
+      .replaceAll('(tailwind-v4-migration.md)', '(../for-contributors/architecture/tailwind-v4.md)')
+      .replaceAll('(internal-consumer-setup.md)', '(../for-consumers/install.md)')
+      .replaceAll('(nextjs-app-router.md', '(../for-contributors/architecture/nextjs-app-router.md');
+  }
+  if (source === 'docs/for-consumers/migration/rsc-patterns.md') {
+    text = text.replaceAll('(../roadmap.md)', '(../../for-contributors/roadmap.md)');
+  }
+  if (source === 'docs/for-contributors/architecture/nextjs-app-router.md') {
+    text = text
+      .replaceAll('(tailwind-v4-migration.md)', '(tailwind-v4.md)')
+      .replaceAll('(internal-consumer-setup.md)', '(../../for-consumers/install.md)');
+  }
+  if (source === 'docs/for-contributors/architecture/tailwind-v4.md') {
+    text = text.replaceAll('(migration/v0.7-to-v0.8.md)', '(../../for-consumers/migration/v0.7-to-v0.8.md)');
+  }
+  if (source === 'docs/for-contributors/component-history.md') {
+    text = text.replaceAll('(migration/v0.7-to-v0.8.md)', '(../for-consumers/migration/v0.7-to-v0.8.md)');
+  }
+  if (source === 'docs/for-contributors/docs-architecture.md') {
+    text = text.replaceAll('](...)', '](../for-consumers/migration/v0.7-to-v0.8.md)');
+  }
+  if (source === 'docs/for-contributors/roadmap.md') {
+    text = text
+      .replaceAll('(migration/v0.6-to-v0.7.md)', '(../for-consumers/migration/v0.6-to-v0.7.md)')
+      .replaceAll('(migration/v0.7-to-v0.8.md)', '(../for-consumers/migration/v0.7-to-v0.8.md)');
+  }
+  if (source.startsWith('packages/')) {
+    text = text.replaceAll('(docs/for-design-team/followup.md)', '(../../docs/for-design-team/followup.md)');
+  }
+  return text;
+}
+
+function bufferForDestination(source, destination, buffer) {
+  if (!destination.startsWith(`${VENDOR_ROOT}/`) || !source.endsWith('.md')) return buffer;
+  return Buffer.from(normalizeVendorMarkdown(source, buffer.toString('utf8')), 'utf8');
+}
+
 async function ensureParent(filePath) {
   await mkdir(path.dirname(filePath), { recursive: true });
 }
 
-async function readExisting(filePath) {
+async function readExistingBuffer(filePath) {
   if (!existsSync(filePath)) return null;
-  return readFile(filePath, 'utf8');
+  return readFile(filePath);
 }
 
-async function writeText(filePath, text, { check }) {
-  const current = await readExisting(filePath);
-  if (check) {
-    return current === text;
-  }
+async function writeBuffer(filePath, buffer, { check }) {
+  const current = await readExistingBuffer(filePath);
+  if (check) return Boolean(current && current.equals(buffer));
   await ensureParent(filePath);
-  await writeFile(filePath, text, 'utf8');
+  await writeFile(filePath, buffer);
   return true;
 }
 
-async function fetchText(ref, source) {
-  const url = `${RAW_REPO}/${encodeURIComponent(ref).replaceAll('%2F', '/')}/${source}`;
+async function writeText(filePath, text, options) {
+  return writeBuffer(filePath, Buffer.from(text, 'utf8'), options);
+}
+
+async function fetchJson(url) {
+  const response = await fetch(url, { headers: { 'User-Agent': 'maetelson-polaris-sync' } });
+  if (!response.ok) throw new Error(`Failed to fetch ${url}: ${response.status} ${response.statusText}`);
+  return response.json();
+}
+
+async function fetchBuffer(ref, source) {
+  const url = `${RAW_REPO}/${encodeURIComponent(ref).replaceAll('%2F', '/')}/${encodeSourcePath(source)}`;
   const response = await fetch(url, { headers: { 'User-Agent': 'maetelson-polaris-sync' } });
   if (!response.ok) throw new Error(`Failed to fetch ${source}: ${response.status} ${response.statusText}`);
-  return response.text();
+  return Buffer.from(await response.arrayBuffer());
 }
 
 async function resolveCommit(ref) {
   if (/^[0-9a-f]{40}$/i.test(ref)) return ref;
-  const response = await fetch(`https://api.github.com/repos/PolarisOffice/PolarisDesign/commits/${ref}`, {
-    headers: { 'User-Agent': 'maetelson-polaris-sync' },
-  });
-  if (!response.ok) return ref;
-  const json = await response.json();
+  const json = await fetchJson(`${API_REPO}/commits/${encodeURIComponent(ref)}`);
   return json.sha || ref;
+}
+
+async function listUpstreamFiles(commit) {
+  const json = await fetchJson(`${API_REPO}/git/trees/${commit}?recursive=1`);
+  if (json.truncated) throw new Error('GitHub tree response was truncated.');
+  return json.tree
+    .filter((item) => item.type === 'blob')
+    .map((item) => ({ path: item.path, size: item.size || 0 }))
+    .filter((item) => isIncludedSource(item.path))
+    .sort((a, b) => a.path.localeCompare(b.path));
+}
+
+async function walkFiles(dir) {
+  if (!existsSync(dir)) return [];
+  const entries = await readdir(dir, { withFileTypes: true });
+  const files = [];
+  for (const entry of entries) {
+    const full = path.join(dir, entry.name);
+    if (entry.isDirectory()) files.push(...(await walkFiles(full)));
+    else files.push(normalizePath(full));
+  }
+  return files;
+}
+
+async function listManagedFiles() {
+  const all = [];
+  for (const prefix of MANAGED_PREFIXES) {
+    all.push(...(await walkFiles(prefix)));
+  }
+  return all.sort();
+}
+
+async function removeStaleFiles(staleFiles, { check }) {
+  if (check || staleFiles.length === 0) return;
+  const repoRoot = process.cwd();
+  for (const file of staleFiles) {
+    const resolved = path.resolve(file);
+    if (!resolved.startsWith(repoRoot)) throw new Error(`Refusing to remove outside repo: ${file}`);
+    await unlink(file);
+  }
+  for (const prefix of MANAGED_PREFIXES) {
+    if (existsSync(prefix)) await rm(prefix, { recursive: true, force: true });
+  }
 }
 
 function extractFrontmatter(markdown) {
@@ -162,10 +279,7 @@ function parseScalar(rawValue) {
   if (!value) return '';
   const commentIndex = value.search(/\s#/);
   if (commentIndex >= 0) value = value.slice(0, commentIndex).trim();
-  if (
-    (value.startsWith('"') && value.endsWith('"')) ||
-    (value.startsWith("'") && value.endsWith("'"))
-  ) {
+  if ((value.startsWith('"') && value.endsWith('"')) || (value.startsWith("'") && value.endsWith("'"))) {
     return value.slice(1, -1).replace(/\\"/g, '"');
   }
   if (/^-?\d+(\.\d+)?$/.test(value)) return Number(value);
@@ -241,9 +355,15 @@ function categorizeCssVariables(vars) {
   return categories;
 }
 
+function text(files, source) {
+  const value = files.get(source);
+  if (!value) throw new Error(`Missing fetched file for generated artifact: ${source}`);
+  return value.toString('utf8');
+}
+
 function buildTokensJson(files, ref, commit, generatedAt) {
-  const design = files.get('DESIGN.md');
-  const tokensCss = files.get('packages/ui/src/styles/tokens.css');
+  const design = text(files, 'DESIGN.md');
+  const tokensCss = text(files, 'packages/ui/src/styles/tokens.css');
   const designFrontmatterRaw = extractFrontmatter(design);
   const designFrontmatter = parseSimpleYaml(designFrontmatterRaw);
   const lightVars = parseCssVariables(extractCssBlock(tokensCss, ':root'));
@@ -252,12 +372,7 @@ function buildTokensJson(files, ref, commit, generatedAt) {
 
   return {
     schemaVersion: 1,
-    source: {
-      repo: UPSTREAM_REPO,
-      ref,
-      commit,
-      releaseTag: DEFAULT_RELEASE_TAG,
-    },
+    source: { repo: UPSTREAM_REPO, ref, commit, releaseTag: DEFAULT_RELEASE_TAG },
     generatedAt,
     designFrontmatter,
     counts: {
@@ -289,18 +404,14 @@ function buildTokensJson(files, ref, commit, generatedAt) {
 }
 
 function buildComponentsJson(files, ref, commit, generatedAt) {
-  const markdown = files.get('packages/ui/COMPONENTS.md');
-  const familyCountMatch = markdown.match(/현재\s+(\d+)\s+family export/);
+  const markdown = text(files, 'packages/ui/COMPONENTS.md');
+  const familyCountMatch = markdown.match(/(\d+)\s+family export/);
   const components = Array.from(new Set([...markdown.matchAll(/<([A-Z][A-Za-z0-9]+)>/g)].map((m) => m[1]))).sort();
   const subpaths = [];
   for (const line of markdown.split(/\r?\n/)) {
     const match = line.match(/^\|\s+`([^`]+)`\s+\|\s+([^|]+)\|\s+([^|]+)\|/);
     if (match && match[1].startsWith('@polaris/')) {
-      subpaths.push({
-        path: match[1],
-        description: match[2].trim(),
-        serverSafe: match[3].trim(),
-      });
+      subpaths.push({ path: match[1], description: match[2].trim(), serverSafe: match[3].trim() });
     }
   }
   return {
@@ -314,17 +425,11 @@ function buildComponentsJson(files, ref, commit, generatedAt) {
 }
 
 function buildLintRulesJson(files, ref, commit, generatedAt) {
-  const markdown = files.get('packages/lint/RULES.md');
+  const markdown = text(files, 'packages/lint/RULES.md');
   const rules = [];
   for (const line of markdown.split(/\r?\n/)) {
     const match = line.match(/^\|\s+`(@polaris\/[^`]+)`\s+\|\s+([^|]+)\|\s+([^|]+)\|/);
-    if (match) {
-      rules.push({
-        name: match[1],
-        type: match[2].trim(),
-        description: match[3].trim(),
-      });
-    }
+    if (match) rules.push({ name: match[1], type: match[2].trim(), description: match[3].trim() });
   }
   return {
     schemaVersion: 1,
@@ -335,62 +440,121 @@ function buildLintRulesJson(files, ref, commit, generatedAt) {
   };
 }
 
-function buildSignatureAssetsJson(files, ref, commit, generatedAt) {
-  const markdown = files.get('packages/plugin/commands/polaris-brand-audit.md');
-  const heuristics = [];
-  const pattern = /###\s+\d+\.\s+(.+?)\r?\n([\s\S]*?)(?=\r?\n###\s+\d+\.|\r?\n## 보고 형식)/g;
-  for (const match of markdown.matchAll(pattern)) {
-    const body = match[2];
-    const codeMatch = body.match(/```sh\r?\n([\s\S]*?)```/);
-    const suggestionMatch = body.match(/\*\*제안\*\*:\s+(.+)/);
-    heuristics.push({
-      name: match[1].trim(),
-      command: codeMatch ? codeMatch[1].trim() : null,
-      suggestion: suggestionMatch ? suggestionMatch[1].trim() : null,
-    });
-  }
+function buildAssetCatalog(files, ref, commit, generatedAt, syncedFiles) {
+  const assetFiles = syncedFiles.filter((item) => item.source.startsWith('assets/'));
+  const byKind = {
+    figmaSpec: assetFiles.filter((item) => item.source.startsWith('assets/figma-spec/')),
+    fileIcons: assetFiles.filter((item) => item.source.startsWith('assets/svg/file-icons/')),
+    uiIcons: assetFiles.filter((item) => item.source.startsWith('assets/svg/icons/')),
+    logos: assetFiles.filter((item) => item.source.startsWith('assets/svg/logos/')),
+    ribbonBig: assetFiles.filter((item) => item.source.startsWith('assets/ribbon/big/')),
+    ribbonSmall: assetFiles.filter((item) => item.source.startsWith('assets/ribbon/small/')),
+  };
   return {
     schemaVersion: 1,
-    source: {
-      repo: UPSTREAM_REPO,
-      ref,
-      commit,
-      file: 'packages/plugin/commands/polaris-brand-audit.md',
-    },
+    source: { repo: UPSTREAM_REPO, ref, commit },
+    generatedAt,
+    counts: Object.fromEntries(Object.entries(byKind).map(([key, value]) => [key, value.length])),
+    assets: Object.fromEntries(
+      Object.entries(byKind).map(([key, value]) => [
+        key,
+        value.map((item) => ({ source: item.source, destination: item.destination, sha256: item.sha256 })),
+      ])
+    ),
+  };
+}
+
+function buildSignatureAssetsJson(files, ref, commit, generatedAt, assetCatalog) {
+  const markdown = text(files, 'packages/plugin/commands/polaris-brand-audit.md');
+  const headings = [...markdown.matchAll(/^###\s+\d+\.\s+(.+)$/gm)].map((match) => match[1].trim());
+  return {
+    schemaVersion: 1,
+    source: { repo: UPSTREAM_REPO, ref, commit, file: 'packages/plugin/commands/polaris-brand-audit.md' },
     generatedAt,
     requiredAssets: SIGNATURE_ASSET_FALLBACK,
-    heuristics,
+    heuristics: headings.map((name) => ({ name })),
+    assetCatalog: {
+      figmaSpec: assetCatalog.counts.figmaSpec,
+      fileIcons: assetCatalog.counts.fileIcons,
+      uiIcons: assetCatalog.counts.uiIcons,
+      logos: assetCatalog.counts.logos,
+      ribbonBig: assetCatalog.counts.ribbonBig,
+      ribbonSmall: assetCatalog.counts.ribbonSmall,
+    },
   };
 }
 
 async function writeJson(filePath, value, options) {
-  const text = `${JSON.stringify(value, null, 2)}\n`;
-  const ok = await writeText(filePath, text, options);
-  return { filePath, text, ok, checksum: sha256(text) };
+  const buffer = Buffer.from(`${JSON.stringify(value, null, 2)}\n`, 'utf8');
+  const ok = await writeBuffer(filePath, buffer, options);
+  return { filePath, ok, sha256: sha256(buffer) };
+}
+
+async function mapWithConcurrency(items, limit, mapper) {
+  const results = new Array(items.length);
+  let index = 0;
+  async function worker() {
+    while (index < items.length) {
+      const current = index;
+      index += 1;
+      results[current] = await mapper(items[current], current);
+    }
+  }
+  await Promise.all(Array.from({ length: Math.min(limit, items.length) }, worker));
+  return results;
 }
 
 async function main() {
   const options = parseArgs(process.argv.slice(2));
   const commit = await resolveCommit(options.ref);
-  const existingManifest = options.check && existsSync('polaris.design-sync.json')
-    ? JSON.parse(await readFile('polaris.design-sync.json', 'utf8'))
-    : null;
+  const existingManifest =
+    options.check && existsSync('polaris.design-sync.json')
+      ? JSON.parse((await readFile('polaris.design-sync.json')).toString('utf8'))
+      : null;
   const syncedAt = existingManifest?.syncedAt || new Date().toISOString();
+  const upstreamFiles = await listUpstreamFiles(commit);
+  const missingRequired = REQUIRED_SOURCE_FILES.filter((file) => !upstreamFiles.some((item) => item.path === file));
+  if (missingRequired.length > 0) throw new Error(`Missing required upstream files: ${missingRequired.join(', ')}`);
+
   const fetched = new Map();
-  const fileChecksums = {};
+  const desiredDestinations = new Set();
+  const syncedFiles = [];
   const drift = [];
 
-  for (const item of SYNC_FILES) {
-    const text = await fetchText(options.ref, item.source);
-    fetched.set(item.source, text);
-    for (const destination of item.destinations) {
-      const ok = await writeText(destination, text, options);
-      fileChecksums[destination] = sha256(text);
+  await mapWithConcurrency(upstreamFiles, 8, async (file) => {
+    const buffer = await fetchBuffer(commit, file.path);
+    fetched.set(file.path, buffer);
+    for (const destination of destinationsForSource(file.path)) {
+      const destinationBuffer = bufferForDestination(file.path, destination, buffer);
+      desiredDestinations.add(destination);
+      const ok = await writeBuffer(destination, destinationBuffer, options);
       if (!ok) drift.push(destination);
+      syncedFiles.push({
+        source: file.path,
+        destination,
+        size: destinationBuffer.byteLength,
+        sha256: sha256(destinationBuffer),
+      });
+    }
+  });
+  syncedFiles.sort((a, b) => a.destination.localeCompare(b.destination));
+
+  const managedFiles = await listManagedFiles();
+  const staleFiles = managedFiles.filter((file) => !desiredDestinations.has(file));
+  if (staleFiles.length > 0) drift.push(...staleFiles.map((file) => `stale:${file}`));
+  await removeStaleFiles(staleFiles, options);
+
+  if (!options.check) {
+    for (const file of upstreamFiles) {
+      for (const destination of destinationsForSource(file.path)) {
+        const buffer = fetched.get(file.path);
+        await writeBuffer(destination, bufferForDestination(file.path, destination, buffer), options);
+      }
     }
   }
 
-  const generated = [
+  const assetCatalog = buildAssetCatalog(fetched, options.ref, commit, syncedAt, syncedFiles);
+  const generatedArtifacts = [
     await writeJson('docs/design/generated/polaris.tokens.json', buildTokensJson(fetched, options.ref, commit, syncedAt), options),
     await writeJson(
       'docs/design/generated/polaris.components.json',
@@ -402,40 +566,37 @@ async function main() {
       buildLintRulesJson(fetched, options.ref, commit, syncedAt),
       options
     ),
+    await writeJson('docs/design/generated/polaris.assets.json', assetCatalog, options),
     await writeJson(
       'docs/design/generated/polaris.signature-assets.json',
-      buildSignatureAssetsJson(fetched, options.ref, commit, syncedAt),
+      buildSignatureAssetsJson(fetched, options.ref, commit, syncedAt, assetCatalog),
       options
     ),
   ];
-  for (const artifact of generated) {
+  for (const artifact of generatedArtifacts) {
     if (!artifact.ok) drift.push(artifact.filePath);
   }
 
   const manifest = {
-    schemaVersion: 1,
+    schemaVersion: 2,
+    syncProfile: 'design-source',
     upstream: {
       repo: UPSTREAM_REPO,
       ref: options.ref,
       commit,
       releaseTag: DEFAULT_RELEASE_TAG,
       releaseUrl: `${UPSTREAM_REPO}/releases/tag/${DEFAULT_RELEASE_TAG}`,
-      tarballs: {
-        ui: UI_TARBALL,
-        lint: LINT_TARBALL,
-      },
+      tarballs: { ui: UI_TARBALL, lint: LINT_TARBALL },
     },
+    includedRootFiles: VENDOR_ROOT_FILES,
+    includedPrefixes: [...ROOT_ASSET_PREFIXES, ...VENDOR_PREFIXES],
+    excludedPrefixes: EXCLUDED_PREFIXES,
+    managedPrefixes: MANAGED_PREFIXES,
     syncedAt,
-    syncedFiles: SYNC_FILES.flatMap((item) =>
-      item.destinations.map((destination) => ({
-        source: item.source,
-        destination,
-        sha256: fileChecksums[destination],
-      }))
-    ),
-    generatedArtifacts: generated.map((artifact) => ({
+    syncedFiles,
+    generatedArtifacts: generatedArtifacts.map((artifact) => ({
       destination: artifact.filePath,
-      sha256: artifact.checksum,
+      sha256: artifact.sha256,
     })),
   };
   const manifestResult = await writeJson('polaris.design-sync.json', manifest, options);
@@ -447,11 +608,8 @@ async function main() {
     process.exit(1);
   }
 
-  if (options.check) {
-    console.log('Polaris design sync is up to date.');
-  } else {
-    console.log(`Synced PolarisDesign ${commit} into ${process.cwd()}`);
-  }
+  if (options.check) console.log('Polaris design sync is up to date.');
+  else console.log(`Synced PolarisDesign ${commit} (${syncedFiles.length} files) into ${process.cwd()}`);
 }
 
 main().catch((error) => {
