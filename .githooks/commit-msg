@@ -1,0 +1,15 @@
+#!/bin/sh
+
+if [ -n "$POLARIS_NODE" ]; then
+  NODE_BIN="$POLARIS_NODE"
+elif command -v node >/dev/null 2>&1; then
+  NODE_BIN="node"
+elif [ -n "$USERPROFILE" ] && [ -x "$USERPROFILE/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node.exe" ]; then
+  NODE_BIN="$USERPROFILE/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node.exe"
+else
+  echo "Node.js를 찾을 수 없어 커밋 메시지를 검사할 수 없습니다." >&2
+  echo "Node.js를 설치하거나 POLARIS_NODE 환경 변수에 node 실행 파일 경로를 지정해 주세요." >&2
+  exit 1
+fi
+
+"$NODE_BIN" scripts/validate-commit-msg.cjs "$1"
