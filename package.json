@@ -3,6 +3,12 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "commit:check": "node scripts/validate-commit-msg.cjs"
+    "commit:check": "node scripts/validate-commit-msg.cjs",
+    "polaris:sync": "node scripts/sync-polaris-design.mjs",
+    "polaris:validate": "node scripts/validate-polaris-design-sync.mjs",
+    "polaris:figma:build": "node scripts/build-polaris-figma-sync.mjs",
+    "polaris:brand-audit": "node scripts/polaris-brand-audit.mjs",
+    "polaris:brand-audit:fixtures": "node scripts/polaris-brand-audit.mjs --fixtures",
+    "polaris:brief:check": "node scripts/check-polaris-brief.mjs"
   }
 }
