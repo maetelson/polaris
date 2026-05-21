@@ -2,7 +2,11 @@
   "name": "polaris",
   "private": true,
   "version": "0.0.0",
+  "type": "module",
   "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview --host 0.0.0.0",
     "commit:check": "node scripts/validate-commit-msg.cjs",
     "polaris:sync": "node scripts/sync-polaris-design.mjs",
     "polaris:validate": "node scripts/validate-polaris-design-sync.mjs",
@@ -12,5 +16,19 @@
     "polaris:brief:check": "node scripts/check-polaris-brief.mjs",
     "polaris:links:check": "node scripts/check-md-links.mjs",
     "polaris:pages:check": "node scripts/check-polaris-pages-coverage.mjs"
+  },
+  "dependencies": {
+    "@polaris/ui": "file:vendor/polaris-design/packages/ui",
+    "lucide-react": "^0.469.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@polaris/lint": "file:vendor/polaris-design/packages/lint",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "@vitejs/plugin-react": "^4.5.0",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.5"
   }
 }
