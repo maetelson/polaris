@@ -1,0 +1,33 @@
+name: Polaris Contract
+
+on:
+  pull_request:
+  push:
+
+jobs:
+  validate:
+    name: PolarisDesign sync and enforcement
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Check upstream sync drift
+        run: npm run polaris:sync -- --check
+
+      - name: Validate generated Polaris contract
+        run: npm run polaris:validate
+
+      - name: Validate UI brief contract
+        run: npm run polaris:brief:check
+
+      - name: Brand audit
+        run: npm run polaris:brand-audit
+
+      - name: Brand audit fixtures
+        run: npm run polaris:brand-audit:fixtures
