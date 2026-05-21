@@ -1,0 +1,236 @@
+/* Polaris Design — Tailwind v4 native theme
+ *
+ * Mirrors the v3 preset (`@polaris/ui/tailwind`) as a Tailwind v4 `@theme inline`
+ * block. The same utility class names work in both versions: `bg-accent-brand-normal`,
+ * `text-label-normal`, `rounded-polaris-md`, `shadow-polaris-sm`, `font-polaris`,
+ * `text-polaris-body2`, etc.
+ *
+ * Usage (Next.js 15+ / Tailwind v4):
+ * ```css
+ * @import 'tailwindcss';
+ * @import '@polaris/ui/styles/tokens.css';
+ * @import '@polaris/ui/styles/v4-theme.css';
+ * ```
+ *
+ * Notes:
+ * - `tokens.css` provides raw CSS variables (`--polaris-*`). This file maps
+ *   them to Tailwind v4's `--color-*` / `--radius-*` / `--shadow-*` namespaces.
+ * - Alpha modifiers (`bg-state-success/15`) work because the underlying
+ *   `--polaris-state-*` values are plain hex — Tailwind v4 wraps them in
+ *   `color-mix()` automatically when an opacity is requested.
+ * - Dark mode uses `tokens.css`'s `[data-theme="dark"]` selector. To enable
+ *   Tailwind's `dark:` variant on top of that, add this to globals.css:
+ *   `@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));`
+ *
+ * v0.8 removed every legacy alias block (rc.0 `brand-*` / `surface-canvas` /
+ * `fg-*` / `status-*`, v0.6 typography `polaris-h1`-`h5`, `polaris-body`,
+ * `polaris-meta`, `polaris-tiny`, `polaris-display-lg`, etc.). Run
+ * `pnpm dlx @polaris/lint polaris-codemod-v08 --apply src` to migrate
+ * consumer code; the lint rule `no-deprecated-polaris-token` guards
+ * against regressions.
+ */
+
+@theme inline {
+  /* === Brand palette base === */
+  --color-polaris-blue:   var(--polaris-blue);
+  --color-polaris-green:  var(--polaris-green);
+  --color-polaris-orange: var(--polaris-orange);
+  --color-polaris-red:    var(--polaris-red);
+  --color-polaris-purple: var(--polaris-purple);
+
+  /* === File type === */
+  --color-file-docx: var(--polaris-file-docx);
+  --color-file-hwp:  var(--polaris-file-hwp);
+  --color-file-xlsx: var(--polaris-file-xlsx);
+  --color-file-pptx: var(--polaris-file-pptx);
+  --color-file-pdf:  var(--polaris-file-pdf);
+
+  /* === Surface elevation tier (popover / modal — v0.7.5+) === */
+  --color-surface-popover: var(--polaris-surface-popover);
+  --color-surface-modal:   var(--polaris-surface-modal);
+
+  /* === Label (text + icon) === */
+  --color-label-normal:      var(--polaris-label-normal);
+  --color-label-neutral:     var(--polaris-label-neutral);
+  --color-label-alternative: var(--polaris-label-alternative);
+  --color-label-assistive:   var(--polaris-label-assistive);
+  --color-label-inverse:     var(--polaris-label-inverse);
+  --color-label-disabled:    var(--polaris-label-disabled);
+
+  /* === Background (page-level) === */
+  --color-background-base:     var(--polaris-background-base);
+  --color-background-disabled: var(--polaris-background-disabled);
+
+  /* === Layer (raised surfaces) === */
+  --color-layer-surface: var(--polaris-layer-surface);
+  --color-layer-overlay: var(--polaris-layer-overlay);
+
+  /* === Interaction === */
+  --color-interaction-hover:   var(--polaris-interaction-hover);
+  --color-interaction-pressed: var(--polaris-interaction-pressed);
+
+  /* === Fill === */
+  --color-fill-neutral: var(--polaris-fill-neutral);
+  --color-fill-normal:  var(--polaris-fill-normal);
+  --color-fill-strong:  var(--polaris-fill-strong);
+
+  /* === Line === */
+  --color-line-neutral:  var(--polaris-line-neutral);
+  --color-line-normal:   var(--polaris-line-normal);
+  --color-line-strong:   var(--polaris-line-strong);
+  --color-line-disabled: var(--polaris-line-disabled);
+
+  /* === Accent (brand + action) === */
+  --color-accent-brand-normal:        var(--polaris-accent-brand-normal);
+  --color-accent-brand-strong:        var(--polaris-accent-brand-strong);
+  --color-accent-brand-bg:            var(--polaris-accent-brand-bg);
+  --color-accent-brand-bg-hover:      var(--polaris-accent-brand-bg-hover);
+  --color-accent-brand-normal-subtle: var(--polaris-accent-brand-normal-subtle);
+  --color-accent-action-normal:       var(--polaris-accent-action-normal);
+  --color-accent-action-strong:       var(--polaris-accent-action-strong);
+
+  /* === Focus / Static / State === */
+  --color-focus-ring:           var(--polaris-focus-ring);
+  --color-static-white:         var(--polaris-static-white);
+  --color-static-black:         var(--polaris-static-black);
+  --color-state-new:            var(--polaris-state-new);
+  --color-state-success:        var(--polaris-state-success);
+  --color-state-success-bg:     var(--polaris-state-success-bg);
+  --color-state-success-strong: var(--polaris-state-success-strong);
+  --color-state-warning:        var(--polaris-state-warning);
+  --color-state-warning-bg:     var(--polaris-state-warning-bg);
+  --color-state-warning-strong: var(--polaris-state-warning-strong);
+  --color-state-error:          var(--polaris-state-error);
+  --color-state-error-bg:       var(--polaris-state-error-bg);
+  --color-state-error-strong:   var(--polaris-state-error-strong);
+  --color-state-info:           var(--polaris-state-info);
+  --color-state-info-bg:        var(--polaris-state-info-bg);
+  --color-state-info-strong:    var(--polaris-state-info-strong);
+
+  /* === Polaris-specific (AI namespace) === */
+  --color-ai-normal:  var(--polaris-ai-normal);
+  --color-ai-strong:  var(--polaris-ai-strong);
+  --color-ai-hover:   var(--polaris-ai-hover);
+  --color-ai-pressed: var(--polaris-ai-pressed);
+
+  /* === Neutral 12-step === */
+  --color-neutral-0:    var(--polaris-neutral-0);
+  --color-neutral-50:   var(--polaris-neutral-50);
+  --color-neutral-100:  var(--polaris-neutral-100);
+  --color-neutral-200:  var(--polaris-neutral-200);
+  --color-neutral-300:  var(--polaris-neutral-300);
+  --color-neutral-400:  var(--polaris-neutral-400);
+  --color-neutral-500:  var(--polaris-neutral-500);
+  --color-neutral-600:  var(--polaris-neutral-600);
+  --color-neutral-700:  var(--polaris-neutral-700);
+  --color-neutral-800:  var(--polaris-neutral-800);
+  --color-neutral-900:  var(--polaris-neutral-900);
+  --color-neutral-1000: var(--polaris-neutral-1000);
+
+  /* === Border radius === */
+  --radius-polaris-2xs:  var(--polaris-radius-2xs);
+  --radius-polaris-xs:   var(--polaris-radius-xs);
+  --radius-polaris-sm:   var(--polaris-radius-sm);
+  --radius-polaris-md:   var(--polaris-radius-md);
+  --radius-polaris-lg:   var(--polaris-radius-lg);
+  --radius-polaris-xl:   var(--polaris-radius-xl);
+  --radius-polaris-2xl:  var(--polaris-radius-2xl);
+  --radius-polaris-pill: var(--polaris-radius-pill);
+
+  /* === Shadow === */
+  --shadow-polaris-xs:    var(--polaris-shadow-xs);
+  --shadow-polaris-sm:    var(--polaris-shadow-sm);
+  --shadow-polaris-md:    var(--polaris-shadow-md);
+  --shadow-polaris-lg:    var(--polaris-shadow-lg);
+  --shadow-polaris-ai:    var(--polaris-shadow-ai);
+  --shadow-polaris-focus: var(--polaris-shadow-focus);
+
+  /* === Font family === */
+  --font-polaris:      var(--polaris-font-sans);
+  --font-polaris-mono: var(--polaris-font-mono);
+
+  /* === Font size + line-height + weight (v0.8 spec)
+   * Spec names: display / title / heading1-4 / body1-3 / caption1-2.
+   * NO letter-spacing per DESIGN.md §3 — Pretendard's metrics handle it.
+   * Line-heights: 1.4 headings, 1.5 body, 1.3 captions.
+   */
+  --text-polaris-display: 40px;
+  --text-polaris-display--line-height: 56px;
+  --text-polaris-display--font-weight: 700;
+
+  --text-polaris-title: 32px;
+  --text-polaris-title--line-height: 44px;
+  --text-polaris-title--font-weight: 700;
+
+  --text-polaris-heading1: 28px;
+  --text-polaris-heading1--line-height: 40px;
+  --text-polaris-heading1--font-weight: 700;
+
+  --text-polaris-heading2: 24px;
+  --text-polaris-heading2--line-height: 34px;
+  --text-polaris-heading2--font-weight: 700;
+
+  --text-polaris-heading3: 20px;
+  --text-polaris-heading3--line-height: 28px;
+  --text-polaris-heading3--font-weight: 700;
+
+  --text-polaris-heading4: 18px;
+  --text-polaris-heading4--line-height: 26px;
+  --text-polaris-heading4--font-weight: 700;
+
+  --text-polaris-body1: 16px;
+  --text-polaris-body1--line-height: 24px;
+  --text-polaris-body1--font-weight: 400;
+
+  --text-polaris-body2: 14px;
+  --text-polaris-body2--line-height: 21px;
+  --text-polaris-body2--font-weight: 400;
+
+  --text-polaris-body3: 13px;
+  --text-polaris-body3--line-height: 20px;
+  --text-polaris-body3--font-weight: 400;
+
+  --text-polaris-caption1: 12px;
+  --text-polaris-caption1--line-height: 16px;
+  --text-polaris-caption1--font-weight: 700;
+
+  --text-polaris-caption2: 11px;
+  --text-polaris-caption2--line-height: 14px;
+  --text-polaris-caption2--font-weight: 700;
+
+  /* v0.7.4 — form helper / error / floating-label 12 / 400 / lh 1.3. */
+  --text-polaris-helper: 12px;
+  --text-polaris-helper--line-height: 16px;
+  --text-polaris-helper--font-weight: 400;
+
+  /* === Spacing — class form `p-polaris-md`, `gap-polaris-lg` === */
+  --spacing-polaris-none: var(--polaris-spacing-none);
+  --spacing-polaris-4xs:  var(--polaris-spacing-4xs);
+  --spacing-polaris-3xs:  var(--polaris-spacing-3xs);
+  --spacing-polaris-2xs:  var(--polaris-spacing-2xs);
+  --spacing-polaris-xs:   var(--polaris-spacing-xs);
+  --spacing-polaris-sm:   var(--polaris-spacing-sm);
+  --spacing-polaris-md:   var(--polaris-spacing-md);
+  --spacing-polaris-lg:   var(--polaris-spacing-lg);
+  --spacing-polaris-xl:   var(--polaris-spacing-xl);
+  --spacing-polaris-2xl:  var(--polaris-spacing-2xl);
+  --spacing-polaris-3xl:  var(--polaris-spacing-3xl);
+  --spacing-polaris-4xl:  var(--polaris-spacing-4xl);
+
+  /* === Z-index — class form `z-polaris-modal` === */
+  --z-polaris-base:     var(--polaris-z-base);
+  --z-polaris-dropdown: var(--polaris-z-dropdown);
+  --z-polaris-sticky:   var(--polaris-z-sticky);
+  --z-polaris-dim:      var(--polaris-z-dim);
+  --z-polaris-modal:    var(--polaris-z-modal);
+  --z-polaris-toast:    var(--polaris-z-toast);
+
+  /* === Motion — `duration-polaris-fast`, `ease-polaris-out` === */
+  --duration-polaris-instant: var(--polaris-duration-instant);
+  --duration-polaris-fast:    var(--polaris-duration-fast);
+  --duration-polaris-normal:  var(--polaris-duration-normal);
+  --duration-polaris-slow:    var(--polaris-duration-slow);
+  --ease-polaris-in-out: var(--polaris-ease-in-out);
+  --ease-polaris-out:    var(--polaris-ease-out);
+  --ease-polaris-in:     var(--polaris-ease-in);
+}

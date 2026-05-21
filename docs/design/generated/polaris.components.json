@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "repo": "https://github.com/PolarisOffice/PolarisDesign",
+    "ref": "1d0e2460de63eb634c979855f183c2b18d688b1e",
+    "commit": "1d0e2460de63eb634c979855f183c2b18d688b1e",
+    "file": "packages/ui/COMPONENTS.md"
+  },
+  "generatedAt": "2026-05-21T15:01:42.718Z",
+  "familyCount": 45,
+  "components": [
+    "Accordion",
+    "Alert",
+    "Avatar",
+    "Badge",
+    "Breadcrumb",
+    "Button",
+    "Calendar",
+    "Card",
+    "Checkbox",
+    "CircularProgress",
+    "Combobox",
+    "Command",
+    "Container",
+    "CopyButton",
+    "DatePicker",
+    "DateTimeInput",
+    "DescriptionList",
+    "Dialog",
+    "Disclosure",
+    "Drawer",
+    "DropdownMenu",
+    "EmptyState",
+    "FileCard",
+    "FileIcon",
+    "FileInput",
+    "Form",
+    "Input",
+    "Navbar",
+    "NovaInput",
+    "PageHeader",
+    "Pagination",
+    "Popover",
+    "Progress",
+    "PromptChip",
+    "Select",
+    "Sidebar",
+    "Skeleton",
+    "Stack",
+    "Stat",
+    "Switch",
+    "Table",
+    "TableHelpers",
+    "Tabs",
+    "Textarea",
+    "Toast",
+    "Tooltip"
+  ],
+  "subpaths": [
+    {
+      "path": "@polaris/ui/tokens",
+      "description": "토큰 객체 (`label`, `accentBrand`, …)",
+      "serverSafe": "✓ server-safe"
+    },
+    {
+      "path": "@polaris/ui/tailwind",
+      "description": "Tailwind preset",
+      "serverSafe": "✓ server-safe"
+    },
+    {
+      "path": "@polaris/ui/utils",
+      "description": "순수 함수 (`pageNumberItems`, …) — v0.8.0-rc.8 신규",
+      "serverSafe": "✓ server-safe"
+    },
+    {
+      "path": "@polaris/ui/form",
+      "description": "`<Form>` + react-hook-form 통합",
+      "serverSafe": "client"
+    },
+    {
+      "path": "@polaris/ui/ribbon",
+      "description": "Ribbon family (25+ subcomponents)",
+      "serverSafe": "client"
+    },
+    {
+      "path": "@polaris/ui/icons",
+      "description": "65 UI 아이콘 (18/24/32 px)",
+      "serverSafe": "client"
+    },
+    {
+      "path": "@polaris/ui/file-icons",
+      "description": "29 파일 타입 SVG",
+      "serverSafe": "client"
+    },
+    {
+      "path": "@polaris/ui/logos",
+      "description": "PolarisLogo + NovaLogo",
+      "serverSafe": "client"
+    },
+    {
+      "path": "@polaris/ui/ribbon-icons",
+      "description": "91 ribbon-icons (57 big × 32 + 34 small × 16)",
+      "serverSafe": "client"
+    }
+  ]
+}

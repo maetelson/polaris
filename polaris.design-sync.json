@@ -1,0 +1,135 @@
+{
+  "schemaVersion": 1,
+  "upstream": {
+    "repo": "https://github.com/PolarisOffice/PolarisDesign",
+    "ref": "1d0e2460de63eb634c979855f183c2b18d688b1e",
+    "commit": "1d0e2460de63eb634c979855f183c2b18d688b1e",
+    "releaseTag": "v0.8.0-rc.8",
+    "releaseUrl": "https://github.com/PolarisOffice/PolarisDesign/releases/tag/v0.8.0-rc.8",
+    "tarballs": {
+      "ui": "https://github.com/PolarisOffice/PolarisDesign/releases/download/v0.8.0-rc.8/polaris-ui-0.8.0-rc.8.tgz",
+      "lint": "https://github.com/PolarisOffice/PolarisDesign/releases/download/v0.8.0-rc.8/polaris-lint-0.8.0-rc.8.tgz"
+    }
+  },
+  "syncedAt": "2026-05-21T15:01:42.718Z",
+  "syncedFiles": [
+    {
+      "source": "DESIGN.md",
+      "destination": "DESIGN.md",
+      "sha256": "6b511a88305f37b2735d5aba5af0b95b50a0e66f1bcfd3c0e2e540227f0de5e9"
+    },
+    {
+      "source": "DESIGN.md",
+      "destination": "vendor/polaris-design/DESIGN.md",
+      "sha256": "6b511a88305f37b2735d5aba5af0b95b50a0e66f1bcfd3c0e2e540227f0de5e9"
+    },
+    {
+      "source": "tokens.md",
+      "destination": "vendor/polaris-design/tokens.md",
+      "sha256": "17cf7150189ba882ab9e2c4ac810393e4520e44354e9059a81aa0d5919b531f2"
+    },
+    {
+      "source": "packages/ui/COMPONENTS.md",
+      "destination": "vendor/polaris-design/packages/ui/COMPONENTS.md",
+      "sha256": "1fc9c258f0b05a4f8871c4dc29f3201b05f5b49c8880563949798af015367727"
+    },
+    {
+      "source": "packages/lint/RULES.md",
+      "destination": "vendor/polaris-design/packages/lint/RULES.md",
+      "sha256": "9096ac3297e5f33a277212d89ab70a5fc3914a899abb7da26f8c0f6c32a0a99d"
+    },
+    {
+      "source": "packages/plugin/skills/polaris-web/SKILL.md",
+      "destination": "vendor/polaris-design/packages/plugin/skills/polaris-web/SKILL.md",
+      "sha256": "8c7cf3c0196126534c700956b1e856d67bfd344798854fb9a74c39d862b8f48f"
+    },
+    {
+      "source": "packages/plugin/commands/polaris-check.md",
+      "destination": "vendor/polaris-design/packages/plugin/commands/polaris-check.md",
+      "sha256": "dfcfa20b384bb71cceeb4759e0c4049874fcb6370869c8c897f9476765693f5b"
+    },
+    {
+      "source": "packages/plugin/commands/polaris-component.md",
+      "destination": "vendor/polaris-design/packages/plugin/commands/polaris-component.md",
+      "sha256": "8199c309d96a17473774ddefded94c25c521df32d799b999d075b5881949d912"
+    },
+    {
+      "source": "packages/plugin/commands/polaris-brand-audit.md",
+      "destination": "vendor/polaris-design/packages/plugin/commands/polaris-brand-audit.md",
+      "sha256": "34bd11cc0616175f8a10320dd4227bca247d1eaba8ab9ae79ef16ef84836ee7c"
+    },
+    {
+      "source": "packages/ui/src/tokens/index.ts",
+      "destination": "vendor/polaris-design/packages/ui/src/tokens/index.ts",
+      "sha256": "12532babe728eec5bc142808c8cc5af51d9b375eae9852cdfee130faa2d2000f"
+    },
+    {
+      "source": "packages/ui/src/tokens/colors.ts",
+      "destination": "vendor/polaris-design/packages/ui/src/tokens/colors.ts",
+      "sha256": "efa21c73937f8d9258bc89d37c4bcd7c78880638b0be7fd3e134192a00e7a1f7"
+    },
+    {
+      "source": "packages/ui/src/tokens/typography.ts",
+      "destination": "vendor/polaris-design/packages/ui/src/tokens/typography.ts",
+      "sha256": "c57c8f0b47db41bdecf62cc70bef6f165f4cb5f78dbee2c8479db0e208b44dd4"
+    },
+    {
+      "source": "packages/ui/src/tokens/spacing.ts",
+      "destination": "vendor/polaris-design/packages/ui/src/tokens/spacing.ts",
+      "sha256": "aae4563660a1b7851f37224ab3ef7e689cc45824e37dc3070b567e06473a56ce"
+    },
+    {
+      "source": "packages/ui/src/tokens/radius.ts",
+      "destination": "vendor/polaris-design/packages/ui/src/tokens/radius.ts",
+      "sha256": "336d2bb706215eba7e6d7de113270f8a26086eed12b144d03a96343bdf8e09e2"
+    },
+    {
+      "source": "packages/ui/src/tokens/shadow.ts",
+      "destination": "vendor/polaris-design/packages/ui/src/tokens/shadow.ts",
+      "sha256": "d018e2ad24f07e2132c69a36380db8656029944e703888367ce93c099d8ebdf4"
+    },
+    {
+      "source": "packages/ui/src/tokens/motion.ts",
+      "destination": "vendor/polaris-design/packages/ui/src/tokens/motion.ts",
+      "sha256": "7e25625473e7153f0070f30b3f1bb4b16a69c36a70c58a2860abbe2b0ce6618a"
+    },
+    {
+      "source": "packages/ui/src/tokens/zIndex.ts",
+      "destination": "vendor/polaris-design/packages/ui/src/tokens/zIndex.ts",
+      "sha256": "f9f4128ee30b3b0bdcf10c2ddd8996f176ade6d49947c205c3cd1ba32f87083f"
+    },
+    {
+      "source": "packages/ui/src/styles/tokens.css",
+      "destination": "vendor/polaris-design/packages/ui/src/styles/tokens.css",
+      "sha256": "ccaccdb2da681e458f4285fa2b604d19760df7ef3b9579b64c00fdabeccb1b46"
+    },
+    {
+      "source": "packages/ui/src/styles/v4-theme.css",
+      "destination": "vendor/polaris-design/packages/ui/src/styles/v4-theme.css",
+      "sha256": "4e2256323dcc05578b80670f9fc1b74ae88bcb7666c15eb9e1ecfdaa6035917b"
+    },
+    {
+      "source": "packages/ui/src/tailwind/index.ts",
+      "destination": "vendor/polaris-design/packages/ui/src/tailwind/index.ts",
+      "sha256": "c7a07d4ff0f9e7d7efd608e4d892c82dfbf2d5aaac211bb14e81a47fe38fcb46"
+    }
+  ],
+  "generatedArtifacts": [
+    {
+      "destination": "docs/design/generated/polaris.tokens.json",
+      "sha256": "d71778899dfdaf3618bbec25197faf5befb288d431fe55e5ec70959de8e60874"
+    },
+    {
+      "destination": "docs/design/generated/polaris.components.json",
+      "sha256": "a786bbbbc8866c23ae61e985aa578ec1a17267832aee2095fbd32265c023640e"
+    },
+    {
+      "destination": "docs/design/generated/polaris.lint-rules.json",
+      "sha256": "a8c437101512d8e3abcce600ec041ff6bc4e05ceda4d39dd841e99ddf9b71055"
+    },
+    {
+      "destination": "docs/design/generated/polaris.signature-assets.json",
+      "sha256": "f4c097cde2108f1c1c8144836d096f11d14f7f6d0bd4534e4ece751620651764"
+    }
+  ]
+}

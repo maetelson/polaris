@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "repo": "https://github.com/PolarisOffice/PolarisDesign",
+    "ref": "1d0e2460de63eb634c979855f183c2b18d688b1e",
+    "commit": "1d0e2460de63eb634c979855f183c2b18d688b1e",
+    "file": "packages/lint/RULES.md"
+  },
+  "generatedAt": "2026-05-21T15:01:42.718Z",
+  "ruleCount": 9,
+  "rules": [
+    {
+      "name": "@polaris/no-arbitrary-tailwind",
+      "type": "problem",
+      "description": "Disallow Tailwind arbitrary values; use Polaris token-based classes (e.g. bg-accent-brand-normal, p-4) instead. Layout utilities like grid-cols-[...] are exempt."
+    },
+    {
+      "name": "@polaris/no-deprecated-polaris-token",
+      "type": "problem",
+      "description": "Disallow deprecated Polaris token aliases (rc.0 / v0.6 era); use v0.7 spec tokens instead. Run"
+    },
+    {
+      "name": "@polaris/no-direct-font-family",
+      "type": "problem",
+      "description": "Disallow direct font-family declarations; use Polaris font tokens (var(--polaris-font-sans), font-polaris)."
+    },
+    {
+      "name": "@polaris/no-hardcoded-color",
+      "type": "problem",
+      "description": "Disallow hardcoded color values; use Polaris design tokens (CSS variables or @polaris/ui token imports)."
+    },
+    {
+      "name": "@polaris/no-non-polaris-css-var",
+      "type": "problem",
+      "description": "Disallow consumption of non-Polaris CSS variables. Every"
+    },
+    {
+      "name": "@polaris/no-tailwind-default-color",
+      "type": "problem",
+      "description": "Disallow Tailwind built-in color palette utilities (slate-*, rose-*, etc.); use Polaris semantic tokens (label-*, state-*, accent-brand-*) instead."
+    },
+    {
+      "name": "@polaris/prefer-polaris-component",
+      "type": "problem",
+      "description": "Prefer @polaris/ui components over native HTML elements that have a Polaris equivalent (button, input, textarea, select, dialog)."
+    },
+    {
+      "name": "@polaris/prefer-polaris-icon",
+      "type": "suggestion",
+      "description": "Prefer"
+    },
+    {
+      "name": "@polaris/state-color-with-icon",
+      "type": "suggestion",
+      "description": "Pair"
+    }
+  ]
+}
