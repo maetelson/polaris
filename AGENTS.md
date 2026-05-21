@@ -4,7 +4,7 @@
 
 ## 1. Polaris UI Brief 먼저 출력
 
-사용자가 기획안, 화면 아이디어, 기능 설명만 주고 UI 제작을 요청하면 구현 전에 반드시 한국어로 `Polaris UI Brief`를 먼저 출력합니다. 브리프 없이 Figma 프레임, React 컴포넌트, HTML/CSS, 화면 문서를 만들지 않습니다.
+사용자가 기획안, 화면 아이디어, 기능 설명만 주고 UI 제작을 요청하면 구현 전에 반드시 root [DESIGN.md](DESIGN.md)를 먼저 읽고 한국어로 `Polaris UI Brief`를 출력합니다. 브리프 없이 Figma 프레임, React 컴포넌트, HTML/CSS, 화면 문서를 만들지 않습니다.
 
 필수 형식은 [UI Brief Template](docs/design/ui-brief-template.md)을 따릅니다.
 
@@ -24,8 +24,11 @@
 
 ## 2. 기준 문서
 
+- 1차 기계/사람 공용 spec: [DESIGN.md](DESIGN.md)
 - 톤앤매너 SSoT: [Polaris UI Contract](docs/design/polaris-ui-contract.md)
 - Figma 산출물 규칙: [Figma Output Contract](docs/design/figma-output-contract.md)
+- upstream snapshot: [vendor/polaris-design](vendor/polaris-design)
+- generated token data: [docs/design/generated](docs/design/generated)
 - 원본 디자인 시스템 참고: [PolarisOffice/PolarisDesign](https://github.com/PolarisOffice/PolarisDesign/tree/main)
 
 ## 3. 기본 매핑
@@ -47,6 +50,16 @@
 
 ## 5. 완료 전 확인
 
-- Figma 작업: `00 Polaris Output Contract` 페이지가 있고, 주요 화면 프레임 주변에 brief 요약이 있어야 합니다.
-- Web 작업: 앱 코드가 생기면 `@polaris/ui`, `@polaris/lint`, `pnpm lint`, brand audit 흐름을 연결해야 합니다.
+- PolarisDesign 동기화: `npm run polaris:validate`가 통과해야 합니다.
+- Brief 계약: `npm run polaris:brief:check`가 통과해야 합니다.
+- Figma 작업: [figma/sync-polaris-figma.js](figma/sync-polaris-figma.js)를 Figma MCP로 실행해 `00 Polaris Output Contract`, token collections, text/effect styles를 갱신합니다.
+- Web 작업: 앱 코드가 생기면 `@polaris/ui`, `@polaris/lint`, `pnpm lint`, `npm run polaris:brand-audit` 흐름을 연결해야 합니다.
+- 감사 fixture: `npm run polaris:brand-audit:fixtures`가 raw hex, Tailwind arbitrary/default palette, native control, AI CTA, FileIcon, Ribbon 누락을 잡는지 확인합니다.
 - PR 작업: PR 본문에 Polaris brief와 Figma/Web 검증 체크가 포함되어야 합니다.
+
+## 6. 동기화 명령
+
+- upstream snapshot 갱신: `npm run polaris:sync`
+- drift 확인: `npm run polaris:sync -- --check`
+- Figma MCP용 스크립트 재생성: `npm run polaris:figma:build`
+- 전체 계약 검증: `npm run polaris:validate && npm run polaris:brief:check`

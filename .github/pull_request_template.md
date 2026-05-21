@@ -14,7 +14,11 @@
 ## 체크리스트
 
 - [ ] UI 작업 전에 `Polaris UI Brief`를 작성했다.
+- [ ] root `DESIGN.md`와 `docs/design/generated/*`가 upstream PolarisDesign snapshot과 일치한다.
+- [ ] `npm run polaris:validate`를 실행했다.
+- [ ] `npm run polaris:brief:check`를 실행했다.
 - [ ] Figma 작업이면 `00 Polaris Output Contract` 페이지와 주요 프레임 brief note를 확인했다.
+- [ ] Figma 작업이면 `figma/sync-polaris-figma.js`를 Figma MCP로 실행하고 upstream checksum을 확인했다.
 - [ ] Web 작업이면 `@polaris/ui` 컴포넌트와 Polaris token을 우선 사용했다.
 - [ ] AI 기능에는 NOVA purple / `ai.*` / `NovaLogo` 적용 여부를 검토했다.
 - [ ] 문서 편집 화면에는 Ribbon 또는 문서 중심 UI 패턴을 검토했다.
@@ -28,4 +32,4 @@
 - [ ] 문서만 변경했다.
 - [ ] Figma 산출물을 직접 확인했다.
 - [ ] `pnpm lint`를 실행했다.
-- [ ] brand audit 또는 signature asset 체크를 수행했다.
+- [ ] `npm run polaris:brand-audit` 또는 signature asset 체크를 수행했다.

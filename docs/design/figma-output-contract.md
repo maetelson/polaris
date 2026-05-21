@@ -22,10 +22,12 @@ Figma 파일에는 다음 페이지를 둡니다.
 
 ## 변수와 스타일
 
-- color variable은 Polaris semantic token 이름을 우선합니다.
+- Figma sync는 [figma/sync-polaris-figma.js](../../figma/sync-polaris-figma.js)를 Figma MCP `use_figma`로 실행합니다.
+- color variable은 `docs/design/generated/polaris.tokens.json`의 Polaris semantic token 이름을 우선합니다.
 - primitive ramp는 reference로만 두고 화면 직접 적용은 semantic token을 우선합니다.
 - text style은 Polaris text scale 이름을 사용합니다.
 - radius와 spacing은 Polaris scale 이름을 사용합니다.
+- shadow/effect style은 upstream `shadow` token을 기준으로 생성합니다.
 
 ## Signature Asset 적용
 
@@ -48,6 +50,7 @@ Figma 파일에는 다음 페이지를 둡니다.
 ## 완료 체크
 
 - `00 Polaris Output Contract` 페이지가 있다.
+- `Polaris / Color`, `Polaris / Number`, `Polaris/*` text style, `Polaris/shadow/*` effect style이 upstream checksum 기준으로 갱신되어 있다.
 - 주요 화면마다 brief note가 있다.
 - AI, 문서, 파일, 운영 화면별 signature asset이 반영되어 있다.
 - 색상과 typography가 Polaris 토큰/스타일 이름으로 설명 가능하다.

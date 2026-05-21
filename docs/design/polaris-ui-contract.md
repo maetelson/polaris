@@ -4,6 +4,8 @@
 
 ## 핵심 톤
 
+- 1차 기준은 root `DESIGN.md`입니다. 이 파일은 upstream PolarisDesign `DESIGN.md`를 그대로 동기화한 기계/사람 공용 spec입니다.
+- token source는 `vendor/polaris-design/packages/ui/src/tokens/*`, CSS 변수는 `vendor/polaris-design/packages/ui/src/styles/tokens.css`, Tailwind preset은 `vendor/polaris-design/packages/ui/src/tailwind/index.ts`를 기준으로 합니다.
 - 차분한 생산성 UI: 과한 장식보다 반복 업무, 문서 작업, 검토 흐름에 어울리는 밀도와 질서를 우선합니다.
 - 문서 중심: Polaris Office의 정체성은 문서, 파일, 편집, 검토, 공유 경험에서 드러나야 합니다.
 - 토큰 우선: 색상, 타이포그래피, radius, spacing, shadow는 Polaris 토큰과 컴포넌트 결정을 먼저 따릅니다.
@@ -61,6 +63,11 @@ Web 구현 기본값:
 
 - UI 생성 전 `Polaris UI Brief`가 있다.
 - brief의 signature asset이 화면에 실제로 반영되어 있다.
+- `npm run polaris:validate`와 `npm run polaris:brief:check`가 통과한다.
 - Figma 산출물에는 contract 페이지와 주요 프레임 brief note가 있다.
 - Web 산출물은 `@polaris/ui`와 `@polaris/lint` 연결을 전제로 한다.
 - 색상, 타입, 컴포넌트 우회가 없다.
+
+## Automation Checks
+
+- `npm run polaris:brand-audit:fixtures` must keep catching AI CTA, FileIcon, Ribbon, raw hex, Tailwind arbitrary/default palette, and native control violations.
