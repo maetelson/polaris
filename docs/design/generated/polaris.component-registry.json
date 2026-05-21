@@ -1,0 +1,991 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "repo": "https://github.com/PolarisOffice/PolarisDesign",
+    "ref": "1d0e2460de63eb634c979855f183c2b18d688b1e",
+    "commit": "1d0e2460de63eb634c979855f183c2b18d688b1e",
+    "files": [
+      "packages/ui/src/components/index.ts",
+      "packages/ui/src/components/*.tsx",
+      "apps/demo/src/pages/Components.tsx"
+    ]
+  },
+  "generatedAt": "2026-05-21T23:05:43.495Z",
+  "summary": {
+    "familyCount": 45,
+    "rootExportCount": 172,
+    "demoImportCount": 131,
+    "demoSectionCount": 45,
+    "demoSecondaryExportsMissingFromFamilyCatalog": 92
+  },
+  "families": [
+    "Accordion",
+    "Alert",
+    "Avatar",
+    "Badge",
+    "Breadcrumb",
+    "Button",
+    "Calendar",
+    "Card",
+    "Checkbox",
+    "CircularProgress",
+    "Combobox",
+    "Command",
+    "Container",
+    "CopyButton",
+    "DatePicker",
+    "DateTimeInput",
+    "DescriptionList",
+    "Dialog",
+    "Disclosure",
+    "Drawer",
+    "DropdownMenu",
+    "EmptyState",
+    "FileCard",
+    "FileIcon",
+    "FileInput",
+    "Form",
+    "Input",
+    "Navbar",
+    "NovaInput",
+    "PageHeader",
+    "Pagination",
+    "Popover",
+    "Progress",
+    "PromptChip",
+    "Select",
+    "Sidebar",
+    "Skeleton",
+    "Stack",
+    "Stat",
+    "Switch",
+    "Table",
+    "TableHelpers",
+    "Tabs",
+    "Textarea",
+    "Toast",
+    "Tooltip"
+  ],
+  "rootExports": [
+    "Accordion",
+    "AccordionContent",
+    "AccordionItem",
+    "AccordionTrigger",
+    "Alert",
+    "AlertDescription",
+    "AlertTitle",
+    "AppNavbar",
+    "Avatar",
+    "AvatarFallback",
+    "AvatarGroup",
+    "AvatarImage",
+    "Badge",
+    "Breadcrumb",
+    "BreadcrumbItem",
+    "BreadcrumbLink",
+    "BreadcrumbList",
+    "BreadcrumbPage",
+    "BreadcrumbSeparator",
+    "Button",
+    "Calendar",
+    "Card",
+    "CardBody",
+    "CardDescription",
+    "CardFooter",
+    "CardHeader",
+    "CardTitle",
+    "Checkbox",
+    "CircularProgress",
+    "Combobox",
+    "Command",
+    "CommandDialog",
+    "CommandEmpty",
+    "CommandGroup",
+    "CommandInput",
+    "CommandItem",
+    "CommandList",
+    "CommandSeparator",
+    "CommandShortcut",
+    "Container",
+    "ContractsPagination",
+    "CopyButton",
+    "DatePicker",
+    "DateRangePicker",
+    "DateTimeInput",
+    "DescriptionDetails",
+    "DescriptionList",
+    "DescriptionTerm",
+    "Dialog",
+    "DialogClose",
+    "DialogContent",
+    "DialogDescription",
+    "DialogFooter",
+    "DialogHeader",
+    "DialogOverlay",
+    "DialogPortal",
+    "DialogTitle",
+    "DialogTrigger",
+    "Disclosure",
+    "DisclosureContent",
+    "DisclosureRoot",
+    "DisclosureTrigger",
+    "Drawer",
+    "DrawerBody",
+    "DrawerClose",
+    "DrawerContent",
+    "DrawerDescription",
+    "DrawerFooter",
+    "DrawerHeader",
+    "DrawerOverlay",
+    "DrawerPortal",
+    "DrawerTitle",
+    "DrawerTrigger",
+    "DropdownMenu",
+    "DropdownMenuCheckboxItem",
+    "DropdownMenuContent",
+    "DropdownMenuFormItem",
+    "DropdownMenuGroup",
+    "DropdownMenuItem",
+    "DropdownMenuLabel",
+    "DropdownMenuPortal",
+    "DropdownMenuRadioGroup",
+    "DropdownMenuRadioItem",
+    "DropdownMenuSeparator",
+    "DropdownMenuSub",
+    "DropdownMenuSubContent",
+    "DropdownMenuSubTrigger",
+    "DropdownMenuTrigger",
+    "EmptyState",
+    "FileCard",
+    "FileDropZone",
+    "FileIcon",
+    "FileInput",
+    "Form",
+    "FormControl",
+    "FormDescription",
+    "FormField",
+    "FormItem",
+    "FormLabel",
+    "FormMessage",
+    "Input",
+    "Navbar",
+    "NavbarActions",
+    "NavbarBrand",
+    "NavbarItem",
+    "NavbarNav",
+    "NovaInput",
+    "PageHeader",
+    "Pagination",
+    "PaginationEllipsis",
+    "PaginationFooter",
+    "PaginationItem",
+    "PaginationNext",
+    "PaginationPrev",
+    "Popover",
+    "PopoverAnchor",
+    "PopoverClose",
+    "PopoverContent",
+    "PopoverTrigger",
+    "Progress",
+    "PromptChip",
+    "SectionHeader",
+    "Select",
+    "SelectContent",
+    "SelectGroup",
+    "SelectItem",
+    "SelectLabel",
+    "SelectSeparator",
+    "SelectTrigger",
+    "SelectValue",
+    "Sidebar",
+    "SidebarBody",
+    "SidebarFooter",
+    "SidebarHeader",
+    "SidebarItem",
+    "SidebarSection",
+    "SimpleTooltip",
+    "Skeleton",
+    "Stack",
+    "Stat",
+    "StatGroup",
+    "Switch",
+    "Table",
+    "TableBody",
+    "TableCaption",
+    "TableCell",
+    "TableFooter",
+    "TableHead",
+    "TableHeader",
+    "TableRow",
+    "TableSearchInput",
+    "TableSelectionBar",
+    "TableSkeleton",
+    "TableToolbar",
+    "Tabs",
+    "TabsContent",
+    "TabsList",
+    "TabsTrigger",
+    "Textarea",
+    "TimeInput",
+    "Toast",
+    "ToastAction",
+    "ToastClose",
+    "ToastDescription",
+    "ToastProvider",
+    "ToastTitle",
+    "ToastViewport",
+    "Toaster",
+    "Tooltip",
+    "TooltipContent",
+    "TooltipProvider",
+    "TooltipTrigger"
+  ],
+  "exportsByFile": {
+    "packages/ui/src/components/Accordion.tsx": [
+      "Accordion",
+      "AccordionContent",
+      "AccordionItem",
+      "AccordionTrigger"
+    ],
+    "packages/ui/src/components/Alert.tsx": [
+      "Alert",
+      "AlertDescription",
+      "AlertTitle"
+    ],
+    "packages/ui/src/components/Avatar.tsx": [
+      "Avatar",
+      "AvatarFallback",
+      "AvatarGroup",
+      "AvatarImage"
+    ],
+    "packages/ui/src/components/Badge.tsx": [
+      "Badge"
+    ],
+    "packages/ui/src/components/Breadcrumb.tsx": [
+      "Breadcrumb",
+      "BreadcrumbItem",
+      "BreadcrumbLink",
+      "BreadcrumbList",
+      "BreadcrumbPage",
+      "BreadcrumbSeparator"
+    ],
+    "packages/ui/src/components/Button.tsx": [
+      "Button"
+    ],
+    "packages/ui/src/components/Calendar.tsx": [
+      "Calendar"
+    ],
+    "packages/ui/src/components/Card.tsx": [
+      "Card",
+      "CardBody",
+      "CardDescription",
+      "CardFooter",
+      "CardHeader",
+      "CardTitle"
+    ],
+    "packages/ui/src/components/Checkbox.tsx": [
+      "Checkbox"
+    ],
+    "packages/ui/src/components/CircularProgress.tsx": [
+      "CircularProgress"
+    ],
+    "packages/ui/src/components/Combobox.tsx": [
+      "Combobox"
+    ],
+    "packages/ui/src/components/Command.tsx": [
+      "Command",
+      "CommandDialog",
+      "CommandEmpty",
+      "CommandGroup",
+      "CommandInput",
+      "CommandItem",
+      "CommandList",
+      "CommandSeparator",
+      "CommandShortcut"
+    ],
+    "packages/ui/src/components/Container.tsx": [
+      "Container"
+    ],
+    "packages/ui/src/components/CopyButton.tsx": [
+      "CopyButton"
+    ],
+    "packages/ui/src/components/DatePicker.tsx": [
+      "DatePicker",
+      "DateRangePicker"
+    ],
+    "packages/ui/src/components/DateTimeInput.tsx": [
+      "DateTimeInput",
+      "TimeInput"
+    ],
+    "packages/ui/src/components/DescriptionList.tsx": [
+      "DescriptionDetails",
+      "DescriptionList",
+      "DescriptionTerm"
+    ],
+    "packages/ui/src/components/Dialog.tsx": [
+      "Dialog",
+      "DialogClose",
+      "DialogContent",
+      "DialogDescription",
+      "DialogFooter",
+      "DialogHeader",
+      "DialogOverlay",
+      "DialogPortal",
+      "DialogTitle",
+      "DialogTrigger"
+    ],
+    "packages/ui/src/components/Disclosure.tsx": [
+      "Disclosure",
+      "DisclosureContent",
+      "DisclosureRoot",
+      "DisclosureTrigger"
+    ],
+    "packages/ui/src/components/Drawer.tsx": [
+      "Drawer",
+      "DrawerBody",
+      "DrawerClose",
+      "DrawerContent",
+      "DrawerDescription",
+      "DrawerFooter",
+      "DrawerHeader",
+      "DrawerOverlay",
+      "DrawerPortal",
+      "DrawerTitle",
+      "DrawerTrigger"
+    ],
+    "packages/ui/src/components/DropdownMenu.tsx": [
+      "DropdownMenu",
+      "DropdownMenuCheckboxItem",
+      "DropdownMenuContent",
+      "DropdownMenuFormItem",
+      "DropdownMenuGroup",
+      "DropdownMenuItem",
+      "DropdownMenuLabel",
+      "DropdownMenuPortal",
+      "DropdownMenuRadioGroup",
+      "DropdownMenuRadioItem",
+      "DropdownMenuSeparator",
+      "DropdownMenuSub",
+      "DropdownMenuSubContent",
+      "DropdownMenuSubTrigger",
+      "DropdownMenuTrigger"
+    ],
+    "packages/ui/src/components/EmptyState.tsx": [
+      "EmptyState"
+    ],
+    "packages/ui/src/components/FileCard.tsx": [
+      "FileCard"
+    ],
+    "packages/ui/src/components/FileIcon.tsx": [
+      "FileIcon"
+    ],
+    "packages/ui/src/components/FileInput.tsx": [
+      "FileDropZone",
+      "FileInput"
+    ],
+    "packages/ui/src/components/Form.tsx": [
+      "Form",
+      "FormControl",
+      "FormDescription",
+      "FormField",
+      "FormItem",
+      "FormLabel",
+      "FormMessage"
+    ],
+    "packages/ui/src/components/Input.tsx": [
+      "Input"
+    ],
+    "packages/ui/src/components/Navbar.tsx": [
+      "AppNavbar",
+      "Navbar",
+      "NavbarActions",
+      "NavbarBrand",
+      "NavbarItem",
+      "NavbarNav"
+    ],
+    "packages/ui/src/components/NovaInput.tsx": [
+      "NovaInput"
+    ],
+    "packages/ui/src/components/PageHeader.tsx": [
+      "PageHeader",
+      "SectionHeader"
+    ],
+    "packages/ui/src/components/Pagination.tsx": [
+      "ContractsPagination",
+      "Pagination",
+      "PaginationEllipsis",
+      "PaginationFooter",
+      "PaginationItem",
+      "PaginationNext",
+      "PaginationPrev"
+    ],
+    "packages/ui/src/components/Popover.tsx": [
+      "Popover",
+      "PopoverAnchor",
+      "PopoverClose",
+      "PopoverContent",
+      "PopoverTrigger"
+    ],
+    "packages/ui/src/components/Progress.tsx": [
+      "Progress"
+    ],
+    "packages/ui/src/components/PromptChip.tsx": [
+      "PromptChip"
+    ],
+    "packages/ui/src/components/Select.tsx": [
+      "Select",
+      "SelectContent",
+      "SelectGroup",
+      "SelectItem",
+      "SelectLabel",
+      "SelectSeparator",
+      "SelectTrigger",
+      "SelectValue"
+    ],
+    "packages/ui/src/components/Sidebar.tsx": [
+      "Sidebar",
+      "SidebarBody",
+      "SidebarFooter",
+      "SidebarHeader",
+      "SidebarItem",
+      "SidebarSection"
+    ],
+    "packages/ui/src/components/Skeleton.tsx": [
+      "Skeleton"
+    ],
+    "packages/ui/src/components/Stack.tsx": [
+      "Stack"
+    ],
+    "packages/ui/src/components/Stat.tsx": [
+      "Stat",
+      "StatGroup"
+    ],
+    "packages/ui/src/components/Switch.tsx": [
+      "Switch"
+    ],
+    "packages/ui/src/components/Table.tsx": [
+      "Table",
+      "TableBody",
+      "TableCaption",
+      "TableCell",
+      "TableFooter",
+      "TableHead",
+      "TableHeader",
+      "TableRow"
+    ],
+    "packages/ui/src/components/TableHelpers.tsx": [
+      "TableSearchInput",
+      "TableSelectionBar",
+      "TableSkeleton",
+      "TableToolbar"
+    ],
+    "packages/ui/src/components/Tabs.tsx": [
+      "Tabs",
+      "TabsContent",
+      "TabsList",
+      "TabsTrigger"
+    ],
+    "packages/ui/src/components/Textarea.tsx": [
+      "Textarea"
+    ],
+    "packages/ui/src/components/Toast.tsx": [
+      "Toast",
+      "ToastAction",
+      "ToastClose",
+      "ToastDescription",
+      "ToastProvider",
+      "ToastTitle",
+      "ToastViewport",
+      "Toaster"
+    ],
+    "packages/ui/src/components/Tooltip.tsx": [
+      "SimpleTooltip",
+      "Tooltip",
+      "TooltipContent",
+      "TooltipProvider",
+      "TooltipTrigger"
+    ]
+  },
+  "demo": {
+    "route": "/components",
+    "source": "apps/demo/src/pages/Components.tsx",
+    "importsFromRoot": [
+      "Accordion",
+      "AccordionContent",
+      "AccordionItem",
+      "AccordionTrigger",
+      "Alert",
+      "AlertDescription",
+      "AlertTitle",
+      "Avatar",
+      "AvatarFallback",
+      "AvatarGroup",
+      "AvatarImage",
+      "Badge",
+      "Breadcrumb",
+      "BreadcrumbItem",
+      "BreadcrumbLink",
+      "BreadcrumbList",
+      "BreadcrumbPage",
+      "BreadcrumbSeparator",
+      "Card",
+      "CardBody",
+      "CardDescription",
+      "CardFooter",
+      "CardHeader",
+      "CardTitle",
+      "Checkbox",
+      "CircularProgress",
+      "Combobox",
+      "ComboboxOption",
+      "CommandDialog",
+      "CommandEmpty",
+      "CommandGroup",
+      "CommandInput",
+      "CommandItem",
+      "CommandList",
+      "CommandSeparator",
+      "CommandShortcut",
+      "Container",
+      "CopyButton",
+      "DatePicker",
+      "DateRangePicker",
+      "DateTimeInput",
+      "DescriptionDetails",
+      "DescriptionList",
+      "DescriptionTerm",
+      "Dialog",
+      "DialogClose",
+      "DialogContent",
+      "DialogDescription",
+      "DialogFooter",
+      "DialogHeader",
+      "DialogTitle",
+      "DialogTrigger",
+      "Disclosure",
+      "DisclosureContent",
+      "DisclosureRoot",
+      "DisclosureTrigger",
+      "Drawer",
+      "DrawerBody",
+      "DrawerContent",
+      "DrawerDescription",
+      "DrawerFooter",
+      "DrawerHeader",
+      "DrawerTitle",
+      "DrawerTrigger",
+      "DropdownMenu",
+      "DropdownMenuContent",
+      "DropdownMenuItem",
+      "DropdownMenuLabel",
+      "DropdownMenuSeparator",
+      "DropdownMenuTrigger",
+      "EmptyState",
+      "FileCard",
+      "FileDropZone",
+      "FileIcon",
+      "FileInput",
+      "Input",
+      "Navbar",
+      "NavbarActions",
+      "NavbarBrand",
+      "NavbarItem",
+      "NavbarNav",
+      "NovaInput",
+      "PageHeader",
+      "Pagination",
+      "PaginationEllipsis",
+      "PaginationFooter",
+      "PaginationItem",
+      "PaginationNext",
+      "PaginationPrev",
+      "Progress",
+      "PromptChip",
+      "SectionHeader",
+      "Select",
+      "SelectContent",
+      "SelectGroup",
+      "SelectItem",
+      "SelectLabel",
+      "SelectTrigger",
+      "SelectValue",
+      "Sidebar",
+      "SidebarBody",
+      "SidebarFooter",
+      "SidebarHeader",
+      "SidebarItem",
+      "SidebarSection",
+      "SimpleTooltip",
+      "Skeleton",
+      "Stack",
+      "Stat",
+      "Switch",
+      "Table",
+      "TableBody",
+      "TableCell",
+      "TableHead",
+      "TableHeader",
+      "TableRow",
+      "TableSearchInput",
+      "TableSelectionBar",
+      "TableSkeleton",
+      "TableSortDirection",
+      "TableToolbar",
+      "Tabs",
+      "TabsContent",
+      "TabsList",
+      "TabsTrigger",
+      "Textarea",
+      "TimeInput",
+      "Toast",
+      "ToastClose",
+      "ToastDescription",
+      "ToastTitle"
+    ],
+    "categories": {
+      "foundation": [
+        {
+          "title": "1. Button — variants × sizes × 슬롯 / 상태",
+          "primaryComponentHint": "Button"
+        },
+        {
+          "title": "2. Card — header / body / footer + interactive",
+          "primaryComponentHint": "Card"
+        },
+        {
+          "title": "3. Badge — variants × tones × icon / dismissible",
+          "primaryComponentHint": "Badge"
+        },
+        {
+          "title": "4. Avatar & AvatarGroup — sizes + overlap",
+          "primaryComponentHint": "Avatar & AvatarGroup"
+        },
+        {
+          "title": "5. FileIcon — 파일 유형 아이콘 (폴라리스 고유)",
+          "primaryComponentHint": "FileIcon"
+        },
+        {
+          "title": "6. FileCard — 파일 카드 (폴라리스 고유)",
+          "primaryComponentHint": "FileCard"
+        },
+        {
+          "title": "7. Stack & Container — 레이아웃 프리미티브",
+          "primaryComponentHint": "Stack & Container"
+        },
+        {
+          "title": "8. Skeleton — placeholder + shape preset",
+          "primaryComponentHint": "Skeleton"
+        },
+        {
+          "title": "9. Disclosure — 단일 collapsible (Radix 기반)",
+          "primaryComponentHint": "Disclosure"
+        }
+      ],
+      "forms": [
+        {
+          "title": "1. Input — label / hint / error + prefix / suffix / clearable",
+          "primaryComponentHint": "Input"
+        },
+        {
+          "title": "2. Textarea — autoResize + showCount",
+          "primaryComponentHint": "Textarea"
+        },
+        {
+          "title": "3. NovaInput — AI 프롬프트 입력 (폴라리스 고유)",
+          "primaryComponentHint": "NovaInput"
+        },
+        {
+          "title": "4. Select — 단일 선택 (Radix)",
+          "primaryComponentHint": "Select"
+        },
+        {
+          "title": "5. Combobox — searchable Select (single + multiple)",
+          "primaryComponentHint": "Combobox"
+        },
+        {
+          "title": "6. Checkbox & Switch — 토글 입력",
+          "primaryComponentHint": "Checkbox & Switch"
+        },
+        {
+          "title": "7. DatePicker / DateRangePicker — 날짜 선택",
+          "primaryComponentHint": "DatePicker / DateRangePicker"
+        },
+        {
+          "title": "8. DateTimeInput / TimeInput — native input wrap",
+          "primaryComponentHint": "DateTimeInput / TimeInput"
+        },
+        {
+          "title": "9. FileInput / FileDropZone — 파일 업로드",
+          "primaryComponentHint": "FileInput / FileDropZone"
+        },
+        {
+          "title": "10. Form — RHF + zod (사내 표준)",
+          "primaryComponentHint": "Form"
+        }
+      ],
+      "navigation": [
+        {
+          "title": "1. Tabs — pill (default) + underline variant",
+          "primaryComponentHint": "Tabs"
+        },
+        {
+          "title": "2. Sidebar — 좌측 내비게이션",
+          "primaryComponentHint": "Sidebar"
+        },
+        {
+          "title": "3. Navbar & NavbarItem — 상단 내비게이션",
+          "primaryComponentHint": "Navbar & NavbarItem"
+        },
+        {
+          "title": "4. Breadcrumb — 경로 표시",
+          "primaryComponentHint": "Breadcrumb"
+        },
+        {
+          "title": "5. Pagination — 프리미티브 + Footer 통합 래퍼",
+          "primaryComponentHint": "Pagination"
+        },
+        {
+          "title": "6. PageHeader & SectionHeader — 페이지 레이아웃",
+          "primaryComponentHint": "PageHeader & SectionHeader"
+        }
+      ],
+      "overlays": [
+        {
+          "title": "1. Dialog — 모달 다이얼로그",
+          "primaryComponentHint": "Dialog"
+        },
+        {
+          "title": "2. Drawer — side variants (right/left/top/bottom)",
+          "primaryComponentHint": "Drawer"
+        },
+        {
+          "title": "3. DropdownMenu — 액션 메뉴",
+          "primaryComponentHint": "DropdownMenu"
+        },
+        {
+          "title": "4. Tooltip — 툴팁 (sides + 긴 텍스트)",
+          "primaryComponentHint": "Tooltip"
+        },
+        {
+          "title": "5. Toast — 4 variants + imperative push",
+          "primaryComponentHint": "Toast"
+        },
+        {
+          "title": "6. Alert — variants + dismissible / action",
+          "primaryComponentHint": "Alert"
+        },
+        {
+          "title": "7. EmptyState — 기본 / 액션 / 커스텀 아이콘",
+          "primaryComponentHint": "EmptyState"
+        },
+        {
+          "title": "8. CommandPalette — ⌘K 명령 검색",
+          "primaryComponentHint": "CommandPalette"
+        }
+      ],
+      "data": [
+        {
+          "title": "1. Table primitive — densities",
+          "primaryComponentHint": "Table primitive"
+        },
+        {
+          "title": "2. Table integration — Sortable + Toolbar / SelectionBar / Skeleton + 행 선택 / 행 액션",
+          "primaryComponentHint": "Table integration"
+        },
+        {
+          "title": "3. DescriptionList — inline / stacked",
+          "primaryComponentHint": "DescriptionList"
+        },
+        {
+          "title": "4. Progress — determinate / indeterminate · tone · size · interactive",
+          "primaryComponentHint": "Progress"
+        },
+        {
+          "title": "5. CircularProgress — 라디얼 인디케이터",
+          "primaryComponentHint": "CircularProgress"
+        },
+        {
+          "title": "6. Stat — KPI 타일 + loading",
+          "primaryComponentHint": "Stat"
+        },
+        {
+          "title": "7. Accordion — 그룹 disclosure",
+          "primaryComponentHint": "Accordion"
+        }
+      ],
+      "polaris": [
+        {
+          "title": "1. PromptChip — 프롬프트 칩 (폴라리스 고유)",
+          "primaryComponentHint": "PromptChip"
+        },
+        {
+          "title": "2. CopyButton — clipboard + 1.5s 성공 피드백",
+          "primaryComponentHint": "CopyButton"
+        },
+        {
+          "title": "3. Ribbon — Office 스타일 (subpath: @polaris/ui/ribbon)",
+          "primaryComponentHint": "Ribbon"
+        },
+        {
+          "title": "4. Ribbon — 단일 패널 (MD 에디터 케이스)",
+          "primaryComponentHint": "Ribbon"
+        },
+        {
+          "title": "5. 폴라리스 화면 모방 (조합 검증)",
+          "primaryComponentHint": "폴라리스 화면 모방 (조합 검증)"
+        }
+      ]
+    },
+    "secondaryExportsMissingFromFamilyCatalog": [
+      "AccordionContent",
+      "AccordionItem",
+      "AccordionTrigger",
+      "AlertDescription",
+      "AlertTitle",
+      "AvatarFallback",
+      "AvatarGroup",
+      "AvatarImage",
+      "BreadcrumbItem",
+      "BreadcrumbLink",
+      "BreadcrumbList",
+      "BreadcrumbPage",
+      "BreadcrumbSeparator",
+      "CardBody",
+      "CardDescription",
+      "CardFooter",
+      "CardHeader",
+      "CardTitle",
+      "ComboboxOption",
+      "CommandDialog",
+      "CommandEmpty",
+      "CommandGroup",
+      "CommandInput",
+      "CommandItem",
+      "CommandList",
+      "CommandSeparator",
+      "CommandShortcut",
+      "DateRangePicker",
+      "DescriptionDetails",
+      "DescriptionTerm",
+      "DialogClose",
+      "DialogContent",
+      "DialogDescription",
+      "DialogFooter",
+      "DialogHeader",
+      "DialogTitle",
+      "DialogTrigger",
+      "DisclosureContent",
+      "DisclosureRoot",
+      "DisclosureTrigger",
+      "DrawerBody",
+      "DrawerContent",
+      "DrawerDescription",
+      "DrawerFooter",
+      "DrawerHeader",
+      "DrawerTitle",
+      "DrawerTrigger",
+      "DropdownMenuContent",
+      "DropdownMenuItem",
+      "DropdownMenuLabel",
+      "DropdownMenuSeparator",
+      "DropdownMenuTrigger",
+      "FileDropZone",
+      "NavbarActions",
+      "NavbarBrand",
+      "NavbarItem",
+      "NavbarNav",
+      "PaginationEllipsis",
+      "PaginationFooter",
+      "PaginationItem",
+      "PaginationNext",
+      "PaginationPrev",
+      "SectionHeader",
+      "SelectContent",
+      "SelectGroup",
+      "SelectItem",
+      "SelectLabel",
+      "SelectTrigger",
+      "SelectValue",
+      "SidebarBody",
+      "SidebarFooter",
+      "SidebarHeader",
+      "SidebarItem",
+      "SidebarSection",
+      "SimpleTooltip",
+      "TableBody",
+      "TableCell",
+      "TableHead",
+      "TableHeader",
+      "TableRow",
+      "TableSearchInput",
+      "TableSelectionBar",
+      "TableSkeleton",
+      "TableSortDirection",
+      "TableToolbar",
+      "TabsContent",
+      "TabsList",
+      "TabsTrigger",
+      "TimeInput",
+      "ToastClose",
+      "ToastDescription",
+      "ToastTitle"
+    ]
+  },
+  "subpaths": [
+    {
+      "path": "@polaris/ui/tokens",
+      "description": "토큰 객체 (`label`, `accentBrand`, …)",
+      "serverSafe": "✓ server-safe"
+    },
+    {
+      "path": "@polaris/ui/tailwind",
+      "description": "Tailwind preset",
+      "serverSafe": "✓ server-safe"
+    },
+    {
+      "path": "@polaris/ui/utils",
+      "description": "순수 함수 (`pageNumberItems`, …) — v0.8.0-rc.8 신규",
+      "serverSafe": "✓ server-safe"
+    },
+    {
+      "path": "@polaris/ui/form",
+      "description": "`<Form>` + react-hook-form 통합",
+      "serverSafe": "client"
+    },
+    {
+      "path": "@polaris/ui/ribbon",
+      "description": "Ribbon family (25+ subcomponents)",
+      "serverSafe": "client"
+    },
+    {
+      "path": "@polaris/ui/icons",
+      "description": "65 UI 아이콘 (18/24/32 px)",
+      "serverSafe": "client"
+    },
+    {
+      "path": "@polaris/ui/file-icons",
+      "description": "29 파일 타입 SVG",
+      "serverSafe": "client"
+    },
+    {
+      "path": "@polaris/ui/logos",
+      "description": "PolarisLogo + NovaLogo",
+      "serverSafe": "client"
+    },
+    {
+      "path": "@polaris/ui/ribbon-icons",
+      "description": "91 ribbon-icons (57 big × 32 + 34 small × 16)",
+      "serverSafe": "client"
+    },
+    {
+      "path": "@polaris/ui/ribbon",
+      "source": "packages/ui/src/ribbon/index.ts",
+      "exports": []
+    },
+    {
+      "path": "@polaris/ui/form",
+      "source": "packages/ui/src/form/index.ts",
+      "exports": []
+    }
+  ]
+}

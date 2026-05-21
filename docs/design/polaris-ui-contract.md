@@ -72,4 +72,5 @@ Web 구현 기본값:
 
 - `npm run polaris:brand-audit:fixtures` must keep catching AI CTA, FileIcon, Ribbon, raw hex, Tailwind arbitrary/default palette, and native control violations.
 - `npm run polaris:sync -- --check` must validate the `design-source` snapshot profile and fail on missing, changed, or stale managed files.
+- `npm run polaris:pages:check` must keep GitHub Pages `/components`, `/tokens`, `/icons`, `/assets` coverage mapped to generated component/token registries.
 - `npm run polaris:links:check` must keep all local Markdown file/image links resolvable.

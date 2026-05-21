@@ -24,6 +24,8 @@ Figma 파일에는 다음 페이지를 둡니다.
 
 - Figma sync는 [figma/sync-polaris-figma.js](../../figma/sync-polaris-figma.js)를 Figma MCP `use_figma`로 실행합니다.
 - color variable은 `docs/design/generated/polaris.tokens.json`의 Polaris semantic token 이름을 우선합니다.
+- component reference는 `docs/design/generated/polaris.component-registry.json`의 Pages demo categories와 secondary exports를 함께 봅니다.
+- color/typography/grid reference는 `docs/design/generated/polaris.token-registry.json`을 기준으로 합니다.
 - primitive ramp는 reference로만 두고 화면 직접 적용은 semantic token을 우선합니다.
 - text style은 Polaris text scale 이름을 사용합니다.
 - radius와 spacing은 Polaris scale 이름을 사용합니다.

@@ -1,0 +1,104 @@
+{
+  "schemaVersion": 1,
+  "source": {
+    "repo": "https://github.com/PolarisOffice/PolarisDesign",
+    "ref": "1d0e2460de63eb634c979855f183c2b18d688b1e",
+    "commit": "1d0e2460de63eb634c979855f183c2b18d688b1e",
+    "githubPages": "https://polarisoffice.github.io/PolarisDesign/",
+    "app": "apps/demo"
+  },
+  "generatedAt": "2026-05-21T23:05:43.495Z",
+  "routeCount": 10,
+  "routes": [
+    {
+      "path": "/",
+      "component": "Home",
+      "source": "apps/demo/src/pages/Home.tsx"
+    },
+    {
+      "path": "/components",
+      "component": "Components",
+      "source": "apps/demo/src/pages/Components.tsx"
+    },
+    {
+      "path": "/nova",
+      "component": "NovaWorkspace",
+      "source": "apps/demo/src/pages/NovaWorkspace.tsx"
+    },
+    {
+      "path": "/crm/contract",
+      "component": "CrmContractDetail",
+      "source": "apps/demo/src/pages/CrmContractDetail.tsx"
+    },
+    {
+      "path": "/sign/contracts",
+      "component": "SignContractList",
+      "source": "apps/demo/src/pages/SignContractList.tsx"
+    },
+    {
+      "path": "/polaris-office",
+      "component": "PolarisOffice",
+      "source": "apps/demo/src/pages/PolarisOffice.tsx"
+    },
+    {
+      "path": "/proposal-platform",
+      "component": "ProposalPlatform",
+      "source": "apps/demo/src/pages/ProposalPlatform.tsx"
+    },
+    {
+      "path": "/tokens",
+      "component": "Tokens",
+      "source": "apps/demo/src/pages/Tokens.tsx"
+    },
+    {
+      "path": "/assets",
+      "component": "Assets",
+      "source": "apps/demo/src/pages/Assets.tsx"
+    },
+    {
+      "path": "/icons",
+      "component": "Icons",
+      "source": "apps/demo/src/pages/Icons.tsx"
+    }
+  ],
+  "requiredReferenceRoutes": [
+    "/components",
+    "/tokens",
+    "/icons",
+    "/assets"
+  ],
+  "referenceCoverage": {
+    "components": {
+      "route": "/components",
+      "source": "apps/demo/src/pages/Components.tsx",
+      "sectionCount": 45
+    },
+    "tokens": {
+      "route": "/tokens",
+      "source": "apps/demo/src/pages/Tokens.tsx",
+      "sections": [
+        "1. 브랜드 정체성 (4-color × 파일 타입 단일 별칭)",
+        "2. 시맨틱 토큰",
+        "3. 브랜드 컬러 램프 (10단계 05~90)",
+        "4. 서브 팔레트",
+        "5. Gray Ramp (UI 백본)",
+        "6. 타이포그래피",
+        "7. Spacing",
+        "8. Radius (md 12px default)",
+        "9. Shadow (5단계 + AI glow + focus ring)",
+        "10. Motion",
+        "11. Z-index",
+        "12. Breakpoint",
+        "13. Iconography"
+      ]
+    },
+    "icons": {
+      "route": "/icons",
+      "source": "apps/demo/src/pages/Icons.tsx"
+    },
+    "assets": {
+      "route": "/assets",
+      "source": "apps/demo/src/pages/Assets.tsx"
+    }
+  }
+}

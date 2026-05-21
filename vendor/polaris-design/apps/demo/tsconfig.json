@@ -1,0 +1,23 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "noEmit": true,
+    "moduleResolution": "Bundler",
+    "module": "ESNext",
+    "allowImportingTsExtensions": false,
+    "baseUrl": ".",
+    "paths": {
+      "@polaris/ui": ["../../packages/ui/src/index.ts"],
+      "@polaris/ui/tokens": ["../../packages/ui/src/tokens/index.ts"],
+      "@polaris/ui/tailwind": ["../../packages/ui/src/tailwind/index.ts"],
+      "@polaris/ui/form": ["../../packages/ui/src/form/index.ts"],
+      "@polaris/ui/ribbon": ["../../packages/ui/src/ribbon/index.ts"],
+      "@polaris/ui/icons": ["../../packages/ui/src/icons/index.ts"],
+      "@polaris/ui/file-icons": ["../../packages/ui/src/file-icons/index.ts"],
+      "@polaris/ui/logos": ["../../packages/ui/src/logos/index.ts"],
+      "@polaris/ui/ribbon-icons": ["../../packages/ui/src/ribbon-icons/index.ts"]
+    }
+  },
+  "include": ["src/**/*", "vite.config.ts"]
+}

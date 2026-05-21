@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 2,
+  "schemaVersion": 3,
   "syncProfile": "design-source",
   "upstream": {
     "repo": "https://github.com/PolarisOffice/PolarisDesign",
@@ -28,6 +28,7 @@
   "includedPrefixes": [
     "assets/figma-spec/",
     ".claude-plugin/",
+    "apps/demo/",
     "assets/",
     "docs/",
     "packages/ui/",
@@ -36,7 +37,6 @@
     "packages/template-next/"
   ],
   "excludedPrefixes": [
-    "apps/",
     "e2e/",
     ".github/",
     ".changeset/"
@@ -45,7 +45,7 @@
     "assets/figma-spec/",
     "vendor/polaris-design/"
   ],
-  "syncedAt": "2026-05-21T22:30:06.213Z",
+  "syncedAt": "2026-05-21T23:05:43.495Z",
   "syncedFiles": [
     {
       "source": "assets/figma-spec/components/action-button.png",
@@ -172,6 +172,198 @@
       "destination": "vendor/polaris-design/AGENTS.md",
       "size": 13913,
       "sha256": "b9c55e3f5d053c5543a0bb1519f3a5f4f15609b2cee90568bec3e604e1a34f96"
+    },
+    {
+      "source": "apps/demo/CHANGELOG.md",
+      "destination": "vendor/polaris-design/apps/demo/CHANGELOG.md",
+      "size": 48002,
+      "sha256": "7165d13d02f3774afd684c26852d88df0215248b38c9ad292b99d24534a2c2dc"
+    },
+    {
+      "source": "apps/demo/eslint.config.mjs",
+      "destination": "vendor/polaris-design/apps/demo/eslint.config.mjs",
+      "size": 326,
+      "sha256": "44c2424fc418a790550440095253bd751b87a91756f36f54c9f6315a9e437632"
+    },
+    {
+      "source": "apps/demo/index.html",
+      "destination": "vendor/polaris-design/apps/demo/index.html",
+      "size": 494,
+      "sha256": "22af5214b61596b78fa554b67816437ac8804db54aa18fa55db5a17c35cdf1ea"
+    },
+    {
+      "source": "apps/demo/package.json",
+      "destination": "vendor/polaris-design/apps/demo/package.json",
+      "size": 1373,
+      "sha256": "b8c494d90d60075fb2e386792d1ff33ab10317f75f59b5cf547256457a74d559"
+    },
+    {
+      "source": "apps/demo/postcss.config.js",
+      "destination": "vendor/polaris-design/apps/demo/postcss.config.js",
+      "size": 81,
+      "sha256": "e32657baf631d7c5f4dc67b4b2ee0ec8e7d5b3c41860e09cddce7c0377cd80bc"
+    },
+    {
+      "source": "apps/demo/public/nova-features/bgremove.png",
+      "destination": "vendor/polaris-design/apps/demo/public/nova-features/bgremove.png",
+      "size": 104996,
+      "sha256": "8964353a96c20714fd3f4cab10362f241894417f4edd4c4a2f949f985f5e4ac7"
+    },
+    {
+      "source": "apps/demo/public/nova-features/chat.png",
+      "destination": "vendor/polaris-design/apps/demo/public/nova-features/chat.png",
+      "size": 49141,
+      "sha256": "fdc781e89d5e35cae14501564775be81920378f46965223db810a62595587358"
+    },
+    {
+      "source": "apps/demo/public/nova-features/dictation.png",
+      "destination": "vendor/polaris-design/apps/demo/public/nova-features/dictation.png",
+      "size": 49668,
+      "sha256": "328af51c82ffbe1c5f2465ec82f0a3859ab72018b84e1f116a8ebe0a15eecc20"
+    },
+    {
+      "source": "apps/demo/public/nova-features/imagegen.png",
+      "destination": "vendor/polaris-design/apps/demo/public/nova-features/imagegen.png",
+      "size": 59102,
+      "sha256": "f9270a93ba730f7ce5b2e504220d2b2a70334b933b0de8fe79a4aa03a5f3d0ae"
+    },
+    {
+      "source": "apps/demo/public/nova-features/nano.png",
+      "destination": "vendor/polaris-design/apps/demo/public/nova-features/nano.png",
+      "size": 226360,
+      "sha256": "fede105a223b2afc948f6ad37aeb638e56b164cd726b71ec5d82c1286af98bf5"
+    },
+    {
+      "source": "apps/demo/public/nova-features/ppt.png",
+      "destination": "vendor/polaris-design/apps/demo/public/nova-features/ppt.png",
+      "size": 38167,
+      "sha256": "379dfce0ecb3c501ec90ceed003ea7a6c4ad149fd3bd0fa27100774daf58e91d"
+    },
+    {
+      "source": "apps/demo/public/nova-features/style.png",
+      "destination": "vendor/polaris-design/apps/demo/public/nova-features/style.png",
+      "size": 285412,
+      "sha256": "916aec146f5e0d0c79fdd2300ac1ee411facb4522d1ece799e991fa7296b6aeb"
+    },
+    {
+      "source": "apps/demo/public/nova-features/translate.png",
+      "destination": "vendor/polaris-design/apps/demo/public/nova-features/translate.png",
+      "size": 50865,
+      "sha256": "6edb02a0759ccd38aacd76250d114417e8319a4484e366630add1b1f90bd9645"
+    },
+    {
+      "source": "apps/demo/scripts/optimize-nova-images.mjs",
+      "destination": "vendor/polaris-design/apps/demo/scripts/optimize-nova-images.mjs",
+      "size": 2150,
+      "sha256": "df013d1a900ef796f94e223114399f87b2399e9d6de0e831ce802cd69c93c3a8"
+    },
+    {
+      "source": "apps/demo/src/App.tsx",
+      "destination": "vendor/polaris-design/apps/demo/src/App.tsx",
+      "size": 1421,
+      "sha256": "fb17e2a4171bcf0c6f6fb205eafeb2e4a668d67d6bea0205aba1cc65a30456b8"
+    },
+    {
+      "source": "apps/demo/src/index.css",
+      "destination": "vendor/polaris-design/apps/demo/src/index.css",
+      "size": 301,
+      "sha256": "301898d8ecf2b37f76ce9e8147f4e653cd160be90e91c7cf452061d7beddfb2a"
+    },
+    {
+      "source": "apps/demo/src/Layout.tsx",
+      "destination": "vendor/polaris-design/apps/demo/src/Layout.tsx",
+      "size": 10963,
+      "sha256": "00d9f128ad004de931491b61dfbd53681d2b7dea75850c46001a298188a46500"
+    },
+    {
+      "source": "apps/demo/src/main.tsx",
+      "destination": "vendor/polaris-design/apps/demo/src/main.tsx",
+      "size": 305,
+      "sha256": "796024ba1f273bbd6d21a199d6f41ba0962732c126dd1ff96c243ddf366cea8f"
+    },
+    {
+      "source": "apps/demo/src/pages/Assets.tsx",
+      "destination": "vendor/polaris-design/apps/demo/src/pages/Assets.tsx",
+      "size": 18358,
+      "sha256": "7f27badb8ce064a7ab64baa97833dd40519a2bfe2e95aa489e5f3e1827bd3418"
+    },
+    {
+      "source": "apps/demo/src/pages/Components.tsx",
+      "destination": "vendor/polaris-design/apps/demo/src/pages/Components.tsx",
+      "size": 92971,
+      "sha256": "346ea3bedbfe5cee8631aa71bd3c681b464f260439abb3b9991e1f36d3a128b6"
+    },
+    {
+      "source": "apps/demo/src/pages/CrmContractDetail.tsx",
+      "destination": "vendor/polaris-design/apps/demo/src/pages/CrmContractDetail.tsx",
+      "size": 16183,
+      "sha256": "791b01b4c1538dd065aa0c47fcf2c6bd55d86d26be99902ceacec0315f2b1d1a"
+    },
+    {
+      "source": "apps/demo/src/pages/Home.tsx",
+      "destination": "vendor/polaris-design/apps/demo/src/pages/Home.tsx",
+      "size": 6166,
+      "sha256": "b8b4440ed7d3fe2632a8ef9e2b42adf466743a4dd0c5909bfe9319d9cd2c224b"
+    },
+    {
+      "source": "apps/demo/src/pages/Icons.tsx",
+      "destination": "vendor/polaris-design/apps/demo/src/pages/Icons.tsx",
+      "size": 11887,
+      "sha256": "44703f22a84671841344f98d295419712d4813b4dcd4593d0119d98c9d654bb5"
+    },
+    {
+      "source": "apps/demo/src/pages/NovaWorkspace.tsx",
+      "destination": "vendor/polaris-design/apps/demo/src/pages/NovaWorkspace.tsx",
+      "size": 17345,
+      "sha256": "6808f425c3248793dca28fafc0946e3a0867597f82057a53294a94621d1e06d9"
+    },
+    {
+      "source": "apps/demo/src/pages/PolarisOffice.tsx",
+      "destination": "vendor/polaris-design/apps/demo/src/pages/PolarisOffice.tsx",
+      "size": 47914,
+      "sha256": "b33d28b299803a179de31d326644bdb995d453f2038f379cc5620a473084aaf2"
+    },
+    {
+      "source": "apps/demo/src/pages/ProposalPlatform.tsx",
+      "destination": "vendor/polaris-design/apps/demo/src/pages/ProposalPlatform.tsx",
+      "size": 19204,
+      "sha256": "f475f6536e203f1ac51ecf81d838dc71a39347bd9df2b19ffe298ac9755f6acb"
+    },
+    {
+      "source": "apps/demo/src/pages/SignContractList.tsx",
+      "destination": "vendor/polaris-design/apps/demo/src/pages/SignContractList.tsx",
+      "size": 12562,
+      "sha256": "397fefbf47e9aa671192c0eb6f91c2ab0eaa0761deaa8331ff5afd1e2974c99c"
+    },
+    {
+      "source": "apps/demo/src/pages/Tokens.tsx",
+      "destination": "vendor/polaris-design/apps/demo/src/pages/Tokens.tsx",
+      "size": 25777,
+      "sha256": "d99ae889021b83bd82b308178699d38e12b66a181350b3041a7b67c71206d27f"
+    },
+    {
+      "source": "apps/demo/src/vite-env.d.ts",
+      "destination": "vendor/polaris-design/apps/demo/src/vite-env.d.ts",
+      "size": 38,
+      "sha256": "65996936fbb042915f7b74a200fcdde7e410f32a669b1ab9597cfaa4b0faddb5"
+    },
+    {
+      "source": "apps/demo/tailwind.config.ts",
+      "destination": "vendor/polaris-design/apps/demo/tailwind.config.ts",
+      "size": 318,
+      "sha256": "3853c15d7726b90469cc6fd47c9b82f49c9d76f450514959587da4b7ab020856"
+    },
+    {
+      "source": "apps/demo/tsconfig.json",
+      "destination": "vendor/polaris-design/apps/demo/tsconfig.json",
+      "size": 942,
+      "sha256": "b4b093f4fa6a67c8363a226c775188030551909ae65708e75d57a35e11b9fb3d"
+    },
+    {
+      "source": "apps/demo/vite.config.ts",
+      "destination": "vendor/polaris-design/apps/demo/vite.config.ts",
+      "size": 2006,
+      "sha256": "90aa307099911203c5e18afaf8d854312cef4957e5aaf3929bef52a4ce919501"
     },
     {
       "source": "assets/figma-spec/components/action-button.png",
@@ -3483,23 +3675,35 @@
   "generatedArtifacts": [
     {
       "destination": "docs/design/generated/polaris.tokens.json",
-      "sha256": "38d2670cf1fcc3af535062df49ce34b9c13d52c3e3d3ed8dee78349bd7a3d0ff"
+      "sha256": "76157eb9cea5ae12c33dc5de8ff5ae24f4b1b8159aca2246bf4a3d0f29f18f39"
     },
     {
       "destination": "docs/design/generated/polaris.components.json",
-      "sha256": "6cc26f8a0fd62800ef3d07459a4a74aa9dbde20b44a48a5ebb5b507b45305076"
+      "sha256": "dfd56e8d83175c822324fb7aa0af5040855b15a7ed4e3dad901c3a461f3358ee"
+    },
+    {
+      "destination": "docs/design/generated/polaris.component-registry.json",
+      "sha256": "4ed045f10c1cb40a687d331f63de43f5dda5915dad70e8dd4e41bae796bb5485"
+    },
+    {
+      "destination": "docs/design/generated/polaris.token-registry.json",
+      "sha256": "55551225be8caeaad9f4d102cfcfcfc4096e8c948a5c68fbc0546ec09b68d09f"
+    },
+    {
+      "destination": "docs/design/generated/polaris.pages.json",
+      "sha256": "cdd87398e5048410811f8e8a2cf8b4e9f95ad1a168ce1ee497ad40cf21c22d92"
     },
     {
       "destination": "docs/design/generated/polaris.lint-rules.json",
-      "sha256": "d745fccd32e5ce9fd741409add621da6811613c0f58e72307ea64c339d50a671"
+      "sha256": "b73714d0aca6423fa8032d08d6a401f60d4f3ab0ae94f837671ddbb4a4de9458"
     },
     {
       "destination": "docs/design/generated/polaris.assets.json",
-      "sha256": "6467f5bd703135e9d4868bc7143648f09bfd249e962d49bc925212d81e97acb9"
+      "sha256": "d412d423d87c46c7d0c865eaae08eaaaacceb1f9e1e17fbb20c433f996dfa5a3"
     },
     {
       "destination": "docs/design/generated/polaris.signature-assets.json",
-      "sha256": "22943f30a35b8344e0f27c38bf42794895669c431ca07bd1151d4cdb23feadfa"
+      "sha256": "6062b88f0bb1b261d203863bab77a2168d653108a8f2f6dd0b549d9254a59e39"
     }
   ]
 }

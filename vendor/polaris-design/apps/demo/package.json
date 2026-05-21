@@ -1,0 +1,42 @@
+{
+  "name": "demo",
+  "version": "0.8.0-rc.8",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "pnpm sync:figma-spec && pnpm prep:ui && vite --port 5173 --host",
+    "build": "pnpm sync:figma-spec && pnpm prep:ui && tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "typecheck": "pnpm prep:ui-sources && tsc --noEmit",
+    "lint": "pnpm prep:ui-sources && eslint .",
+    "optimize-images": "node scripts/optimize-nova-images.mjs",
+    "sync:figma-spec": "rm -rf public/figma-spec && cp -r ../../assets/figma-spec public/figma-spec",
+    "prep:ui-sources": "pnpm --filter @polaris/ui gen:sources",
+    "prep:ui": "pnpm --filter @polaris/ui build"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^3.10.0",
+    "@polaris/ui": "workspace:*",
+    "lucide-react": "^0.469.0",
+    "react": "^18.3.1",
+    "react-day-picker": "^9.4.4",
+    "react-dom": "^18.3.1",
+    "react-hook-form": "^7.54.2",
+    "react-router-dom": "^6.28.1",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@polaris/lint": "workspace:*",
+    "@types/node": "^22.10.5",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "@vitejs/plugin-react": "^4.3.4",
+    "autoprefixer": "^10.4.20",
+    "eslint": "^9.18.0",
+    "postcss": "^8.5.0",
+    "sharp": "^0.34.5",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.7.3",
+    "vite": "^6.0.7"
+  }
+}

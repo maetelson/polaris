@@ -10,6 +10,7 @@
     "polaris:brand-audit": "node scripts/polaris-brand-audit.mjs",
     "polaris:brand-audit:fixtures": "node scripts/polaris-brand-audit.mjs --fixtures",
     "polaris:brief:check": "node scripts/check-polaris-brief.mjs",
-    "polaris:links:check": "node scripts/check-md-links.mjs"
+    "polaris:links:check": "node scripts/check-md-links.mjs",
+    "polaris:pages:check": "node scripts/check-polaris-pages-coverage.mjs"
   }
 }

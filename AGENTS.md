@@ -29,6 +29,7 @@
 - Figma 산출물 규칙: [Figma Output Contract](docs/design/figma-output-contract.md)
 - upstream snapshot: [vendor/polaris-design](vendor/polaris-design)
 - generated token data: [docs/design/generated](docs/design/generated)
+- GitHub Pages reference: `docs/design/generated/polaris.pages.json`, `polaris.component-registry.json`, `polaris.token-registry.json`
 - 원본 디자인 시스템 참고: [PolarisOffice/PolarisDesign](https://github.com/PolarisOffice/PolarisDesign/tree/main)
 
 ## 3. 기본 매핑
@@ -51,7 +52,8 @@
 ## 5. 완료 전 확인
 
 - PolarisDesign 동기화: `npm run polaris:validate`가 통과해야 합니다.
-- Design-source snapshot: `npm run polaris:sync -- --check`가 `assets`, `docs`, `packages/ui`, `packages/lint`, `packages/plugin`, `packages/template-next` drift를 확인해야 합니다.
+- Design-source snapshot: `npm run polaris:sync -- --check`가 `apps/demo`, `assets`, `docs`, `packages/ui`, `packages/lint`, `packages/plugin`, `packages/template-next` drift를 확인해야 합니다.
+- GitHub Pages coverage: `npm run polaris:pages:check`가 `/components`, `/tokens`, `/icons`, `/assets`와 컴포넌트/컬러/타이포/그리드 registry를 확인해야 합니다.
 - Markdown links: `npm run polaris:links:check`가 통과해야 합니다.
 - Brief 계약: `npm run polaris:brief:check`가 통과해야 합니다.
 - Figma 작업: [figma/sync-polaris-figma.js](figma/sync-polaris-figma.js)를 Figma MCP로 실행해 `00 Polaris Output Contract`, token collections, text/effect styles를 갱신합니다.
@@ -65,4 +67,4 @@
 - drift 확인: `npm run polaris:sync -- --check`
 - Markdown 링크 확인: `npm run polaris:links:check`
 - Figma MCP용 스크립트 재생성: `npm run polaris:figma:build`
-- 전체 계약 검증: `npm run polaris:validate && npm run polaris:brief:check`
+- 전체 계약 검증: `npm run polaris:validate && npm run polaris:pages:check && npm run polaris:brief:check`

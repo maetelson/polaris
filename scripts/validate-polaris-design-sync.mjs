@@ -13,6 +13,11 @@ const REQUIRED_FILES = [
   'vendor/polaris-design/assets/figma-spec/foundation/color.png',
   'vendor/polaris-design/docs/for-consumers/migration/rsc-patterns.md',
   'vendor/polaris-design/docs/archive/design-assets-v07.md',
+  'vendor/polaris-design/apps/demo/src/App.tsx',
+  'vendor/polaris-design/apps/demo/src/pages/Components.tsx',
+  'vendor/polaris-design/apps/demo/src/pages/Tokens.tsx',
+  'vendor/polaris-design/apps/demo/src/pages/Icons.tsx',
+  'vendor/polaris-design/apps/demo/src/pages/Assets.tsx',
   'vendor/polaris-design/packages/ui/src/styles/tokens.css',
   'vendor/polaris-design/packages/ui/src/tailwind/index.ts',
   'vendor/polaris-design/packages/ui/scripts/build-tokens.ts',
@@ -25,6 +30,9 @@ const REQUIRED_FILES = [
   'vendor/polaris-design/packages/plugin/commands/polaris-brand-audit.md',
   'docs/design/generated/polaris.tokens.json',
   'docs/design/generated/polaris.components.json',
+  'docs/design/generated/polaris.component-registry.json',
+  'docs/design/generated/polaris.token-registry.json',
+  'docs/design/generated/polaris.pages.json',
   'docs/design/generated/polaris.lint-rules.json',
   'docs/design/generated/polaris.signature-assets.json',
   'docs/design/generated/polaris.assets.json',
@@ -122,6 +130,9 @@ async function main() {
   const manifest = await readJson('polaris.design-sync.json');
   const tokens = await readJson('docs/design/generated/polaris.tokens.json');
   const components = await readJson('docs/design/generated/polaris.components.json');
+  const componentRegistry = await readJson('docs/design/generated/polaris.component-registry.json');
+  const tokenRegistry = await readJson('docs/design/generated/polaris.token-registry.json');
+  const pages = await readJson('docs/design/generated/polaris.pages.json');
   const lintRules = await readJson('docs/design/generated/polaris.lint-rules.json');
   const signatureAssets = await readJson('docs/design/generated/polaris.signature-assets.json');
   const assets = await readJson('docs/design/generated/polaris.assets.json');
@@ -129,11 +140,11 @@ async function main() {
   await validateManifestChecksums(manifest, failures);
   await validateManagedPrefixes(manifest, failures);
 
-  assert(manifest.schemaVersion === 2, 'Manifest schemaVersion must be 2', failures);
+  assert(manifest.schemaVersion === 3, 'Manifest schemaVersion must be 3', failures);
   assert(manifest.syncProfile === 'design-source', 'Manifest syncProfile must be design-source', failures);
   assert(manifest.includedPrefixes.includes('assets/'), 'Manifest must include upstream assets in vendor snapshot', failures);
+  assert(manifest.includedPrefixes.includes('apps/demo/'), 'Manifest must include GitHub Pages demo source', failures);
   assert(manifest.includedPrefixes.includes('packages/ui/'), 'Manifest must include packages/ui', failures);
-  assert(manifest.excludedPrefixes.includes('apps/'), 'Manifest must explicitly exclude apps/demo', failures);
   assert(manifest.excludedPrefixes.includes('e2e/'), 'Manifest must explicitly exclude e2e screenshots', failures);
   assert(manifest.syncedFiles.length >= 500, 'Design-source snapshot should include 500+ synced files', failures);
 
@@ -155,6 +166,27 @@ async function main() {
   assert(components.components.includes('Button'), 'Component catalog missing Button', failures);
   assert(components.components.includes('FileIcon'), 'Component catalog missing FileIcon', failures);
   assert(components.subpaths.some((item) => item.path === '@polaris/ui/ribbon'), 'Component catalog missing ribbon subpath', failures);
+  assert(componentRegistry.summary.demoSectionCount >= 45, 'Component registry must include 45+ Pages demo sections', failures);
+  assert(componentRegistry.summary.demoImportCount >= 60, 'Component registry must include Pages demo root imports', failures);
+  assert(componentRegistry.rootExports.includes('AvatarGroup'), 'Component registry missing secondary export AvatarGroup', failures);
+  assert(componentRegistry.rootExports.includes('DateRangePicker'), 'Component registry missing DateRangePicker', failures);
+  assert(componentRegistry.rootExports.includes('FileDropZone'), 'Component registry missing FileDropZone', failures);
+  assert(componentRegistry.rootExports.includes('PaginationFooter'), 'Component registry missing PaginationFooter', failures);
+  assert(componentRegistry.demo.categories.foundation?.length >= 9, 'Pages component registry missing Foundation sections', failures);
+  assert(componentRegistry.demo.categories.forms?.length >= 10, 'Pages component registry missing Forms sections', failures);
+
+  assert(pages.routeCount >= 9, 'Pages registry should include demo routes', failures);
+  for (const route of ['/components', '/tokens', '/icons', '/assets']) {
+    assert(pages.routes.some((item) => item.path === route), `Pages registry missing ${route}`, failures);
+  }
+  assert(pages.referenceCoverage.components.sectionCount >= 45, 'Pages registry missing component coverage', failures);
+
+  assert(tokenRegistry.typography.count >= 11, 'Token registry missing typography scale', failures);
+  assert(tokenRegistry.colors.counts.semantic >= 40, 'Token registry missing semantic colors', failures);
+  assert(tokenRegistry.colors.counts.brandRamps >= 60, 'Token registry missing brand ramps', failures);
+  assert(Object.keys(tokenRegistry.grid.spacingNamed).length >= 12, 'Token registry missing named spacing grid', failures);
+  assert(Object.keys(tokenRegistry.grid.breakpoint).length >= 9, 'Token registry missing breakpoints', failures);
+  assert(tokenRegistry.pagesReference.sections.length >= 13, 'Token registry missing Pages token sections', failures);
 
   assert(lintRules.ruleCount >= 9, 'Lint rules JSON should include 9+ rules', failures);
   assert(lintRules.rules.some((rule) => rule.name === '@polaris/no-hardcoded-color'), 'Lint rules missing no-hardcoded-color', failures);

@@ -23,6 +23,9 @@ jobs:
       - name: Validate generated Polaris contract
         run: npm run polaris:validate
 
+      - name: Validate GitHub Pages coverage
+        run: npm run polaris:pages:check
+
       - name: Validate UI brief contract
         run: npm run polaris:brief:check
 

@@ -17,6 +17,7 @@
 - [ ] root `DESIGN.md`와 `docs/design/generated/*`가 upstream PolarisDesign snapshot과 일치한다.
 - [ ] `polaris.design-sync.json`의 `design-source` snapshot이 `assets`, `docs`, `packages/ui`, `packages/lint`, `packages/plugin`, `packages/template-next` drift를 막는다.
 - [ ] `npm run polaris:validate`를 실행했다.
+- [ ] `npm run polaris:pages:check`를 실행했다.
 - [ ] `npm run polaris:brief:check`를 실행했다.
 - [ ] `npm run polaris:links:check`를 실행했다.
 - [ ] Figma 작업이면 `00 Polaris Output Contract` 페이지와 주요 프레임 brief note를 확인했다.

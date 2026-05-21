@@ -6,6 +6,9 @@ import process from 'node:process';
 
 const TOKENS_PATH = 'docs/design/generated/polaris.tokens.json';
 const COMPONENTS_PATH = 'docs/design/generated/polaris.components.json';
+const COMPONENT_REGISTRY_PATH = 'docs/design/generated/polaris.component-registry.json';
+const TOKEN_REGISTRY_PATH = 'docs/design/generated/polaris.token-registry.json';
+const PAGES_PATH = 'docs/design/generated/polaris.pages.json';
 const MANIFEST_PATH = 'polaris.design-sync.json';
 const OUTPUT_PATH = 'figma/sync-polaris-figma.js';
 
@@ -13,7 +16,7 @@ async function readJson(filePath) {
   return JSON.parse(await readFile(filePath, 'utf8'));
 }
 
-function buildFigmaCode({ tokens, components, manifest }) {
+function buildFigmaCode({ tokens, components, componentRegistry, tokenRegistry, pages, manifest }) {
   const tokenArtifact = manifest.generatedArtifacts.find(
     (item) => item.destination === 'docs/design/generated/polaris.tokens.json'
   );
@@ -38,6 +41,25 @@ function buildFigmaCode({ tokens, components, manifest }) {
         path: item.path,
         serverSafe: item.serverSafe,
       })),
+    },
+    componentRegistry: {
+      summary: componentRegistry.summary,
+      demo: componentRegistry.demo,
+      rootExports: componentRegistry.rootExports,
+    },
+    tokenRegistry: {
+      pagesReference: tokenRegistry.pagesReference,
+      colors: {
+        counts: tokenRegistry.colors.counts,
+        groups: tokenRegistry.colors.groups,
+      },
+      typography: tokenRegistry.typography,
+      grid: tokenRegistry.grid,
+    },
+    pages: {
+      routeCount: pages.routeCount,
+      routes: pages.routes,
+      referenceCoverage: pages.referenceCoverage,
     },
     manifest: {
       upstream: manifest.upstream,
@@ -308,7 +330,7 @@ async function buildTokenPage() {
   const page = await ensurePage('Polaris DS - Tokens');
   const root = figma.createFrame();
   root.name = 'Polaris Token Specimen';
-  root.resize(1440, 1800);
+  root.resize(1440, 2600);
   root.fills = paint('#FFFFFF');
   auto(root, 'VERTICAL', 32, 64);
   page.appendChild(root);
@@ -322,6 +344,17 @@ async function buildTokenPage() {
       1000
     )
   );
+
+  root.appendChild(
+    await makeText(
+      'GitHub Pages token sections: ' + POLARIS_SYNC_DATA.tokenRegistry.pagesReference.sections.join(' / '),
+      12,
+      'Regular',
+      '#72787F',
+      1000
+    )
+  );
+
   const colors = POLARIS_SYNC_DATA.tokens.cssVariables.categorizedLight.colors;
   const grid = figma.createFrame();
   grid.name = 'Color variables';
@@ -347,6 +380,53 @@ async function buildTokenPage() {
     grid.appendChild(item);
   }
   root.appendChild(grid);
+
+  const typeFrame = figma.createFrame();
+  typeFrame.name = 'Typography styles';
+  typeFrame.resize(1200, 10);
+  typeFrame.fills = [];
+  auto(typeFrame, 'VERTICAL', 12, 0);
+  typeFrame.appendChild(await makeText('Typography', 24, 'Bold', '#26282B', 1000));
+  for (const [name, spec] of Object.entries(POLARIS_SYNC_DATA.tokenRegistry.typography.styles)) {
+    const row = figma.createFrame();
+    row.name = 'Type/' + name;
+    row.resize(1100, 10);
+    row.fills = [];
+    auto(row, 'HORIZONTAL', 16, 0);
+    row.appendChild(await makeText(name, 12, 'Regular', '#72787F', 120));
+    const weight = Number(spec.fontWeight) >= 700 ? 'Bold' : 'Regular';
+    row.appendChild(await makeText('The quick brown fox / 폴라리스 오피스', parsePx(spec.fontSize), weight, '#26282B', 620));
+    row.appendChild(await makeText(spec.fontSize + ' / ' + spec.lineHeight + ' / ' + spec.fontWeight, 11, 'Regular', '#72787F', 220));
+    typeFrame.appendChild(row);
+  }
+  root.appendChild(typeFrame);
+
+  const gridFrame = figma.createFrame();
+  gridFrame.name = 'Grid spacing breakpoints';
+  gridFrame.resize(1200, 10);
+  gridFrame.fills = [];
+  auto(gridFrame, 'VERTICAL', 16, 0);
+  gridFrame.appendChild(await makeText('Grid / Spacing / Breakpoints', 24, 'Bold', '#26282B', 1000));
+  for (const [name, value] of Object.entries(POLARIS_SYNC_DATA.tokenRegistry.grid.spacingNamed)) {
+    const row = figma.createFrame();
+    row.name = 'Spacing/' + name;
+    row.resize(760, 10);
+    row.fills = [];
+    auto(row, 'HORIZONTAL', 12, 0);
+    row.appendChild(await makeText(name, 12, 'Regular', '#72787F', 96));
+    const bar = figma.createRectangle();
+    bar.resize(Math.max(2, parsePx(value)) * 4, 12);
+    bar.cornerRadius = 2;
+    bar.fills = paint('#1D7FF9');
+    row.appendChild(bar);
+    row.appendChild(await makeText(value, 12, 'Regular', '#454C53', 120));
+    gridFrame.appendChild(row);
+  }
+  const breakpointText = Object.entries(POLARIS_SYNC_DATA.tokenRegistry.grid.breakpoint)
+    .map(([name, value]) => name + ': ' + value)
+    .join(' / ');
+  gridFrame.appendChild(await makeText('Breakpoints: ' + breakpointText, 12, 'Regular', '#454C53', 1000));
+  root.appendChild(gridFrame);
 }
 
 async function buildComponentPage() {
@@ -369,8 +449,30 @@ async function buildComponentPage() {
   );
   root.appendChild(
     await makeText(
+      'Pages demo sections: ' + POLARIS_SYNC_DATA.componentRegistry.summary.demoSectionCount + '. Root exports used by demo: ' + POLARIS_SYNC_DATA.componentRegistry.summary.demoImportCount + '.',
+      14,
+      'Regular',
+      '#454C53',
+      1000
+    )
+  );
+  const categorySummary = Object.entries(POLARIS_SYNC_DATA.componentRegistry.demo.categories)
+    .map(([category, sections]) => category + ' ' + sections.length)
+    .join(' / ');
+  root.appendChild(await makeText('Pages categories: ' + categorySummary, 12, 'Regular', '#72787F', 1000));
+  root.appendChild(
+    await makeText(
       POLARIS_SYNC_DATA.components.components.slice(0, 80).join(' / '),
       13,
+      'Regular',
+      '#454C53',
+      1000
+    )
+  );
+  root.appendChild(
+    await makeText(
+      'Secondary exports captured from source: ' + POLARIS_SYNC_DATA.componentRegistry.demo.secondaryExportsMissingFromFamilyCatalog.slice(0, 80).join(' / '),
+      12,
       'Regular',
       '#454C53',
       1000
@@ -425,9 +527,12 @@ return await main();
 async function main() {
   const tokens = await readJson(TOKENS_PATH);
   const components = await readJson(COMPONENTS_PATH);
+  const componentRegistry = await readJson(COMPONENT_REGISTRY_PATH);
+  const tokenRegistry = await readJson(TOKEN_REGISTRY_PATH);
+  const pages = await readJson(PAGES_PATH);
   const manifest = await readJson(MANIFEST_PATH);
   await mkdir(path.dirname(OUTPUT_PATH), { recursive: true });
-  await writeFile(OUTPUT_PATH, buildFigmaCode({ tokens, components, manifest }), 'utf8');
+  await writeFile(OUTPUT_PATH, buildFigmaCode({ tokens, components, componentRegistry, tokenRegistry, pages, manifest }), 'utf8');
   console.log(`Wrote ${OUTPUT_PATH}`);
 }
 

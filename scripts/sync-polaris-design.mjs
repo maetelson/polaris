@@ -34,6 +34,7 @@ const VENDOR_ROOT_FILES = [
 ];
 const VENDOR_PREFIXES = [
   '.claude-plugin/',
+  'apps/demo/',
   'assets/',
   'docs/',
   'packages/ui/',
@@ -41,7 +42,7 @@ const VENDOR_PREFIXES = [
   'packages/plugin/',
   'packages/template-next/',
 ];
-const EXCLUDED_PREFIXES = ['apps/', 'e2e/', '.github/', '.changeset/'];
+const EXCLUDED_PREFIXES = ['e2e/', '.github/', '.changeset/'];
 const MANAGED_PREFIXES = ['assets/figma-spec/', 'vendor/polaris-design/'];
 
 const REQUIRED_SOURCE_FILES = [
@@ -60,6 +61,11 @@ const REQUIRED_SOURCE_FILES = [
   'packages/ui/src/tokens/shadow.ts',
   'packages/ui/src/tokens/motion.ts',
   'packages/ui/src/tokens/zIndex.ts',
+  'apps/demo/src/App.tsx',
+  'apps/demo/src/pages/Components.tsx',
+  'apps/demo/src/pages/Tokens.tsx',
+  'apps/demo/src/pages/Icons.tsx',
+  'apps/demo/src/pages/Assets.tsx',
 ];
 
 const SIGNATURE_ASSET_FALLBACK = [
@@ -175,6 +181,9 @@ function normalizeVendorMarkdown(source, textValue) {
       .replaceAll('(migration/v0.7-to-v0.8.md)', '(../for-consumers/migration/v0.7-to-v0.8.md)');
   }
   if (source.startsWith('packages/')) {
+    text = text.replaceAll('(docs/for-design-team/followup.md)', '(../../docs/for-design-team/followup.md)');
+  }
+  if (source === 'apps/demo/CHANGELOG.md') {
     text = text.replaceAll('(docs/for-design-team/followup.md)', '(../../docs/for-design-team/followup.md)');
   }
   return text;
@@ -355,6 +364,141 @@ function categorizeCssVariables(vars) {
   return categories;
 }
 
+function parseSimpleConstMap(ts, exportName) {
+  const match = ts.match(new RegExp(`export const ${exportName}\\s*=\\s*\\{([\\s\\S]*?)\\}\\s+as const`));
+  if (!match) return {};
+  const values = {};
+  for (const line of match[1].split(/\r?\n/)) {
+    const clean = line.replace(/\/\/.*$/, '').trim();
+    const entry = clean.match(/^['"]?([\w.-]+)['"]?\s*:\s*['"]([^'"]+)['"]/);
+    if (entry) values[entry[1]] = entry[2];
+  }
+  return values;
+}
+
+function extractDemoRoutes(appTsx) {
+  const imports = {};
+  for (const match of appTsx.matchAll(/^import\s+([A-Z][A-Za-z0-9]+)\s+from\s+'\.\/pages\/([^']+)'/gm)) {
+    imports[match[1]] = `apps/demo/src/pages/${match[2]}.tsx`;
+  }
+  const routes = [{ path: '/', component: 'Home', source: imports.Home }];
+  for (const match of appTsx.matchAll(/<Route\s+path="([^"]+)"\s+element=\{<([A-Z][A-Za-z0-9]+)\s*\/>\}/g)) {
+    if (match[1] === '*') continue;
+    routes.push({ path: `/${match[1]}`, component: match[2], source: imports[match[2]] || null });
+  }
+  return routes;
+}
+
+function extractDemoComponentSections(componentsTsx) {
+  const categories = {};
+  for (const match of componentsTsx.matchAll(/<Section\s+cat="([^"]+)"\s+current=\{catTab\}\s+title="([^"]+)"/g)) {
+    const [, category, title] = match;
+    if (!categories[category]) categories[category] = [];
+    categories[category].push({
+      title,
+      primaryComponentHint: title.replace(/^\d+\.\s*/, '').split(' — ')[0],
+    });
+  }
+  return categories;
+}
+
+function extractDemoUiImports(componentsTsx) {
+  const match = componentsTsx.match(/import\s+\{([\s\S]*?)\}\s+from\s+'@polaris\/ui';/);
+  if (!match) return [];
+  return Array.from(
+    new Set(
+      match[1]
+        .replace(/\/\/.*$/gm, '')
+        .split(',')
+        .map((part) => part.trim().replace(/^type\s+/, ''))
+        .filter((part) => /^[A-Z][A-Za-z0-9]+$/.test(part))
+    )
+  ).sort();
+}
+
+function extractTokenPageSections(tokensTsx) {
+  return [...tokensTsx.matchAll(/<Section\s+title="([^"]+)"/g)].map((match) => match[1]);
+}
+
+function extractComponentExports(files) {
+  const exportsByFile = {};
+  const all = new Set();
+  for (const [source, buffer] of [...files.entries()].sort(([a], [b]) => a.localeCompare(b))) {
+    if (!source.startsWith('packages/ui/src/components/') || !source.endsWith('.tsx')) continue;
+    const tsx = buffer.toString('utf8');
+    const names = new Set();
+    for (const match of tsx.matchAll(/export\s+(?:const|function)\s+([A-Z][A-Za-z0-9]+)/g)) names.add(match[1]);
+    for (const match of tsx.matchAll(/^([A-Z][A-Za-z0-9]+)\.displayName\s*=/gm)) names.add(match[1]);
+    if (names.size > 0) {
+      const list = [...names].sort();
+      exportsByFile[source] = list;
+      list.forEach((name) => all.add(name));
+    }
+  }
+  return {
+    count: all.size,
+    exports: [...all].sort(),
+    byFile: exportsByFile,
+  };
+}
+
+function extractSubpathExports(files, source) {
+  const index = files.get(source);
+  if (!index) return [];
+  const textValue = index.toString('utf8');
+  const names = new Set();
+  for (const match of textValue.matchAll(/export\s+(?:const|function|class)\s+([A-Z][A-Za-z0-9]+)/g)) names.add(match[1]);
+  for (const match of textValue.matchAll(/export\s+\{\s*([^}]+)\s*\}/g)) {
+    match[1]
+      .split(',')
+      .map((part) => part.trim().split(/\s+as\s+/).pop())
+      .filter((part) => /^[A-Z][A-Za-z0-9]+$/.test(part))
+      .forEach((name) => names.add(name));
+  }
+  return [...names].sort();
+}
+
+function groupColorTokens(lightVars, darkVars) {
+  const groupOf = (cssName) => {
+    const name = cssName.replace('--polaris-', '');
+    if (/^(blue|green|orange|red|purple)$/.test(name) || name.startsWith('file-')) return 'brandIdentity';
+    if (
+      name.startsWith('label-') ||
+      name.startsWith('background-') ||
+      name.startsWith('layer-') ||
+      name.startsWith('surface-') ||
+      name.startsWith('interaction-') ||
+      name.startsWith('fill-') ||
+      name.startsWith('line-') ||
+      name.startsWith('accent-') ||
+      name.startsWith('focus-') ||
+      name.startsWith('static-') ||
+      name.startsWith('state-') ||
+      name.startsWith('ai-')
+    ) {
+      return 'semantic';
+    }
+    if (/^(blue|dark-blue|green|orange|red|purple)-/.test(name)) return 'brandRamps';
+    if (/^(sky-blue|blue-supplementary|violet|cyan|yellow)-/.test(name)) return 'supplementaryRamps';
+    if (/^(neutral|gray)-/.test(name)) return 'neutralAndGray';
+    return 'other';
+  };
+
+  const groups = {};
+  for (const [cssVariable, light] of Object.entries(lightVars)) {
+    const group = groupOf(cssVariable);
+    if (!groups[group]) groups[group] = [];
+    groups[group].push({
+      name: cssVariable.replace('--polaris-', ''),
+      cssVariable,
+      figmaVariable: cssVariable.replace('--polaris-', '').replaceAll('-', '/'),
+      light,
+      dark: darkVars[cssVariable] || light,
+    });
+  }
+  return groups;
+}
+
 function text(files, source) {
   const value = files.get(source);
   if (!value) throw new Error(`Missing fetched file for generated artifact: ${source}`);
@@ -421,6 +565,147 @@ function buildComponentsJson(files, ref, commit, generatedAt) {
     familyCount: familyCountMatch ? Number(familyCountMatch[1]) : components.length,
     components,
     subpaths,
+  };
+}
+
+function buildComponentRegistryJson(files, ref, commit, generatedAt, componentsJson) {
+  const componentExports = extractComponentExports(files);
+  const demoImports = extractDemoUiImports(text(files, 'apps/demo/src/pages/Components.tsx'));
+  const familySet = new Set(componentsJson.components);
+  const demoMissingFromFamilyCatalog = demoImports.filter((name) => !familySet.has(name));
+  return {
+    schemaVersion: 1,
+    source: {
+      repo: UPSTREAM_REPO,
+      ref,
+      commit,
+      files: [
+        'packages/ui/src/components/index.ts',
+        'packages/ui/src/components/*.tsx',
+        'apps/demo/src/pages/Components.tsx',
+      ],
+    },
+    generatedAt,
+    summary: {
+      familyCount: componentsJson.familyCount,
+      rootExportCount: componentExports.count,
+      demoImportCount: demoImports.length,
+      demoSectionCount: Object.values(extractDemoComponentSections(text(files, 'apps/demo/src/pages/Components.tsx'))).flat()
+        .length,
+      demoSecondaryExportsMissingFromFamilyCatalog: demoMissingFromFamilyCatalog.length,
+    },
+    families: componentsJson.components,
+    rootExports: componentExports.exports,
+    exportsByFile: componentExports.byFile,
+    demo: {
+      route: '/components',
+      source: 'apps/demo/src/pages/Components.tsx',
+      importsFromRoot: demoImports,
+      categories: extractDemoComponentSections(text(files, 'apps/demo/src/pages/Components.tsx')),
+      secondaryExportsMissingFromFamilyCatalog: demoMissingFromFamilyCatalog,
+    },
+    subpaths: [
+      ...componentsJson.subpaths,
+      {
+        path: '@polaris/ui/ribbon',
+        source: 'packages/ui/src/ribbon/index.ts',
+        exports: extractSubpathExports(files, 'packages/ui/src/ribbon/index.ts'),
+      },
+      {
+        path: '@polaris/ui/form',
+        source: 'packages/ui/src/form/index.ts',
+        exports: extractSubpathExports(files, 'packages/ui/src/form/index.ts'),
+      },
+    ],
+  };
+}
+
+function buildTokenRegistryJson(files, ref, commit, generatedAt, tokensJson) {
+  const spacingTs = text(files, 'packages/ui/src/tokens/spacing.ts');
+  const tokenPageSections = extractTokenPageSections(text(files, 'apps/demo/src/pages/Tokens.tsx'));
+  return {
+    schemaVersion: 1,
+    source: {
+      repo: UPSTREAM_REPO,
+      ref,
+      commit,
+      files: [
+        'packages/ui/src/styles/tokens.css',
+        'packages/ui/src/tokens/typography.ts',
+        'packages/ui/src/tokens/spacing.ts',
+        'apps/demo/src/pages/Tokens.tsx',
+      ],
+    },
+    generatedAt,
+    pagesReference: {
+      route: '/tokens',
+      source: 'apps/demo/src/pages/Tokens.tsx',
+      sections: tokenPageSections,
+      requiredVisualAxes: ['color', 'typography', 'spacing/grid', 'radius', 'shadow', 'motion', 'z-index', 'breakpoint', 'iconography'],
+    },
+    colors: {
+      groups: groupColorTokens(tokensJson.cssVariables.light, tokensJson.cssVariables.dark),
+      counts: Object.fromEntries(
+        Object.entries(groupColorTokens(tokensJson.cssVariables.light, tokensJson.cssVariables.dark)).map(([key, value]) => [
+          key,
+          value.length,
+        ])
+      ),
+    },
+    typography: {
+      source: 'DESIGN.md frontmatter + packages/ui/src/tokens/typography.ts',
+      styles: tokensJson.designFrontmatter.typography || {},
+      count: Object.keys(tokensJson.designFrontmatter.typography || {}).length,
+      rule: 'Pretendard Variable, no letter-spacing, 700 for headings/captions, 400 for body.',
+      figmaSpecImage: 'assets/figma-spec/foundation/typography.png',
+    },
+    grid: {
+      spacing: tokensJson.cssVariables.categorizedLight.spacing,
+      spacingNamed: parseSimpleConstMap(spacingTs, 'spacingNamed'),
+      breakpoint: parseSimpleConstMap(spacingTs, 'breakpoint'),
+      container: parseSimpleConstMap(spacingTs, 'container'),
+      figmaSpecImage: 'assets/figma-spec/foundation/grid.png',
+    },
+    relatedTokenGroups: {
+      radius: tokensJson.cssVariables.categorizedLight.radius,
+      shadow: tokensJson.cssVariables.categorizedLight.shadow,
+      motion: tokensJson.cssVariables.categorizedLight.motion,
+      zIndex: tokensJson.cssVariables.categorizedLight.zIndex,
+    },
+  };
+}
+
+function buildPagesJson(files, ref, commit, generatedAt) {
+  const appTsx = text(files, 'apps/demo/src/App.tsx');
+  const routes = extractDemoRoutes(appTsx);
+  return {
+    schemaVersion: 1,
+    source: {
+      repo: UPSTREAM_REPO,
+      ref,
+      commit,
+      githubPages: 'https://polarisoffice.github.io/PolarisDesign/',
+      app: 'apps/demo',
+    },
+    generatedAt,
+    routeCount: routes.length,
+    routes,
+    requiredReferenceRoutes: ['/components', '/tokens', '/icons', '/assets'],
+    referenceCoverage: {
+      components: {
+        route: '/components',
+        source: 'apps/demo/src/pages/Components.tsx',
+        sectionCount: Object.values(extractDemoComponentSections(text(files, 'apps/demo/src/pages/Components.tsx'))).flat()
+          .length,
+      },
+      tokens: {
+        route: '/tokens',
+        source: 'apps/demo/src/pages/Tokens.tsx',
+        sections: extractTokenPageSections(text(files, 'apps/demo/src/pages/Tokens.tsx')),
+      },
+      icons: { route: '/icons', source: 'apps/demo/src/pages/Icons.tsx' },
+      assets: { route: '/assets', source: 'apps/demo/src/pages/Assets.tsx' },
+    },
   };
 }
 
@@ -554,13 +839,26 @@ async function main() {
   }
 
   const assetCatalog = buildAssetCatalog(fetched, options.ref, commit, syncedAt, syncedFiles);
+  const tokensJson = buildTokensJson(fetched, options.ref, commit, syncedAt);
+  const componentsJson = buildComponentsJson(fetched, options.ref, commit, syncedAt);
   const generatedArtifacts = [
-    await writeJson('docs/design/generated/polaris.tokens.json', buildTokensJson(fetched, options.ref, commit, syncedAt), options),
+    await writeJson('docs/design/generated/polaris.tokens.json', tokensJson, options),
     await writeJson(
       'docs/design/generated/polaris.components.json',
-      buildComponentsJson(fetched, options.ref, commit, syncedAt),
+      componentsJson,
       options
     ),
+    await writeJson(
+      'docs/design/generated/polaris.component-registry.json',
+      buildComponentRegistryJson(fetched, options.ref, commit, syncedAt, componentsJson),
+      options
+    ),
+    await writeJson(
+      'docs/design/generated/polaris.token-registry.json',
+      buildTokenRegistryJson(fetched, options.ref, commit, syncedAt, tokensJson),
+      options
+    ),
+    await writeJson('docs/design/generated/polaris.pages.json', buildPagesJson(fetched, options.ref, commit, syncedAt), options),
     await writeJson(
       'docs/design/generated/polaris.lint-rules.json',
       buildLintRulesJson(fetched, options.ref, commit, syncedAt),
@@ -578,7 +876,7 @@ async function main() {
   }
 
   const manifest = {
-    schemaVersion: 2,
+    schemaVersion: 3,
     syncProfile: 'design-source',
     upstream: {
       repo: UPSTREAM_REPO,
