@@ -18,13 +18,13 @@
     "polaris:pages:check": "node scripts/check-polaris-pages-coverage.mjs"
   },
   "dependencies": {
-    "@polaris/ui": "file:vendor/polaris-design/packages/ui",
+    "@polaris/ui": "https://github.com/PolarisOffice/PolarisDesign/releases/download/v0.8.0-rc.8/polaris-ui-0.8.0-rc.8.tgz",
     "lucide-react": "^0.469.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
-    "@polaris/lint": "file:vendor/polaris-design/packages/lint",
+    "@polaris/lint": "https://github.com/PolarisOffice/PolarisDesign/releases/download/v0.8.0-rc.8/polaris-lint-0.8.0-rc.8.tgz",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
     "@vitejs/plugin-react": "^4.5.0",
