@@ -1,16 +1,13 @@
 import { useMemo, useState } from 'react';
 import {
   Bell,
-  BookOpen,
   BriefcaseBusiness,
   ChevronDown,
   FilePenLine,
   FileText,
   HelpCircle,
   Home,
-  LayoutGrid,
   Menu,
-  Palette,
   PanelLeftClose,
   Search,
   Settings,
@@ -66,33 +63,12 @@ const workspaceNav: NavItem[] = [
   }
 ];
 
-const systemNav: NavItem[] = [
-  {
-    id: 'components',
-    label: '컴포넌트',
-    description: 'Polaris UI catalog',
-    icon: LayoutGrid
-  },
-  {
-    id: 'tokens',
-    label: '토큰',
-    description: 'Color, Type, Grid',
-    icon: Palette
-  },
-  {
-    id: 'guides',
-    label: '가이드',
-    description: '톤앤매너 계약',
-    icon: BookOpen
-  }
-];
-
 export function App() {
   const [activeId, setActiveId] = useState('home');
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const activeItem = useMemo(
-    () => [...workspaceNav, ...systemNav].find((item) => item.id === activeId) ?? workspaceNav[0],
+    () => workspaceNav.find((item) => item.id === activeId) ?? workspaceNav[0],
     [activeId]
   );
 
@@ -105,12 +81,12 @@ export function App() {
     <div className="app-shell">
       <aside className={`sidebar ${mobileOpen ? 'sidebar-open' : ''}`} aria-label="주요 메뉴">
         <div className="sidebar-header">
-          <a className="brand-link" href="/" aria-label="Polaris 홈">
+          <a className="brand-link" href="/" aria-label="DECK A팀 홈">
             <span className="brand-mark" aria-hidden="true">
               P
             </span>
             <span className="brand-copy">
-              <strong>Polaris</strong>
+              <strong>DECK A팀</strong>
               <span>Office Workbench</span>
             </span>
           </a>
@@ -119,9 +95,8 @@ export function App() {
           </PolarisButton>
         </div>
 
-        <nav className="sidebar-body" aria-label="Polaris 작업 영역">
+        <nav className="sidebar-body" aria-label="DECK A팀 작업 영역">
           <NavSection items={workspaceNav} activeId={activeId} title="Workspace" onSelect={selectItem} />
-          <NavSection items={systemNav} activeId={activeId} title="Design System" onSelect={selectItem} />
         </nav>
 
         <div className="sidebar-footer">
@@ -164,7 +139,7 @@ export function App() {
               <span className="avatar" aria-hidden="true">
                 <UserRound size={16} />
               </span>
-              <span className="profile-copy">기획 A팀</span>
+              <span className="profile-copy">DECK A팀</span>
               <ChevronDown size={15} aria-hidden="true" />
             </PolarisButton>
           </div>
