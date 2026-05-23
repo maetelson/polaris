@@ -1,8 +1,6 @@
 import { useMemo, useState, type ElementType, type ReactNode } from 'react';
 import {
-  BadgeCheck,
   BriefcaseBusiness,
-  ClipboardCheck,
   Eye,
   FileCheck2,
   FileText,
@@ -27,6 +25,8 @@ type SupportTrack = {
   company: string;
   role: string;
   detail: string;
+  deadline: string;
+  status: string;
   tags: string[];
 };
 
@@ -57,50 +57,23 @@ type SubmissionCheck = {
 type SubmissionPackage = {
   id: string;
   title: string;
-  description: string;
+  detail: string;
   tags: string[];
 };
 
 type CareerPassSection = {
   id: CareerPassSectionId;
   label: string;
-  description: string;
   icon: ElementType;
   badge?: string;
 };
 
 const careerPassSections: CareerPassSection[] = [
-  {
-    id: 'dashboard',
-    label: '홈',
-    description: '공고 등록부터 제출 검수까지 연결된 취업 지원 워크플로우',
-    icon: LayoutDashboard
-  },
-  {
-    id: 'track',
-    label: '지원 트랙 생성',
-    description: '공고 링크, PDF, 자소서 문항을 기업별 트랙으로 정리',
-    icon: BriefcaseBusiness,
-    badge: '12'
-  },
-  {
-    id: 'experience',
-    label: '경험 카드',
-    description: '활동 경험을 STAR 구조 기반 자산으로 변환',
-    icon: Puzzle
-  },
-  {
-    id: 'writing',
-    label: '자소서 작성',
-    description: '문항별 경험 추천과 작성 흐름 연결',
-    icon: PenLine
-  },
-  {
-    id: 'final',
-    label: 'Final Room',
-    description: '제출 직전 파일과 문항 누락을 검수',
-    icon: PackageCheck
-  }
+  { id: 'dashboard', label: '홈', icon: LayoutDashboard },
+  { id: 'track', label: '지원 트랙', icon: BriefcaseBusiness, badge: '12' },
+  { id: 'experience', label: '경험 카드', icon: Puzzle },
+  { id: 'writing', label: '자소서', icon: PenLine },
+  { id: 'final', label: 'Final Room', icon: PackageCheck }
 ];
 
 const initialTracks: SupportTrack[] = [
@@ -109,14 +82,18 @@ const initialTracks: SupportTrack[] = [
     company: '현대자동차',
     role: 'UX Designer',
     detail: '자소서 3문항 · 포트폴리오 제출',
-    tags: ['공채 시즌', 'PDF 제출', 'D-4']
+    deadline: 'D-4',
+    status: '작성 중',
+    tags: ['공채 시즌', 'PDF 제출']
   },
   {
     id: 'kakao-product',
     company: '카카오',
     role: 'Product Designer',
     detail: '자소서 2문항 · 자유 양식 포트폴리오',
-    tags: ['상시 채용', '링크 제출', 'D-9']
+    deadline: 'D-9',
+    status: '초안 완료',
+    tags: ['상시 채용', '링크 제출']
   }
 ];
 
@@ -124,42 +101,42 @@ const initialExperienceCards: ExperienceCard[] = [
   {
     id: 'branding-contest',
     title: '브랜딩 공모전',
-    summary: '시장 분석 기반 전략 수정 경험과 팀 협업 과정을 중심으로 문제 해결 흐름이 구조화되었습니다.',
+    summary: '시장 분석 기반 전략 수정 경험과 팀 협업 과정',
     tags: ['협업 경험', '갈등 해결', '전략 기획', '성과 중심'],
     role: '브랜드 전략 방향 수정 및 발표 구조 설계',
-    action: '사용자 조사 데이터를 기반으로 전략 방향성을 재정리하고, 팀원 간 의견 충돌을 조율했습니다.',
+    action: '사용자 조사 데이터를 기반으로 전략 방향성을 재정리하고 팀원 간 의견 충돌을 조율',
     result: '최종 발표 우수상 수상 및 전략 완성도 개선'
   },
   {
     id: 'industry-project',
     title: '산학 프로젝트',
-    summary: '사용자 리서치 기반 UX 개선 프로젝트를 역할, 문제 해결, 성과 중심으로 정리했습니다.',
+    summary: '사용자 리서치 기반 UX 개선 프로젝트',
     tags: ['협업 경험', '문제 해결', 'STAR 구조화'],
     role: '사용자 인터뷰 설계 및 UX 개선안 도출',
-    action: '인터뷰 데이터를 다시 분류하고 핵심 pain point를 기준으로 화면 개선 우선순위를 정했습니다.',
-    result: '프로토타입 채택률이 높아지고 최종 발표에서 개선 방향이 긍정 평가를 받았습니다.'
+    action: '인터뷰 데이터를 분류하고 핵심 pain point 기준으로 화면 개선 우선순위 산정',
+    result: '프로토타입 채택률 상승 및 개선 방향 긍정 평가'
   }
 ];
 
 const initialChecks: SubmissionCheck[] = [
-  { id: 'length', label: '글자 수 제한 확인', status: 'complete', text: '완료' },
-  { id: 'questions', label: '필수 문항 누락 여부', status: 'complete', text: '완료' },
-  { id: 'attachments', label: '첨부 파일 확인', status: 'complete', text: '완료' },
-  { id: 'filename', label: '파일명 규칙 점검', status: 'warning', text: '수정 필요' }
+  { id: 'length', label: '글자 수 제한', status: 'complete', text: '완료' },
+  { id: 'questions', label: '필수 문항', status: 'complete', text: '완료' },
+  { id: 'attachments', label: '첨부 파일', status: 'complete', text: '완료' },
+  { id: 'filename', label: '파일명 규칙', status: 'warning', text: '수정 필요' }
 ];
 
 const initialPackages: SubmissionPackage[] = [
   {
     id: 'hyundai-final',
     title: '현대자동차 UX Designer',
-    description: '최종 제출본 및 포트폴리오 업로드 완료',
+    detail: '최종 제출본 · 포트폴리오 업로드 완료',
     tags: ['최종 제출본', 'PDF 저장', 'D-1']
   },
   {
     id: 'kakao-final',
     title: '카카오 Product Designer',
-    description: '첨부 파일 검수 완료 및 제출 준비 상태',
-    tags: ['검수 완료', '수정 이력 저장', 'D-3']
+    detail: '첨부 파일 검수 완료',
+    tags: ['검수 완료', '수정 이력', 'D-3']
   }
 ];
 
@@ -171,7 +148,7 @@ export function CareerPass() {
   const [trackLink, setTrackLink] = useState('');
   const [trackQuestions, setTrackQuestions] = useState('');
   const [trackFileName, setTrackFileName] = useState('');
-  const [trackNotice, setTrackNotice] = useState('현재 8개의 지원 트랙을 관리 중입니다.');
+  const [trackNotice, setTrackNotice] = useState('8개 트랙 관리 중');
   const [supportTracks, setSupportTracks] = useState<SupportTrack[]>(initialTracks);
   const [activityName, setActivityName] = useState('');
   const [activityDescription, setActivityDescription] = useState('');
@@ -186,7 +163,7 @@ export function CareerPass() {
   const [finalFileName, setFinalFileName] = useState('');
   const [submissionChecks, setSubmissionChecks] = useState<SubmissionCheck[]>(initialChecks);
   const [submissionPackages, setSubmissionPackages] = useState<SubmissionPackage[]>(initialPackages);
-  const [finalNotice, setFinalNotice] = useState('제출 직전 체크리스트 검수를 준비했습니다.');
+  const [finalNotice, setFinalNotice] = useState('검수 대기');
 
   const currentSection = useMemo(
     () => careerPassSections.find((section) => section.id === activeSection) ?? careerPassSections[0],
@@ -203,29 +180,29 @@ export function CareerPass() {
     const track: SupportTrack = {
       id: `track-${Date.now()}`,
       company,
-      role: '지원 직무 정리 중',
-      detail: `자소서 ${questionCount}문항 · ${trackFileName ? 'PDF 제출' : '링크 기반 정리'}`,
-      tags: ['신규 트랙', trackFileName ? 'PDF 업로드' : '링크 입력', 'D-확인']
+      role: '지원 직무',
+      detail: `자소서 ${questionCount}문항 · ${trackFileName ? 'PDF 제출' : '링크 제출'}`,
+      deadline: 'D-확인',
+      status: '신규',
+      tags: [trackFileName ? 'PDF 업로드' : '링크 입력']
     };
 
     setSupportTracks((tracks) => [track, ...tracks]);
-    setTrackNotice(`${company} 지원 트랙이 생성되었습니다.`);
+    setTrackNotice(`${company} 트랙 생성`);
   };
 
   const createExperienceCard = () => {
     const title = activityName.trim() || '신규 활동 경험';
-    const description =
-      activityDescription.trim() ||
-      '프로젝트 배경, 역할, 문제 해결 과정이 입력되면 STAR 구조로 정리됩니다.';
+    const description = activityDescription.trim() || '역할, 문제 해결 과정, 성과';
 
     const card: ExperienceCard = {
       id: `experience-${Date.now()}`,
       title,
-      summary: `${description.slice(0, 80)}${description.length > 80 ? '...' : ''}`,
-      tags: ['신규 경험', activityFileName ? '자료 업로드' : '직접 입력', 'STAR 구조화'],
-      role: '활동 내 핵심 역할을 정리 중입니다.',
-      action: '문제 해결 과정과 의사결정 근거를 중심으로 구조화합니다.',
-      result: '성과와 인사이트를 제출 문항에 재사용할 수 있도록 정리합니다.'
+      summary: `${description.slice(0, 72)}${description.length > 72 ? '...' : ''}`,
+      tags: ['신규 경험', activityFileName ? '자료 업로드' : '직접 입력', 'STAR'],
+      role: '핵심 역할 입력 필요',
+      action: '문제 해결 과정 입력 필요',
+      result: '성과 입력 필요'
     };
 
     setExperienceCards((cards) => [card, ...cards]);
@@ -236,7 +213,7 @@ export function CareerPass() {
       ...draft,
       body:
         'Situation: 프로젝트 진행 과정에서 팀원 간 전략 방향성에 대한 의견 충돌이 발생했습니다.\n\nTask: 저는 객관적인 기준으로 팀의 의사결정을 다시 정렬해야 했습니다.\n\nAction: 사용자 인터뷰 데이터를 재정리하고 우선순위 회의 구조를 제안해 의견을 시각적으로 정리했습니다.\n\nResult: 전략 방향을 빠르게 통합했고 프로젝트 완성도를 높여 최종 발표에서 우수상을 수상했습니다.',
-      status: 'AI 구조화 적용됨',
+      status: 'AI 구조화',
       finalApplied: false
     }));
   };
@@ -245,7 +222,7 @@ export function CareerPass() {
     setEssayDraft((draft) => ({
       ...draft,
       body: draft.body.replace('저는', '이 과정에서 저는').replace('그 결과', '이를 통해'),
-      status: '문장 다듬기 적용됨',
+      status: '문장 다듬기',
       finalApplied: false
     }));
   };
@@ -255,7 +232,7 @@ export function CareerPass() {
   };
 
   const applyFinalEssay = () => {
-    setEssayDraft((draft) => ({ ...draft, status: '최종 반영됨', finalApplied: true }));
+    setEssayDraft((draft) => ({ ...draft, status: '최종 반영', finalApplied: true }));
   };
 
   const toggleSubmissionCheck = (checkId: string) => {
@@ -265,7 +242,7 @@ export function CareerPass() {
           ? {
               ...check,
               status: check.status === 'complete' ? 'warning' : 'complete',
-              text: check.status === 'complete' ? '재확인 필요' : '완료'
+              text: check.status === 'complete' ? '재확인' : '완료'
             }
           : check
       )
@@ -276,35 +253,38 @@ export function CareerPass() {
     const nextPackage: SubmissionPackage = {
       id: `package-${Date.now()}`,
       title: '신규 제출 패키지',
-      description: finalFileName ? `${finalFileName} 검수 상태 저장` : '파일 업로드 전 체크리스트 상태 저장',
-      tags: [finalFileName ? '파일 연결' : '체크리스트 저장', `${completionRate}% 완료`, '방금 저장']
+      detail: finalFileName || '파일 미선택',
+      tags: [`${completionRate}% 완료`, '방금 저장']
     };
 
     setSubmissionPackages((packages) => [nextPackage, ...packages]);
-    setFinalNotice('최종 제출 패키지가 저장되었습니다.');
+    setFinalNotice('패키지 저장됨');
   };
+
+  const sectionStatus =
+    activeSection === 'writing'
+      ? essayDraft.status
+      : activeSection === 'final'
+        ? `${completionRate}% 검수`
+        : `${supportTracks.length}개 트랙`;
 
   return (
     <section className="career-pass" aria-labelledby="career-pass-title">
       <div className="career-pass-heading">
-        <div>
-          <p className="eyebrow">Polaris Career Pass</p>
-          <h1 id="career-pass-title">취업 지원 워크플로우를 하나로 연결하세요.</h1>
-          <p>공고 등록, 경험 정리, 자소서 작성, 제출 검수까지 Polaris 안에서 이어집니다.</p>
-        </div>
+        <h1 id="career-pass-title">Career Pass</h1>
         <div className="career-pass-actions">
           <PolarisButton className="secondary-action" onClick={() => setActiveSection('dashboard')}>
             <Eye size={16} aria-hidden="true" />
-            지원 현황 보기
+            현황
           </PolarisButton>
           <PolarisButton className="primary-action" onClick={() => setActiveSection('track')}>
             <Plus size={16} aria-hidden="true" />
-            새 공고 등록
+            공고 등록
           </PolarisButton>
         </div>
       </div>
 
-      <nav className="career-tabs" aria-label="Career Pass 섹션">
+      <nav className="career-tabs" aria-label="Career Pass">
         {careerPassSections.map((section) => {
           const Icon = section.icon;
           const active = activeSection === section.id;
@@ -324,19 +304,17 @@ export function CareerPass() {
         })}
       </nav>
 
-      <section className="career-section-heading" aria-label={`${currentSection.label} 소개`}>
-        <div>
-          <p className="empty-kicker">Current Section</p>
-          <h2>{currentSection.label}</h2>
-          <p>{currentSection.description}</p>
-        </div>
-        <span className="status-pill">{activeSection === 'writing' ? essayDraft.status : 'State prototype'}</span>
+      <section className="career-section-heading" aria-label={currentSection.label}>
+        <h2>{currentSection.label}</h2>
+        <span className="status-pill">{sectionStatus}</span>
       </section>
 
       {activeSection === 'dashboard' && (
         <DashboardSection
           tracks={supportTracks}
           experienceCards={experienceCards}
+          checks={submissionChecks}
+          packages={submissionPackages}
           completionRate={completionRate}
           onTrackSelect={() => setActiveSection('track')}
           onExperienceSelect={() => setActiveSection('experience')}
@@ -379,8 +357,8 @@ export function CareerPass() {
           onBodyChange={(body) => setEssayDraft((draft) => ({ ...draft, body, status: '작성 중', finalApplied: false }))}
           onStructure={structureEssay}
           onPolish={polishEssay}
-          onSaveDraft={() => saveEssay('초안 저장됨')}
-          onTempSave={() => saveEssay('임시 저장됨')}
+          onSaveDraft={() => saveEssay('초안 저장')}
+          onTempSave={() => saveEssay('임시 저장')}
           onApplyFinal={applyFinalEssay}
         />
       )}
@@ -404,6 +382,8 @@ export function CareerPass() {
 function DashboardSection({
   tracks,
   experienceCards,
+  checks,
+  packages,
   completionRate,
   onTrackSelect,
   onExperienceSelect,
@@ -412,6 +392,8 @@ function DashboardSection({
 }: {
   tracks: SupportTrack[];
   experienceCards: ExperienceCard[];
+  checks: SubmissionCheck[];
+  packages: SubmissionPackage[];
   completionRate: number;
   onTrackSelect: () => void;
   onExperienceSelect: () => void;
@@ -419,126 +401,66 @@ function DashboardSection({
   onFinalSelect: () => void;
 }) {
   return (
-    <div className="career-dashboard-grid">
+    <div className="career-dashboard-grid service-dashboard">
       <div className="career-dashboard-main">
-        <section className="career-hero">
-          <div>
-            <h2>문서 편집기를 넘어, 취준 워크플로우 플랫폼으로.</h2>
-            <p>
-              Career Pass는 흩어진 경험 자료를 구조화하고, 기업별 자소서 문항에 맞춰 경험을
-              연결하며, 제출 직전 누락과 실수를 줄이는 데 집중합니다.
-            </p>
-            <div className="hero-stats">
-              <MetricCard value="15" label="지원 트랙 관리" />
-              <MetricCard value="48" label="경험 카드 자산화" />
-              <MetricCard value={`${completionRate}%`} label="검수 완료율" />
-            </div>
-          </div>
-          <div className="workflow-stack" aria-label="Career Pass 단계">
-            <WorkflowStep title="1. 공고 등록" status="완료" description="현대자동차 UX기획 채용 공고 PDF 분석 및 제출 조건 자동 정리" />
-            <WorkflowStep title="2. 경험 카드 생성" status="진행중" description="산학 프로젝트 · 공모전 · 인턴십 경험 요약 및 STAR 구조화" />
-            <WorkflowStep title="3. Final Room 검수" status="대기" description="글자 수 · 파일 형식 · 제출 파일명 규칙 자동 점검 예정" />
-          </div>
-        </section>
+        <div className="metric-strip">
+          <MetricCard value={String(tracks.length)} label="지원 트랙" />
+          <MetricCard value={String(experienceCards.length)} label="경험 카드" />
+          <MetricCard value={`${completionRate}%`} label="검수율" />
+          <MetricCard value="2" label="이번 주 마감" />
+        </div>
 
-        <div className="career-card-grid">
-          <FeatureCard
-            icon={BriefcaseBusiness}
-            title="① 지원 트랙 생성"
-            description="채용 공고 링크, 자소서 문항, PDF 파일을 기반으로 기업별 지원 트랙을 빠르게 생성합니다."
-            actionLabel="지원 트랙 열기"
-            onAction={onTrackSelect}
-          >
-            <div className="upload-preview">
-              <strong>공고 & 문항 업로드</strong>
-              <span>링크 · PDF · 문항 텍스트 입력 지원</span>
-              <TagList tags={['기업명 정리', '직무 분류', '제출 조건 확인']} />
-            </div>
-          </FeatureCard>
-
-          <FeatureCard
-            icon={Puzzle}
-            title="② 경험 카드 & 문서 작성"
-            description="사용자의 활동 경험을 구조화하고, 문항에 맞는 경험 추천과 자소서 작성을 지원합니다."
-            actionLabel="경험 카드 열기"
-            onAction={onExperienceSelect}
-          >
-            <CompactList
-              items={experienceCards.slice(0, 2).map((card) => ({
-                title: card.title,
-                description: card.summary,
-                tags: card.tags.slice(0, 3)
+        <div className="dashboard-board">
+          <Panel title="지원 트랙" actionLabel="등록" onAction={onTrackSelect}>
+            <DataRows
+              items={tracks.map((track) => ({
+                title: `${track.company} ${track.role}`,
+                meta: track.detail,
+                status: track.status,
+                aside: track.deadline,
+                tags: track.tags
               }))}
             />
-          </FeatureCard>
+          </Panel>
 
-          <FeatureCard
-            icon={ClipboardCheck}
-            title="③ Final Room 제출 관리"
-            description="제출 직전 체크리스트 기반 검수를 통해 파일 누락과 오발송을 줄입니다."
-            actionLabel="Final Room 열기"
-            onAction={onFinalSelect}
-          >
-            <div className="checklist compact-checklist">
-              <StatusRow label="글자 수 제한 확인" text="정상" status="complete" />
-              <StatusRow label="필수 문항 누락 여부" text="완료" status="complete" />
-              <StatusRow label="첨부 파일 확인" text="완료" status="complete" />
-              <StatusRow label="파일명 규칙 점검" text="수정 필요" status="warning" />
+          <Panel title="오늘 할 일" actionLabel="작성" onAction={onWritingSelect}>
+            <div className="task-list">
+              <TaskRow label="현대자동차 2번 문항" status="작성 중" />
+              <TaskRow label="카카오 포트폴리오 링크" status="확인" />
+              <TaskRow label="파일명 규칙" status="수정 필요" tone="warning" />
             </div>
-          </FeatureCard>
+          </Panel>
 
-          <FeatureCard
-            icon={BadgeCheck}
-            title="시즌형 구독 플랜"
-            description="취준 시즌의 집중 사용 패턴에 맞춰 기간형·지원 트랙 관리형 구조를 제공합니다."
-            actionLabel="자소서 작성 열기"
-            onAction={onWritingSelect}
-          >
-            <CompactList
-              items={[
-                { title: 'Career Pass 1개월', description: '단기 집중 지원용', tags: ['기간형'] },
-                { title: 'Career Pass 3개월', description: '공채 시즌 집중 관리', tags: ['시즌형'] },
-                { title: '15개 지원 트랙 관리', description: '다수 기업 통합 지원 관리', tags: ['트랙 관리'] }
-              ]}
+          <Panel title="경험 카드" actionLabel="추가" onAction={onExperienceSelect}>
+            <DataRows
+              items={experienceCards.slice(0, 3).map((card) => ({
+                title: card.title,
+                meta: card.summary,
+                status: card.tags[0],
+                tags: card.tags.slice(1, 3)
+              }))}
             />
-          </FeatureCard>
+          </Panel>
+
+          <Panel title="제출 패키지" actionLabel="검수" onAction={onFinalSelect}>
+            <div className="checklist compact-checklist">
+              {checks.map((check) => (
+                <StatusRow key={check.id} label={check.label} text={check.text} status={check.status} />
+              ))}
+            </div>
+            <DataRows
+              items={packages.slice(0, 2).map((item) => ({
+                title: item.title,
+                meta: item.detail,
+                status: item.tags[0],
+                tags: item.tags.slice(1)
+              }))}
+            />
+          </Panel>
         </div>
       </div>
 
-      <aside className="nova-assistant" aria-label="NOVA AI Assistant">
-        <div className="assistant-header">
-          <div>
-            <p className="empty-kicker">NOVA AI Assistant</p>
-            <h2 className="nova-gradient-keyword bg-clip-text">AI ACTIVE</h2>
-          </div>
-          <Sparkles size={20} aria-hidden="true" />
-        </div>
-
-        <AssistantCard title="지원 문항 분석">
-          <p>현대자동차 UX 기획 직무의 주요 역량은 협업, 데이터 기반 문제 해결, 사용자 경험 개선입니다.</p>
-          <div className="recommendation-box">
-            <strong>추천 경험 카드</strong>
-            <span>브랜딩 공모전 전략 수정 경험이 협업 및 갈등 해결 문항과 높은 연관성을 가집니다.</span>
-          </div>
-        </AssistantCard>
-
-        <AssistantCard title="STAR 구조 가이드">
-          <div className="timeline">
-            <TimelineItem title="Situation" description="프로젝트 방향성 충돌 발생" />
-            <TimelineItem title="Task" description="팀 내 의견 조율 및 전략 재정비 필요" />
-            <TimelineItem title="Action" description="사용자 데이터 기반 회의 구조 재설계" />
-            <TimelineItem title="Result" description="최종 발표 우수상 수상 및 프로젝트 채택" />
-          </div>
-        </AssistantCard>
-
-        <AssistantCard title="제출 패키지 상태">
-          <div className="checklist compact-checklist">
-            <StatusRow label="자소서 최종본" text="업로드 완료" status="complete" />
-            <StatusRow label="포트폴리오 PDF" text="검수 완료" status="complete" />
-            <StatusRow label="파일명 규칙" text="재확인 필요" status="warning" />
-          </div>
-        </AssistantCard>
-      </aside>
+      <WorkPanel completionRate={completionRate} checks={checks} onWritingSelect={onWritingSelect} onFinalSelect={onFinalSelect} />
     </div>
   );
 }
@@ -568,13 +490,10 @@ function TrackSection({
     <div className="career-two-column">
       <section className="career-card">
         <div className="section-card-header">
-          <div>
-            <h3>지원 트랙 생성</h3>
-            <p>채용 공고 링크, PDF 또는 자소서 문항을 입력해 기업별 지원 트랙을 생성하세요.</p>
-          </div>
+          <h3>공고 등록</h3>
           <PolarisButton className="primary-action" onClick={onCreateTrack}>
             <Plus size={16} aria-hidden="true" />
-            새 지원 트랙 생성
+            트랙 생성
           </PolarisButton>
         </div>
 
@@ -593,8 +512,8 @@ function TrackSection({
             onChange={(event) => onQuestionsChange(event.target.value)}
           />
           <PolarisFileDrop
-            label="공고 PDF 업로드"
-            description="PDF 파일을 드래그하거나 클릭하여 업로드하세요."
+            label="공고 파일"
+            description="PDF 선택"
             fileName={trackFileName}
             accept=".pdf"
             onFileSelect={onFileSelect}
@@ -602,18 +521,20 @@ function TrackSection({
           <FileIconSignals types={['pdf']} />
         </div>
 
-        <p className="state-note">{trackNotice} 공고 마감 일정과 제출 상태를 확인하세요.</p>
+        <p className="state-note">{trackNotice}</p>
       </section>
 
       <section className="career-card">
-        <h3>생성된 지원 트랙</h3>
-        <p>기업별 제출 조건과 문항이 자동 정리됩니다.</p>
+        <h3>트랙 목록</h3>
         <div className="track-list">
           {tracks.map((track) => (
             <article className="track-item" key={track.id}>
-              <h4>{track.company} {track.role}</h4>
+              <div className="row-title">
+                <h4>{track.company} {track.role}</h4>
+                <strong className="deadline-pill">{track.deadline}</strong>
+              </div>
               <p>{track.detail}</p>
-              <TagList tags={track.tags} />
+              <TagList tags={[track.status, ...track.tags]} />
             </article>
           ))}
         </div>
@@ -645,13 +566,10 @@ function ExperienceSection({
     <div className="career-two-column balanced">
       <section className="career-card">
         <div className="section-card-header">
-          <div>
-            <h3>활동 경험 입력</h3>
-            <p>활동명과 관련 경험 내용을 입력하거나 발표 자료 및 문서를 업로드하세요.</p>
-          </div>
+          <h3>경험 입력</h3>
           <PolarisButton className="primary-action" onClick={onCreateCard}>
             <Plus size={16} aria-hidden="true" />
-            새 경험 카드 생성
+            카드 생성
           </PolarisButton>
         </div>
 
@@ -663,15 +581,15 @@ function ExperienceSection({
             onChange={(event) => onNameChange(event.target.value)}
           />
           <PolarisTextarea
-            label="활동 설명"
+            label="활동 내용"
             rows={8}
-            placeholder="프로젝트 배경, 역할, 문제 해결 과정 등을 입력하세요."
+            placeholder="배경, 역할, 행동, 성과"
             value={activityDescription}
             onChange={(event) => onDescriptionChange(event.target.value)}
           />
           <PolarisFileDrop
-            label="관련 자료 업로드"
-            description="PPT · PDF · 문서 파일 업로드 지원"
+            label="자료"
+            description="PPT · PDF · DOCX 선택"
             fileName={activityFileName}
             accept=".ppt,.pptx,.pdf,.doc,.docx"
             onFileSelect={onFileSelect}
@@ -681,8 +599,7 @@ function ExperienceSection({
       </section>
 
       <section className="career-card">
-        <h3>생성된 경험 카드</h3>
-        <p>AI가 STAR 구조 기반으로 경험 내용을 정리합니다.</p>
+        <h3>카드 목록</h3>
         <div className="experience-stack">
           {cards.map((card) => (
             <article className="experience-card" key={card.id}>
@@ -690,7 +607,7 @@ function ExperienceSection({
               <p>{card.summary}</p>
               <TagList tags={card.tags} />
               <InfoBlock title="역할" text={card.role} />
-              <InfoBlock title="문제 해결 과정" text={card.action} />
+              <InfoBlock title="행동" text={card.action} />
               <InfoBlock title="성과" text={card.result} />
             </article>
           ))}
@@ -722,57 +639,52 @@ function WritingSection({
   return (
     <div className="career-two-column writing-layout">
       <section className="career-card">
-        <h3>AI 추천 경험</h3>
-        <p>문항과 가장 연관성이 높은 경험을 추천합니다.</p>
+        <h3>문항 매칭</h3>
 
         <div className="question-box">
-          <strong>자소서 문항</strong>
+          <strong>문항</strong>
           <p>{draft.question}</p>
         </div>
 
         <div className="recommendation-box strong">
           <strong>추천 경험</strong>
-          <span>브랜딩 공모전 전략 수정 경험이 협업 및 갈등 해결 문항과 높은 연관성을 가집니다.</span>
-          <TagList tags={['협업 경험', '갈등 해결', 'STAR 구조', '문제 해결']} />
+          <span>브랜딩 공모전 전략 수정 경험</span>
+          <TagList tags={['협업', '갈등 해결', 'STAR', '문제 해결']} />
         </div>
 
         <div className="guide-box">
-          <strong>작성 가이드</strong>
-          <TimelineItem title="Situation" description="갈등 상황 설명" />
-          <TimelineItem title="Task" description="해결해야 했던 역할" />
-          <TimelineItem title="Action" description="문제 해결 행동" />
-          <TimelineItem title="Result" description="성과 및 인사이트" />
+          <strong>STAR</strong>
+          <TimelineItem title="S" description="방향성 충돌" />
+          <TimelineItem title="T" description="의견 조율" />
+          <TimelineItem title="A" description="데이터 기반 재정렬" />
+          <TimelineItem title="R" description="우수상" />
         </div>
       </section>
 
       <section className="career-card essay-card">
         <div className="section-card-header">
-          <div>
-            <h3>자소서 작성하기</h3>
-            <p>{draft.finalApplied ? '최종 반영된 문안입니다.' : '문항별 추천 경험을 바탕으로 초안을 다듬으세요.'}</p>
-          </div>
+          <h3>작성 본문</h3>
           <div className="button-row">
             <PolarisButton className="secondary-action" onClick={onStructure}>
               <Wand2 size={16} aria-hidden="true" />
-              AI 구조화
+              구조화
             </PolarisButton>
             <PolarisButton className="secondary-action" onClick={onPolish}>
               <Sparkles size={16} aria-hidden="true" />
-              문장 다듬기
+              다듬기
             </PolarisButton>
           </div>
         </div>
 
         <PolarisTextarea
-          label="작성 본문"
+          label="본문"
           rows={14}
           value={draft.body}
           onChange={(event) => onBodyChange(event.target.value)}
-          helperText="공백 포함 글자 수가 아래에 실시간 반영됩니다."
         />
 
         <div className="essay-bottom-bar">
-          <span>공백 포함 {characterCount.toLocaleString('ko-KR')}자</span>
+          <span>{characterCount.toLocaleString('ko-KR')}자</span>
           <div className="button-row">
             <PolarisButton className="secondary-action" onClick={onTempSave}>
               <Save size={16} aria-hidden="true" />
@@ -784,7 +696,7 @@ function WritingSection({
             </PolarisButton>
             <PolarisButton className="secondary-action" onClick={onSaveDraft}>
               <Eye size={16} aria-hidden="true" />
-              PDF 미리보기
+              미리보기
             </PolarisButton>
             <PolarisButton className="primary-action" onClick={onApplyFinal}>
               <FileCheck2 size={16} aria-hidden="true" />
@@ -820,19 +732,16 @@ function FinalSection({
     <div className="career-two-column">
       <section className="career-card">
         <div className="section-card-header">
-          <div>
-            <h3>최종 제출 파일 업로드</h3>
-            <p>자소서, 포트폴리오, 첨부 파일을 업로드하여 제출 전 체크리스트 검수를 진행하세요.</p>
-          </div>
+          <h3>제출 파일</h3>
           <PolarisButton className="primary-action" onClick={onSavePackage}>
             <PackageCheck size={16} aria-hidden="true" />
-            최종 제출 패키지 저장
+            패키지 저장
           </PolarisButton>
         </div>
 
         <PolarisFileDrop
-          label="최종 제출 파일 업로드"
-          description="PDF · 포트폴리오 · 첨부 문서 업로드 지원"
+          label="첨부 파일"
+          description="PDF · PPTX · DOCX 선택"
           fileName={fileName}
           accept=".pdf,.ppt,.pptx,.doc,.docx"
           onFileSelect={onFileSelect}
@@ -851,23 +760,65 @@ function FinalSection({
             </PolarisButton>
           ))}
         </div>
-        <p className="state-note">{notice} 현재 검수 완료율은 {completionRate}%입니다.</p>
+        <p className="state-note">{notice} · {completionRate}%</p>
       </section>
 
       <section className="career-card">
-        <h3>저장된 제출 패키지</h3>
-        <p>기업별 제출 이력과 최종 파일 상태를 저장합니다.</p>
+        <h3>제출 패키지</h3>
         <div className="package-stack">
           {packages.map((item) => (
             <article className="package-card" key={item.id}>
               <h4>{item.title}</h4>
-              <p>{item.description}</p>
+              <p>{item.detail}</p>
               <TagList tags={item.tags} />
             </article>
           ))}
         </div>
       </section>
     </div>
+  );
+}
+
+function WorkPanel({
+  checks,
+  completionRate,
+  onWritingSelect,
+  onFinalSelect
+}: {
+  checks: SubmissionCheck[];
+  completionRate: number;
+  onWritingSelect: () => void;
+  onFinalSelect: () => void;
+}) {
+  return (
+    <aside className="nova-assistant work-panel" aria-label="작업 패널">
+      <div className="assistant-header">
+        <div>
+          <p className="empty-kicker">WORK PANEL</p>
+          <h2>오늘</h2>
+        </div>
+        <Sparkles size={20} aria-hidden="true" />
+      </div>
+
+      <AssistantCard title="문항 분석">
+        <KeyValue label="역량" value="협업 · 문제 해결 · UX 개선" />
+        <KeyValue label="추천 카드" value="브랜딩 공모전" />
+      </AssistantCard>
+
+      <AssistantCard title="검수">
+        <div className="checklist compact-checklist">
+          {checks.map((check) => (
+            <StatusRow key={check.id} label={check.label} text={check.text} status={check.status} />
+          ))}
+        </div>
+        <p className="panel-metric">{completionRate}%</p>
+      </AssistantCard>
+
+      <div className="panel-actions">
+        <PolarisButton className="secondary-action" onClick={onWritingSelect}>자소서</PolarisButton>
+        <PolarisButton className="primary-action" onClick={onFinalSelect}>검수</PolarisButton>
+      </div>
+    </aside>
   );
 }
 
@@ -880,48 +831,58 @@ function MetricCard({ value, label }: { value: string; label: string }) {
   );
 }
 
-function WorkflowStep({ title, status, description }: { title: string; status: string; description: string }) {
-  return (
-    <article className="workflow-step">
-      <div>
-        <strong>{title}</strong>
-        <span>{status}</span>
-      </div>
-      <p>{description}</p>
-    </article>
-  );
-}
-
-function FeatureCard({
-  icon: Icon,
+function Panel({
   title,
-  description,
   actionLabel,
   onAction,
   children
 }: {
-  icon: ElementType;
   title: string;
-  description: string;
   actionLabel: string;
   onAction: () => void;
   children: ReactNode;
 }) {
   return (
-    <article className="career-card feature-card">
-      <div className="feature-card-title">
-        <span className="feature-icon" aria-hidden="true">
-          <Icon size={18} />
-        </span>
+    <section className="career-card dashboard-panel">
+      <div className="section-card-header">
         <h3>{title}</h3>
+        <PolarisButton className="secondary-action" onClick={onAction}>{actionLabel}</PolarisButton>
       </div>
-      <p>{description}</p>
       {children}
-      <PolarisButton className="secondary-action" onClick={onAction}>
-        <Eye size={16} aria-hidden="true" />
-        {actionLabel}
-      </PolarisButton>
-    </article>
+    </section>
+  );
+}
+
+function DataRows({
+  items
+}: {
+  items: Array<{ title: string; meta: string; status: string; aside?: string; tags: string[] }>;
+}) {
+  return (
+    <div className="data-row-list">
+      {items.map((item) => (
+        <article className="data-row" key={`${item.title}-${item.meta}`}>
+          <div>
+            <h4>{item.title}</h4>
+            <p>{item.meta}</p>
+            <TagList tags={item.tags} />
+          </div>
+          <div className="row-state">
+            {item.aside && <strong>{item.aside}</strong>}
+            <span>{item.status}</span>
+          </div>
+        </article>
+      ))}
+    </div>
+  );
+}
+
+function TaskRow({ label, status, tone = 'complete' }: { label: string; status: string; tone?: SubmissionCheck['status'] }) {
+  return (
+    <div className="task-row">
+      <span>{label}</span>
+      <strong className={`check-status ${tone}`}>{status}</strong>
+    </div>
   );
 }
 
@@ -943,20 +904,6 @@ function TimelineItem({ title, description }: { title: string; description: stri
   );
 }
 
-function CompactList({ items }: { items: Array<{ title: string; description: string; tags: string[] }> }) {
-  return (
-    <div className="compact-list">
-      {items.map((item) => (
-        <article className="compact-item" key={`${item.title}-${item.description}`}>
-          <h4>{item.title}</h4>
-          <p>{item.description}</p>
-          <TagList tags={item.tags} />
-        </article>
-      ))}
-    </div>
-  );
-}
-
 function StatusRow({ label, text, status }: { label: string; text: string; status: SubmissionCheck['status'] }) {
   return (
     <div className="check-row">
@@ -971,6 +918,15 @@ function InfoBlock({ title, text }: { title: string; text: string }) {
     <div className="info-block">
       <strong>{title}</strong>
       <p>{text}</p>
+    </div>
+  );
+}
+
+function KeyValue({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="key-value">
+      <span>{label}</span>
+      <strong>{value}</strong>
     </div>
   );
 }

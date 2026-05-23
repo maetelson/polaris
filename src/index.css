@@ -507,6 +507,10 @@ p {
   align-items: center;
 }
 
+.career-pass-heading > h1 {
+  margin: 0;
+}
+
 .career-pass-heading h1,
 .career-section-heading h2,
 .career-card h3,
@@ -641,7 +645,7 @@ p {
 }
 
 .career-section-heading {
-  align-items: flex-end;
+  align-items: center;
   padding: var(--polaris-spacing-sm);
   border: 1px solid var(--polaris-line-neutral);
   border-radius: var(--polaris-radius-sm);
@@ -662,6 +666,9 @@ p {
 
 .career-dashboard-main,
 .career-card-grid,
+.dashboard-board,
+.data-row-list,
+.task-list,
 .workflow-stack,
 .track-list,
 .experience-stack,
@@ -671,6 +678,27 @@ p {
 .timeline {
   display: grid;
   gap: var(--polaris-spacing-xs);
+}
+
+.service-dashboard {
+  grid-template-columns: minmax(0, 1fr) 300px;
+}
+
+.metric-strip {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--polaris-spacing-xs);
+}
+
+.dashboard-board {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.dashboard-panel {
+  display: grid;
+  align-content: start;
+  gap: var(--polaris-spacing-xs);
+  min-height: 260px;
 }
 
 .career-hero {
@@ -724,16 +752,21 @@ p {
 .metric-card {
   display: grid;
   gap: var(--polaris-spacing-4xs);
-  min-height: 78px;
+  min-height: 74px;
   padding: var(--polaris-spacing-sm);
+  border: 1px solid var(--polaris-line-neutral);
+  border-radius: var(--polaris-radius-sm);
+  background: var(--polaris-background-base);
 }
 
 .metric-card strong {
-  font-size: 26px;
-  line-height: 34px;
+  color: var(--polaris-label-normal);
+  font-size: 24px;
+  line-height: 31px;
 }
 
 .metric-card span {
+  color: var(--polaris-label-neutral);
   font-size: 13px;
   font-weight: 700;
   line-height: 20px;
@@ -819,6 +852,8 @@ p {
   background: var(--polaris-accent-brand-normal-subtle);
 }
 
+.data-row,
+.task-row,
 .upload-preview,
 .question-box,
 .recommendation-box,
@@ -833,6 +868,8 @@ p {
   background: var(--polaris-fill-neutral);
 }
 
+.data-row,
+.task-row,
 .upload-preview,
 .question-box,
 .recommendation-box,
@@ -842,6 +879,74 @@ p {
 .experience-card,
 .package-card {
   padding: var(--polaris-spacing-sm);
+}
+
+.data-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--polaris-spacing-sm);
+}
+
+.data-row h4,
+.task-row span,
+.row-title h4 {
+  margin: 0;
+  color: var(--polaris-label-normal);
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 21px;
+}
+
+.data-row p {
+  margin: var(--polaris-spacing-4xs) 0 0;
+  color: var(--polaris-label-neutral);
+  font-size: 13px;
+  line-height: 20px;
+  word-break: keep-all;
+}
+
+.row-state {
+  display: grid;
+  justify-items: end;
+  gap: var(--polaris-spacing-3xs);
+  flex: 0 0 auto;
+}
+
+.row-state strong,
+.deadline-pill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 26px;
+  padding: 0 var(--polaris-spacing-2xs);
+  border-radius: var(--polaris-radius-pill);
+  color: var(--polaris-state-warning-strong);
+  background: var(--polaris-state-warning-bg);
+  font-size: 12px;
+  line-height: 18px;
+  white-space: nowrap;
+}
+
+.row-state span {
+  color: var(--polaris-label-alternative);
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 18px;
+  white-space: nowrap;
+}
+
+.task-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--polaris-spacing-xs);
+}
+
+.row-title {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--polaris-spacing-xs);
 }
 
 .upload-preview {
@@ -904,6 +1009,10 @@ p {
   padding: var(--polaris-spacing-sm);
 }
 
+.work-panel {
+  align-content: start;
+}
+
 .assistant-header {
   align-items: center;
   padding-bottom: var(--polaris-spacing-xs);
@@ -921,6 +1030,48 @@ p {
   border: 1px solid var(--polaris-ai-pressed);
   border-radius: var(--polaris-radius-sm);
   background: var(--polaris-ai-hover);
+}
+
+.key-value {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--polaris-spacing-xs);
+  padding: var(--polaris-spacing-2xs) 0;
+  border-bottom: 1px solid var(--polaris-ai-pressed);
+}
+
+.key-value:last-child {
+  border-bottom: 0;
+}
+
+.key-value span {
+  color: var(--polaris-label-alternative);
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 18px;
+}
+
+.key-value strong {
+  color: var(--polaris-label-normal);
+  font-size: 13px;
+  line-height: 20px;
+  text-align: right;
+}
+
+.panel-metric {
+  margin: 0;
+  color: var(--polaris-ai-normal);
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 31px;
+  text-align: right;
+}
+
+.panel-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--polaris-spacing-2xs);
 }
 
 .assistant-card h3 {
@@ -1281,12 +1432,18 @@ p {
   }
 
   .career-dashboard-grid,
+  .service-dashboard,
   .career-hero,
   .career-card-grid,
+  .dashboard-board,
   .career-two-column,
   .career-two-column.balanced,
   .career-two-column.writing-layout {
     grid-template-columns: 1fr;
+  }
+
+  .metric-strip {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .nova-assistant {
@@ -1367,6 +1524,21 @@ p {
   .career-card,
   .career-hero {
     padding: var(--polaris-spacing-sm);
+  }
+
+  .data-row,
+  .row-title,
+  .task-row {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .row-state {
+    justify-items: start;
+  }
+
+  .metric-strip {
+    grid-template-columns: 1fr;
   }
 
   .essay-card .textarea-field {
