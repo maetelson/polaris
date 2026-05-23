@@ -5,6 +5,7 @@ import {
   ClipboardList,
   HelpCircle,
   Home,
+  ListChecks,
   Menu,
   PanelLeftClose,
   Search,
@@ -13,6 +14,7 @@ import {
   X
 } from 'lucide-react';
 import { CareerPass } from './CareerPass';
+import { ClusterOneStart, ClusterOneWorkspace } from './ClusterOne';
 import { PolarisButton } from './polaris-controls';
 
 // Polaris contract reference: use @polaris/ui/ribbon when the document editor surface becomes functional.
@@ -26,6 +28,8 @@ type NavItem = {
   ai?: boolean;
 };
 
+const POLARIS_HOME_URL = 'https://www.polarisoffice.com/ko';
+
 const workspaceNav: NavItem[] = [
   {
     id: 'home',
@@ -35,14 +39,26 @@ const workspaceNav: NavItem[] = [
   },
   {
     id: 'career-pass',
-    label: 'Career Pass',
+    label: '커리어 패스',
     description: '공고 등록부터 제출 검수까지 취업 지원 워크플로우',
     icon: ClipboardList
+  },
+  {
+    id: 'cluster-one',
+    label: '작업 카드',
+    description: '외부 공고를 Polaris 작업 카드로 전환',
+    icon: ListChecks
   }
 ];
 
 export function App() {
-  const [activeId, setActiveId] = useState('home');
+  const startsOnClusterOne = isClusterOneRoute();
+  const clusterOneView = getClusterOneView();
+  const startsInClusterOneWorkspace = startsOnClusterOne && (clusterOneView === 'workspace' || clusterOneView === 'detail');
+  const [activeId, setActiveId] = useState(startsOnClusterOne ? 'cluster-one' : 'home');
+  const [showClusterOneStart, setShowClusterOneStart] = useState(startsOnClusterOne && !startsInClusterOneWorkspace);
+  const [clusterOneStartsInDetail, setClusterOneStartsInDetail] = useState(startsOnClusterOne && clusterOneView === 'detail');
+  const [clusterOneResetKey, setClusterOneResetKey] = useState(0);
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const activeItem = useMemo(
@@ -51,9 +67,32 @@ export function App() {
   );
 
   const selectItem = (itemId: string) => {
+    if (itemId === 'home') {
+      window.location.assign(POLARIS_HOME_URL);
+      return;
+    }
+
     setActiveId(itemId);
+    setShowClusterOneStart(false);
+    if (itemId === 'cluster-one') {
+      setClusterOneStartsInDetail(false);
+      setClusterOneResetKey((key) => key + 1);
+    }
     setMobileOpen(false);
+    syncRouteForNav(itemId);
   };
+
+  const enterClusterOneWorkspace = () => {
+    setActiveId('cluster-one');
+    setShowClusterOneStart(false);
+    setClusterOneStartsInDetail(true);
+    setClusterOneResetKey((key) => key + 1);
+    syncRouteForNav('cluster-one');
+  };
+
+  if (showClusterOneStart) {
+    return <ClusterOneStart onSendToPolaris={enterClusterOneWorkspace} />;
+  }
 
   return (
     <div className="app-shell">
@@ -124,11 +163,13 @@ export function App() {
         </header>
 
         <main
-          className={`content-shell ${activeId === 'career-pass' ? 'content-shell-career' : ''}`}
+          className={`content-shell ${activeId === 'career-pass' ? 'content-shell-career' : ''} ${activeId === 'cluster-one' ? 'content-shell-cl1' : ''}`}
           aria-label={`${activeItem.label} 화면`}
         >
           {activeId === 'career-pass' ? (
             <CareerPass />
+          ) : activeId === 'cluster-one' ? (
+            <ClusterOneWorkspace key={`${clusterOneResetKey}-${clusterOneStartsInDetail}`} initialDetail={clusterOneStartsInDetail} />
           ) : (
             <>
               <section className="page-heading">
@@ -167,6 +208,34 @@ export function App() {
       </div>
     </div>
   );
+}
+
+function isClusterOneRoute() {
+  if (typeof window === 'undefined') {
+    return false;
+  }
+
+  return window.location.pathname.replace(/\/$/, '').endsWith('/cl1');
+}
+
+function syncRouteForNav(itemId: string) {
+  if (typeof window === 'undefined') {
+    return;
+  }
+
+  const targetPath = itemId === 'cluster-one' ? '/cl1' : '/';
+
+  if (window.location.pathname !== targetPath) {
+    window.history.pushState(null, '', targetPath);
+  }
+}
+
+function getClusterOneView() {
+  if (typeof window === 'undefined') {
+    return null;
+  }
+
+  return new URLSearchParams(window.location.search).get('view');
 }
 
 function NavSection({
