@@ -3,6 +3,7 @@ import {
   Bell,
   BriefcaseBusiness,
   ChevronDown,
+  ClipboardList,
   FilePenLine,
   FileText,
   HelpCircle,
@@ -15,6 +16,7 @@ import {
   UserRound,
   X
 } from 'lucide-react';
+import { CareerPass } from './CareerPass';
 import { PolarisButton } from './polaris-controls';
 
 // Polaris contract reference: use @polaris/ui/ribbon when the document editor surface becomes functional.
@@ -52,6 +54,12 @@ const workspaceNav: NavItem[] = [
     label: '계약/CRM',
     description: '계약, 고객, 운영 목록',
     icon: BriefcaseBusiness
+  },
+  {
+    id: 'career-pass',
+    label: 'Career Pass',
+    description: '공고 등록부터 제출 검수까지 취업 지원 워크플로우',
+    icon: ClipboardList
   },
   {
     id: 'nova',
@@ -145,37 +153,46 @@ export function App() {
           </div>
         </header>
 
-        <main className="content-shell" aria-label={`${activeItem.label} 화면`}>
-          <section className="page-heading">
-            <div>
-              <p className="eyebrow">Polaris Office</p>
-              <h1>{activeItem.label}</h1>
-              <p>{activeItem.description}</p>
-            </div>
-            <span className={activeItem.ai ? 'status-pill ai-pill' : 'status-pill'}>
-              {activeItem.ai ? 'NOVA 영역' : 'Pages ready'}
-            </span>
-          </section>
+        <main
+          className={`content-shell ${activeId === 'career-pass' ? 'content-shell-career' : ''}`}
+          aria-label={`${activeItem.label} 화면`}
+        >
+          {activeId === 'career-pass' ? (
+            <CareerPass />
+          ) : (
+            <>
+              <section className="page-heading">
+                <div>
+                  <p className="eyebrow">Polaris Office</p>
+                  <h1>{activeItem.label}</h1>
+                  <p>{activeItem.description}</p>
+                </div>
+                <span className={activeItem.ai ? 'status-pill ai-pill' : 'status-pill'}>
+                  {activeItem.ai ? 'NOVA 영역' : 'Pages ready'}
+                </span>
+              </section>
 
-          <section className="document-stage" aria-label="빈 문서 작업대">
-            <div className="ribbon-strip" aria-hidden="true">
-              <span />
-              <span />
-              <span />
-              <span />
-            </div>
-            <div className="document-canvas">
-              <div className="canvas-ruler" aria-hidden="true" />
-              <div className="empty-state">
-                <p className="empty-kicker">Blank workspace</p>
-                <h2>다음 기획안은 이 작업대 안에서 Polaris UI로 확장합니다.</h2>
-                <p>
-                  GNB와 사이드바는 PolarisDesign Pages 구조를 기준으로 고정했습니다.
-                  화면별 콘텐츠만 교체해도 같은 톤앤매너가 유지됩니다.
-                </p>
-              </div>
-            </div>
-          </section>
+              <section className="document-stage" aria-label="빈 문서 작업대">
+                <div className="ribbon-strip" aria-hidden="true">
+                  <span />
+                  <span />
+                  <span />
+                  <span />
+                </div>
+                <div className="document-canvas">
+                  <div className="canvas-ruler" aria-hidden="true" />
+                  <div className="empty-state">
+                    <p className="empty-kicker">Blank workspace</p>
+                    <h2>다음 기획안은 이 작업대 안에서 Polaris UI로 확장합니다.</h2>
+                    <p>
+                      GNB와 사이드바는 PolarisDesign Pages 구조를 기준으로 고정했습니다.
+                      화면별 콘텐츠만 교체해도 같은 톤앤매너가 유지됩니다.
+                    </p>
+                  </div>
+                </div>
+              </section>
+            </>
+          )}
         </main>
       </div>
     </div>
