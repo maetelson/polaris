@@ -491,11 +491,8 @@ p {
 }
 
 .career-pass-heading,
-.career-section-heading,
 .section-card-header,
-.essay-bottom-bar,
-.assistant-header,
-.feature-card-title {
+.essay-bottom-bar {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
@@ -512,9 +509,7 @@ p {
 }
 
 .career-pass-heading h1,
-.career-section-heading h2,
-.career-card h3,
-.nova-assistant h2 {
+.career-card h3 {
   margin: var(--polaris-spacing-4xs) 0 0;
   color: var(--polaris-label-normal);
   font-weight: 800;
@@ -527,14 +522,10 @@ p {
   line-height: 40px;
 }
 
-.career-pass-heading p:last-child,
-.career-section-heading p,
 .career-card > p,
-.assistant-card p,
 .track-item p,
 .experience-card p,
-.package-card p,
-.compact-item p {
+.package-card p {
   margin: var(--polaris-spacing-4xs) 0 0;
   color: var(--polaris-label-neutral);
   font-size: 14px;
@@ -542,7 +533,6 @@ p {
   word-break: keep-all;
 }
 
-.career-pass-actions,
 .button-row {
   display: flex;
   align-items: center;
@@ -644,179 +634,16 @@ p {
   text-align: center;
 }
 
-.career-section-heading {
-  align-items: center;
-  padding: var(--polaris-spacing-sm);
-  border: 1px solid var(--polaris-line-neutral);
-  border-radius: var(--polaris-radius-sm);
-  background: var(--polaris-background-base);
-}
-
-.career-section-heading h2 {
-  font-size: 22px;
-  line-height: 31px;
-}
-
-.career-dashboard-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 320px;
-  gap: var(--polaris-spacing-sm);
-  align-items: start;
-}
-
-.career-dashboard-main,
-.career-card-grid,
-.dashboard-board,
-.data-row-list,
-.task-list,
-.workflow-stack,
 .track-list,
 .experience-stack,
 .package-stack,
-.compact-list,
 .checklist,
 .timeline {
   display: grid;
   gap: var(--polaris-spacing-xs);
 }
 
-.service-dashboard {
-  grid-template-columns: minmax(0, 1fr) 300px;
-}
-
-.metric-strip {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: var(--polaris-spacing-xs);
-}
-
-.dashboard-board {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.dashboard-panel {
-  display: grid;
-  align-content: start;
-  gap: var(--polaris-spacing-xs);
-  min-height: 260px;
-}
-
-.career-hero {
-  display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
-  gap: var(--polaris-spacing-sm);
-  align-items: stretch;
-  padding: var(--polaris-spacing-lg);
-  border-radius: var(--polaris-radius-sm);
-  color: var(--polaris-label-inverse);
-  background:
-    linear-gradient(
-      135deg,
-      var(--polaris-accent-brand-strong),
-      var(--polaris-accent-brand-normal)
-    );
-}
-
-.career-hero h2 {
-  max-width: 620px;
-  margin: 0;
-  font-size: 28px;
-  font-weight: 800;
-  line-height: 40px;
-  word-break: keep-all;
-}
-
-.career-hero p {
-  max-width: 660px;
-  margin: var(--polaris-spacing-xs) 0 0;
-  color: var(--polaris-accent-brand-bg);
-  font-size: 15px;
-  line-height: 24px;
-  word-break: keep-all;
-}
-
-.hero-stats {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--polaris-spacing-xs);
-  margin-top: var(--polaris-spacing-md);
-}
-
-.metric-card,
-.workflow-step {
-  border: 1px solid color-mix(in srgb, var(--polaris-background-base) 24%, transparent);
-  border-radius: var(--polaris-radius-sm);
-  background: color-mix(in srgb, var(--polaris-background-base) 12%, transparent);
-}
-
-.metric-card {
-  display: grid;
-  gap: var(--polaris-spacing-4xs);
-  min-height: 74px;
-  padding: var(--polaris-spacing-sm);
-  border: 1px solid var(--polaris-line-neutral);
-  border-radius: var(--polaris-radius-sm);
-  background: var(--polaris-background-base);
-}
-
-.metric-card strong {
-  color: var(--polaris-label-normal);
-  font-size: 24px;
-  line-height: 31px;
-}
-
-.metric-card span {
-  color: var(--polaris-label-neutral);
-  font-size: 13px;
-  font-weight: 700;
-  line-height: 20px;
-}
-
-.workflow-step {
-  padding: var(--polaris-spacing-sm);
-  color: var(--polaris-label-inverse);
-}
-
-.workflow-step div {
-  display: flex;
-  justify-content: space-between;
-  gap: var(--polaris-spacing-xs);
-}
-
-.workflow-step strong {
-  font-size: 14px;
-  line-height: 21px;
-}
-
-.workflow-step span {
-  display: inline-flex;
-  align-items: center;
-  min-height: 22px;
-  padding: 0 var(--polaris-spacing-2xs);
-  border-radius: var(--polaris-radius-pill);
-  color: var(--polaris-state-success-strong);
-  background: var(--polaris-state-success-bg);
-  font-size: 12px;
-  font-weight: 800;
-  line-height: 18px;
-  white-space: nowrap;
-}
-
-.workflow-step p {
-  margin: var(--polaris-spacing-2xs) 0 0;
-  color: var(--polaris-accent-brand-bg);
-  font-size: 13px;
-  line-height: 20px;
-  word-break: keep-all;
-}
-
-.career-card-grid {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  margin-top: var(--polaris-spacing-sm);
-}
-
-.career-card,
-.nova-assistant {
+.career-card {
   min-width: 0;
   border: 1px solid var(--polaris-line-neutral);
   border-radius: var(--polaris-radius-sm);
@@ -834,32 +661,11 @@ p {
   line-height: 28px;
 }
 
-.feature-card {
-  display: grid;
-  align-content: start;
-  gap: var(--polaris-spacing-xs);
-}
-
-.feature-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 34px;
-  height: 34px;
-  flex: 0 0 auto;
-  border-radius: var(--polaris-radius-sm);
-  color: var(--polaris-accent-brand-normal);
-  background: var(--polaris-accent-brand-normal-subtle);
-}
-
-.data-row,
-.task-row,
 .upload-preview,
 .question-box,
 .recommendation-box,
 .guide-box,
 .form-panel,
-.compact-item,
 .track-item,
 .experience-card,
 .package-card {
@@ -868,28 +674,16 @@ p {
   background: var(--polaris-fill-neutral);
 }
 
-.data-row,
-.task-row,
 .upload-preview,
 .question-box,
 .recommendation-box,
 .guide-box,
-.compact-item,
 .track-item,
 .experience-card,
 .package-card {
   padding: var(--polaris-spacing-sm);
 }
 
-.data-row {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: var(--polaris-spacing-sm);
-}
-
-.data-row h4,
-.task-row span,
 .row-title h4 {
   margin: 0;
   color: var(--polaris-label-normal);
@@ -898,22 +692,6 @@ p {
   line-height: 21px;
 }
 
-.data-row p {
-  margin: var(--polaris-spacing-4xs) 0 0;
-  color: var(--polaris-label-neutral);
-  font-size: 13px;
-  line-height: 20px;
-  word-break: keep-all;
-}
-
-.row-state {
-  display: grid;
-  justify-items: end;
-  gap: var(--polaris-spacing-3xs);
-  flex: 0 0 auto;
-}
-
-.row-state strong,
 .deadline-pill {
   display: inline-flex;
   align-items: center;
@@ -925,21 +703,6 @@ p {
   font-size: 12px;
   line-height: 18px;
   white-space: nowrap;
-}
-
-.row-state span {
-  color: var(--polaris-label-alternative);
-  font-size: 12px;
-  font-weight: 800;
-  line-height: 18px;
-  white-space: nowrap;
-}
-
-.task-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--polaris-spacing-xs);
 }
 
 .row-title {
@@ -964,8 +727,7 @@ p {
 .info-block strong,
 .package-card h4,
 .track-item h4,
-.experience-card h4,
-.compact-item h4 {
+.experience-card h4 {
   display: block;
   margin: 0;
   color: var(--polaris-label-normal);
@@ -999,86 +761,6 @@ p {
   font-size: 12px;
   font-weight: 800;
   line-height: 18px;
-}
-
-.nova-assistant {
-  position: sticky;
-  top: 72px;
-  display: grid;
-  gap: var(--polaris-spacing-xs);
-  padding: var(--polaris-spacing-sm);
-}
-
-.work-panel {
-  align-content: start;
-}
-
-.assistant-header {
-  align-items: center;
-  padding-bottom: var(--polaris-spacing-xs);
-  border-bottom: 1px solid var(--polaris-line-neutral);
-}
-
-.assistant-header svg {
-  color: var(--polaris-ai-normal);
-}
-
-.assistant-card {
-  display: grid;
-  gap: var(--polaris-spacing-xs);
-  padding: var(--polaris-spacing-sm);
-  border: 1px solid var(--polaris-ai-pressed);
-  border-radius: var(--polaris-radius-sm);
-  background: var(--polaris-ai-hover);
-}
-
-.key-value {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--polaris-spacing-xs);
-  padding: var(--polaris-spacing-2xs) 0;
-  border-bottom: 1px solid var(--polaris-ai-pressed);
-}
-
-.key-value:last-child {
-  border-bottom: 0;
-}
-
-.key-value span {
-  color: var(--polaris-label-alternative);
-  font-size: 12px;
-  font-weight: 800;
-  line-height: 18px;
-}
-
-.key-value strong {
-  color: var(--polaris-label-normal);
-  font-size: 13px;
-  line-height: 20px;
-  text-align: right;
-}
-
-.panel-metric {
-  margin: 0;
-  color: var(--polaris-ai-normal);
-  font-size: 24px;
-  font-weight: 800;
-  line-height: 31px;
-  text-align: right;
-}
-
-.panel-actions {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--polaris-spacing-2xs);
-}
-
-.assistant-card h3 {
-  margin: 0;
-  color: var(--polaris-label-normal);
-  font-size: 16px;
-  line-height: 24px;
 }
 
 .recommendation-box.strong {
@@ -1418,49 +1100,27 @@ p {
   }
 
   .career-pass-heading,
-  .career-section-heading,
   .section-card-header,
   .essay-bottom-bar {
     align-items: flex-start;
     flex-direction: column;
   }
 
-  .career-pass-heading h1,
-  .career-hero h2 {
+  .career-pass-heading h1 {
     font-size: 24px;
     line-height: 34px;
   }
 
-  .career-dashboard-grid,
-  .service-dashboard,
-  .career-hero,
-  .career-card-grid,
-  .dashboard-board,
   .career-two-column,
   .career-two-column.balanced,
   .career-two-column.writing-layout {
     grid-template-columns: 1fr;
   }
 
-  .metric-strip {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .nova-assistant {
-    position: static;
-  }
-
-  .hero-stats {
-    grid-template-columns: 1fr;
-  }
-
-  .career-pass-actions,
   .button-row {
     width: 100%;
   }
 
-  .career-pass-actions .primary-action,
-  .career-pass-actions .secondary-action,
   .essay-bottom-bar .primary-action,
   .essay-bottom-bar .secondary-action {
     flex: 1;
@@ -1504,7 +1164,6 @@ p {
   }
 
   .career-pass-heading h1,
-  .career-section-heading h2,
   .career-card h3 {
     word-break: keep-all;
   }
@@ -1521,24 +1180,13 @@ p {
     font-size: 12px;
   }
 
-  .career-card,
-  .career-hero {
+  .career-card {
     padding: var(--polaris-spacing-sm);
   }
 
-  .data-row,
-  .row-title,
-  .task-row {
+  .row-title {
     align-items: flex-start;
     flex-direction: column;
-  }
-
-  .row-state {
-    justify-items: start;
-  }
-
-  .metric-strip {
-    grid-template-columns: 1fr;
   }
 
   .essay-card .textarea-field {

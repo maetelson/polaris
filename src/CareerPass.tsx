@@ -1,10 +1,9 @@
-import { useMemo, useState, type ElementType, type ReactNode } from 'react';
+import { useState, type ElementType } from 'react';
 import {
   BriefcaseBusiness,
   Eye,
   FileCheck2,
   FileText,
-  LayoutDashboard,
   PackageCheck,
   PenLine,
   Plus,
@@ -18,7 +17,7 @@ import { PolarisButton, PolarisFileDrop, PolarisInput, PolarisTextarea } from '.
 
 // @polaris/ui/ribbon is reserved for the full document editor surface; this feature stays in workflow mode.
 
-type CareerPassSectionId = 'dashboard' | 'track' | 'experience' | 'writing' | 'final';
+type CareerPassSectionId = 'track' | 'experience' | 'writing' | 'final';
 
 type SupportTrack = {
   id: string;
@@ -65,12 +64,10 @@ type CareerPassSection = {
   id: CareerPassSectionId;
   label: string;
   icon: ElementType;
-  badge?: string;
 };
 
 const careerPassSections: CareerPassSection[] = [
-  { id: 'dashboard', label: '홈', icon: LayoutDashboard },
-  { id: 'track', label: '지원 트랙', icon: BriefcaseBusiness, badge: '12' },
+  { id: 'track', label: '지원 트랙', icon: BriefcaseBusiness },
   { id: 'experience', label: '경험 카드', icon: Puzzle },
   { id: 'writing', label: '자소서', icon: PenLine },
   { id: 'final', label: 'Final Room', icon: PackageCheck }
@@ -144,7 +141,7 @@ const initialEssay =
   '프로젝트 진행 과정에서 팀원 간 전략 방향성에 대한 의견 충돌이 발생했습니다. 초기에는 각자의 아이디어를 중심으로 논의가 이어지며 의사결정이 지연되었습니다. 저는 사용자 인터뷰 데이터를 다시 정리하여 객관적인 기준을 제시했고, 이를 기반으로 우선순위를 재조정하는 회의 구조를 제안했습니다. 이후 팀원들의 의견을 시각적으로 정리해 합의 과정을 단순화했고, 최종적으로 전략 방향을 빠르게 통합할 수 있었습니다. 그 결과 프로젝트 완성도를 높일 수 있었고, 최종 발표에서 우수상을 수상했습니다.';
 
 export function CareerPass() {
-  const [activeSection, setActiveSection] = useState<CareerPassSectionId>('dashboard');
+  const [activeSection, setActiveSection] = useState<CareerPassSectionId>('track');
   const [trackLink, setTrackLink] = useState('');
   const [trackQuestions, setTrackQuestions] = useState('');
   const [trackFileName, setTrackFileName] = useState('');
@@ -165,14 +162,24 @@ export function CareerPass() {
   const [submissionPackages, setSubmissionPackages] = useState<SubmissionPackage[]>(initialPackages);
   const [finalNotice, setFinalNotice] = useState('검수 대기');
 
-  const currentSection = useMemo(
-    () => careerPassSections.find((section) => section.id === activeSection) ?? careerPassSections[0],
-    [activeSection]
-  );
-
   const essayCharacterCount = essayDraft.body.length;
   const completedChecks = submissionChecks.filter((check) => check.status === 'complete').length;
   const completionRate = Math.round((completedChecks / submissionChecks.length) * 100);
+  const getSectionBadge = (sectionId: CareerPassSectionId) => {
+    if (sectionId === 'track') {
+      return `${supportTracks.length}개 지원 중`;
+    }
+
+    if (sectionId === 'experience') {
+      return `${experienceCards.length}개 카드`;
+    }
+
+    if (sectionId === 'writing') {
+      return essayDraft.status;
+    }
+
+    return `${completionRate}% 검수`;
+  };
 
   const createSupportTrack = () => {
     const company = inferCompanyName(trackLink);
@@ -261,33 +268,17 @@ export function CareerPass() {
     setFinalNotice('패키지 저장됨');
   };
 
-  const sectionStatus =
-    activeSection === 'writing'
-      ? essayDraft.status
-      : activeSection === 'final'
-        ? `${completionRate}% 검수`
-        : `${supportTracks.length}개 트랙`;
-
   return (
     <section className="career-pass" aria-labelledby="career-pass-title">
       <div className="career-pass-heading">
         <h1 id="career-pass-title">Career Pass</h1>
-        <div className="career-pass-actions">
-          <PolarisButton className="secondary-action" onClick={() => setActiveSection('dashboard')}>
-            <Eye size={16} aria-hidden="true" />
-            현황
-          </PolarisButton>
-          <PolarisButton className="primary-action" onClick={() => setActiveSection('track')}>
-            <Plus size={16} aria-hidden="true" />
-            공고 등록
-          </PolarisButton>
-        </div>
       </div>
 
       <nav className="career-tabs" aria-label="Career Pass">
         {careerPassSections.map((section) => {
           const Icon = section.icon;
           const active = activeSection === section.id;
+          const badge = getSectionBadge(section.id);
 
           return (
             <PolarisButton
@@ -298,30 +289,11 @@ export function CareerPass() {
             >
               <Icon size={16} aria-hidden="true" />
               <span>{section.label}</span>
-              {section.badge && <strong>{section.badge}</strong>}
+              <strong>{badge}</strong>
             </PolarisButton>
           );
         })}
       </nav>
-
-      <section className="career-section-heading" aria-label={currentSection.label}>
-        <h2>{currentSection.label}</h2>
-        <span className="status-pill">{sectionStatus}</span>
-      </section>
-
-      {activeSection === 'dashboard' && (
-        <DashboardSection
-          tracks={supportTracks}
-          experienceCards={experienceCards}
-          checks={submissionChecks}
-          packages={submissionPackages}
-          completionRate={completionRate}
-          onTrackSelect={() => setActiveSection('track')}
-          onExperienceSelect={() => setActiveSection('experience')}
-          onWritingSelect={() => setActiveSection('writing')}
-          onFinalSelect={() => setActiveSection('final')}
-        />
-      )}
 
       {activeSection === 'track' && (
         <TrackSection
@@ -376,92 +348,6 @@ export function CareerPass() {
         />
       )}
     </section>
-  );
-}
-
-function DashboardSection({
-  tracks,
-  experienceCards,
-  checks,
-  packages,
-  completionRate,
-  onTrackSelect,
-  onExperienceSelect,
-  onWritingSelect,
-  onFinalSelect
-}: {
-  tracks: SupportTrack[];
-  experienceCards: ExperienceCard[];
-  checks: SubmissionCheck[];
-  packages: SubmissionPackage[];
-  completionRate: number;
-  onTrackSelect: () => void;
-  onExperienceSelect: () => void;
-  onWritingSelect: () => void;
-  onFinalSelect: () => void;
-}) {
-  return (
-    <div className="career-dashboard-grid service-dashboard">
-      <div className="career-dashboard-main">
-        <div className="metric-strip">
-          <MetricCard value={String(tracks.length)} label="지원 트랙" />
-          <MetricCard value={String(experienceCards.length)} label="경험 카드" />
-          <MetricCard value={`${completionRate}%`} label="검수율" />
-          <MetricCard value="2" label="이번 주 마감" />
-        </div>
-
-        <div className="dashboard-board">
-          <Panel title="지원 트랙" actionLabel="등록" onAction={onTrackSelect}>
-            <DataRows
-              items={tracks.map((track) => ({
-                title: `${track.company} ${track.role}`,
-                meta: track.detail,
-                status: track.status,
-                aside: track.deadline,
-                tags: track.tags
-              }))}
-            />
-          </Panel>
-
-          <Panel title="오늘 할 일" actionLabel="작성" onAction={onWritingSelect}>
-            <div className="task-list">
-              <TaskRow label="현대자동차 2번 문항" status="작성 중" />
-              <TaskRow label="카카오 포트폴리오 링크" status="확인" />
-              <TaskRow label="파일명 규칙" status="수정 필요" tone="warning" />
-            </div>
-          </Panel>
-
-          <Panel title="경험 카드" actionLabel="추가" onAction={onExperienceSelect}>
-            <DataRows
-              items={experienceCards.slice(0, 3).map((card) => ({
-                title: card.title,
-                meta: card.summary,
-                status: card.tags[0],
-                tags: card.tags.slice(1, 3)
-              }))}
-            />
-          </Panel>
-
-          <Panel title="제출 패키지" actionLabel="검수" onAction={onFinalSelect}>
-            <div className="checklist compact-checklist">
-              {checks.map((check) => (
-                <StatusRow key={check.id} label={check.label} text={check.text} status={check.status} />
-              ))}
-            </div>
-            <DataRows
-              items={packages.slice(0, 2).map((item) => ({
-                title: item.title,
-                meta: item.detail,
-                status: item.tags[0],
-                tags: item.tags.slice(1)
-              }))}
-            />
-          </Panel>
-        </div>
-      </div>
-
-      <WorkPanel completionRate={completionRate} checks={checks} onWritingSelect={onWritingSelect} onFinalSelect={onFinalSelect} />
-    </div>
   );
 }
 
@@ -779,122 +665,6 @@ function FinalSection({
   );
 }
 
-function WorkPanel({
-  checks,
-  completionRate,
-  onWritingSelect,
-  onFinalSelect
-}: {
-  checks: SubmissionCheck[];
-  completionRate: number;
-  onWritingSelect: () => void;
-  onFinalSelect: () => void;
-}) {
-  return (
-    <aside className="nova-assistant work-panel" aria-label="작업 패널">
-      <div className="assistant-header">
-        <div>
-          <p className="empty-kicker">WORK PANEL</p>
-          <h2>오늘</h2>
-        </div>
-        <Sparkles size={20} aria-hidden="true" />
-      </div>
-
-      <AssistantCard title="문항 분석">
-        <KeyValue label="역량" value="협업 · 문제 해결 · UX 개선" />
-        <KeyValue label="추천 카드" value="브랜딩 공모전" />
-      </AssistantCard>
-
-      <AssistantCard title="검수">
-        <div className="checklist compact-checklist">
-          {checks.map((check) => (
-            <StatusRow key={check.id} label={check.label} text={check.text} status={check.status} />
-          ))}
-        </div>
-        <p className="panel-metric">{completionRate}%</p>
-      </AssistantCard>
-
-      <div className="panel-actions">
-        <PolarisButton className="secondary-action" onClick={onWritingSelect}>자소서</PolarisButton>
-        <PolarisButton className="primary-action" onClick={onFinalSelect}>검수</PolarisButton>
-      </div>
-    </aside>
-  );
-}
-
-function MetricCard({ value, label }: { value: string; label: string }) {
-  return (
-    <div className="metric-card">
-      <strong>{value}</strong>
-      <span>{label}</span>
-    </div>
-  );
-}
-
-function Panel({
-  title,
-  actionLabel,
-  onAction,
-  children
-}: {
-  title: string;
-  actionLabel: string;
-  onAction: () => void;
-  children: ReactNode;
-}) {
-  return (
-    <section className="career-card dashboard-panel">
-      <div className="section-card-header">
-        <h3>{title}</h3>
-        <PolarisButton className="secondary-action" onClick={onAction}>{actionLabel}</PolarisButton>
-      </div>
-      {children}
-    </section>
-  );
-}
-
-function DataRows({
-  items
-}: {
-  items: Array<{ title: string; meta: string; status: string; aside?: string; tags: string[] }>;
-}) {
-  return (
-    <div className="data-row-list">
-      {items.map((item) => (
-        <article className="data-row" key={`${item.title}-${item.meta}`}>
-          <div>
-            <h4>{item.title}</h4>
-            <p>{item.meta}</p>
-            <TagList tags={item.tags} />
-          </div>
-          <div className="row-state">
-            {item.aside && <strong>{item.aside}</strong>}
-            <span>{item.status}</span>
-          </div>
-        </article>
-      ))}
-    </div>
-  );
-}
-
-function TaskRow({ label, status, tone = 'complete' }: { label: string; status: string; tone?: SubmissionCheck['status'] }) {
-  return (
-    <div className="task-row">
-      <span>{label}</span>
-      <strong className={`check-status ${tone}`}>{status}</strong>
-    </div>
-  );
-}
-
-function AssistantCard({ title, children }: { title: string; children: ReactNode }) {
-  return (
-    <article className="assistant-card">
-      <h3>{title}</h3>
-      {children}
-    </article>
-  );
-}
-
 function TimelineItem({ title, description }: { title: string; description: string }) {
   return (
     <div className="timeline-item">
@@ -904,29 +674,11 @@ function TimelineItem({ title, description }: { title: string; description: stri
   );
 }
 
-function StatusRow({ label, text, status }: { label: string; text: string; status: SubmissionCheck['status'] }) {
-  return (
-    <div className="check-row">
-      <span>{label}</span>
-      <strong className={`check-status ${status}`}>{text}</strong>
-    </div>
-  );
-}
-
 function InfoBlock({ title, text }: { title: string; text: string }) {
   return (
     <div className="info-block">
       <strong>{title}</strong>
       <p>{text}</p>
-    </div>
-  );
-}
-
-function KeyValue({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="key-value">
-      <span>{label}</span>
-      <strong>{value}</strong>
     </div>
   );
 }
