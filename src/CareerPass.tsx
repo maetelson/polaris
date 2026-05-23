@@ -1,24 +1,36 @@
 import { useState, type ElementType } from 'react';
 import {
   BriefcaseBusiness,
+  ChevronRight,
   Eye,
-  FileCheck2,
   FileText,
   PackageCheck,
   PenLine,
   Plus,
   Puzzle,
   Save,
-  Sparkles,
-  Wand2,
   X
 } from 'lucide-react';
 import { DocxIcon, PdfIcon, PptxIcon } from '@polaris/ui/file-icons';
+import { Ribbon, RibbonButton, RibbonGroup, RibbonRow, RibbonSeparator, RibbonStack } from '@polaris/ui/ribbon';
+import {
+  AiChatIcon,
+  AiWriteIcon,
+  AlignCenterIcon,
+  AlignLeftIcon,
+  ApplyIcon,
+  BoldIcon,
+  ItalicIcon,
+  Underline01Icon,
+  WordCountIcon
+} from '@polaris/ui/ribbon-icons';
 import { PolarisButton, PolarisFileDrop, PolarisInput, PolarisTextarea } from './polaris-controls';
 
-// @polaris/ui/ribbon is reserved for the full document editor surface; this feature stays in workflow mode.
+const LIST_PREVIEW_LIMIT = 2;
 
 type CareerPassSectionId = 'track' | 'experience' | 'writing' | 'final';
+
+type CareerPassListId = 'applications' | 'experiences' | 'essayApplications' | 'packages';
 
 type SupportTrack = {
   id: string;
@@ -68,7 +80,7 @@ type CareerPassSection = {
 };
 
 const careerPassSections: CareerPassSection[] = [
-  { id: 'track', label: '지원 트랙', icon: BriefcaseBusiness },
+  { id: 'track', label: '지원 현황', icon: BriefcaseBusiness },
   { id: 'experience', label: '경험 카드', icon: Puzzle },
   { id: 'writing', label: '자소서', icon: PenLine },
   { id: 'final', label: 'Final Room', icon: PackageCheck }
@@ -144,10 +156,17 @@ const initialEssay =
 export function CareerPass() {
   const [activeSection, setActiveSection] = useState<CareerPassSectionId>('track');
   const [trackModalOpen, setTrackModalOpen] = useState(false);
+  const [expandedLists, setExpandedLists] = useState<Record<CareerPassListId, boolean>>({
+    applications: false,
+    experiences: false,
+    essayApplications: false,
+    packages: false
+  });
+  const [selectedApplicationId, setSelectedApplicationId] = useState<string | null>(null);
   const [trackLink, setTrackLink] = useState('');
   const [trackQuestions, setTrackQuestions] = useState('');
   const [trackFileName, setTrackFileName] = useState('');
-  const [trackNotice, setTrackNotice] = useState('트랙 관리 중');
+  const [trackNotice, setTrackNotice] = useState('지원 관리 중');
   const [supportTracks, setSupportTracks] = useState<SupportTrack[]>(initialTracks);
   const [activityName, setActivityName] = useState('');
   const [activityDescription, setActivityDescription] = useState('');
@@ -197,7 +216,7 @@ export function CareerPass() {
     };
 
     setSupportTracks((tracks) => [track, ...tracks]);
-    setTrackNotice(`${company} 트랙 생성`);
+    setTrackNotice(`${company} 지원 추가`);
     setTrackLink('');
     setTrackQuestions('');
     setTrackFileName('');
@@ -275,13 +294,17 @@ export function CareerPass() {
     setFinalNotice('패키지 저장됨');
   };
 
+  const toggleExpandedList = (listId: CareerPassListId) => {
+    setExpandedLists((lists) => ({ ...lists, [listId]: !lists[listId] }));
+  };
+
   return (
     <section className="career-pass" aria-labelledby="career-pass-title">
       <div className="career-pass-heading">
         <h1 id="career-pass-title">Career Pass</h1>
         <PolarisButton className="primary-action" onClick={() => setTrackModalOpen(true)}>
           <Plus size={16} aria-hidden="true" />
-          트랙 생성
+          지원 추가
         </PolarisButton>
       </div>
 
@@ -310,6 +333,8 @@ export function CareerPass() {
         <TrackSection
           trackNotice={trackNotice}
           tracks={supportTracks}
+          showAll={expandedLists.applications}
+          onToggleList={() => toggleExpandedList('applications')}
         />
       )}
 
@@ -319,6 +344,8 @@ export function CareerPass() {
           activityDescription={activityDescription}
           activityFileName={activityFileName}
           cards={experienceCards}
+          showAll={expandedLists.experiences}
+          onToggleList={() => toggleExpandedList('experiences')}
           onNameChange={setActivityName}
           onDescriptionChange={setActivityDescription}
           onFileSelect={setActivityFileName}
@@ -328,8 +355,13 @@ export function CareerPass() {
 
       {activeSection === 'writing' && (
         <WritingSection
+          applications={supportTracks}
+          selectedApplicationId={selectedApplicationId}
           draft={essayDraft}
           characterCount={essayCharacterCount}
+          showAllApplications={expandedLists.essayApplications}
+          onToggleApplications={() => toggleExpandedList('essayApplications')}
+          onSelectApplication={setSelectedApplicationId}
           onBodyChange={(body) => setEssayDraft((draft) => ({ ...draft, body, status: '작성 중', finalApplied: false }))}
           onStructure={structureEssay}
           onPolish={polishEssay}
@@ -346,8 +378,10 @@ export function CareerPass() {
           fileName={finalFileName}
           notice={finalNotice}
           completionRate={completionRate}
+          showAllPackages={expandedLists.packages}
           onFileSelect={setFinalFileName}
           onToggleCheck={toggleSubmissionCheck}
+          onTogglePackages={() => toggleExpandedList('packages')}
           onSavePackage={saveSubmissionPackage}
         />
       )}
@@ -370,19 +404,33 @@ export function CareerPass() {
 
 function TrackSection({
   trackNotice,
-  tracks
+  tracks,
+  showAll,
+  onToggleList
 }: {
   trackNotice: string;
   tracks: SupportTrack[];
+  showAll: boolean;
+  onToggleList: () => void;
 }) {
+  const visibleTracks = showAll ? tracks : tracks.slice(0, LIST_PREVIEW_LIMIT);
+
   return (
     <section className="career-card track-board">
       <div className="section-card-header">
-        <h3>트랙 목록</h3>
-        <span className="status-pill">{trackNotice}</span>
+        <h3>지원 목록</h3>
+        <div className="button-row">
+          <span className="status-pill">{trackNotice}</span>
+          {tracks.length > LIST_PREVIEW_LIMIT && (
+            <PolarisButton className="secondary-action compact-action" onClick={onToggleList}>
+              <ChevronRight size={16} aria-hidden="true" />
+              {showAll ? '접기' : '더보기'}
+            </PolarisButton>
+          )}
+        </div>
       </div>
       <div className="track-list">
-        {tracks.map((track) => (
+        {visibleTracks.map((track) => (
           <article className="track-item" key={track.id}>
             <div className="row-title">
               <h4>{track.company} {track.role}</h4>
@@ -420,7 +468,7 @@ function TrackCreateModal({
     <div className="modal-backdrop" role="presentation">
       <section className="career-modal" role="dialog" aria-modal="true" aria-labelledby="track-create-title">
         <div className="section-card-header modal-header">
-          <h3 id="track-create-title">트랙 생성</h3>
+          <h3 id="track-create-title">지원 추가</h3>
           <PolarisButton className="icon-button" aria-label="닫기" onClick={onClose}>
             <X size={18} aria-hidden="true" />
           </PolarisButton>
@@ -455,7 +503,7 @@ function TrackCreateModal({
             취소
           </PolarisButton>
           <PolarisButton className="primary-action" onClick={onCreateTrack}>
-            생성
+            추가
           </PolarisButton>
         </div>
       </section>
@@ -468,6 +516,8 @@ function ExperienceSection({
   activityDescription,
   activityFileName,
   cards,
+  showAll,
+  onToggleList,
   onNameChange,
   onDescriptionChange,
   onFileSelect,
@@ -477,11 +527,15 @@ function ExperienceSection({
   activityDescription: string;
   activityFileName: string;
   cards: ExperienceCard[];
+  showAll: boolean;
+  onToggleList: () => void;
   onNameChange: (value: string) => void;
   onDescriptionChange: (value: string) => void;
   onFileSelect: (fileName: string) => void;
   onCreateCard: () => void;
 }) {
+  const visibleCards = showAll ? cards : cards.slice(0, LIST_PREVIEW_LIMIT);
+
   return (
     <div className="career-two-column balanced">
       <section className="career-card">
@@ -519,9 +573,17 @@ function ExperienceSection({
       </section>
 
       <section className="career-card">
-        <h3>카드 목록</h3>
+        <div className="section-card-header">
+          <h3>카드 목록</h3>
+          {cards.length > LIST_PREVIEW_LIMIT && (
+            <PolarisButton className="secondary-action compact-action" onClick={onToggleList}>
+              <ChevronRight size={16} aria-hidden="true" />
+              {showAll ? '접기' : '더보기'}
+            </PolarisButton>
+          )}
+        </div>
         <div className="experience-stack">
-          {cards.map((card) => (
+          {visibleCards.map((card) => (
             <article className="experience-card" key={card.id}>
               <h4>{card.title}</h4>
               <p>{card.summary}</p>
@@ -538,8 +600,13 @@ function ExperienceSection({
 }
 
 function WritingSection({
+  applications,
+  selectedApplicationId,
   draft,
   characterCount,
+  showAllApplications,
+  onToggleApplications,
+  onSelectApplication,
   onBodyChange,
   onStructure,
   onPolish,
@@ -547,8 +614,13 @@ function WritingSection({
   onTempSave,
   onApplyFinal
 }: {
+  applications: SupportTrack[];
+  selectedApplicationId: string | null;
   draft: EssayDraft;
   characterCount: number;
+  showAllApplications: boolean;
+  onToggleApplications: () => void;
+  onSelectApplication: (applicationId: string) => void;
   onBodyChange: (value: string) => void;
   onStructure: () => void;
   onPolish: () => void;
@@ -556,75 +628,140 @@ function WritingSection({
   onTempSave: () => void;
   onApplyFinal: () => void;
 }) {
+  const selectedApplication = applications.find((application) => application.id === selectedApplicationId) ?? null;
+  const visibleApplications = showAllApplications ? applications : applications.slice(0, LIST_PREVIEW_LIMIT);
+
   return (
-    <div className="career-two-column writing-layout">
-      <section className="career-card">
-        <h3>문항 매칭</h3>
-
-        <div className="question-box">
-          <strong>문항</strong>
-          <p>{draft.question}</p>
-        </div>
-
-        <div className="recommendation-box strong">
-          <strong>추천 경험</strong>
-          <span>브랜딩 공모전 전략 수정 경험</span>
-          <TagList tags={['협업', '갈등 해결', 'STAR', '문제 해결']} />
-        </div>
-
-        <div className="guide-box">
-          <strong>STAR</strong>
-          <TimelineItem title="S" description="방향성 충돌" />
-          <TimelineItem title="T" description="의견 조율" />
-          <TimelineItem title="A" description="데이터 기반 재정렬" />
-          <TimelineItem title="R" description="우수상" />
-        </div>
-      </section>
-
-      <section className="career-card essay-card">
+    <div className="writing-workspace">
+      <section className="career-card application-picker">
         <div className="section-card-header">
-          <h3>작성 본문</h3>
-          <div className="button-row">
-            <PolarisButton className="secondary-action" onClick={onStructure}>
-              <Wand2 size={16} aria-hidden="true" />
-              구조화
+          <h3>지원 선택</h3>
+          {applications.length > LIST_PREVIEW_LIMIT && (
+            <PolarisButton className="secondary-action compact-action" onClick={onToggleApplications}>
+              <ChevronRight size={16} aria-hidden="true" />
+              {showAllApplications ? '접기' : '더보기'}
             </PolarisButton>
-            <PolarisButton className="secondary-action" onClick={onPolish}>
-              <Sparkles size={16} aria-hidden="true" />
-              다듬기
-            </PolarisButton>
-          </div>
+          )}
         </div>
 
-        <PolarisTextarea
-          label="본문"
-          rows={14}
-          value={draft.body}
-          onChange={(event) => onBodyChange(event.target.value)}
-        />
+        <div className="application-list">
+          {visibleApplications.map((application) => {
+            const active = selectedApplicationId === application.id;
 
-        <div className="essay-bottom-bar">
-          <span>{characterCount.toLocaleString('ko-KR')}자</span>
-          <div className="button-row">
-            <PolarisButton className="secondary-action" onClick={onTempSave}>
-              <Save size={16} aria-hidden="true" />
-              임시 저장
-            </PolarisButton>
-            <PolarisButton className="secondary-action" onClick={onSaveDraft}>
-              <FileText size={16} aria-hidden="true" />
-              초안 저장
-            </PolarisButton>
-            <PolarisButton className="secondary-action" onClick={onSaveDraft}>
-              <Eye size={16} aria-hidden="true" />
-              미리보기
-            </PolarisButton>
-            <PolarisButton className="primary-action" onClick={onApplyFinal}>
-              <FileCheck2 size={16} aria-hidden="true" />
-              최종 반영
-            </PolarisButton>
-          </div>
+            return (
+              <PolarisButton
+                key={application.id}
+                className={`application-card ${active ? 'application-card-active' : ''}`}
+                aria-pressed={active}
+                onClick={() => onSelectApplication(application.id)}
+              >
+                <div>
+                  <h4>{application.company} {application.role}</h4>
+                  <p>{application.detail}</p>
+                  <TagList tags={[application.status, application.deadline, ...application.tags.slice(0, 1)]} />
+                </div>
+                <ChevronRight size={16} aria-hidden="true" />
+              </PolarisButton>
+            );
+          })}
         </div>
       </section>
+
+      {selectedApplication ? (
+        <section className="career-card essay-card document-editor">
+          <div className="section-card-header">
+            <div>
+              <h3>{selectedApplication.company} 자소서</h3>
+              <p>{selectedApplication.role} · {selectedApplication.deadline}</p>
+            </div>
+            <span className="status-pill">{draft.status}</span>
+          </div>
+
+          <div className="editor-context-grid">
+            <div className="question-box">
+              <strong>문항</strong>
+              <p>{draft.question}</p>
+            </div>
+
+            <div className="recommendation-box strong">
+              <strong>추천 경험</strong>
+              <span>브랜딩 공모전 전략 수정 경험</span>
+              <TagList tags={['협업', '갈등 해결', 'STAR', '문제 해결']} />
+            </div>
+
+            <div className="guide-box compact-guide">
+              <strong>STAR</strong>
+              <TimelineItem title="S" description="방향성 충돌" />
+              <TimelineItem title="T" description="의견 조율" />
+              <TimelineItem title="A" description="데이터 기반 재정렬" />
+              <TimelineItem title="R" description="우수상" />
+            </div>
+          </div>
+
+          <Ribbon className="essay-ribbon" aria-label="자소서 편집 리본">
+            <RibbonGroup label="AI">
+              <RibbonButton size="lg" icon={<AiWriteIcon />} onClick={onStructure}>
+                구조화
+              </RibbonButton>
+              <RibbonButton size="lg" icon={<AiChatIcon />} onClick={onPolish}>
+                다듬기
+              </RibbonButton>
+            </RibbonGroup>
+            <RibbonSeparator />
+            <RibbonGroup label="서식">
+              <RibbonStack>
+                <RibbonRow>
+                  <RibbonButton size="sm" icon={<BoldIcon />} aria-label="굵게" />
+                  <RibbonButton size="sm" icon={<ItalicIcon />} aria-label="기울임" />
+                  <RibbonButton size="sm" icon={<Underline01Icon />} aria-label="밑줄" />
+                </RibbonRow>
+                <RibbonRow>
+                  <RibbonButton size="sm" icon={<AlignLeftIcon />} aria-label="왼쪽 정렬" />
+                  <RibbonButton size="sm" icon={<AlignCenterIcon />} aria-label="가운데 정렬" />
+                </RibbonRow>
+              </RibbonStack>
+            </RibbonGroup>
+            <RibbonSeparator />
+            <RibbonGroup label="검토">
+              <RibbonButton size="lg" icon={<WordCountIcon />}>
+                글자 수
+              </RibbonButton>
+              <RibbonButton size="lg" icon={<ApplyIcon />} onClick={onApplyFinal}>
+                최종 반영
+              </RibbonButton>
+            </RibbonGroup>
+          </Ribbon>
+
+          <PolarisTextarea
+            label="본문"
+            rows={14}
+            value={draft.body}
+            onChange={(event) => onBodyChange(event.target.value)}
+          />
+
+          <div className="essay-bottom-bar">
+            <span>{characterCount.toLocaleString('ko-KR')}자</span>
+            <div className="button-row">
+              <PolarisButton className="secondary-action" onClick={onTempSave}>
+                <Save size={16} aria-hidden="true" />
+                임시 저장
+              </PolarisButton>
+              <PolarisButton className="secondary-action" onClick={onSaveDraft}>
+                <FileText size={16} aria-hidden="true" />
+                초안 저장
+              </PolarisButton>
+              <PolarisButton className="secondary-action" onClick={onSaveDraft}>
+                <Eye size={16} aria-hidden="true" />
+                미리보기
+              </PolarisButton>
+            </div>
+          </div>
+        </section>
+      ) : (
+        <section className="career-card essay-placeholder">
+          <h3>지원 항목을 선택하세요</h3>
+        </section>
+      )}
     </div>
   );
 }
@@ -635,8 +772,10 @@ function FinalSection({
   fileName,
   notice,
   completionRate,
+  showAllPackages,
   onFileSelect,
   onToggleCheck,
+  onTogglePackages,
   onSavePackage
 }: {
   checks: SubmissionCheck[];
@@ -644,10 +783,14 @@ function FinalSection({
   fileName: string;
   notice: string;
   completionRate: number;
+  showAllPackages: boolean;
   onFileSelect: (fileName: string) => void;
   onToggleCheck: (checkId: string) => void;
+  onTogglePackages: () => void;
   onSavePackage: () => void;
 }) {
+  const visiblePackages = showAllPackages ? packages : packages.slice(0, LIST_PREVIEW_LIMIT);
+
   return (
     <div className="career-two-column">
       <section className="career-card">
@@ -684,9 +827,17 @@ function FinalSection({
       </section>
 
       <section className="career-card">
-        <h3>제출 패키지</h3>
+        <div className="section-card-header">
+          <h3>제출 패키지</h3>
+          {packages.length > LIST_PREVIEW_LIMIT && (
+            <PolarisButton className="secondary-action compact-action" onClick={onTogglePackages}>
+              <ChevronRight size={16} aria-hidden="true" />
+              {showAllPackages ? '접기' : '더보기'}
+            </PolarisButton>
+          )}
+        </div>
         <div className="package-stack">
-          {packages.map((item) => (
+          {visiblePackages.map((item) => (
             <article className="package-card" key={item.id}>
               <h4>{item.title}</h4>
               <p>{item.detail}</p>

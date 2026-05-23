@@ -544,6 +544,11 @@ p {
   gap: var(--polaris-spacing-2xs);
 }
 
+.compact-action {
+  min-height: 32px;
+  padding: 0 var(--polaris-spacing-2xs);
+}
+
 .primary-action,
 .secondary-action {
   display: inline-flex;
@@ -650,6 +655,11 @@ p {
 .track-board {
   display: grid;
   gap: var(--polaris-spacing-xs);
+}
+
+.career-card > .section-card-header + .experience-stack,
+.career-card > .section-card-header + .package-stack {
+  margin-top: var(--polaris-spacing-xs);
 }
 
 .career-card {
@@ -823,6 +833,158 @@ p {
 .career-two-column.balanced,
 .career-two-column.writing-layout {
   grid-template-columns: minmax(300px, 0.9fr) minmax(0, 1.1fr);
+}
+
+.writing-workspace {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.42fr) minmax(0, 1fr);
+  gap: var(--polaris-spacing-sm);
+  align-items: start;
+}
+
+.application-picker,
+.document-editor,
+.essay-placeholder {
+  display: grid;
+  gap: var(--polaris-spacing-xs);
+}
+
+.application-list {
+  display: grid;
+  gap: var(--polaris-spacing-xs);
+}
+
+.application-card {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 100%;
+  gap: var(--polaris-spacing-xs);
+  padding: var(--polaris-spacing-sm);
+  border: 1px solid var(--polaris-line-neutral);
+  border-radius: var(--polaris-radius-sm);
+  color: var(--polaris-label-normal);
+  background: var(--polaris-fill-neutral);
+  cursor: pointer;
+  text-align: left;
+}
+
+.application-card:hover,
+.application-card-active {
+  border-color: var(--polaris-accent-brand-bg-hover);
+  background: var(--polaris-accent-brand-normal-subtle);
+}
+
+.application-card h4 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 21px;
+}
+
+.application-card p,
+.document-editor .section-card-header p {
+  margin: var(--polaris-spacing-4xs) 0 0;
+  color: var(--polaris-label-neutral);
+  font-size: 13px;
+  line-height: 20px;
+  word-break: keep-all;
+}
+
+.application-card > svg {
+  flex: 0 0 auto;
+  color: var(--polaris-label-alternative);
+}
+
+.editor-context-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(220px, 0.9fr);
+  gap: var(--polaris-spacing-xs);
+}
+
+.editor-context-grid .compact-guide {
+  grid-column: 1 / -1;
+}
+
+.essay-ribbon {
+  display: flex;
+  align-items: stretch;
+  min-width: 0;
+  min-height: 92px;
+  overflow-x: auto;
+  padding: var(--polaris-spacing-3xs);
+  border: 1px solid var(--polaris-line-neutral);
+  border-radius: var(--polaris-radius-sm);
+  background: var(--polaris-background-base);
+}
+
+.essay-ribbon > div:not([role="separator"]) {
+  display: flex;
+  min-width: max-content;
+  flex-direction: column;
+  padding: 0 var(--polaris-spacing-3xs);
+}
+
+.essay-ribbon > div:not([role="separator"]) > div:first-child {
+  display: flex;
+  min-height: 64px;
+  align-items: center;
+  justify-content: center;
+  gap: var(--polaris-spacing-3xs);
+}
+
+.essay-ribbon > div:not([role="separator"]) > div:last-child {
+  margin-top: var(--polaris-spacing-4xs);
+  color: var(--polaris-label-alternative);
+  font-size: 11px;
+  line-height: 16px;
+  text-align: center;
+}
+
+.essay-ribbon [role="separator"] {
+  width: 1px;
+  margin: var(--polaris-spacing-3xs);
+  background: var(--polaris-line-neutral);
+}
+
+.essay-ribbon button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 30px;
+  min-width: 30px;
+  gap: var(--polaris-spacing-3xs);
+  padding: var(--polaris-spacing-3xs) var(--polaris-spacing-2xs);
+  border-radius: var(--polaris-radius-sm);
+  color: var(--polaris-label-normal);
+  background: transparent;
+  cursor: pointer;
+}
+
+.essay-ribbon button:hover {
+  background: var(--polaris-accent-brand-normal-subtle);
+}
+
+.essay-ribbon button:focus-visible {
+  outline: none;
+  box-shadow: var(--polaris-shadow-focus);
+}
+
+.essay-ribbon button svg {
+  flex: 0 0 auto;
+}
+
+.essay-ribbon button span {
+  font-size: 12px;
+  line-height: 18px;
+  white-space: nowrap;
+}
+
+.essay-placeholder {
+  min-height: 220px;
+  align-content: center;
+  justify-items: center;
+  color: var(--polaris-label-alternative);
 }
 
 .form-panel {
@@ -1158,7 +1320,9 @@ p {
 
   .career-two-column,
   .career-two-column.balanced,
-  .career-two-column.writing-layout {
+  .career-two-column.writing-layout,
+  .writing-workspace,
+  .editor-context-grid {
     grid-template-columns: 1fr;
   }
 
@@ -1240,6 +1404,10 @@ p {
   .modal-actions .primary-action,
   .modal-actions .secondary-action {
     width: 100%;
+  }
+
+  .essay-ribbon {
+    min-height: 86px;
   }
 
   .row-title {
