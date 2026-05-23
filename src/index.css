@@ -504,6 +504,10 @@ p {
   align-items: center;
 }
 
+.career-pass-heading .primary-action {
+  flex: 0 0 auto;
+}
+
 .career-pass-heading > h1 {
   margin: 0;
 }
@@ -639,6 +643,11 @@ p {
 .package-stack,
 .checklist,
 .timeline {
+  display: grid;
+  gap: var(--polaris-spacing-xs);
+}
+
+.track-board {
   display: grid;
   gap: var(--polaris-spacing-xs);
 }
@@ -821,6 +830,43 @@ p {
   gap: var(--polaris-spacing-xs);
   margin-top: var(--polaris-spacing-sm);
   padding: var(--polaris-spacing-sm);
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: grid;
+  place-items: center;
+  padding: var(--polaris-spacing-md);
+  background: var(--polaris-layer-overlay);
+}
+
+.career-modal {
+  display: grid;
+  width: min(100%, 640px);
+  max-height: min(760px, calc(100vh - 48px));
+  overflow: auto;
+  gap: var(--polaris-spacing-sm);
+  padding: var(--polaris-spacing-md);
+  border: 1px solid var(--polaris-line-neutral);
+  border-radius: var(--polaris-radius-sm);
+  background: var(--polaris-background-base);
+  box-shadow: var(--polaris-shadow-lg);
+}
+
+.modal-header {
+  align-items: center;
+}
+
+.modal-form {
+  margin-top: 0;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--polaris-spacing-2xs);
 }
 
 .field-control {
@@ -1099,7 +1145,6 @@ p {
     padding: var(--polaris-spacing-sm);
   }
 
-  .career-pass-heading,
   .section-card-header,
   .essay-bottom-bar {
     align-items: flex-start;
@@ -1182,6 +1227,19 @@ p {
 
   .career-card {
     padding: var(--polaris-spacing-sm);
+  }
+
+  .career-modal {
+    padding: var(--polaris-spacing-sm);
+  }
+
+  .modal-actions {
+    flex-direction: column-reverse;
+  }
+
+  .modal-actions .primary-action,
+  .modal-actions .secondary-action {
+    width: 100%;
   }
 
   .row-title {

@@ -10,7 +10,8 @@ import {
   Puzzle,
   Save,
   Sparkles,
-  Wand2
+  Wand2,
+  X
 } from 'lucide-react';
 import { DocxIcon, PdfIcon, PptxIcon } from '@polaris/ui/file-icons';
 import { PolarisButton, PolarisFileDrop, PolarisInput, PolarisTextarea } from './polaris-controls';
@@ -142,10 +143,11 @@ const initialEssay =
 
 export function CareerPass() {
   const [activeSection, setActiveSection] = useState<CareerPassSectionId>('track');
+  const [trackModalOpen, setTrackModalOpen] = useState(false);
   const [trackLink, setTrackLink] = useState('');
   const [trackQuestions, setTrackQuestions] = useState('');
   const [trackFileName, setTrackFileName] = useState('');
-  const [trackNotice, setTrackNotice] = useState('8개 트랙 관리 중');
+  const [trackNotice, setTrackNotice] = useState('트랙 관리 중');
   const [supportTracks, setSupportTracks] = useState<SupportTrack[]>(initialTracks);
   const [activityName, setActivityName] = useState('');
   const [activityDescription, setActivityDescription] = useState('');
@@ -167,18 +169,18 @@ export function CareerPass() {
   const completionRate = Math.round((completedChecks / submissionChecks.length) * 100);
   const getSectionBadge = (sectionId: CareerPassSectionId) => {
     if (sectionId === 'track') {
-      return `${supportTracks.length}개 지원 중`;
+      return String(supportTracks.length);
     }
 
     if (sectionId === 'experience') {
-      return `${experienceCards.length}개 카드`;
+      return String(experienceCards.length);
     }
 
     if (sectionId === 'writing') {
       return essayDraft.status;
     }
 
-    return `${completionRate}% 검수`;
+    return `${completionRate}%`;
   };
 
   const createSupportTrack = () => {
@@ -196,6 +198,11 @@ export function CareerPass() {
 
     setSupportTracks((tracks) => [track, ...tracks]);
     setTrackNotice(`${company} 트랙 생성`);
+    setTrackLink('');
+    setTrackQuestions('');
+    setTrackFileName('');
+    setActiveSection('track');
+    setTrackModalOpen(false);
   };
 
   const createExperienceCard = () => {
@@ -272,6 +279,10 @@ export function CareerPass() {
     <section className="career-pass" aria-labelledby="career-pass-title">
       <div className="career-pass-heading">
         <h1 id="career-pass-title">Career Pass</h1>
+        <PolarisButton className="primary-action" onClick={() => setTrackModalOpen(true)}>
+          <Plus size={16} aria-hidden="true" />
+          트랙 생성
+        </PolarisButton>
       </div>
 
       <nav className="career-tabs" aria-label="Career Pass">
@@ -297,15 +308,8 @@ export function CareerPass() {
 
       {activeSection === 'track' && (
         <TrackSection
-          trackLink={trackLink}
-          trackQuestions={trackQuestions}
-          trackFileName={trackFileName}
           trackNotice={trackNotice}
           tracks={supportTracks}
-          onLinkChange={setTrackLink}
-          onQuestionsChange={setTrackQuestions}
-          onFileSelect={setTrackFileName}
-          onCreateTrack={createSupportTrack}
         />
       )}
 
@@ -347,43 +351,82 @@ export function CareerPass() {
           onSavePackage={saveSubmissionPackage}
         />
       )}
+
+      {trackModalOpen && (
+        <TrackCreateModal
+          trackLink={trackLink}
+          trackQuestions={trackQuestions}
+          trackFileName={trackFileName}
+          onLinkChange={setTrackLink}
+          onQuestionsChange={setTrackQuestions}
+          onFileSelect={setTrackFileName}
+          onCreateTrack={createSupportTrack}
+          onClose={() => setTrackModalOpen(false)}
+        />
+      )}
     </section>
   );
 }
 
 function TrackSection({
+  trackNotice,
+  tracks
+}: {
+  trackNotice: string;
+  tracks: SupportTrack[];
+}) {
+  return (
+    <section className="career-card track-board">
+      <div className="section-card-header">
+        <h3>트랙 목록</h3>
+        <span className="status-pill">{trackNotice}</span>
+      </div>
+      <div className="track-list">
+        {tracks.map((track) => (
+          <article className="track-item" key={track.id}>
+            <div className="row-title">
+              <h4>{track.company} {track.role}</h4>
+              <strong className="deadline-pill">{track.deadline}</strong>
+            </div>
+            <p>{track.detail}</p>
+            <TagList tags={[track.status, ...track.tags]} />
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function TrackCreateModal({
   trackLink,
   trackQuestions,
   trackFileName,
-  trackNotice,
-  tracks,
   onLinkChange,
   onQuestionsChange,
   onFileSelect,
-  onCreateTrack
+  onCreateTrack,
+  onClose
 }: {
   trackLink: string;
   trackQuestions: string;
   trackFileName: string;
-  trackNotice: string;
-  tracks: SupportTrack[];
   onLinkChange: (value: string) => void;
   onQuestionsChange: (value: string) => void;
   onFileSelect: (fileName: string) => void;
   onCreateTrack: () => void;
+  onClose: () => void;
 }) {
   return (
-    <div className="career-two-column">
-      <section className="career-card">
-        <div className="section-card-header">
-          <h3>공고 등록</h3>
-          <PolarisButton className="primary-action" onClick={onCreateTrack}>
-            <Plus size={16} aria-hidden="true" />
-            트랙 생성
+    <div className="modal-backdrop" role="presentation">
+      <section className="career-modal" role="dialog" aria-modal="true" aria-labelledby="track-create-title">
+        <div className="section-card-header modal-header">
+          <h3 id="track-create-title">트랙 생성</h3>
+          <PolarisButton className="icon-button" aria-label="닫기" onClick={onClose}>
+            <X size={18} aria-hidden="true" />
           </PolarisButton>
         </div>
 
-        <div className="form-panel">
+        <div className="form-panel modal-form">
           <PolarisInput
             label="채용 공고 링크"
             placeholder="https://company.com/recruit"
@@ -407,22 +450,13 @@ function TrackSection({
           <FileIconSignals types={['pdf']} />
         </div>
 
-        <p className="state-note">{trackNotice}</p>
-      </section>
-
-      <section className="career-card">
-        <h3>트랙 목록</h3>
-        <div className="track-list">
-          {tracks.map((track) => (
-            <article className="track-item" key={track.id}>
-              <div className="row-title">
-                <h4>{track.company} {track.role}</h4>
-                <strong className="deadline-pill">{track.deadline}</strong>
-              </div>
-              <p>{track.detail}</p>
-              <TagList tags={[track.status, ...track.tags]} />
-            </article>
-          ))}
+        <div className="modal-actions">
+          <PolarisButton className="secondary-action" onClick={onClose}>
+            취소
+          </PolarisButton>
+          <PolarisButton className="primary-action" onClick={onCreateTrack}>
+            생성
+          </PolarisButton>
         </div>
       </section>
     </div>
