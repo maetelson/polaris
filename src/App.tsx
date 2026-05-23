@@ -1,18 +1,14 @@
 import { useMemo, useState } from 'react';
 import {
   Bell,
-  BriefcaseBusiness,
   ChevronDown,
   ClipboardList,
-  FilePenLine,
-  FileText,
   HelpCircle,
   Home,
   Menu,
   PanelLeftClose,
   Search,
   Settings,
-  Sparkles,
   UserRound,
   X
 } from 'lucide-react';
@@ -38,36 +34,10 @@ const workspaceNav: NavItem[] = [
     icon: Home
   },
   {
-    id: 'office',
-    label: '오피스 문서',
-    description: '문서 편집과 리본 작업대',
-    icon: FileText
-  },
-  {
-    id: 'proposal',
-    label: '제안서',
-    description: '보고서와 제안서 제작',
-    icon: FilePenLine
-  },
-  {
-    id: 'crm',
-    label: '계약/CRM',
-    description: '계약, 고객, 운영 목록',
-    icon: BriefcaseBusiness
-  },
-  {
     id: 'career-pass',
     label: 'Career Pass',
     description: '공고 등록부터 제출 검수까지 취업 지원 워크플로우',
     icon: ClipboardList
-  },
-  {
-    id: 'nova',
-    label: 'NOVA',
-    description: '요약, 생성, 자동화',
-    icon: Sparkles,
-    badge: 'AI',
-    ai: true
   }
 ];
 
@@ -89,7 +59,7 @@ export function App() {
     <div className="app-shell">
       <aside className={`sidebar ${mobileOpen ? 'sidebar-open' : ''}`} aria-label="주요 메뉴">
         <div className="sidebar-header">
-          <a className="brand-link" href="/" aria-label="DECK A팀 홈">
+          <a className="brand-link" href="https://www.polarisoffice.com/ko" aria-label="Polaris Office 홈페이지">
             <span className="brand-mark" aria-hidden="true">
               P
             </span>
