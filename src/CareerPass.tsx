@@ -31,8 +31,6 @@ const LIST_PREVIEW_LIMIT = 2;
 
 type CareerPassSectionId = 'track' | 'experience' | 'final';
 
-type CareerPassListId = 'applications' | 'packages';
-
 type ExperienceSortMode = 'recent' | 'title';
 
 type SupportTrack = {
@@ -69,13 +67,6 @@ type SubmissionCheck = {
   text: string;
 };
 
-type SubmissionPackage = {
-  id: string;
-  title: string;
-  detail: string;
-  tags: string[];
-};
-
 type CareerPassSection = {
   id: CareerPassSectionId;
   label: string;
@@ -85,7 +76,7 @@ type CareerPassSection = {
 const careerPassSections: CareerPassSection[] = [
   { id: 'track', label: '지원 현황', icon: BriefcaseBusiness },
   { id: 'experience', label: '경험 카드', icon: Puzzle },
-  { id: 'final', label: 'Final Room', icon: PackageCheck }
+  { id: 'final', label: '최종 검수', icon: PackageCheck }
 ];
 
 const initialTracks: SupportTrack[] = [
@@ -227,31 +218,13 @@ const initialChecks: SubmissionCheck[] = [
   { id: 'filename', label: '파일명 규칙', status: 'warning', text: '수정 필요' }
 ];
 
-const initialPackages: SubmissionPackage[] = [
-  {
-    id: 'hyundai-final',
-    title: '현대자동차 UX Designer',
-    detail: '최종 제출본 · 포트폴리오 업로드 완료',
-    tags: ['최종 제출본', '파일 저장', 'D-1']
-  },
-  {
-    id: 'kakao-final',
-    title: '카카오 Product Designer',
-    detail: '첨부 파일 검수 완료',
-    tags: ['검수 완료', '수정 이력', 'D-3']
-  }
-];
-
 const initialEssay =
   '프로젝트 진행 과정에서 팀원 간 전략 방향성에 대한 의견 충돌이 발생했습니다. 초기에는 각자의 아이디어를 중심으로 논의가 이어지며 의사결정이 지연되었습니다. 저는 사용자 인터뷰 데이터를 다시 정리하여 객관적인 기준을 제시했고, 이를 기반으로 우선순위를 재조정하는 회의 구조를 제안했습니다. 이후 팀원들의 의견을 시각적으로 정리해 합의 과정을 단순화했고, 최종적으로 전략 방향을 빠르게 통합할 수 있었습니다. 그 결과 프로젝트 완성도를 높일 수 있었고, 최종 발표에서 우수상을 수상했습니다.';
 
 export function CareerPass() {
   const [activeSection, setActiveSection] = useState<CareerPassSectionId>('track');
   const [trackModalOpen, setTrackModalOpen] = useState(false);
-  const [expandedLists, setExpandedLists] = useState<Record<CareerPassListId, boolean>>({
-    applications: false,
-    packages: false
-  });
+  const [applicationsExpanded, setApplicationsExpanded] = useState(false);
   const [selectedApplicationId, setSelectedApplicationId] = useState<string | null>(null);
   const [trackLink, setTrackLink] = useState('');
   const [trackQuestions, setTrackQuestions] = useState('');
@@ -259,10 +232,12 @@ export function CareerPass() {
   const [trackNotice, setTrackNotice] = useState('지원 관리 중');
   const [supportTracks, setSupportTracks] = useState<SupportTrack[]>(initialTracks);
   const [essayCardsPanelOpen, setEssayCardsPanelOpen] = useState(true);
+  const [experienceModalOpen, setExperienceModalOpen] = useState(false);
   const [activityName, setActivityName] = useState('');
   const [activityDescription, setActivityDescription] = useState('');
   const [experienceSortMode, setExperienceSortMode] = useState<ExperienceSortMode>('recent');
   const [experienceCards, setExperienceCards] = useState<ExperienceCard[]>(initialExperienceCards);
+  const [selectedExperienceCardId, setSelectedExperienceCardId] = useState<string | null>(initialExperienceCards[0]?.id ?? null);
   const [essayDraft, setEssayDraft] = useState<EssayDraft>({
     question: '협업 과정에서 갈등을 해결했던 경험과, 이를 통해 얻은 인사이트를 작성해주세요.',
     body: initialEssay,
@@ -271,8 +246,7 @@ export function CareerPass() {
   });
   const [finalFileName, setFinalFileName] = useState('');
   const [submissionChecks, setSubmissionChecks] = useState<SubmissionCheck[]>(initialChecks);
-  const [submissionPackages, setSubmissionPackages] = useState<SubmissionPackage[]>(initialPackages);
-  const [finalNotice, setFinalNotice] = useState('검수 대기');
+  const finalNotice = '검수 대기';
 
   const essayCharacterCount = essayDraft.body.length;
   const completedChecks = submissionChecks.filter((check) => check.status === 'complete').length;
@@ -334,8 +308,10 @@ export function CareerPass() {
     };
 
     setExperienceCards((cards) => [card, ...cards]);
+    setSelectedExperienceCardId(card.id);
     setActivityName('');
     setActivityDescription('');
+    setExperienceModalOpen(false);
   };
 
   const structureEssay = () => {
@@ -379,22 +355,6 @@ export function CareerPass() {
     );
   };
 
-  const saveSubmissionPackage = () => {
-    const nextPackage: SubmissionPackage = {
-      id: `package-${Date.now()}`,
-      title: '신규 제출 패키지',
-      detail: finalFileName || '파일 미선택',
-      tags: [`${completionRate}% 완료`, '방금 저장']
-    };
-
-    setSubmissionPackages((packages) => [nextPackage, ...packages]);
-    setFinalNotice('패키지 저장됨');
-  };
-
-  const toggleExpandedList = (listId: CareerPassListId) => {
-    setExpandedLists((lists) => ({ ...lists, [listId]: !lists[listId] }));
-  };
-
   const toggleExperienceSort = () => {
     setExperienceSortMode((mode) => (mode === 'recent' ? 'title' : 'recent'));
   };
@@ -410,7 +370,23 @@ export function CareerPass() {
     setEssayCardsPanelOpen(true);
   };
 
+  const openEditorWithExperience = (experienceCardId: string) => {
+    const firstTrack = supportTracks[0];
+
+    if (!firstTrack) {
+      return;
+    }
+
+    setSelectedExperienceCardId(experienceCardId);
+    setActiveSection('track');
+    setSelectedApplicationId(firstTrack.id);
+    setEssayCardsPanelOpen(true);
+    setEssayDraft((draft) => ({ ...draft, status: '경험 연결', finalApplied: false }));
+  };
+
   const selectedApplication = supportTracks.find((application) => application.id === selectedApplicationId) ?? null;
+  const selectedExperienceCard =
+    experienceCards.find((card) => card.id === selectedExperienceCardId) ?? experienceCards[0] ?? null;
 
   return (
     <section className="career-pass" aria-labelledby="career-pass-title">
@@ -447,6 +423,7 @@ export function CareerPass() {
         <WritingSection
           application={selectedApplication}
           experienceCards={experienceCards}
+          selectedExperienceCard={selectedExperienceCard}
           draft={essayDraft}
           characterCount={essayCharacterCount}
           cardsPanelOpen={essayCardsPanelOpen}
@@ -465,22 +442,30 @@ export function CareerPass() {
         <TrackSection
           trackNotice={trackNotice}
           tracks={supportTracks}
-          showAll={expandedLists.applications}
-          onToggleList={() => toggleExpandedList('applications')}
+          showAll={applicationsExpanded}
+          onToggleList={() => setApplicationsExpanded((expanded) => !expanded)}
           onOpenEssay={openEssayEditor}
         />
       )}
 
       {activeSection === 'experience' && (
         <ExperienceSection
-          activityName={activityName}
-          activityDescription={activityDescription}
           cards={experienceCards}
           sortMode={experienceSortMode}
           onToggleSort={toggleExperienceSort}
+          onOpenInput={() => setExperienceModalOpen(true)}
+          onOpenEditor={openEditorWithExperience}
+        />
+      )}
+
+      {experienceModalOpen && (
+        <ExperienceCreateModal
+          activityName={activityName}
+          activityDescription={activityDescription}
           onNameChange={setActivityName}
           onDescriptionChange={setActivityDescription}
           onCreateCard={createExperienceCard}
+          onClose={() => setExperienceModalOpen(false)}
           canSave={Boolean(activityName.trim() || activityDescription.trim())}
         />
       )}
@@ -488,15 +473,11 @@ export function CareerPass() {
       {activeSection === 'final' && (
         <FinalSection
           checks={submissionChecks}
-          packages={submissionPackages}
           fileName={finalFileName}
           notice={finalNotice}
           completionRate={completionRate}
-          showAllPackages={expandedLists.packages}
           onFileSelect={setFinalFileName}
           onToggleCheck={toggleSubmissionCheck}
-          onTogglePackages={() => toggleExpandedList('packages')}
-          onSavePackage={saveSubmissionPackage}
         />
       )}
 
@@ -638,25 +619,17 @@ function TrackCreateModal({
 }
 
 function ExperienceSection({
-  activityName,
-  activityDescription,
   cards,
   sortMode,
   onToggleSort,
-  onNameChange,
-  onDescriptionChange,
-  onCreateCard,
-  canSave
+  onOpenInput,
+  onOpenEditor
 }: {
-  activityName: string;
-  activityDescription: string;
   cards: ExperienceCard[];
   sortMode: ExperienceSortMode;
   onToggleSort: () => void;
-  onNameChange: (value: string) => void;
-  onDescriptionChange: (value: string) => void;
-  onCreateCard: () => void;
-  canSave: boolean;
+  onOpenInput: () => void;
+  onOpenEditor: (cardId: string) => void;
 }) {
   const sortedCards =
     sortMode === 'title'
@@ -666,48 +639,24 @@ function ExperienceSection({
 
   return (
     <div className="experience-workspace">
-      <section className="career-card experience-composer">
+      <section className="experience-list-card" aria-labelledby="experience-list-title">
         <div className="section-card-header">
-          <h3>경험 입력</h3>
-          <PolarisButton className="primary-action" disabled={!canSave} onClick={onCreateCard}>
-            <Save size={16} aria-hidden="true" />
-            저장하기
-          </PolarisButton>
-        </div>
-
-        <div className="form-panel experience-form-panel">
-          <div className="experience-form-fields">
-            <PolarisInput
-              label="활동명"
-              placeholder="예: 브랜딩 공모전 프로젝트"
-              value={activityName}
-              onChange={(event) => onNameChange(event.target.value)}
-            />
-            <PolarisTextarea
-              label="활동 내용"
-              rows={5}
-              placeholder="배경, 역할, 행동, 성과"
-              value={activityDescription}
-              onChange={(event) => onDescriptionChange(event.target.value)}
-            />
-          </div>
-        </div>
-      </section>
-
-      <section className="career-card experience-list-card">
-        <div className="section-card-header">
-          <h3>카드 목록</h3>
+          <h3 id="experience-list-title">카드 목록</h3>
           <div className="button-row">
             <span className="status-pill">총 {cards.length}개</span>
             <PolarisButton className="secondary-action compact-action" onClick={onToggleSort}>
               <ArrowUpDown size={16} aria-hidden="true" />
               정렬: {sortLabel}
             </PolarisButton>
+            <PolarisButton className="primary-action compact-action" onClick={onOpenInput}>
+              <Plus size={16} aria-hidden="true" />
+              경험 입력
+            </PolarisButton>
           </div>
         </div>
         <div className="experience-stack case-card-grid">
           {sortedCards.map((card) => (
-            <article className="case-card experience-case-card" key={card.id}>
+            <PolarisButton className="case-card experience-case-card" key={card.id} onClick={() => onOpenEditor(card.id)}>
               <div className="case-card-visual experience-case-visual">
                 <span className="case-card-kicker">{card.tags[0]}</span>
                 <strong>{card.title}</strong>
@@ -724,9 +673,71 @@ function ExperienceSection({
                   <span>{card.tags[0]}</span>
                   <strong>{card.tags[1] ?? card.tags[2]}</strong>
                 </div>
+                <div className="case-card-action">
+                  <PenLine size={15} aria-hidden="true" />
+                  편집기로 연결
+                  <ChevronRight size={15} aria-hidden="true" />
+                </div>
               </div>
-            </article>
+            </PolarisButton>
           ))}
+        </div>
+      </section>
+    </div>
+  );
+}
+
+function ExperienceCreateModal({
+  activityName,
+  activityDescription,
+  onNameChange,
+  onDescriptionChange,
+  onCreateCard,
+  onClose,
+  canSave
+}: {
+  activityName: string;
+  activityDescription: string;
+  onNameChange: (value: string) => void;
+  onDescriptionChange: (value: string) => void;
+  onCreateCard: () => void;
+  onClose: () => void;
+  canSave: boolean;
+}) {
+  return (
+    <div className="modal-backdrop" role="presentation">
+      <section className="career-modal" role="dialog" aria-modal="true" aria-labelledby="experience-create-title">
+        <div className="section-card-header modal-header">
+          <h3 id="experience-create-title">경험 입력</h3>
+          <PolarisButton className="icon-button" aria-label="닫기" onClick={onClose}>
+            <X size={18} aria-hidden="true" />
+          </PolarisButton>
+        </div>
+
+        <div className="form-panel modal-form">
+          <PolarisInput
+            label="활동명"
+            placeholder="예: 브랜딩 공모전 프로젝트"
+            value={activityName}
+            onChange={(event) => onNameChange(event.target.value)}
+          />
+          <PolarisTextarea
+            label="활동 내용"
+            rows={6}
+            placeholder="배경, 역할, 행동, 성과"
+            value={activityDescription}
+            onChange={(event) => onDescriptionChange(event.target.value)}
+          />
+        </div>
+
+        <div className="modal-actions">
+          <PolarisButton className="secondary-action" onClick={onClose}>
+            취소
+          </PolarisButton>
+          <PolarisButton className="primary-action" disabled={!canSave} onClick={onCreateCard}>
+            <Save size={16} aria-hidden="true" />
+            저장하기
+          </PolarisButton>
         </div>
       </section>
     </div>
@@ -736,6 +747,7 @@ function ExperienceSection({
 function WritingSection({
   application,
   experienceCards,
+  selectedExperienceCard,
   draft,
   characterCount,
   cardsPanelOpen,
@@ -750,6 +762,7 @@ function WritingSection({
 }: {
   application: SupportTrack;
   experienceCards: ExperienceCard[];
+  selectedExperienceCard: ExperienceCard | null;
   draft: EssayDraft;
   characterCount: number;
   cardsPanelOpen: boolean;
@@ -791,8 +804,8 @@ function WritingSection({
 
           <div className="recommendation-box strong">
             <strong>추천 경험</strong>
-            <span>브랜딩 공모전 전략 수정 경험</span>
-            <TagList tags={['협업', '갈등 해결', 'STAR', '문제 해결']} />
+            <span>{selectedExperienceCard?.title ?? '저장된 경험 카드'}</span>
+            <TagList tags={selectedExperienceCard?.tags ?? ['협업', '갈등 해결', 'STAR', '문제 해결']} />
           </div>
 
           <div className="guide-box compact-guide">
@@ -870,7 +883,7 @@ function WritingSection({
       </section>
 
       {cardsPanelOpen && (
-        <ExperienceReferencePanel cards={experienceCards} onClose={onToggleCardsPanel} />
+        <ExperienceReferencePanel cards={experienceCards} selectedCardId={selectedExperienceCard?.id ?? null} onClose={onToggleCardsPanel} />
       )}
     </div>
   );
@@ -878,9 +891,11 @@ function WritingSection({
 
 function ExperienceReferencePanel({
   cards,
+  selectedCardId,
   onClose
 }: {
   cards: ExperienceCard[];
+  selectedCardId: string | null;
   onClose: () => void;
 }) {
   return (
@@ -896,13 +911,16 @@ function ExperienceReferencePanel({
       </div>
 
       <div className="experience-reference-list">
-        {cards.map((card, index) => (
+        {cards.map((card, index) => {
+          const selected = selectedCardId ? card.id === selectedCardId : index === 0;
+
+          return (
           <article
-            className={`experience-reference-card ${index === 0 ? 'experience-reference-card-primary' : ''}`}
+            className={`experience-reference-card ${selected ? 'experience-reference-card-primary' : ''}`}
             key={card.id}
           >
             <div className="experience-reference-top">
-              {index === 0 && <span>추천</span>}
+              {selected && <span>추천</span>}
               <strong>{card.tags[2] ?? 'STAR'}</strong>
             </div>
 
@@ -923,7 +941,8 @@ function ExperienceReferencePanel({
               <CaseCardDetail title="성과" text={card.result} />
             </dl>
           </article>
-        ))}
+          );
+        })}
       </div>
     </aside>
   );
@@ -931,84 +950,46 @@ function ExperienceReferencePanel({
 
 function FinalSection({
   checks,
-  packages,
   fileName,
   notice,
   completionRate,
-  showAllPackages,
   onFileSelect,
-  onToggleCheck,
-  onTogglePackages,
-  onSavePackage
+  onToggleCheck
 }: {
   checks: SubmissionCheck[];
-  packages: SubmissionPackage[];
   fileName: string;
   notice: string;
   completionRate: number;
-  showAllPackages: boolean;
   onFileSelect: (fileName: string) => void;
   onToggleCheck: (checkId: string) => void;
-  onTogglePackages: () => void;
-  onSavePackage: () => void;
 }) {
-  const visiblePackages = showAllPackages ? packages : packages.slice(0, LIST_PREVIEW_LIMIT);
-
   return (
-    <div className="career-two-column">
-      <section className="career-card">
-        <div className="section-card-header">
-          <h3>제출 파일</h3>
-          <PolarisButton className="primary-action" onClick={onSavePackage}>
-            <PackageCheck size={16} aria-hidden="true" />
-            패키지 저장
+    <section className="career-card final-review-card">
+      <div className="section-card-header">
+        <div>
+          <h3>최종 검수</h3>
+          <p>첨부 파일과 제출 조건을 한 번에 확인하세요.</p>
+        </div>
+      </div>
+
+      <PolarisFileDrop
+        label="첨부 파일"
+        description="pdf · pptx · docx 선택"
+        fileName={fileName}
+        accept=".pdf,.ppt,.pptx,.doc,.docx"
+        onFileSelect={onFileSelect}
+      />
+
+      <div className="checklist final-review-checklist">
+        {checks.map((check) => (
+          <PolarisButton key={check.id} className="check-row interactive-check" onClick={() => onToggleCheck(check.id)}>
+            <span>{check.label}</span>
+            <strong className={`check-status ${check.status}`}>{check.text}</strong>
           </PolarisButton>
-        </div>
-
-        <PolarisFileDrop
-          label="첨부 파일"
-          description="pdf · pptx · docx 선택"
-          fileName={fileName}
-          accept=".pdf,.ppt,.pptx,.doc,.docx"
-          onFileSelect={onFileSelect}
-        />
-
-        <div className="checklist">
-          {checks.map((check) => (
-            <PolarisButton
-              key={check.id}
-              className="check-row interactive-check"
-              onClick={() => onToggleCheck(check.id)}
-            >
-              <span>{check.label}</span>
-              <strong className={`check-status ${check.status}`}>{check.text}</strong>
-            </PolarisButton>
-          ))}
-        </div>
-        <p className="state-note">{notice} · {completionRate}%</p>
-      </section>
-
-      <section className="career-card">
-        <div className="section-card-header">
-          <h3>제출 패키지</h3>
-          {packages.length > LIST_PREVIEW_LIMIT && (
-            <PolarisButton className="secondary-action compact-action" onClick={onTogglePackages}>
-              <ChevronRight size={16} aria-hidden="true" />
-              {showAllPackages ? '접기' : '더보기'}
-            </PolarisButton>
-          )}
-        </div>
-        <div className="package-stack">
-          {visiblePackages.map((item) => (
-            <article className="package-card" key={item.id}>
-              <h4>{item.title}</h4>
-              <p>{item.detail}</p>
-              <TagList tags={item.tags} />
-            </article>
-          ))}
-        </div>
-      </section>
-    </div>
+        ))}
+      </div>
+      <p className="state-note">{notice} · {completionRate}%</p>
+    </section>
   );
 }
 

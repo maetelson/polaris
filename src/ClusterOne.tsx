@@ -507,7 +507,6 @@ function WorkCardHome({ onOpenCard }: { onOpenCard: (cardId: string, view?: Work
   const selectedFile = selectedFileId ? files.find((file) => file.id === selectedFileId) ?? null : null;
   const selectedTask = selectedFile ? workCards.find((card) => card.id === selectedFile.taskId) ?? workCards[0] : null;
   const priorityCard = workCards[0];
-  const reviewCount = workCards.filter((card) => card.status.includes('검토') || card.status.includes('분류')).length;
 
   return (
     <section className="cl1-card-home" aria-labelledby="cl1-card-home-title">
@@ -525,20 +524,10 @@ function WorkCardHome({ onOpenCard }: { onOpenCard: (cardId: string, view?: Work
       </header>
 
       <section className="cl1-home-overview" aria-label="자료 작업 요약">
-        <div className="cl1-home-priority">
-          <span className="cl1-home-priority-label">오늘 먼저</span>
-          <div>
-            <h2>{priorityCard.nextAction}</h2>
-            <p>
-              <strong>{priorityCard.title}</strong>
-              <span>{priorityCard.source}</span>
-            </p>
-          </div>
-        </div>
         <div className="cl1-home-metrics" aria-label="작업 현황">
           <HomeMetric label="진행 중" value={`${workCards.length}건`} />
           <HomeMetric label="가장 가까운 마감" value={priorityCard.due} />
-          <HomeMetric label="확인 필요" value={`${reviewCount}건`} />
+          <HomeMetric label="오늘 할 일" value={`${workCards.length}건`} helper={priorityCard.nextAction} />
         </div>
       </section>
 
@@ -704,11 +693,20 @@ function WorkCardHome({ onOpenCard }: { onOpenCard: (cardId: string, view?: Work
   );
 }
 
-function HomeMetric({ label, value }: { label: string; value: string }) {
+function HomeMetric({
+  label,
+  value,
+  helper
+}: {
+  label: string;
+  value: string;
+  helper?: string;
+}) {
   return (
     <div className="cl1-home-metric">
       <span>{label}</span>
       <strong>{value}</strong>
+      {helper && <small>{helper}</small>}
     </div>
   );
 }
