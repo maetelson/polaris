@@ -1,0 +1,4 @@
+interface:
+  display_name: "UI Hierarchy Review"
+  short_description: "Checks UI changes with a UI/UX visual hierarchy lens."
+  default_prompt: "Use $ui-hierarchy-review to review this UI change for visual hierarchy before implementation."
