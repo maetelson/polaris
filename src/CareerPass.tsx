@@ -67,6 +67,11 @@ type SubmissionCheck = {
   text: string;
 };
 
+type TrackQuestionItem = {
+  id: string;
+  text: string;
+};
+
 type CareerPassSection = {
   id: CareerPassSectionId;
   label: string;
@@ -227,7 +232,7 @@ export function CareerPass() {
   const [applicationsExpanded, setApplicationsExpanded] = useState(false);
   const [selectedApplicationId, setSelectedApplicationId] = useState<string | null>(null);
   const [trackLink, setTrackLink] = useState('');
-  const [trackQuestions, setTrackQuestions] = useState('');
+  const [trackQuestions, setTrackQuestions] = useState<TrackQuestionItem[]>([{ id: 'question-1', text: '' }]);
   const [trackFileName, setTrackFileName] = useState('');
   const [trackNotice, setTrackNotice] = useState('지원 관리 중');
   const [supportTracks, setSupportTracks] = useState<SupportTrack[]>(initialTracks);
@@ -265,12 +270,13 @@ export function CareerPass() {
 
   const createSupportTrack = () => {
     const company = inferCompanyName(trackLink);
-    const questionCount = countQuestions(trackQuestions);
+    const questionCount = countTrackQuestions(trackQuestions);
+    const questionDetail = questionCount > 0 ? `자소서 ${questionCount}문항` : '문항 확인 필요';
     const track: SupportTrack = {
       id: `track-${Date.now()}`,
       company,
       role: '지원 직무',
-      detail: `자소서 ${questionCount}문항 · ${trackFileName ? '파일 제출' : '링크 제출'}`,
+      detail: `${questionDetail} · ${trackFileName ? '파일 제출' : '링크 제출'}`,
       deadline: 'D-확인',
       status: '신규',
       tags: [trackFileName ? '공고 업로드' : '링크 입력']
@@ -279,11 +285,31 @@ export function CareerPass() {
     setSupportTracks((tracks) => [track, ...tracks]);
     setTrackNotice(`${company} 지원 추가`);
     setTrackLink('');
-    setTrackQuestions('');
+    setTrackQuestions([{ id: `question-${Date.now()}`, text: '' }]);
     setTrackFileName('');
     setActiveSection('track');
     setSelectedApplicationId(null);
     setTrackModalOpen(false);
+  };
+
+  const updateTrackQuestion = (questionId: string, value: string) => {
+    setTrackQuestions((questions) =>
+      questions.map((question) => (question.id === questionId ? { ...question, text: value } : question))
+    );
+  };
+
+  const addTrackQuestion = () => {
+    setTrackQuestions((questions) => [...questions, { id: `question-${Date.now()}`, text: '' }]);
+  };
+
+  const removeTrackQuestion = (questionId: string) => {
+    setTrackQuestions((questions) => {
+      if (questions.length === 1) {
+        return [{ ...questions[0], text: '' }];
+      }
+
+      return questions.filter((question) => question.id !== questionId);
+    });
   };
 
   const createExperienceCard = () => {
@@ -487,7 +513,9 @@ export function CareerPass() {
           trackQuestions={trackQuestions}
           trackFileName={trackFileName}
           onLinkChange={setTrackLink}
-          onQuestionsChange={setTrackQuestions}
+          onQuestionChange={updateTrackQuestion}
+          onAddQuestion={addTrackQuestion}
+          onRemoveQuestion={removeTrackQuestion}
           onFileSelect={setTrackFileName}
           onCreateTrack={createSupportTrack}
           onClose={() => setTrackModalOpen(false)}
@@ -558,16 +586,20 @@ function TrackCreateModal({
   trackQuestions,
   trackFileName,
   onLinkChange,
-  onQuestionsChange,
+  onQuestionChange,
+  onAddQuestion,
+  onRemoveQuestion,
   onFileSelect,
   onCreateTrack,
   onClose
 }: {
   trackLink: string;
-  trackQuestions: string;
+  trackQuestions: TrackQuestionItem[];
   trackFileName: string;
   onLinkChange: (value: string) => void;
-  onQuestionsChange: (value: string) => void;
+  onQuestionChange: (questionId: string, value: string) => void;
+  onAddQuestion: () => void;
+  onRemoveQuestion: (questionId: string) => void;
   onFileSelect: (fileName: string) => void;
   onCreateTrack: () => void;
   onClose: () => void;
@@ -589,20 +621,48 @@ function TrackCreateModal({
             value={trackLink}
             onChange={(event) => onLinkChange(event.target.value)}
           />
-          <PolarisTextarea
-            label="자소서 문항"
-            rows={6}
-            placeholder="문항을 붙여넣으세요."
-            value={trackQuestions}
-            onChange={(event) => onQuestionsChange(event.target.value)}
-          />
-          <PolarisFileDrop
-            label="공고 파일"
-            description="pdf 선택"
-            fileName={trackFileName}
-            accept=".pdf"
-            onFileSelect={onFileSelect}
-          />
+          <div className="question-builder" aria-labelledby="track-question-builder-title">
+            <div className="question-builder-head">
+              <div>
+                <strong id="track-question-builder-title">자소서 문항</strong>
+                <small>문항 하나를 입력란 하나에 등록하세요.</small>
+              </div>
+              <PolarisButton className="secondary-action compact-action" onClick={onAddQuestion}>
+                <Plus size={16} aria-hidden="true" />
+                문항 추가
+              </PolarisButton>
+            </div>
+            <div className="question-list">
+              {trackQuestions.map((question, index) => (
+                <div className="question-row" key={question.id}>
+                  <PolarisInput
+                    className="question-input"
+                    label={`문항 ${index + 1}`}
+                    placeholder="예: 지원 동기와 입사 후 기여 방안을 작성해주세요."
+                    value={question.text}
+                    onChange={(event) => onQuestionChange(question.id, event.target.value)}
+                  />
+                  <PolarisButton
+                    className="icon-button question-delete-button"
+                    aria-label={`문항 ${index + 1} 삭제`}
+                    onClick={() => onRemoveQuestion(question.id)}
+                  >
+                    <X size={17} aria-hidden="true" />
+                  </PolarisButton>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="file-field-group">
+            <span>공고 파일</span>
+            <PolarisFileDrop
+              label="파일 선택"
+              description="pdf 선택"
+              fileName={trackFileName}
+              accept=".pdf"
+              onFileSelect={onFileSelect}
+            />
+          </div>
         </div>
 
         <div className="modal-actions">
@@ -1037,20 +1097,17 @@ function inferCompanyName(link: string) {
 
   try {
     const url = new URL(link);
-    const host = url.hostname.replace(/^www\./, '');
-    const company = host.split('.')[0];
+    const hostParts = url.hostname
+      .replace(/^www\./, '')
+      .split('.')
+      .filter(Boolean);
+    const company = hostParts.find((part) => !['career', 'careers', 'job', 'jobs', 'recruit'].includes(part)) ?? hostParts[0];
     return company ? company.toUpperCase() : '신규 기업';
   } catch {
     return '신규 기업';
   }
 }
 
-function countQuestions(questions: string) {
-  const trimmed = questions.trim();
-  if (!trimmed) {
-    return 1;
-  }
-
-  const lineCount = trimmed.split(/\n+/).filter(Boolean).length;
-  return Math.max(1, lineCount);
+function countTrackQuestions(questions: TrackQuestionItem[]) {
+  return questions.filter((question) => question.text.trim()).length;
 }
