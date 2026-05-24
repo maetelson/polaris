@@ -1,16 +1,19 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   Bell,
   ChevronDown,
   ClipboardList,
   HelpCircle,
   Home,
+  History,
+  Kanban,
   ListChecks,
   Menu,
   MessageSquareText,
   PanelLeftClose,
   Search,
   Settings,
+  ShieldCheck,
   UserRound,
   X
 } from 'lucide-react';
@@ -32,6 +35,21 @@ type NavItem = {
 };
 
 const POLARIS_HOME_URL = 'https://www.polarisoffice.com/ko';
+const defaultReviewRoomDocument = { title: '팀 프로젝트 제안서.docx', unit: '문단' };
+const companyARoute = '/company-A';
+const workCardDetailRoute = '/work-card/job-application';
+const workspaceRoutes: Record<string, string> = {
+  home: '/',
+  'career-pass': '/career-pass',
+  'cluster-one': '/work-card',
+  'review-room': '/review-room',
+  'work-board': '/work-board'
+};
+
+const routeAliases: Record<string, string> = {
+  '/cl1': companyARoute,
+  '/cl2': workspaceRoutes['work-board']
+};
 
 const workspaceNav: NavItem[] = [
   {
@@ -62,20 +80,32 @@ const workspaceNav: NavItem[] = [
     id: 'work-board',
     label: '작업 보드',
     description: '근거 검증부터 인용 점검까지 이어지는 진행 현황',
-    icon: ListChecks
+    icon: Kanban
   }
 ];
 
 export function App() {
+  const startsOnCompanyA = isCompanyARoute();
   const startsOnClusterOne = isClusterOneRoute();
+  const startsOnCareerPass = isCareerPassRoute();
   const startsOnReviewRoom = isReviewRoomRoute();
   const startsOnWorkBoard = isWorkBoardRoute();
   const clusterOneView = getClusterOneView();
-  const startsInClusterOneWorkspace = startsOnClusterOne && (clusterOneView === 'workspace' || clusterOneView === 'detail');
-  const [activeId, setActiveId] = useState(startsOnClusterOne ? 'cluster-one' : startsOnReviewRoom ? 'review-room' : startsOnWorkBoard ? 'work-board' : 'home');
-  const [showClusterOneStart, setShowClusterOneStart] = useState(startsOnClusterOne && !startsInClusterOneWorkspace);
+  const [activeId, setActiveId] = useState(
+    startsOnCompanyA || startsOnClusterOne
+      ? 'cluster-one'
+      : startsOnCareerPass
+        ? 'career-pass'
+        : startsOnReviewRoom
+          ? 'review-room'
+          : startsOnWorkBoard
+            ? 'work-board'
+            : 'home'
+  );
+  const [showClusterOneStart, setShowClusterOneStart] = useState(startsOnCompanyA);
   const [clusterOneStartsInDetail, setClusterOneStartsInDetail] = useState(startsOnClusterOne && clusterOneView === 'detail');
   const [clusterOneResetKey, setClusterOneResetKey] = useState(0);
+  const [reviewRoomDocument, setReviewRoomDocument] = useState(defaultReviewRoomDocument);
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const activeItem = useMemo(
@@ -104,8 +134,29 @@ export function App() {
     setShowClusterOneStart(false);
     setClusterOneStartsInDetail(true);
     setClusterOneResetKey((key) => key + 1);
-    syncRouteForNav('cluster-one');
+    syncRouteTo(workCardDetailRoute);
   };
+
+  useEffect(() => {
+    canonicalizeCurrentRoute();
+
+    const handlePopState = () => {
+      const nextIsCompanyA = isCompanyARoute();
+      const nextId = getCurrentNavId();
+      const nextClusterOneView = getClusterOneView();
+
+      setActiveId(nextId);
+      setShowClusterOneStart(nextIsCompanyA);
+      setClusterOneStartsInDetail(nextId === 'cluster-one' && nextClusterOneView === 'detail');
+      setMobileOpen(false);
+    };
+
+    window.addEventListener('popstate', handlePopState);
+
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, []);
 
   if (showClusterOneStart) {
     return <ClusterOneStart onSendToPolaris={enterClusterOneWorkspace} />;
@@ -121,7 +172,7 @@ export function App() {
             </span>
             <span className="brand-copy">
               <strong>DECK A팀</strong>
-              <span>Office Workbench</span>
+              <span>오피스 작업대</span>
             </span>
           </a>
           <PolarisButton className="icon-button mobile-only" aria-label="메뉴 닫기" onClick={() => setMobileOpen(false)}>
@@ -130,7 +181,7 @@ export function App() {
         </div>
 
         <nav className="sidebar-body" aria-label="DECK A팀 작업 영역">
-          <NavSection items={workspaceNav} activeId={activeId} title="Workspace" onSelect={selectItem} />
+          <NavSection items={workspaceNav} activeId={activeId} title="작업 영역" onSelect={selectItem} />
         </nav>
 
         <div className="sidebar-footer">
@@ -152,31 +203,59 @@ export function App() {
             <PolarisButton className="icon-button mobile-only" aria-label="메뉴 열기" onClick={() => setMobileOpen(true)}>
               <Menu size={18} aria-hidden="true" />
             </PolarisButton>
-            <div className="search-field" role="search">
-              <Search size={16} aria-hidden="true" />
-              <span>문서, 계약, NOVA 작업 검색</span>
-            </div>
+            {activeId === 'review-room' ? (
+              <div className="gnb-document-area" aria-label="현재 문서">
+                <div className="gnb-document-title">
+                  <strong>{reviewRoomDocument.title}</strong>
+                  <span>{reviewRoomDocument.unit}</span>
+                </div>
+              </div>
+            ) : (
+              <div className="search-field" role="search">
+                <Search size={16} aria-hidden="true" />
+                <span>문서, 계약, NOVA 작업 검색</span>
+              </div>
+            )}
           </div>
 
-          <div className="gnb-actions" aria-label="사용자 메뉴">
-            <PolarisButton className="icon-button" aria-label="도움말">
-              <HelpCircle size={18} aria-hidden="true" />
-            </PolarisButton>
-            <PolarisButton className="icon-button notification-button" aria-label="알림 3건">
-              <Bell size={18} aria-hidden="true" />
-              <span aria-hidden="true" />
-            </PolarisButton>
-            <PolarisButton className="icon-button" aria-label="설정">
-              <Settings size={18} aria-hidden="true" />
-            </PolarisButton>
-            <PolarisButton className="profile-button" aria-label="사용자 프로필">
-              <span className="avatar" aria-hidden="true">
-                <UserRound size={16} />
-              </span>
-              <span className="profile-copy">DECK A팀</span>
-              <ChevronDown size={15} aria-hidden="true" />
-            </PolarisButton>
-          </div>
+          {activeId === 'review-room' ? (
+            <div className="gnb-document-actions" aria-label="버전 작업">
+              <PolarisButton
+                className="secondary-action compact-action"
+                onClick={() => window.dispatchEvent(new Event('review-room:save-version'))}
+              >
+                <History size={15} aria-hidden="true" />
+                버전 저장
+              </PolarisButton>
+              <PolarisButton
+                className="primary-action compact-action"
+                onClick={() => window.dispatchEvent(new Event('review-room:confirm-final'))}
+              >
+                <ShieldCheck size={15} aria-hidden="true" />
+                최종 반영
+              </PolarisButton>
+            </div>
+          ) : (
+            <div className="gnb-actions" aria-label="사용자 메뉴">
+              <PolarisButton className="icon-button" aria-label="도움말">
+                <HelpCircle size={18} aria-hidden="true" />
+              </PolarisButton>
+              <PolarisButton className="icon-button notification-button" aria-label="알림 3건">
+                <Bell size={18} aria-hidden="true" />
+                <span aria-hidden="true" />
+              </PolarisButton>
+              <PolarisButton className="icon-button" aria-label="설정">
+                <Settings size={18} aria-hidden="true" />
+              </PolarisButton>
+              <PolarisButton className="profile-button" aria-label="사용자 프로필">
+                <span className="avatar" aria-hidden="true">
+                  <UserRound size={16} />
+                </span>
+                <span className="profile-copy">DECK A팀</span>
+                <ChevronDown size={15} aria-hidden="true" />
+              </PolarisButton>
+            </div>
+          )}
         </header>
 
         <main
@@ -188,7 +267,7 @@ export function App() {
           ) : activeId === 'cluster-one' ? (
             <ClusterOneWorkspace key={`${clusterOneResetKey}-${clusterOneStartsInDetail}`} initialDetail={clusterOneStartsInDetail} />
           ) : activeId === 'review-room' ? (
-            <ReviewRoom />
+            <ReviewRoom onDocumentChange={setReviewRoomDocument} />
           ) : activeId === 'work-board' ? (
             <WorkBoard />
           ) : (
@@ -200,7 +279,7 @@ export function App() {
                   <p>{activeItem.description}</p>
                 </div>
                 <span className={activeItem.ai ? 'status-pill ai-pill' : 'status-pill'}>
-                  {activeItem.ai ? 'NOVA 영역' : 'Pages ready'}
+                  {activeItem.ai ? 'NOVA 영역' : '페이지 준비 완료'}
                 </span>
               </section>
 
@@ -214,7 +293,7 @@ export function App() {
                 <div className="document-canvas">
                   <div className="canvas-ruler" aria-hidden="true" />
                   <div className="empty-state">
-                    <p className="empty-kicker">Blank workspace</p>
+                    <p className="empty-kicker">빈 작업공간</p>
                     <h2>새 문서를 선택하거나 작업 보드에서 이어서 시작하세요.</h2>
                     <p>
                       최근 작업과 팀 문서가 이 공간에 표시됩니다.
@@ -231,12 +310,37 @@ export function App() {
   );
 }
 
+function isCompanyARoute() {
+  if (typeof window === 'undefined') {
+    return false;
+  }
+
+  const path = getRoutePathname();
+  const clusterOneView = getClusterOneView();
+  return (path === companyARoute || path === '/cl1') && !clusterOneView;
+}
+
 function isClusterOneRoute() {
   if (typeof window === 'undefined') {
     return false;
   }
 
-  return window.location.pathname.replace(/\/$/, '').endsWith('/cl1');
+  const path = getRoutePathname();
+  const clusterOneView = getClusterOneView();
+  return (
+    path === workspaceRoutes['cluster-one'] ||
+    path === workCardDetailRoute ||
+    (path === '/cl1' && (clusterOneView === 'workspace' || clusterOneView === 'detail')) ||
+    (path === companyARoute && (clusterOneView === 'workspace' || clusterOneView === 'detail'))
+  );
+}
+
+function isCareerPassRoute() {
+  if (typeof window === 'undefined') {
+    return false;
+  }
+
+  return getRoutePathname() === workspaceRoutes['career-pass'];
 }
 
 function isReviewRoomRoute() {
@@ -244,7 +348,7 @@ function isReviewRoomRoute() {
     return false;
   }
 
-  return window.location.pathname.replace(/\/$/, '').endsWith('/review-room');
+  return getRoutePathname() === workspaceRoutes['review-room'];
 }
 
 function isWorkBoardRoute() {
@@ -252,7 +356,8 @@ function isWorkBoardRoute() {
     return false;
   }
 
-  return window.location.pathname.replace(/\/$/, '').endsWith('/cl2');
+  const path = getRoutePathname();
+  return path === workspaceRoutes['work-board'] || path === '/cl2';
 }
 
 function syncRouteForNav(itemId: string) {
@@ -260,11 +365,102 @@ function syncRouteForNav(itemId: string) {
     return;
   }
 
-  const targetPath = itemId === 'cluster-one' ? '/cl1' : itemId === 'review-room' ? '/review-room' : itemId === 'work-board' ? '/cl2' : '/';
+  const targetRoute = workspaceRoutes[itemId] ?? workspaceRoutes.home;
+  syncRouteTo(targetRoute);
+}
 
-  if (window.location.pathname !== targetPath) {
+function syncRouteTo(targetRoute: string) {
+  if (typeof window === 'undefined') {
+    return;
+  }
+
+  const targetPath = toBrowserPath(targetRoute);
+  const currentPath = getRoutePathname();
+
+  if (currentPath !== targetRoute || window.location.search || window.location.hash) {
     window.history.pushState(null, '', targetPath);
   }
+}
+
+function canonicalizeCurrentRoute() {
+  if (typeof window === 'undefined') {
+    return;
+  }
+
+  const path = getRoutePathname();
+  const clusterOneView = getClusterOneView();
+  let canonicalPath = routeAliases[path];
+  let canonicalSearch = window.location.search;
+
+  if ((path === '/cl1' || path === companyARoute) && clusterOneView === 'detail') {
+    canonicalPath = workCardDetailRoute;
+    canonicalSearch = getSearchWithout('view');
+  } else if ((path === '/cl1' || path === companyARoute) && clusterOneView === 'workspace') {
+    canonicalPath = workspaceRoutes['cluster-one'];
+    canonicalSearch = getSearchWithout('view');
+  }
+
+  if (canonicalPath) {
+    window.history.replaceState(null, '', `${toBrowserPath(canonicalPath)}${canonicalSearch}${window.location.hash}`);
+  }
+}
+
+function getCurrentNavId() {
+  const path = getRoutePathname();
+
+  if (path === workspaceRoutes['career-pass']) {
+    return 'career-pass';
+  }
+
+  if (path === workspaceRoutes['cluster-one'] || path === workCardDetailRoute || path === companyARoute || path === '/cl1') {
+    return 'cluster-one';
+  }
+
+  if (path === workspaceRoutes['review-room']) {
+    return 'review-room';
+  }
+
+  if (path === workspaceRoutes['work-board'] || path === '/cl2') {
+    return 'work-board';
+  }
+
+  return 'home';
+}
+
+function getNormalizedPathname() {
+  if (typeof window === 'undefined') {
+    return '/';
+  }
+
+  const normalized = window.location.pathname.replace(/\/+$/, '');
+  return normalized || '/';
+}
+
+function getRoutePathname() {
+  const path = getNormalizedPathname();
+  const basePath = getAppBasePath();
+
+  if (basePath && (path === basePath || path.startsWith(`${basePath}/`))) {
+    const routePath = path.slice(basePath.length) || '/';
+    return routePath.startsWith('/') ? routePath : `/${routePath}`;
+  }
+
+  return path;
+}
+
+function toBrowserPath(routePath: string) {
+  const basePath = getAppBasePath();
+
+  if (!basePath) {
+    return routePath;
+  }
+
+  return routePath === '/' ? `${basePath}/` : `${basePath}${routePath}`;
+}
+
+function getAppBasePath() {
+  const baseUrl = import.meta.env.BASE_URL.replace(/\/+$/, '');
+  return baseUrl === '' ? '' : baseUrl;
 }
 
 function getClusterOneView() {
@@ -272,7 +468,22 @@ function getClusterOneView() {
     return null;
   }
 
+  if (getRoutePathname() === workCardDetailRoute) {
+    return 'detail';
+  }
+
   return new URLSearchParams(window.location.search).get('view');
+}
+
+function getSearchWithout(name: string) {
+  if (typeof window === 'undefined') {
+    return '';
+  }
+
+  const params = new URLSearchParams(window.location.search);
+  params.delete(name);
+  const nextSearch = params.toString();
+  return nextSearch ? `?${nextSearch}` : '';
 }
 
 function NavSection({
