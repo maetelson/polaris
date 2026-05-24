@@ -2,7 +2,6 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   Check,
   MessageSquareText,
-  ShieldCheck,
   Sparkles,
   X
 } from 'lucide-react';
@@ -20,10 +19,9 @@ import {
 import { PolarisButton } from './polaris-controls';
 
 type DocumentId = 'word' | 'ppt' | 'sheet';
-type PanelId = 'comments' | 'ai' | 'tasks' | 'final';
+type PanelId = 'comments' | 'ai';
 type CommentStatus = '미확인' | '확인' | '해결 완료';
 type Importance = '높음' | '중간' | '낮음';
-type TaskStatus = '대기' | '진행 중' | '완료';
 
 type ReviewDocument = {
   id: DocumentId;
@@ -51,16 +49,6 @@ type MeetingMinute = {
   decision: string;
   due: string;
   importance: Importance;
-};
-
-type ReviewTask = {
-  id: string;
-  sourceCommentId: string;
-  title: string;
-  owner: string;
-  target: string;
-  due: string;
-  status: TaskStatus;
 };
 
 type ReviewVersion = {
@@ -131,10 +119,10 @@ const initialComments: ReviewComment[] = [
 
 const panelTabs: Array<{ id: PanelId; label: string; icon: typeof MessageSquareText }> = [
   { id: 'comments', label: '댓글', icon: MessageSquareText },
-  { id: 'ai', label: 'AI', icon: Sparkles },
-  { id: 'tasks', label: '작업', icon: Check },
-  { id: 'final', label: '최종본', icon: ShieldCheck }
+  { id: 'ai', label: 'AI', icon: Sparkles }
 ];
+
+const reviewProgressStepCount = 4;
 
 type ReviewRoomProps = {
   onDocumentChange?: (document: { title: string; unit: string }) => void;
@@ -154,7 +142,6 @@ export function ReviewRoom({ onDocumentChange }: ReviewRoomProps) {
   const toastTimerRef = useRef<ReturnType<typeof window.setTimeout> | null>(null);
   const [comments, setComments] = useState<ReviewComment[]>(initialComments);
   const [minutes, setMinutes] = useState<MeetingMinute[]>([]);
-  const [tasks, setTasks] = useState<ReviewTask[]>([]);
   const [versions, setVersions] = useState<ReviewVersion[]>([
     {
       id: 'v-seed',
@@ -165,11 +152,6 @@ export function ReviewRoom({ onDocumentChange }: ReviewRoomProps) {
       createdAt: '2026년 5월 24일 오전 10:17'
     }
   ]);
-  const [finalized, setFinalized] = useState<Record<DocumentId, boolean>>({
-    word: false,
-    ppt: false,
-    sheet: false
-  });
 
   const activeDocument = reviewDocuments.find((document) => document.id === activeDocumentId) ?? reviewDocuments[0];
   const documentComments = comments.filter((comment) => comment.documentId === activeDocumentId);
@@ -177,17 +159,11 @@ export function ReviewRoom({ onDocumentChange }: ReviewRoomProps) {
     const source = comments.find((comment) => comment.id === minute.sourceCommentId);
     return source?.documentId === activeDocumentId;
   });
-  const documentTasks = tasks.filter((task) => {
-    const source = comments.find((comment) => comment.id === task.sourceCommentId);
-    return source?.documentId === activeDocumentId;
-  });
   const documentVersions = versions.filter((version) => version.documentId === activeDocumentId);
   const openDocumentComments = documentComments.filter((comment) => comment.status !== '해결 완료');
   const openCommentIds = new Set(openDocumentComments.map((comment) => comment.id));
   const selectedComment = openDocumentComments.find((comment) => comment.id === selectedCommentId) ?? openDocumentComments[0];
   const unresolvedCount = openDocumentComments.length;
-  const highOpenCount = openDocumentComments.filter((comment) => comment.importance === '높음').length;
-  const undoneCount = documentTasks.filter((task) => task.status !== '완료').length;
 
   const openPanel = (panelId: PanelId) => {
     setActivePanelId(panelId);
@@ -210,11 +186,9 @@ export function ReviewRoom({ onDocumentChange }: ReviewRoomProps) {
       documentComments.length > 0,
       documentComments.some((comment) => comment.importance),
       documentMinutes.length > 0,
-      documentTasks.length > 0 && documentTasks.every((task) => task.status === '완료'),
-      documentVersions.length > 0,
-      finalized[activeDocumentId]
+      documentVersions.length > 0
     ].filter(Boolean).length;
-  }, [activeDocumentId, documentComments, documentMinutes, documentTasks, documentVersions, finalized]);
+  }, [documentComments, documentMinutes, documentVersions]);
 
   const selectDocument = (documentId: DocumentId) => {
     setActiveDocumentId(documentId);
@@ -283,56 +257,6 @@ export function ReviewRoom({ onDocumentChange }: ReviewRoomProps) {
     openPanel('ai');
   };
 
-  const createTasks = () => {
-    openPanel('tasks');
-    let sourceMinutes = documentMinutes;
-    if (!sourceMinutes.length) {
-      const generatedMinutes = buildMinutes(comments, minutes, activeDocumentId);
-      sourceMinutes = generatedMinutes;
-      setComments((current) =>
-        current.map((comment) =>
-          comment.documentId === activeDocumentId && comment.status !== '해결 완료' && !comment.importance
-            ? { ...comment, ...classifyComment(comment.content) }
-            : comment
-        )
-      );
-      setMinutes((current) => [...current, ...generatedMinutes]);
-    }
-
-    if (!sourceMinutes.length) {
-      return;
-    }
-
-    setTasks((current) => {
-      const existingSourceIds = new Set(current.map((task) => task.sourceCommentId));
-      const nextTasks = sourceMinutes
-        .filter((minute) => !existingSourceIds.has(minute.sourceCommentId))
-        .map((minute) => ({
-          id: `t-${minute.id}`,
-          sourceCommentId: minute.sourceCommentId,
-          title: minute.decision,
-          owner: minute.owner,
-          target: minute.target,
-          due: minute.due,
-          status: '대기' as TaskStatus
-        }));
-
-      return [...current, ...nextTasks];
-    });
-  };
-
-  const updateTaskStatus = (taskId: string, status: TaskStatus) => {
-    const sourceCommentId = tasks.find((task) => task.id === taskId)?.sourceCommentId;
-    setTasks((current) => current.map((task) => (task.id === taskId ? { ...task, status } : task)));
-
-    if (status === '완료' && sourceCommentId) {
-      setComments((current) =>
-        current.map((comment) => (comment.id === sourceCommentId ? { ...comment, status: '해결 완료' } : comment))
-      );
-      saveVersion('작업 완료 저장본', '작업 완료', '작업 완료 자동 저장');
-    }
-  };
-
   const resolveComment = (commentId: string) => {
     const nextComment = comments.find(
       (comment) => comment.documentId === activeDocumentId && comment.id !== commentId && comment.status !== '해결 완료'
@@ -390,8 +314,6 @@ export function ReviewRoom({ onDocumentChange }: ReviewRoomProps) {
 
   const confirmFinal = () => {
     saveVersion('최종본', '최종본', '최종본 확정');
-    setFinalized((current) => ({ ...current, [activeDocumentId]: true }));
-    openPanel('final');
   };
 
   const openVersionSavePanel = () => {
@@ -537,7 +459,7 @@ export function ReviewRoom({ onDocumentChange }: ReviewRoomProps) {
         {isReviewPanelOpen && (
           <aside className="rr-review-panel" aria-label="리뷰 패널">
             <div className="rr-progress-strip" aria-label="진행 상태">
-              <span style={{ width: `${(doneCount / 6) * 100}%` }} />
+              <span style={{ width: `${(doneCount / reviewProgressStepCount) * 100}%` }} />
             </div>
             <div className="rr-panel-toolbar">
               <strong>리뷰룸</strong>
@@ -627,48 +549,6 @@ export function ReviewRoom({ onDocumentChange }: ReviewRoomProps) {
               </PanelBlock>
             )}
 
-            {activePanelId === 'tasks' && (
-              <PanelBlock title="작업" action={`${undoneCount}개`} scrollable>
-                <div className="rr-button-row">
-                  <PolarisButton className="primary-action compact-action" onClick={createTasks}>
-                    수정 작업 만들기
-                  </PolarisButton>
-                </div>
-                <div className="rr-list">
-                  {documentTasks.length ? (
-                    documentTasks.map((task) => (
-                      <article className="rr-item" key={task.id}>
-                        <span>
-                          <strong>{task.title}</strong>
-                          <select value={task.status} onChange={(event) => updateTaskStatus(task.id, event.target.value as TaskStatus)}>
-                            <option>대기</option>
-                            <option>진행 중</option>
-                            <option>완료</option>
-                          </select>
-                        </span>
-                        <small>{task.owner} · {task.target} · {task.due}</small>
-                      </article>
-                    ))
-                  ) : (
-                    <EmptyLine label="작업 없음" />
-                  )}
-                </div>
-              </PanelBlock>
-            )}
-
-            {activePanelId === 'final' && (
-              <PanelBlock title="최종본" action={finalized[activeDocumentId] ? '확정됨' : '미확정'} scrollable>
-                <div className="rr-final-grid">
-                  <Metric label="미해결 댓글" value={`${unresolvedCount}개`} />
-                  <Metric label="미완료 작업" value={`${undoneCount}개`} />
-                  <Metric label="중요 피드백" value={`${highOpenCount}개`} />
-                  <Metric label="저장된 버전" value={`${documentVersions.length}개`} />
-                </div>
-                <PolarisButton className="primary-action rr-full-button" onClick={confirmFinal}>
-                  최종본 확정
-                </PolarisButton>
-              </PanelBlock>
-            )}
             </div>
           </aside>
         )}
@@ -1157,43 +1037,8 @@ function getCommentAnchorClass(commentId: string, selectedComment: ReviewComment
   return `rr-comment-anchor ${selectedComment?.id === commentId ? 'rr-comment-anchor-active' : ''}`;
 }
 
-function Metric({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="rr-metric">
-      <span>{label}</span>
-      <strong>{value}</strong>
-    </div>
-  );
-}
-
 function EmptyLine({ label }: { label: string }) {
   return <div className="rr-empty-line">{label}</div>;
-}
-
-function buildMinutes(comments: ReviewComment[], minutes: MeetingMinute[], activeDocumentId: DocumentId) {
-  const existingMinuteSourceIds = new Set(minutes.map((minute) => minute.sourceCommentId));
-  return comments
-    .filter((comment) => {
-      const nextComment = comment.importance ? comment : { ...comment, ...classifyComment(comment.content) };
-      return (
-        nextComment.documentId === activeDocumentId &&
-        nextComment.status !== '해결 완료' &&
-        (nextComment.importance === '높음' || nextComment.importance === '중간') &&
-        !existingMinuteSourceIds.has(nextComment.id)
-      );
-    })
-    .map((comment, index) => {
-      const nextComment = comment.importance ? comment : { ...comment, ...classifyComment(comment.content) };
-      return {
-        id: `m-${nextComment.id}-${index}`,
-        sourceCommentId: nextComment.id,
-        target: nextComment.target,
-        owner: extractMention(nextComment.content),
-        decision: defaultDecision(nextComment.content),
-        due: '5/26',
-        importance: nextComment.importance ?? '낮음'
-      };
-    });
 }
 
 function classifyComment(content: string): Pick<ReviewComment, 'importance' | 'category'> {

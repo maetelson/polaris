@@ -19,7 +19,6 @@ import {
   AiWriteIcon,
   AlignCenterIcon,
   AlignLeftIcon,
-  ApplyIcon,
   BoldIcon,
   ItalicIcon,
   Underline01Icon,
@@ -352,8 +351,12 @@ export function CareerPass() {
     setEssayDraft((draft) => ({ ...draft, status }));
   };
 
+  const previewEssay = () => {
+    saveEssay('미리보기');
+  };
+
   const applyFinalEssay = () => {
-    setEssayDraft((draft) => ({ ...draft, status: '최종 반영', finalApplied: true }));
+    setEssayDraft((draft) => ({ ...draft, status: '최종 검수', finalApplied: true }));
   };
 
   const toggleExperienceSort = () => {
@@ -438,8 +441,8 @@ export function CareerPass() {
           onBodyChange={(body) => setEssayDraft((draft) => ({ ...draft, body, status: '작성 중', finalApplied: false }))}
           onStructure={structureEssay}
           onPolish={polishEssay}
-          onSaveDraft={() => saveEssay('초안 저장')}
           onTempSave={() => saveEssay('임시 저장')}
+          onPreview={previewEssay}
           onApplyFinal={applyFinalEssay}
         />
       )}
@@ -787,8 +790,8 @@ function WritingSection({
   onBodyChange,
   onStructure,
   onPolish,
-  onSaveDraft,
   onTempSave,
+  onPreview,
   onApplyFinal
 }: {
   application: SupportTrack;
@@ -804,8 +807,8 @@ function WritingSection({
   onBodyChange: (value: string) => void;
   onStructure: () => void;
   onPolish: () => void;
-  onSaveDraft: () => void;
   onTempSave: () => void;
+  onPreview: () => void;
   onApplyFinal: () => void;
 }) {
   const questions = getTrackQuestionTexts(application, draft.question);
@@ -926,8 +929,8 @@ function WritingSection({
             <RibbonButton size="lg" icon={<WordCountIcon />}>
               글자 수
             </RibbonButton>
-            <RibbonButton size="lg" icon={<ApplyIcon />} onClick={onApplyFinal}>
-              최종 반영
+            <RibbonButton size="lg" icon={<Eye size={18} aria-hidden="true" />} onClick={onPreview}>
+              미리보기
             </RibbonButton>
           </RibbonGroup>
         </Ribbon>
@@ -946,13 +949,9 @@ function WritingSection({
               <Save size={16} aria-hidden="true" />
               임시 저장
             </PolarisButton>
-            <PolarisButton className="secondary-action" onClick={onSaveDraft}>
+            <PolarisButton className="primary-action" onClick={onApplyFinal}>
               <FileText size={16} aria-hidden="true" />
-              초안 저장
-            </PolarisButton>
-            <PolarisButton className="secondary-action" onClick={onSaveDraft}>
-              <Eye size={16} aria-hidden="true" />
-              미리보기
+              최종 검수
             </PolarisButton>
           </div>
         </div>

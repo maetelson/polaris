@@ -955,10 +955,6 @@ p {
   gap: var(--polaris-spacing-2xs);
 }
 
-.rr-full-button {
-  width: 100%;
-}
-
 .rr-empty {
   padding: var(--polaris-spacing-sm);
   border: 1px dashed var(--polaris-line-neutral);
@@ -969,47 +965,6 @@ p {
   line-height: 20px;
   text-align: center;
   word-break: keep-all;
-}
-
-.rr-item select {
-  min-height: 32px;
-  padding: 0 var(--polaris-spacing-2xs);
-  border: 1px solid var(--polaris-line-neutral);
-  border-radius: var(--polaris-radius-sm);
-  color: var(--polaris-label-normal);
-  background: var(--polaris-background-base);
-  font: inherit;
-  font-size: 12px;
-  font-weight: 800;
-}
-
-.rr-final-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--polaris-spacing-2xs);
-}
-
-.rr-metric {
-  display: grid;
-  gap: var(--polaris-spacing-4xs);
-  padding: var(--polaris-spacing-xs);
-  border: 1px solid var(--polaris-line-neutral);
-  border-radius: var(--polaris-radius-sm);
-  background: var(--polaris-fill-neutral);
-}
-
-.rr-metric span {
-  color: var(--polaris-label-alternative);
-  font-size: 11px;
-  font-weight: 800;
-  line-height: 16px;
-}
-
-.rr-metric strong {
-  color: var(--polaris-label-normal);
-  font-size: 18px;
-  font-weight: 800;
-  line-height: 26px;
 }
 
 .rr-topbar {
@@ -1447,7 +1402,7 @@ button.rr-comment-anchor:focus-visible {
 
 .rr-panel-tabs {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--polaris-spacing-4xs);
   padding: var(--polaris-spacing-2xs);
   border-bottom: 1px solid var(--polaris-line-neutral);
@@ -7319,10 +7274,6 @@ button.rr-comment-anchor:focus-visible {
   .rr-action-row .primary-action,
   .rr-action-row .secondary-action {
     width: 100%;
-  }
-
-  .rr-final-grid {
-    grid-template-columns: 1fr;
   }
 
   .wb-kanban {
