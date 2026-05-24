@@ -7,6 +7,7 @@ import {
   Home,
   ListChecks,
   Menu,
+  MessageSquareText,
   PanelLeftClose,
   Search,
   Settings,
@@ -16,6 +17,7 @@ import {
 import { CareerPass } from './CareerPass';
 import { ClusterOneStart, ClusterOneWorkspace } from './ClusterOne';
 import { PolarisButton } from './polaris-controls';
+import { ReviewRoom } from './ReviewRoom';
 
 // Polaris contract reference: use @polaris/ui/ribbon when the document editor surface becomes functional.
 
@@ -48,14 +50,21 @@ const workspaceNav: NavItem[] = [
     label: '작업 카드',
     description: '외부 공고를 Polaris 작업 카드로 전환',
     icon: ListChecks
+  },
+  {
+    id: 'review-room',
+    label: '리뷰룸',
+    description: '댓글부터 최종본까지 연결하는 문서 리뷰 흐름',
+    icon: MessageSquareText
   }
 ];
 
 export function App() {
   const startsOnClusterOne = isClusterOneRoute();
+  const startsOnReviewRoom = isReviewRoomRoute();
   const clusterOneView = getClusterOneView();
   const startsInClusterOneWorkspace = startsOnClusterOne && (clusterOneView === 'workspace' || clusterOneView === 'detail');
-  const [activeId, setActiveId] = useState(startsOnClusterOne ? 'cluster-one' : 'home');
+  const [activeId, setActiveId] = useState(startsOnClusterOne ? 'cluster-one' : startsOnReviewRoom ? 'review-room' : 'home');
   const [showClusterOneStart, setShowClusterOneStart] = useState(startsOnClusterOne && !startsInClusterOneWorkspace);
   const [clusterOneStartsInDetail, setClusterOneStartsInDetail] = useState(startsOnClusterOne && clusterOneView === 'detail');
   const [clusterOneResetKey, setClusterOneResetKey] = useState(0);
@@ -163,13 +172,15 @@ export function App() {
         </header>
 
         <main
-          className={`content-shell ${activeId === 'career-pass' ? 'content-shell-career' : ''} ${activeId === 'cluster-one' ? 'content-shell-cl1' : ''}`}
+          className={`content-shell ${activeId === 'career-pass' ? 'content-shell-career' : ''} ${activeId === 'cluster-one' ? 'content-shell-cl1' : ''} ${activeId === 'review-room' ? 'content-shell-review' : ''}`}
           aria-label={`${activeItem.label} 화면`}
         >
           {activeId === 'career-pass' ? (
             <CareerPass />
           ) : activeId === 'cluster-one' ? (
             <ClusterOneWorkspace key={`${clusterOneResetKey}-${clusterOneStartsInDetail}`} initialDetail={clusterOneStartsInDetail} />
+          ) : activeId === 'review-room' ? (
+            <ReviewRoom />
           ) : (
             <>
               <section className="page-heading">
@@ -218,12 +229,20 @@ function isClusterOneRoute() {
   return window.location.pathname.replace(/\/$/, '').endsWith('/cl1');
 }
 
+function isReviewRoomRoute() {
+  if (typeof window === 'undefined') {
+    return false;
+  }
+
+  return window.location.pathname.replace(/\/$/, '').endsWith('/review-room');
+}
+
 function syncRouteForNav(itemId: string) {
   if (typeof window === 'undefined') {
     return;
   }
 
-  const targetPath = itemId === 'cluster-one' ? '/cl1' : '/';
+  const targetPath = itemId === 'cluster-one' ? '/cl1' : itemId === 'review-room' ? '/review-room' : '/';
 
   if (window.location.pathname !== targetPath) {
     window.history.pushState(null, '', targetPath);
