@@ -15,9 +15,7 @@ import {
   Eye,
   FileText,
   FolderInput,
-  Inbox,
   Link2,
-  ListChecks,
   Mail,
   MoreHorizontal,
   Paperclip,
@@ -35,18 +33,7 @@ type ClusterOneStartProps = {
   onSendToPolaris: () => void;
 };
 
-type ClusterOneWorkspaceProps = {
-  initialDetail?: boolean;
-};
-
 type WorkflowView = 'inbox' | 'task' | 'draft' | 'handoff';
-
-type WorkflowTab = {
-  id: WorkflowView;
-  label: string;
-  icon: ElementType;
-  count: string;
-};
 
 type FileItem = {
   id: string;
@@ -101,13 +88,6 @@ type WorkCard = {
   nextAction: string;
   files: number;
 };
-
-const workflowTabs: WorkflowTab[] = [
-  { id: 'inbox', label: '자료함', icon: Inbox, count: '2' },
-  { id: 'task', label: '연결된 작업', icon: ListChecks, count: '5' },
-  { id: 'draft', label: '작성 문서', icon: FileText, count: '1' },
-  { id: 'handoff', label: '제출', icon: ClipboardCheck, count: '80%' }
-];
 
 const files: FileItem[] = [
   {
@@ -387,8 +367,8 @@ export function ClusterOneStart({ onSendToPolaris }: ClusterOneStartProps) {
   );
 }
 
-export function ClusterOneWorkspace({ initialDetail = false }: ClusterOneWorkspaceProps) {
-  const [selectedTaskId, setSelectedTaskId] = useState<string | null>(initialDetail ? workCards[0].id : null);
+export function ClusterOneWorkspace() {
+  const [selectedTaskId, setSelectedTaskId] = useState(workCards[0].id);
   const [activeView, setActiveView] = useState<WorkflowView>('inbox');
   const [selectedFileId, setSelectedFileId] = useState(files[0].id);
   const [selectedFactId, setSelectedFactId] = useState(extractedFacts[0].id);
@@ -397,6 +377,8 @@ export function ClusterOneWorkspace({ initialDetail = false }: ClusterOneWorkspa
 
   const completionRate = useMemo(() => Math.round((completedIds.length / steps.length) * 100), [completedIds]);
   const selectedTask = workCards.find((card) => card.id === selectedTaskId) ?? workCards[0];
+  const selectedFile = files.find((file) => file.id === selectedFileId) ?? files[0];
+  const isLibraryView = activeView === 'inbox';
 
   const completeStep = (stepId: string) => {
     setCompletedIds((ids) => (ids.includes(stepId) ? ids : [...ids, stepId]));
@@ -407,64 +389,91 @@ export function ClusterOneWorkspace({ initialDetail = false }: ClusterOneWorkspa
     setActiveView('task');
   };
 
+  const goToDraft = () => {
+    completeStep('experience');
+    setActiveView('draft');
+  };
+
+  const goToHandoff = () => {
+    completeStep('draft');
+    completeStep('submit');
+    setActiveView('handoff');
+  };
+
   const toggleStep = (stepId: string) => {
     setCompletedIds((ids) =>
       ids.includes(stepId) ? ids.filter((id) => id !== stepId) : [...ids, stepId]
     );
   };
 
-  const openWorkCard = (cardId: string, view?: WorkflowView) => {
-    setSelectedTaskId(cardId);
-    setActiveView(view ?? (cardId === 'job-application' ? 'inbox' : 'task'));
+  const openMaterialFlow = (fileId: string) => {
+    const file = files.find((item) => item.id === fileId) ?? files[0];
+    setSelectedFileId(file.id);
+    setSelectedTaskId(file.taskId);
+    completeStep('questions');
+    setActiveView('task');
   };
 
-  const backToWorkCards = () => {
-    setSelectedTaskId(null);
+  const backToLibrary = () => {
     setActiveView('inbox');
   };
-
-  if (!selectedTaskId) {
-    return <WorkCardHome onOpenCard={openWorkCard} />;
-  }
 
   return (
     <section className="cl1-workbench" aria-labelledby="cl1-workbench-title">
       <header className="cl1-command-bar">
         <div className="cl1-command-leading">
-          <PolarisButton className="secondary-action compact-action" onClick={backToWorkCards}>
-            <ArrowLeft size={16} aria-hidden="true" />
-            이전
-          </PolarisButton>
-          <div className="cl1-command-title">
-            <span>{selectedTask.category}</span>
-            <h1 id="cl1-workbench-title">{selectedTask.title}</h1>
+          {activeView !== 'inbox' && (
+            <PolarisButton className="secondary-action compact-action cl1-command-back" onClick={backToLibrary}>
+              <ArrowLeft size={16} aria-hidden="true" />
+              이전
+            </PolarisButton>
+          )}
+          <div className={`cl1-command-title ${isLibraryView ? '' : 'cl1-command-title-no-kicker'}`}>
+            {isLibraryView && <span>자료함</span>}
+            <h1 id="cl1-workbench-title">{isLibraryView ? '작업 카드' : selectedTask.title}</h1>
           </div>
         </div>
-        <div className="cl1-command-meta" aria-label="작업 상태">
-          <StatusChip icon={CalendarClock} label={selectedTask.due} tone="warning" />
-          <StatusChip icon={CheckCircle2} label={`${completionRate}%`} tone="success" />
-          <StatusChip icon={Bell} label={selectedTask.status} />
-        </div>
-        <div className="cl1-command-actions">
-          <PolarisButton className="secondary-action">
-            <ExternalLink size={16} aria-hidden="true" />
-            원본
-          </PolarisButton>
-          <PolarisButton className="primary-action" onClick={goToTask}>
-            <Sparkles size={16} aria-hidden="true" />
-            연결 작업 생성
-          </PolarisButton>
-        </div>
+        {!isLibraryView && (
+          <div className="cl1-command-meta" aria-label="작업 상태">
+            <StatusChip icon={CalendarClock} label={selectedTask.due} tone="warning" />
+            <StatusChip icon={CheckCircle2} label={`${completionRate}%`} tone="success" />
+            <StatusChip icon={Bell} label={selectedTask.status} />
+          </div>
+        )}
+        {!isLibraryView && (
+          <div className="cl1-command-actions">
+            <PolarisButton className="secondary-action">
+              <ExternalLink size={16} aria-hidden="true" />
+              원본
+            </PolarisButton>
+            {activeView === 'task' && (
+              <PolarisButton className="primary-action" onClick={goToDraft}>
+                <FileText size={16} aria-hidden="true" />
+                작성 문서로
+              </PolarisButton>
+            )}
+            {activeView === 'draft' && (
+              <PolarisButton className="primary-action" onClick={goToHandoff}>
+                <ClipboardCheck size={16} aria-hidden="true" />
+                제출로
+              </PolarisButton>
+            )}
+            {activeView === 'handoff' && (
+              <PolarisButton className="primary-action">
+                <PanelRightOpen size={16} aria-hidden="true" />
+                패키지 저장
+              </PolarisButton>
+            )}
+          </div>
+        )}
       </header>
-
-      <WorkflowTabs activeView={activeView} completionRate={completionRate} onSelect={setActiveView} />
 
       <main className="cl1-workbench-stage">
         {activeView === 'inbox' && (
           <InboxBoard
             selectedFileId={selectedFileId}
             selectedFactId={selectedFactId}
-            onSelectFile={setSelectedFileId}
+            onOpenFile={openMaterialFlow}
             onSelectFact={setSelectedFactId}
             onCreateTask={goToTask}
           />
@@ -472,25 +481,22 @@ export function ClusterOneWorkspace({ initialDetail = false }: ClusterOneWorkspa
 
         {activeView === 'task' && (
           <TaskBoard
+            task={selectedTask}
+            file={selectedFile}
             completedIds={completedIds}
             completionRate={completionRate}
             onToggleStep={toggleStep}
-            onOpenDraft={() => {
-              completeStep('experience');
-              setActiveView('draft');
-            }}
+            onOpenDraft={goToDraft}
           />
         )}
 
         {activeView === 'draft' && (
           <DraftBoard
+            file={selectedFile}
             draftBody={draftBody}
             onDraftBodyChange={setDraftBody}
             onSave={() => completeStep('draft')}
-            onReview={() => {
-              completeStep('submit');
-              setActiveView('handoff');
-            }}
+            onReview={goToHandoff}
           />
         )}
 
@@ -502,257 +508,16 @@ export function ClusterOneWorkspace({ initialDetail = false }: ClusterOneWorkspa
   );
 }
 
-function WorkCardHome({ onOpenCard }: { onOpenCard: (cardId: string, view?: WorkflowView) => void }) {
-  const [selectedFileId, setSelectedFileId] = useState<string | null>(null);
-  const selectedFile = selectedFileId ? files.find((file) => file.id === selectedFileId) ?? null : null;
-  const selectedTask = selectedFile ? workCards.find((card) => card.id === selectedFile.taskId) ?? workCards[0] : null;
-  const priorityCard = workCards[0];
-
-  return (
-    <section className="cl1-card-home" aria-labelledby="cl1-card-home-title">
-      <header className="cl1-card-home-header">
-        <div className="cl1-card-home-heading">
-          <h1 id="cl1-card-home-title">작업 카드</h1>
-          <p>자료를 선택해 연결된 작업과 작성 문서를 확인하세요.</p>
-        </div>
-        <div className="button-row">
-          <PolarisButton className="primary-action">
-            <FolderInput size={16} aria-hidden="true" />
-            파일 가져오기
-          </PolarisButton>
-        </div>
-      </header>
-
-      <section className="cl1-home-overview" aria-label="자료 작업 요약">
-        <div className="cl1-home-metrics" aria-label="작업 현황">
-          <HomeMetric label="진행 중" value={`${workCards.length}건`} />
-          <HomeMetric label="가장 가까운 마감" value={priorityCard.due} />
-          <HomeMetric label="오늘 할 일" value={`${workCards.length}건`} helper={priorityCard.nextAction} />
-        </div>
-      </section>
-
-      <section className="cl1-home-today-card" aria-labelledby="cl1-home-today-title">
-        <PanelTitle id="cl1-home-today-title" title="오늘 할 일" />
-        <div className="cl1-home-today-list">
-          {workCards.map((card) => (
-            <PolarisButton className="cl1-home-today-row" key={card.id} onClick={() => onOpenCard(card.id)}>
-              <span className="cl1-work-card-type">{card.category}</span>
-              <span className="cl1-home-today-main">
-                <strong>{card.nextAction}</strong>
-                <small>{card.title}</small>
-              </span>
-              <span className="cl1-today-due">{card.due}</span>
-            </PolarisButton>
-          ))}
-        </div>
-      </section>
-
-      <div className="cl1-material-workspace">
-        <section className="cl1-panel cl1-material-list-panel" aria-labelledby="cl1-material-list-title">
-          <PanelTitle id="cl1-material-list-title" title="자료함" />
-          <div className="cl1-search-control" role="search">
-            <Search size={15} aria-hidden="true" />
-            <span>파일명, 출처 검색</span>
-          </div>
-
-          <div className="cl1-material-list">
-            {files.map((file) => {
-              const linkedTask = workCards.find((card) => card.id === file.taskId) ?? workCards[0];
-              const active = selectedFile?.id === file.id;
-
-              return (
-                <PolarisButton
-                  className={`cl1-material-row ${active ? 'cl1-material-row-active' : ''}`}
-                  key={file.id}
-                  onClick={() => setSelectedFileId(file.id)}
-                >
-                  <span className={`cl1-file-badge ${file.type === 'PDF' ? 'pdf' : 'doc'}`}>{file.type}</span>
-                  <span className="cl1-material-main">
-                    <strong>{file.name}</strong>
-                    <small>{file.source} · {file.time}</small>
-                    <em>연결된 작업: {linkedTask.title}</em>
-                  </span>
-                  <ChevronRight size={17} aria-hidden="true" />
-                </PolarisButton>
-              );
-            })}
-          </div>
-        </section>
-
-        {selectedFile && selectedTask ? (
-          <section className="cl1-material-detail" aria-labelledby="cl1-material-detail-title">
-            <div className="cl1-material-detail-header">
-              <span className="cl1-mini-label">자료 요약</span>
-              <h2 id="cl1-material-detail-title">{selectedFile.name}</h2>
-              <p>{selectedFile.summary}</p>
-            </div>
-
-            <div className="cl1-material-summary-grid" aria-label="자료 상태">
-              <MetaBox label="출처" value={selectedFile.source} />
-              <MetaBox label="상태" value={selectedFile.status} />
-              <MetaBox label="추출" value={selectedFile.extractionStatus} />
-            </div>
-
-            <div className="cl1-material-linked-grid">
-              <article className="cl1-linked-section" aria-labelledby="cl1-linked-task-title">
-                <div className="cl1-linked-section-title">
-                  <span className="cl1-work-card-type">{selectedTask.category}</span>
-                  <div>
-                    <h3 id="cl1-linked-task-title">연결된 작업</h3>
-                    <p>{selectedTask.title}</p>
-                  </div>
-                  <strong>{selectedTask.due}</strong>
-                </div>
-
-                <div className="cl1-work-card-progress" aria-label={`진행률 ${selectedTask.progress}%`}>
-                  <i style={{ width: `${selectedTask.progress}%` }} />
-                </div>
-
-                <div className="cl1-next-action">
-                  <span>다음 액션</span>
-                  <strong>{selectedTask.nextAction}</strong>
-                  <small>{selectedTask.status}</small>
-                </div>
-
-                <div className="cl1-linked-step-list">
-                  {steps.slice(0, 3).map((step, index) => (
-                    <div className="cl1-linked-step" key={step.id}>
-                      <span>{index + 1}</span>
-                      <strong>{step.label}</strong>
-                      <small>{step.due}</small>
-                    </div>
-                  ))}
-                </div>
-
-                <PolarisButton className="secondary-action compact-action" onClick={() => onOpenCard(selectedTask.id, 'task')}>
-                  <ListChecks size={16} aria-hidden="true" />
-                  연결된 작업 보기
-                </PolarisButton>
-              </article>
-
-              <article className="cl1-linked-section" aria-labelledby="cl1-linked-document-title">
-                <div className="cl1-linked-section-title">
-                  <span className="cl1-document-icon" aria-hidden="true">
-                    <FileText size={17} />
-                  </span>
-                  <div>
-                    <h3 id="cl1-linked-document-title">작성 문서</h3>
-                    <p>{selectedFile.document.name}</p>
-                  </div>
-                  <strong>{selectedFile.document.status}</strong>
-                </div>
-
-                <div className="cl1-document-meta">
-                  <MetaBox label="구성" value={selectedFile.document.questions} />
-                  <MetaBox label="수정" value={selectedFile.document.updated} />
-                </div>
-
-                <div className="cl1-document-preview">
-                  <strong>지원 동기</strong>
-                  <p>자료에서 추출한 문항과 키워드를 바탕으로 초안 섹션을 준비했습니다.</p>
-                </div>
-
-                <PolarisButton className="primary-action compact-action" onClick={() => onOpenCard(selectedTask.id, 'draft')}>
-                  <FileText size={16} aria-hidden="true" />
-                  문서 열기
-                </PolarisButton>
-              </article>
-            </div>
-          </section>
-        ) : (
-          <section className="cl1-material-detail cl1-material-empty" aria-labelledby="cl1-material-empty-title">
-            <div className="cl1-material-detail-header">
-              <span className="cl1-mini-label">자료 구조</span>
-              <h2 id="cl1-material-empty-title">자료를 선택하면 연결 흐름이 열립니다</h2>
-              <p>첫 화면에서는 전체 자료와 연결 상태만 훑어보고, 자료를 클릭하면 작업과 문서 상세를 확인합니다.</p>
-            </div>
-
-            <div className="cl1-material-tree" aria-label="자료별 연결 구조">
-              {files.map((file) => {
-                const linkedTask = workCards.find((card) => card.id === file.taskId) ?? workCards[0];
-
-                return (
-                  <PolarisButton className="cl1-material-tree-row" key={file.id} onClick={() => setSelectedFileId(file.id)}>
-                    <span className={`cl1-file-badge ${file.type === 'PDF' ? 'pdf' : 'doc'}`}>{file.type}</span>
-                    <span className="cl1-material-tree-main">
-                      <strong>{file.name}</strong>
-                      <small>{file.source} · {file.status}</small>
-                    </span>
-                    <span className="cl1-material-tree-links">
-                      <em>연결된 작업: {linkedTask.title}</em>
-                      <em>작성 문서: {file.document.name}</em>
-                    </span>
-                  </PolarisButton>
-                );
-              })}
-            </div>
-          </section>
-        )}
-      </div>
-    </section>
-  );
-}
-
-function HomeMetric({
-  label,
-  value,
-  helper
-}: {
-  label: string;
-  value: string;
-  helper?: string;
-}) {
-  return (
-    <div className="cl1-home-metric">
-      <span>{label}</span>
-      <strong>{value}</strong>
-      {helper && <small>{helper}</small>}
-    </div>
-  );
-}
-
-function WorkflowTabs({
-  activeView,
-  completionRate,
-  onSelect
-}: {
-  activeView: WorkflowView;
-  completionRate: number;
-  onSelect: (view: WorkflowView) => void;
-}) {
-  return (
-    <nav className="cl1-workbench-tabs" aria-label="작업 단계">
-      {workflowTabs.map((tab) => {
-        const Icon = tab.icon;
-        const active = activeView === tab.id;
-
-        return (
-          <PolarisButton
-            key={tab.id}
-            className={`cl1-workbench-tab ${active ? 'cl1-workbench-tab-active' : ''}`}
-            aria-current={active ? 'page' : undefined}
-            onClick={() => onSelect(tab.id)}
-          >
-            <Icon size={17} aria-hidden="true" />
-            <span>{tab.label}</span>
-            <strong>{tab.id === 'handoff' ? `${completionRate}%` : tab.count}</strong>
-          </PolarisButton>
-        );
-      })}
-    </nav>
-  );
-}
-
 function InboxBoard({
   selectedFileId,
   selectedFactId,
-  onSelectFile,
+  onOpenFile,
   onSelectFact,
   onCreateTask
 }: {
   selectedFileId: string;
   selectedFactId: string;
-  onSelectFile: (fileId: string) => void;
+  onOpenFile: (fileId: string) => void;
   onSelectFact: (factId: string) => void;
   onCreateTask: () => void;
 }) {
@@ -760,7 +525,7 @@ function InboxBoard({
 
   return (
     <div className="cl1-board cl1-inbox-board">
-      <section className="cl1-panel cl1-file-panel" aria-labelledby="cl1-files-title">
+      <section className="cl1-file-section" aria-labelledby="cl1-files-title">
         <PanelTitle
           id="cl1-files-title"
           title="자료함"
@@ -776,25 +541,27 @@ function InboxBoard({
           <span>파일명, 출처 검색</span>
         </div>
 
-        <div className="cl1-file-stack">
-          {files.map((file) => (
-            <PolarisButton
-              key={file.id}
-              className={`cl1-file-card ${selectedFileId === file.id ? 'cl1-file-card-active' : ''}`}
-              onClick={() => onSelectFile(file.id)}
-            >
-              <span className={`cl1-file-badge ${file.type === 'PDF' ? 'pdf' : 'doc'}`}>{file.type}</span>
-              <span>
-                <strong>{file.name}</strong>
-                <small>{file.source} · {file.time}</small>
-              </span>
-              <em>{file.status}</em>
-            </PolarisButton>
-          ))}
+        <div className="cl1-file-card-container" aria-label="자료 카드 목록">
+          <div className="cl1-file-stack">
+            {files.map((file) => (
+              <PolarisButton
+                key={file.id}
+                className={`cl1-file-card ${selectedFileId === file.id ? 'cl1-file-card-active' : ''}`}
+                onClick={() => onOpenFile(file.id)}
+              >
+                <span className={`cl1-file-badge ${file.type === 'PDF' ? 'pdf' : 'doc'}`}>{file.type}</span>
+                <span>
+                  <strong>{file.name}</strong>
+                  <small>{file.source} · {file.time}</small>
+                </span>
+                <em>{file.status}</em>
+              </PolarisButton>
+            ))}
+          </div>
         </div>
       </section>
 
-      <section className="cl1-panel cl1-extract-panel" aria-labelledby="cl1-facts-title">
+      <section className="cl1-extract-section" aria-labelledby="cl1-facts-title">
         <PanelTitle
           id="cl1-facts-title"
           title="추출 결과"
@@ -806,24 +573,26 @@ function InboxBoard({
           }
         />
 
-        <div className="cl1-fact-table">
-          {extractedFacts.map((fact) => (
-            <PolarisButton
-              key={fact.id}
-              className={`cl1-fact-row ${selectedFactId === fact.id ? 'cl1-fact-row-active' : ''}`}
-              onClick={() => onSelectFact(fact.id)}
-            >
-              <span className={`cl1-fact-state ${fact.state}`}>{getFactStateLabel(fact.state)}</span>
-              <span className="cl1-fact-main">
-                <strong>{fact.label}</strong>
-                <small>{fact.value}</small>
-              </span>
-              <span className="cl1-confidence">
-                <i style={{ width: `${fact.confidence}%` }} />
-              </span>
-              <ChevronRight size={16} aria-hidden="true" />
-            </PolarisButton>
-          ))}
+        <div className="cl1-fact-card-container" aria-label="추출 결과 카드 목록">
+          <div className="cl1-fact-table">
+            {extractedFacts.map((fact) => (
+              <PolarisButton
+                key={fact.id}
+                className={`cl1-fact-row ${selectedFactId === fact.id ? 'cl1-fact-row-active' : ''}`}
+                onClick={() => onSelectFact(fact.id)}
+              >
+                <span className={`cl1-fact-state ${fact.state}`}>{getFactStateLabel(fact.state)}</span>
+                <span className="cl1-fact-main">
+                  <strong>{fact.label}</strong>
+                  <small>{fact.value}</small>
+                </span>
+                <span className="cl1-confidence">
+                  <i style={{ width: `${fact.confidence}%` }} />
+                </span>
+                <ChevronRight size={16} aria-hidden="true" />
+              </PolarisButton>
+            ))}
+          </div>
         </div>
 
         <div className="cl1-selected-fact">
@@ -844,11 +613,15 @@ function InboxBoard({
 }
 
 function TaskBoard({
+  task,
+  file,
   completedIds,
   completionRate,
   onToggleStep,
   onOpenDraft
 }: {
+  task: WorkCard;
+  file: FileItem;
   completedIds: string[];
   completionRate: number;
   onToggleStep: (stepId: string) => void;
@@ -860,9 +633,9 @@ function TaskBoard({
         <div className="cl1-task-card-top">
           <div>
             <span className="cl1-mini-label">연결된 작업</span>
-            <h2 id="cl1-task-title">A기업 지원 준비</h2>
+            <h2 id="cl1-task-title">{task.title}</h2>
           </div>
-          <strong>D-18</strong>
+          <strong>{task.due}</strong>
         </div>
 
         <div className="cl1-card-progress" aria-label={`진행률 ${completionRate}%`}>
@@ -870,9 +643,9 @@ function TaskBoard({
         </div>
 
         <div className="cl1-task-meta-grid">
-          <MetaBox label="원본" value="채용공고 PDF" />
-          <MetaBox label="마감" value="06.10 18:00" />
-          <MetaBox label="서류" value="3개" />
+          <MetaBox label="원본" value={file.name} />
+          <MetaBox label="마감" value={task.due} />
+          <MetaBox label="자료" value={`${task.files}개`} />
         </div>
       </section>
 
@@ -912,11 +685,13 @@ function TaskBoard({
 }
 
 function DraftBoard({
+  file,
   draftBody,
   onDraftBodyChange,
   onSave,
   onReview
 }: {
+  file: FileItem;
   draftBody: string;
   onDraftBodyChange: (value: string) => void;
   onSave: () => void;
@@ -928,7 +703,7 @@ function DraftBoard({
         <div className="cl1-editor-titlebar">
           <div>
             <span className="cl1-mini-label">문서</span>
-            <h2 id="cl1-draft-title">A기업_자기소개서_초안.docx</h2>
+            <h2 id="cl1-draft-title">{file.document.name}</h2>
           </div>
           <div className="button-row">
             <PolarisButton className="secondary-action compact-action" onClick={onSave}>

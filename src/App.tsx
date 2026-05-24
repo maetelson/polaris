@@ -90,7 +90,6 @@ export function App() {
   const startsOnCareerPass = isCareerPassRoute();
   const startsOnReviewRoom = isReviewRoomRoute();
   const startsOnWorkBoard = isWorkBoardRoute();
-  const clusterOneView = getClusterOneView();
   const [activeId, setActiveId] = useState(
     startsOnCompanyA || startsOnClusterOne
       ? 'cluster-one'
@@ -103,7 +102,6 @@ export function App() {
             : 'home'
   );
   const [showClusterOneStart, setShowClusterOneStart] = useState(startsOnCompanyA);
-  const [clusterOneStartsInDetail, setClusterOneStartsInDetail] = useState(startsOnClusterOne && clusterOneView === 'detail');
   const [clusterOneResetKey, setClusterOneResetKey] = useState(0);
   const [reviewRoomDocument, setReviewRoomDocument] = useState(defaultReviewRoomDocument);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -122,7 +120,6 @@ export function App() {
     setActiveId(itemId);
     setShowClusterOneStart(false);
     if (itemId === 'cluster-one') {
-      setClusterOneStartsInDetail(false);
       setClusterOneResetKey((key) => key + 1);
     }
     setMobileOpen(false);
@@ -132,9 +129,8 @@ export function App() {
   const enterClusterOneWorkspace = () => {
     setActiveId('cluster-one');
     setShowClusterOneStart(false);
-    setClusterOneStartsInDetail(true);
     setClusterOneResetKey((key) => key + 1);
-    syncRouteTo(workCardDetailRoute);
+    syncRouteTo(workspaceRoutes['cluster-one']);
   };
 
   useEffect(() => {
@@ -143,11 +139,9 @@ export function App() {
     const handlePopState = () => {
       const nextIsCompanyA = isCompanyARoute();
       const nextId = getCurrentNavId();
-      const nextClusterOneView = getClusterOneView();
 
       setActiveId(nextId);
       setShowClusterOneStart(nextIsCompanyA);
-      setClusterOneStartsInDetail(nextId === 'cluster-one' && nextClusterOneView === 'detail');
       setMobileOpen(false);
     };
 
@@ -265,7 +259,7 @@ export function App() {
           {activeId === 'career-pass' ? (
             <CareerPass />
           ) : activeId === 'cluster-one' ? (
-            <ClusterOneWorkspace key={`${clusterOneResetKey}-${clusterOneStartsInDetail}`} initialDetail={clusterOneStartsInDetail} />
+            <ClusterOneWorkspace key={clusterOneResetKey} />
           ) : activeId === 'review-room' ? (
             <ReviewRoom onDocumentChange={setReviewRoomDocument} />
           ) : activeId === 'work-board' ? (
@@ -393,7 +387,7 @@ function canonicalizeCurrentRoute() {
   let canonicalSearch = window.location.search;
 
   if ((path === '/cl1' || path === companyARoute) && clusterOneView === 'detail') {
-    canonicalPath = workCardDetailRoute;
+    canonicalPath = workspaceRoutes['cluster-one'];
     canonicalSearch = getSearchWithout('view');
   } else if ((path === '/cl1' || path === companyARoute) && clusterOneView === 'workspace') {
     canonicalPath = workspaceRoutes['cluster-one'];
