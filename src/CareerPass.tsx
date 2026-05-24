@@ -3,6 +3,7 @@ import {
   ArrowLeft,
   ArrowUpDown,
   BriefcaseBusiness,
+  ChevronLeft,
   ChevronRight,
   Eye,
   FileText,
@@ -40,6 +41,7 @@ type SupportTrack = {
   deadline: string;
   status: string;
   tags: string[];
+  questions: string[];
 };
 
 type ExperienceCard = {
@@ -83,7 +85,12 @@ const initialTracks: SupportTrack[] = [
     detail: '자소서 3문항 · 포트폴리오 제출',
     deadline: 'D-4',
     status: '작성 중',
-    tags: ['공채 시즌', '파일 제출']
+    tags: ['공채 시즌', '파일 제출'],
+    questions: [
+      '협업 과정에서 갈등을 해결했던 경험과, 이를 통해 얻은 인사이트를 작성해주세요.',
+      '현대자동차 UX Designer 직무에 지원한 동기와 입사 후 기여 방안을 작성해주세요.',
+      '사용자 문제를 발견하고 개선안을 설계했던 경험을 구체적으로 작성해주세요.'
+    ]
   },
   {
     id: 'kakao-product',
@@ -92,7 +99,11 @@ const initialTracks: SupportTrack[] = [
     detail: '자소서 2문항 · 자유 양식 포트폴리오',
     deadline: 'D-9',
     status: '초안 완료',
-    tags: ['상시 채용', '링크 제출']
+    tags: ['상시 채용', '링크 제출'],
+    questions: [
+      '사용자의 문제를 정의하고 제품 개선으로 연결했던 경험을 작성해주세요.',
+      '카카오 서비스 중 개선하고 싶은 UX를 고르고, 그 이유와 접근 방식을 작성해주세요.'
+    ]
   }
 ];
 
@@ -215,6 +226,7 @@ export function CareerPass() {
   const [trackModalOpen, setTrackModalOpen] = useState(false);
   const [applicationsExpanded, setApplicationsExpanded] = useState(false);
   const [selectedApplicationId, setSelectedApplicationId] = useState<string | null>(null);
+  const [selectedQuestionIndex, setSelectedQuestionIndex] = useState(0);
   const [trackLink, setTrackLink] = useState('');
   const [trackQuestions, setTrackQuestions] = useState<TrackQuestionItem[]>([{ id: 'question-1', text: '' }]);
   const [trackFileName, setTrackFileName] = useState('');
@@ -244,7 +256,8 @@ export function CareerPass() {
 
   const createSupportTrack = () => {
     const company = inferCompanyName(trackLink);
-    const questionCount = countTrackQuestions(trackQuestions);
+    const questions = normalizeTrackQuestions(trackQuestions);
+    const questionCount = questions.length;
     const questionDetail = questionCount > 0 ? `자소서 ${questionCount}문항` : '문항 확인 필요';
     const track: SupportTrack = {
       id: `track-${Date.now()}`,
@@ -253,7 +266,8 @@ export function CareerPass() {
       detail: `${questionDetail} · ${trackFileName ? '파일 제출' : '링크 제출'}`,
       deadline: 'D-확인',
       status: '신규',
-      tags: [trackFileName ? '공고 업로드' : '링크 입력']
+      tags: [trackFileName ? '공고 업로드' : '링크 입력'],
+      questions
     };
 
     setSupportTracks((tracks) => [track, ...tracks]);
@@ -263,6 +277,7 @@ export function CareerPass() {
     setTrackFileName('');
     setActiveSection('track');
     setSelectedApplicationId(null);
+    setSelectedQuestionIndex(0);
     setTrackModalOpen(false);
   };
 
@@ -348,11 +363,13 @@ export function CareerPass() {
   const selectSection = (sectionId: CareerPassSectionId) => {
     setActiveSection(sectionId);
     setSelectedApplicationId(null);
+    setSelectedQuestionIndex(0);
   };
 
   const openEssayEditor = (applicationId: string) => {
     setActiveSection('track');
     setSelectedApplicationId(applicationId);
+    setSelectedQuestionIndex(0);
     setEssayCardsPanelOpen(true);
   };
 
@@ -366,6 +383,7 @@ export function CareerPass() {
     setSelectedExperienceCardId(experienceCardId);
     setActiveSection('track');
     setSelectedApplicationId(firstTrack.id);
+    setSelectedQuestionIndex(0);
     setEssayCardsPanelOpen(true);
     setEssayDraft((draft) => ({ ...draft, status: '경험 연결', finalApplied: false }));
   };
@@ -412,8 +430,10 @@ export function CareerPass() {
           selectedExperienceCard={selectedExperienceCard}
           draft={essayDraft}
           characterCount={essayCharacterCount}
+          selectedQuestionIndex={selectedQuestionIndex}
           cardsPanelOpen={essayCardsPanelOpen}
           onBack={() => setSelectedApplicationId(null)}
+          onQuestionSelect={setSelectedQuestionIndex}
           onToggleCardsPanel={() => setEssayCardsPanelOpen((open) => !open)}
           onBodyChange={(body) => setEssayDraft((draft) => ({ ...draft, body, status: '작성 중', finalApplied: false }))}
           onStructure={structureEssay}
@@ -759,8 +779,10 @@ function WritingSection({
   selectedExperienceCard,
   draft,
   characterCount,
+  selectedQuestionIndex,
   cardsPanelOpen,
   onBack,
+  onQuestionSelect,
   onToggleCardsPanel,
   onBodyChange,
   onStructure,
@@ -774,8 +796,10 @@ function WritingSection({
   selectedExperienceCard: ExperienceCard | null;
   draft: EssayDraft;
   characterCount: number;
+  selectedQuestionIndex: number;
   cardsPanelOpen: boolean;
   onBack: () => void;
+  onQuestionSelect: (index: number) => void;
   onToggleCardsPanel: () => void;
   onBodyChange: (value: string) => void;
   onStructure: () => void;
@@ -784,6 +808,11 @@ function WritingSection({
   onTempSave: () => void;
   onApplyFinal: () => void;
 }) {
+  const questions = getTrackQuestionTexts(application, draft.question);
+  const currentQuestionIndex = Math.min(selectedQuestionIndex, questions.length - 1);
+  const currentQuestion = questions[currentQuestionIndex];
+  const hasMultipleQuestions = questions.length > 1;
+
   return (
     <div className={`essay-editor-workspace ${cardsPanelOpen ? 'essay-editor-split' : ''}`}>
       <section className="career-card essay-card document-editor">
@@ -807,8 +836,46 @@ function WritingSection({
 
         <div className="editor-context-grid">
           <div className="question-box">
-            <strong>문항</strong>
-            <p>{draft.question}</p>
+            <div className="question-box-header">
+              <strong>문항</strong>
+              {hasMultipleQuestions && (
+                <div className="question-stepper" aria-label="자소서 문항 이동">
+                  <PolarisButton
+                    className="icon-button question-step-button"
+                    aria-label="이전 문항"
+                    disabled={currentQuestionIndex === 0}
+                    onClick={() => onQuestionSelect(currentQuestionIndex - 1)}
+                  >
+                    <ChevronLeft size={15} aria-hidden="true" />
+                  </PolarisButton>
+                  <span>{currentQuestionIndex + 1}/{questions.length}</span>
+                  <PolarisButton
+                    className="icon-button question-step-button"
+                    aria-label="다음 문항"
+                    disabled={currentQuestionIndex === questions.length - 1}
+                    onClick={() => onQuestionSelect(currentQuestionIndex + 1)}
+                  >
+                    <ChevronRight size={15} aria-hidden="true" />
+                  </PolarisButton>
+                </div>
+              )}
+            </div>
+            <p>{currentQuestion}</p>
+            {hasMultipleQuestions && (
+              <div className="question-indicator" aria-label="문항 목록">
+                {questions.map((question, index) => (
+                  <PolarisButton
+                    key={`${question}-${index}`}
+                    className={`question-indicator-dot ${index === currentQuestionIndex ? 'question-indicator-dot-active' : ''}`}
+                    aria-label={`문항 ${index + 1} 보기`}
+                    aria-current={index === currentQuestionIndex ? 'step' : undefined}
+                    onClick={() => onQuestionSelect(index)}
+                  >
+                    <span>{index + 1}</span>
+                  </PolarisButton>
+                ))}
+              </div>
+            )}
           </div>
 
           <div className="recommendation-box strong">
@@ -1012,6 +1079,10 @@ function inferCompanyName(link: string) {
   }
 }
 
-function countTrackQuestions(questions: TrackQuestionItem[]) {
-  return questions.filter((question) => question.text.trim()).length;
+function normalizeTrackQuestions(questions: TrackQuestionItem[]) {
+  return questions.map((question) => question.text.trim()).filter(Boolean);
+}
+
+function getTrackQuestionTexts(application: SupportTrack, fallbackQuestion: string) {
+  return application.questions.length > 0 ? application.questions : [fallbackQuestion];
 }
