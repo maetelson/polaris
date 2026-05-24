@@ -18,6 +18,7 @@ import { CareerPass } from './CareerPass';
 import { ClusterOneStart, ClusterOneWorkspace } from './ClusterOne';
 import { PolarisButton } from './polaris-controls';
 import { ReviewRoom } from './ReviewRoom';
+import { WorkBoard } from './WorkBoard';
 
 // Polaris contract reference: use @polaris/ui/ribbon when the document editor surface becomes functional.
 
@@ -56,15 +57,22 @@ const workspaceNav: NavItem[] = [
     label: '리뷰룸',
     description: '댓글부터 최종본까지 연결하는 문서 리뷰 흐름',
     icon: MessageSquareText
+  },
+  {
+    id: 'work-board',
+    label: '작업 보드',
+    description: '근거 검증부터 인용 점검까지 이어지는 진행 현황',
+    icon: ListChecks
   }
 ];
 
 export function App() {
   const startsOnClusterOne = isClusterOneRoute();
   const startsOnReviewRoom = isReviewRoomRoute();
+  const startsOnWorkBoard = isWorkBoardRoute();
   const clusterOneView = getClusterOneView();
   const startsInClusterOneWorkspace = startsOnClusterOne && (clusterOneView === 'workspace' || clusterOneView === 'detail');
-  const [activeId, setActiveId] = useState(startsOnClusterOne ? 'cluster-one' : startsOnReviewRoom ? 'review-room' : 'home');
+  const [activeId, setActiveId] = useState(startsOnClusterOne ? 'cluster-one' : startsOnReviewRoom ? 'review-room' : startsOnWorkBoard ? 'work-board' : 'home');
   const [showClusterOneStart, setShowClusterOneStart] = useState(startsOnClusterOne && !startsInClusterOneWorkspace);
   const [clusterOneStartsInDetail, setClusterOneStartsInDetail] = useState(startsOnClusterOne && clusterOneView === 'detail');
   const [clusterOneResetKey, setClusterOneResetKey] = useState(0);
@@ -172,7 +180,7 @@ export function App() {
         </header>
 
         <main
-          className={`content-shell ${activeId === 'career-pass' ? 'content-shell-career' : ''} ${activeId === 'cluster-one' ? 'content-shell-cl1' : ''} ${activeId === 'review-room' ? 'content-shell-review' : ''}`}
+          className={`content-shell ${activeId === 'career-pass' ? 'content-shell-career' : ''} ${activeId === 'cluster-one' ? 'content-shell-cl1' : ''} ${activeId === 'review-room' ? 'content-shell-review' : ''} ${activeId === 'work-board' ? 'content-shell-workboard' : ''}`}
           aria-label={`${activeItem.label} 화면`}
         >
           {activeId === 'career-pass' ? (
@@ -181,6 +189,8 @@ export function App() {
             <ClusterOneWorkspace key={`${clusterOneResetKey}-${clusterOneStartsInDetail}`} initialDetail={clusterOneStartsInDetail} />
           ) : activeId === 'review-room' ? (
             <ReviewRoom />
+          ) : activeId === 'work-board' ? (
+            <WorkBoard />
           ) : (
             <>
               <section className="page-heading">
@@ -205,10 +215,10 @@ export function App() {
                   <div className="canvas-ruler" aria-hidden="true" />
                   <div className="empty-state">
                     <p className="empty-kicker">Blank workspace</p>
-                    <h2>다음 기획안은 이 작업대 안에서 Polaris UI로 확장합니다.</h2>
+                    <h2>새 문서를 선택하거나 작업 보드에서 이어서 시작하세요.</h2>
                     <p>
-                      GNB와 사이드바는 PolarisDesign Pages 구조를 기준으로 고정했습니다.
-                      화면별 콘텐츠만 교체해도 같은 톤앤매너가 유지됩니다.
+                      최근 작업과 팀 문서가 이 공간에 표시됩니다.
+                      진행 중인 검토와 작성 흐름도 같은 작업대에서 이어집니다.
                     </p>
                   </div>
                 </div>
@@ -237,12 +247,20 @@ function isReviewRoomRoute() {
   return window.location.pathname.replace(/\/$/, '').endsWith('/review-room');
 }
 
+function isWorkBoardRoute() {
+  if (typeof window === 'undefined') {
+    return false;
+  }
+
+  return window.location.pathname.replace(/\/$/, '').endsWith('/cl2');
+}
+
 function syncRouteForNav(itemId: string) {
   if (typeof window === 'undefined') {
     return;
   }
 
-  const targetPath = itemId === 'cluster-one' ? '/cl1' : itemId === 'review-room' ? '/review-room' : '/';
+  const targetPath = itemId === 'cluster-one' ? '/cl1' : itemId === 'review-room' ? '/review-room' : itemId === 'work-board' ? '/cl2' : '/';
 
   if (window.location.pathname !== targetPath) {
     window.history.pushState(null, '', targetPath);
