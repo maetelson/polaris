@@ -6,7 +6,6 @@ import {
   ChevronRight,
   Eye,
   FileText,
-  PackageCheck,
   PenLine,
   Plus,
   Puzzle,
@@ -29,7 +28,7 @@ import { PolarisButton, PolarisFileDrop, PolarisInput, PolarisTextarea } from '.
 
 const LIST_PREVIEW_LIMIT = 2;
 
-type CareerPassSectionId = 'track' | 'experience' | 'final';
+type CareerPassSectionId = 'track' | 'experience';
 
 type ExperienceSortMode = 'recent' | 'title';
 
@@ -60,13 +59,6 @@ type EssayDraft = {
   finalApplied: boolean;
 };
 
-type SubmissionCheck = {
-  id: string;
-  label: string;
-  status: 'complete' | 'warning';
-  text: string;
-};
-
 type TrackQuestionItem = {
   id: string;
   text: string;
@@ -80,8 +72,7 @@ type CareerPassSection = {
 
 const careerPassSections: CareerPassSection[] = [
   { id: 'track', label: '지원 현황', icon: BriefcaseBusiness },
-  { id: 'experience', label: '경험 카드', icon: Puzzle },
-  { id: 'final', label: '최종 검수', icon: PackageCheck }
+  { id: 'experience', label: '경험 카드', icon: Puzzle }
 ];
 
 const initialTracks: SupportTrack[] = [
@@ -216,13 +207,6 @@ const initialExperienceCards: ExperienceCard[] = [
   }
 ];
 
-const initialChecks: SubmissionCheck[] = [
-  { id: 'length', label: '글자 수 제한', status: 'complete', text: '완료' },
-  { id: 'questions', label: '필수 문항', status: 'complete', text: '완료' },
-  { id: 'attachments', label: '첨부 파일', status: 'complete', text: '완료' },
-  { id: 'filename', label: '파일명 규칙', status: 'warning', text: '수정 필요' }
-];
-
 const initialEssay =
   '프로젝트 진행 과정에서 팀원 간 전략 방향성에 대한 의견 충돌이 발생했습니다. 초기에는 각자의 아이디어를 중심으로 논의가 이어지며 의사결정이 지연되었습니다. 저는 사용자 인터뷰 데이터를 다시 정리하여 객관적인 기준을 제시했고, 이를 기반으로 우선순위를 재조정하는 회의 구조를 제안했습니다. 이후 팀원들의 의견을 시각적으로 정리해 합의 과정을 단순화했고, 최종적으로 전략 방향을 빠르게 통합할 수 있었습니다. 그 결과 프로젝트 완성도를 높일 수 있었고, 최종 발표에서 우수상을 수상했습니다.';
 
@@ -249,23 +233,13 @@ export function CareerPass() {
     status: '작성 중',
     finalApplied: false
   });
-  const [finalFileName, setFinalFileName] = useState('');
-  const [submissionChecks, setSubmissionChecks] = useState<SubmissionCheck[]>(initialChecks);
-  const finalNotice = '검수 대기';
-
   const essayCharacterCount = essayDraft.body.length;
-  const completedChecks = submissionChecks.filter((check) => check.status === 'complete').length;
-  const completionRate = Math.round((completedChecks / submissionChecks.length) * 100);
   const getSectionBadge = (sectionId: CareerPassSectionId) => {
     if (sectionId === 'track') {
       return String(supportTracks.length);
     }
 
-    if (sectionId === 'experience') {
-      return String(experienceCards.length);
-    }
-
-    return `${completionRate}%`;
+    return String(experienceCards.length);
   };
 
   const createSupportTrack = () => {
@@ -365,20 +339,6 @@ export function CareerPass() {
 
   const applyFinalEssay = () => {
     setEssayDraft((draft) => ({ ...draft, status: '최종 반영', finalApplied: true }));
-  };
-
-  const toggleSubmissionCheck = (checkId: string) => {
-    setSubmissionChecks((checks) =>
-      checks.map((check) =>
-        check.id === checkId
-          ? {
-              ...check,
-              status: check.status === 'complete' ? 'warning' : 'complete',
-              text: check.status === 'complete' ? '재확인' : '완료'
-            }
-          : check
-      )
-    );
   };
 
   const toggleExperienceSort = () => {
@@ -493,17 +453,6 @@ export function CareerPass() {
           onCreateCard={createExperienceCard}
           onClose={() => setExperienceModalOpen(false)}
           canSave={Boolean(activityName.trim() || activityDescription.trim())}
-        />
-      )}
-
-      {activeSection === 'final' && (
-        <FinalSection
-          checks={submissionChecks}
-          fileName={finalFileName}
-          notice={finalNotice}
-          completionRate={completionRate}
-          onFileSelect={setFinalFileName}
-          onToggleCheck={toggleSubmissionCheck}
         />
       )}
 
@@ -1005,51 +954,6 @@ function ExperienceReferencePanel({
         })}
       </div>
     </aside>
-  );
-}
-
-function FinalSection({
-  checks,
-  fileName,
-  notice,
-  completionRate,
-  onFileSelect,
-  onToggleCheck
-}: {
-  checks: SubmissionCheck[];
-  fileName: string;
-  notice: string;
-  completionRate: number;
-  onFileSelect: (fileName: string) => void;
-  onToggleCheck: (checkId: string) => void;
-}) {
-  return (
-    <section className="career-card final-review-card">
-      <div className="section-card-header">
-        <div>
-          <h3>최종 검수</h3>
-          <p>첨부 파일과 제출 조건을 한 번에 확인하세요.</p>
-        </div>
-      </div>
-
-      <PolarisFileDrop
-        label="첨부 파일"
-        description="pdf · pptx · docx 선택"
-        fileName={fileName}
-        accept=".pdf,.ppt,.pptx,.doc,.docx"
-        onFileSelect={onFileSelect}
-      />
-
-      <div className="checklist final-review-checklist">
-        {checks.map((check) => (
-          <PolarisButton key={check.id} className="check-row interactive-check" onClick={() => onToggleCheck(check.id)}>
-            <span>{check.label}</span>
-            <strong className={`check-status ${check.status}`}>{check.text}</strong>
-          </PolarisButton>
-        ))}
-      </div>
-      <p className="state-note">{notice} · {completionRate}%</p>
-    </section>
   );
 }
 

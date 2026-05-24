@@ -10,6 +10,7 @@ import {
   ListChecks,
   Menu,
   MessageSquareText,
+  PackageCheck,
   PanelLeftClose,
   Search,
   Settings,
@@ -19,6 +20,7 @@ import {
 } from 'lucide-react';
 import { CareerPass } from './CareerPass';
 import { ClusterOneStart, ClusterOneWorkspace } from './ClusterOne';
+import { FinalRoom } from './FinalRoom';
 import { PolarisButton } from './polaris-controls';
 import { ReviewRoom } from './ReviewRoom';
 import { WorkBoard } from './WorkBoard';
@@ -41,6 +43,7 @@ const workCardDetailRoute = '/work-card/job-application';
 const workspaceRoutes: Record<string, string> = {
   home: '/',
   'career-pass': '/career-pass',
+  'final-room': '/final-room',
   'cluster-one': '/work-card',
   'review-room': '/review-room',
   'work-board': '/work-board'
@@ -61,8 +64,14 @@ const workspaceNav: NavItem[] = [
   {
     id: 'career-pass',
     label: '커리어 패스',
-    description: '공고 등록부터 제출 검수까지 취업 지원 워크플로우',
+    description: '공고 등록부터 자기소개서 작성까지 취업 지원 워크플로우',
     icon: ClipboardList
+  },
+  {
+    id: 'final-room',
+    label: '파이널룸',
+    description: '첨부 파일과 제출 조건을 한 번에 확인',
+    icon: PackageCheck
   },
   {
     id: 'cluster-one',
@@ -88,6 +97,7 @@ export function App() {
   const startsOnCompanyA = isCompanyARoute();
   const startsOnClusterOne = isClusterOneRoute();
   const startsOnCareerPass = isCareerPassRoute();
+  const startsOnFinalRoom = isFinalRoomRoute();
   const startsOnReviewRoom = isReviewRoomRoute();
   const startsOnWorkBoard = isWorkBoardRoute();
   const [activeId, setActiveId] = useState(
@@ -95,11 +105,13 @@ export function App() {
       ? 'cluster-one'
       : startsOnCareerPass
         ? 'career-pass'
-        : startsOnReviewRoom
-          ? 'review-room'
-          : startsOnWorkBoard
-            ? 'work-board'
-            : 'home'
+        : startsOnFinalRoom
+          ? 'final-room'
+          : startsOnReviewRoom
+            ? 'review-room'
+            : startsOnWorkBoard
+              ? 'work-board'
+              : 'home'
   );
   const [showClusterOneStart, setShowClusterOneStart] = useState(startsOnCompanyA);
   const [clusterOneResetKey, setClusterOneResetKey] = useState(0);
@@ -253,11 +265,13 @@ export function App() {
         </header>
 
         <main
-          className={`content-shell ${activeId === 'career-pass' ? 'content-shell-career' : ''} ${activeId === 'cluster-one' ? 'content-shell-cl1' : ''} ${activeId === 'review-room' ? 'content-shell-review' : ''} ${activeId === 'work-board' ? 'content-shell-workboard' : ''}`}
+          className={`content-shell ${activeId === 'career-pass' || activeId === 'final-room' ? 'content-shell-career' : ''} ${activeId === 'cluster-one' ? 'content-shell-cl1' : ''} ${activeId === 'review-room' ? 'content-shell-review' : ''} ${activeId === 'work-board' ? 'content-shell-workboard' : ''}`}
           aria-label={`${activeItem.label} 화면`}
         >
           {activeId === 'career-pass' ? (
             <CareerPass />
+          ) : activeId === 'final-room' ? (
+            <FinalRoom />
           ) : activeId === 'cluster-one' ? (
             <ClusterOneWorkspace key={clusterOneResetKey} />
           ) : activeId === 'review-room' ? (
@@ -337,6 +351,14 @@ function isCareerPassRoute() {
   return getRoutePathname() === workspaceRoutes['career-pass'];
 }
 
+function isFinalRoomRoute() {
+  if (typeof window === 'undefined') {
+    return false;
+  }
+
+  return getRoutePathname() === workspaceRoutes['final-room'];
+}
+
 function isReviewRoomRoute() {
   if (typeof window === 'undefined') {
     return false;
@@ -404,6 +426,10 @@ function getCurrentNavId() {
 
   if (path === workspaceRoutes['career-pass']) {
     return 'career-pass';
+  }
+
+  if (path === workspaceRoutes['final-room']) {
+    return 'final-room';
   }
 
   if (path === workspaceRoutes['cluster-one'] || path === workCardDetailRoute || path === companyARoute || path === '/cl1') {
