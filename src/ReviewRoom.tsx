@@ -18,7 +18,7 @@ import {
 } from '@polaris/ui/ribbon-icons';
 import { PolarisButton } from './polaris-controls';
 
-type DocumentId = 'word' | 'ppt' | 'sheet';
+type DocumentId = 'word' | 'ppt' | 'sheet' | 'minutes';
 type PanelId = 'comments' | 'ai';
 type CommentStatus = '미확인' | '확인' | '해결 완료';
 type Importance = '높음' | '중간' | '낮음';
@@ -65,6 +65,8 @@ const reviewDocuments: ReviewDocument[] = [
   { id: 'ppt', label: 'PPT', title: '문서 협업 리뷰룸.pptx', unit: '슬라이드' },
   { id: 'sheet', label: 'Sheet', title: '팀 프로젝트 작업 현황.xlsx', unit: '셀' }
 ];
+
+const minutesDocument: ReviewDocument = { id: 'minutes', label: '회의록', title: 'AI 회의록.docx', unit: '문단' };
 
 const initialComments: ReviewComment[] = [
   {
@@ -142,6 +144,7 @@ export function ReviewRoom({ onDocumentChange }: ReviewRoomProps) {
   const toastTimerRef = useRef<ReturnType<typeof window.setTimeout> | null>(null);
   const [comments, setComments] = useState<ReviewComment[]>(initialComments);
   const [minutes, setMinutes] = useState<MeetingMinute[]>([]);
+  const [hasMinutesDocument, setHasMinutesDocument] = useState(false);
   const [versions, setVersions] = useState<ReviewVersion[]>([
     {
       id: 'v-seed',
@@ -153,7 +156,11 @@ export function ReviewRoom({ onDocumentChange }: ReviewRoomProps) {
     }
   ]);
 
-  const activeDocument = reviewDocuments.find((document) => document.id === activeDocumentId) ?? reviewDocuments[0];
+  const availableDocuments = useMemo(
+    () => (hasMinutesDocument ? [...reviewDocuments, minutesDocument] : reviewDocuments),
+    [hasMinutesDocument]
+  );
+  const activeDocument = availableDocuments.find((document) => document.id === activeDocumentId) ?? availableDocuments[0];
   const documentComments = comments.filter((comment) => comment.documentId === activeDocumentId);
   const documentMinutes = minutes.filter((minute) => {
     const source = comments.find((comment) => comment.id === minute.sourceCommentId);
@@ -164,6 +171,7 @@ export function ReviewRoom({ onDocumentChange }: ReviewRoomProps) {
   const openCommentIds = new Set(openDocumentComments.map((comment) => comment.id));
   const selectedComment = openDocumentComments.find((comment) => comment.id === selectedCommentId) ?? openDocumentComments[0];
   const unresolvedCount = openDocumentComments.length;
+  const hasAiSummary = documentComments.some((comment) => comment.importance);
 
   const openPanel = (panelId: PanelId) => {
     setActivePanelId(panelId);
@@ -226,15 +234,16 @@ export function ReviewRoom({ onDocumentChange }: ReviewRoomProps) {
   };
 
   const createMinutes = () => {
+    const sourceDocumentId = activeDocumentId;
     const analyzedComments = comments.map((comment) => {
-      if (comment.documentId !== activeDocumentId || comment.status === '해결 완료') {
+      if (comment.documentId !== sourceDocumentId || comment.status === '해결 완료') {
         return comment;
       }
 
       return comment.importance ? comment : { ...comment, ...classifyComment(comment.content) };
     });
     const candidates = analyzedComments.filter(
-      (comment) => comment.documentId === activeDocumentId && comment.status !== '해결 완료' && (comment.importance === '높음' || comment.importance === '중간')
+      (comment) => comment.documentId === sourceDocumentId && comment.status !== '해결 완료' && (comment.importance === '높음' || comment.importance === '중간')
     );
 
     setComments(analyzedComments);
@@ -254,6 +263,9 @@ export function ReviewRoom({ onDocumentChange }: ReviewRoomProps) {
 
       return [...current, ...nextMinutes];
     });
+    setHasMinutesDocument(true);
+    setActiveDocumentId('minutes');
+    setSelectedCommentId('');
     openPanel('ai');
   };
 
@@ -417,7 +429,7 @@ export function ReviewRoom({ onDocumentChange }: ReviewRoomProps) {
 
           <div className="rr-floating-doc-tabs" aria-label="문서 미니탭">
             <div className="rr-doc-switch" role="tablist" aria-label="문서">
-              {reviewDocuments.map((document) => (
+              {availableDocuments.map((document) => (
                 <PolarisButton
                   key={document.id}
                   className={`rr-doc-tab ${activeDocumentId === document.id ? 'rr-doc-tab-active' : ''}`}
@@ -430,7 +442,9 @@ export function ReviewRoom({ onDocumentChange }: ReviewRoomProps) {
           </div>
 
           <ReviewScrollArea className="rr-canvas-scroll-area" viewportClassName={`rr-canvas rr-canvas-${activeDocumentId}`}>
-            {activeDocumentId === 'ppt' ? (
+            {activeDocumentId === 'minutes' ? (
+              <MeetingMinutesCanvas minutes={minutes} comments={comments} />
+            ) : activeDocumentId === 'ppt' ? (
               <SlideCanvas
                 selectedComment={selectedComment}
                 activeCommentIds={openCommentIds}
@@ -522,11 +536,8 @@ export function ReviewRoom({ onDocumentChange }: ReviewRoomProps) {
             {activePanelId === 'ai' && (
               <PanelBlock title="AI 정리" action={`${documentComments.filter((comment) => comment.importance).length}건`} scrollable>
                 <div className="rr-button-row">
-                  <PolarisButton className="primary-action compact-action" onClick={runAiSummary}>
-                    AI 정리 실행
-                  </PolarisButton>
-                  <PolarisButton className="secondary-action compact-action" onClick={createMinutes}>
-                    회의록 만들기
+                  <PolarisButton className="primary-action compact-action" onClick={hasAiSummary ? createMinutes : runAiSummary}>
+                    {hasAiSummary ? '회의록 만들기' : 'AI 정리 실행'}
                   </PolarisButton>
                 </div>
                 <div className="rr-list">
@@ -868,6 +879,64 @@ function WordCanvas({
           최종 제출 전 반복 사용과 제출 안정성을 기준으로 문장을 정리합니다.
         </CommentAnchor>
       </p>
+    </article>
+  );
+}
+
+function MeetingMinutesCanvas({
+  minutes,
+  comments
+}: {
+  minutes: MeetingMinute[];
+  comments: ReviewComment[];
+}) {
+  const createdAt = new Intl.DateTimeFormat('ko-KR', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  }).format(new Date());
+
+  return (
+    <article className="rr-word-page rr-minutes-page">
+      <h1>AI 회의록</h1>
+      <p className="rr-minutes-meta">작성일 {createdAt} · 리뷰룸 AI 정리 기반</p>
+      <h2>주요 논의</h2>
+      {minutes.length > 0 ? (
+        <div className="rr-minutes-list">
+          {minutes.map((minute, index) => {
+            const sourceComment = comments.find((comment) => comment.id === minute.sourceCommentId);
+
+            return (
+              <section className="rr-minutes-item" key={minute.id}>
+                <strong>{index + 1}. {minute.target}</strong>
+                <p>{sourceComment?.content ?? minute.decision}</p>
+                <dl>
+                  <div>
+                    <dt>담당</dt>
+                    <dd>{minute.owner}</dd>
+                  </div>
+                  <div>
+                    <dt>결정/작업</dt>
+                    <dd>{minute.decision}</dd>
+                  </div>
+                  <div>
+                    <dt>기한</dt>
+                    <dd>{minute.due}</dd>
+                  </div>
+                  <div>
+                    <dt>우선도</dt>
+                    <dd>{minute.importance}</dd>
+                  </div>
+                </dl>
+              </section>
+            );
+          })}
+        </div>
+      ) : (
+        <p>AI 정리 결과를 바탕으로 회의록을 생성하면 주요 논의와 작업 항목이 여기에 정리됩니다.</p>
+      )}
+      <h2>후속 작업</h2>
+      <p>위 항목을 기준으로 담당자별 작업을 확인하고, 다음 검토 전까지 결정/작업 내용을 문서에 반영합니다.</p>
     </article>
   );
 }

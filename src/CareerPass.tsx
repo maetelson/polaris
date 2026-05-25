@@ -1,4 +1,4 @@
-import { useState, type ElementType } from 'react';
+import { useState, type Dispatch, type ElementType, type SetStateAction } from 'react';
 import {
   ArrowLeft,
   ArrowUpDown,
@@ -34,7 +34,7 @@ type CareerPassSectionId = 'track' | 'experience';
 
 type ExperienceSortMode = 'recent' | 'title';
 
-type SupportTrack = {
+export type SupportTrack = {
   id: string;
   company: string;
   role: string;
@@ -80,7 +80,7 @@ const careerPassSections: CareerPassSection[] = [
 
 const experienceLabelOptions = ['협업 경험', '문제 해결', '전략 기획', '성과 중심', '리더십', '리서치', '커뮤니케이션', '운영 경험'];
 
-const initialTracks: SupportTrack[] = [
+export const initialSupportTracks: SupportTrack[] = [
   {
     id: 'hyundai-ux',
     company: '현대자동차',
@@ -224,7 +224,15 @@ const initialExperienceCards: ExperienceCard[] = [
 const initialEssay =
   '프로젝트 진행 과정에서 팀원 간 전략 방향성에 대한 의견 충돌이 발생했습니다. 초기에는 각자의 아이디어를 중심으로 논의가 이어지며 의사결정이 지연되었습니다. 저는 사용자 인터뷰 데이터를 다시 정리하여 객관적인 기준을 제시했고, 이를 기반으로 우선순위를 재조정하는 회의 구조를 제안했습니다. 이후 팀원들의 의견을 시각적으로 정리해 합의 과정을 단순화했고, 최종적으로 전략 방향을 빠르게 통합할 수 있었습니다. 그 결과 프로젝트 완성도를 높일 수 있었고, 최종 발표에서 우수상을 수상했습니다.';
 
-export function CareerPass({ onFinalReview }: { onFinalReview?: (fileName: string) => void }) {
+export function CareerPass({
+  supportTracks,
+  setSupportTracks,
+  onFinalReview
+}: {
+  supportTracks: SupportTrack[];
+  setSupportTracks: Dispatch<SetStateAction<SupportTrack[]>>;
+  onFinalReview?: (fileName: string) => void;
+}) {
   const [activeSection, setActiveSection] = useState<CareerPassSectionId | null>(null);
   const [trackModalOpen, setTrackModalOpen] = useState(false);
   const [applicationsExpanded, setApplicationsExpanded] = useState(false);
@@ -234,7 +242,6 @@ export function CareerPass({ onFinalReview }: { onFinalReview?: (fileName: strin
   const [trackQuestions, setTrackQuestions] = useState<TrackQuestionItem[]>([{ id: 'question-1', text: '' }]);
   const [trackFileName, setTrackFileName] = useState('');
   const [trackNotice, setTrackNotice] = useState('지원 관리 중');
-  const [supportTracks, setSupportTracks] = useState<SupportTrack[]>(initialTracks);
   const [essayCardsPanelOpen, setEssayCardsPanelOpen] = useState(true);
   const [essayGuideOpen, setEssayGuideOpen] = useState(true);
   const [experienceModalOpen, setExperienceModalOpen] = useState(false);

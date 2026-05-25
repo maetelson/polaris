@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { FileSearch } from 'lucide-react';
 import { PolarisButton, PolarisFileDrop } from './polaris-controls';
+import type { SupportTrack } from './CareerPass';
 
 type RestrictionId = 'length' | 'questions' | 'attachments' | 'filename';
 
@@ -54,7 +55,13 @@ export type FinalRoomHandoff = {
   submittedAt: number;
 };
 
-export function FinalRoom({ handoff }: { handoff?: FinalRoomHandoff | null }) {
+export function FinalRoom({
+  applications,
+  handoff
+}: {
+  applications: SupportTrack[];
+  handoff?: FinalRoomHandoff | null;
+}) {
   const [finalFileName, setFinalFileName] = useState(handoff?.fileName ?? '');
   const [selectedRestrictionIds, setSelectedRestrictionIds] = useState<RestrictionId[]>([]);
   const [restrictionValues, setRestrictionValues] = useState<Record<RestrictionId, string>>(emptyRestrictionValues);
@@ -100,6 +107,14 @@ export function FinalRoom({ handoff }: { handoff?: FinalRoomHandoff | null }) {
     setReviewStarted(false);
   };
 
+  const selectApplicationForReview = (application: SupportTrack) => {
+    setFinalFileName(buildApplicationFileName(application));
+    setSelectedRestrictionIds([]);
+    setRestrictionValues(emptyRestrictionValues);
+    setSubmissionChecks([]);
+    setReviewStarted(false);
+  };
+
   const startReview = () => {
     setSubmissionChecks(buildSubmissionChecks(finalFileName, selectedRestrictionIds, restrictionValues));
     setReviewStarted(true);
@@ -115,18 +130,63 @@ export function FinalRoom({ handoff }: { handoff?: FinalRoomHandoff | null }) {
         <span className="status-pill">{finalNotice} · {completionRate}%</span>
       </div>
 
-      <FinalReviewCard
-        checks={submissionChecks}
-        fileName={finalFileName}
-        selectedRestrictionIds={selectedRestrictionIds}
-        restrictionValues={restrictionValues}
-        reviewStarted={reviewStarted}
-        onFileSelect={updateFinalFileName}
-        onRestrictionToggle={toggleRestrictionSelection}
-        onRestrictionValueChange={updateRestrictionValue}
-        onStartReview={startReview}
-      />
+      <div className="final-room-layout">
+        <FinalApplicationsPanel
+          applications={applications}
+          activeFileName={finalFileName}
+          onSelectApplication={selectApplicationForReview}
+        />
+        <FinalReviewCard
+          checks={submissionChecks}
+          fileName={finalFileName}
+          selectedRestrictionIds={selectedRestrictionIds}
+          restrictionValues={restrictionValues}
+          reviewStarted={reviewStarted}
+          onFileSelect={updateFinalFileName}
+          onRestrictionToggle={toggleRestrictionSelection}
+          onRestrictionValueChange={updateRestrictionValue}
+          onStartReview={startReview}
+        />
+      </div>
     </section>
+  );
+}
+
+function FinalApplicationsPanel({
+  applications,
+  activeFileName,
+  onSelectApplication
+}: {
+  applications: SupportTrack[];
+  activeFileName: string;
+  onSelectApplication: (application: SupportTrack) => void;
+}) {
+  return (
+    <aside className="final-application-panel" aria-label="지원 현황 기업 목록">
+      <div className="final-application-panel-head">
+        <strong>지원 현황</strong>
+        <span>{applications.length}</span>
+      </div>
+      <div className="final-application-list">
+        {applications.map((application) => {
+          const fileName = buildApplicationFileName(application);
+          const active = activeFileName === fileName;
+
+          return (
+            <PolarisButton
+              key={application.id}
+              className={`final-application-item ${active ? 'final-application-item-active' : ''}`}
+              aria-current={active ? 'true' : undefined}
+              onClick={() => onSelectApplication(application)}
+            >
+              <span className="final-application-company">{application.company}</span>
+              <span className="final-application-meta">{application.role} · {application.deadline}</span>
+              <span className="final-application-detail">{application.detail}</span>
+            </PolarisButton>
+          );
+        })}
+      </div>
+    </aside>
   );
 }
 
@@ -367,4 +427,8 @@ function parseFirstNumber(value: string) {
 
 function getFileExtension(fileName: string) {
   return fileName.split('.').pop()?.toLowerCase() ?? '';
+}
+
+function buildApplicationFileName(application: SupportTrack) {
+  return `${application.company}_${application.role}.docx`;
 }

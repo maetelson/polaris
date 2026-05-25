@@ -1228,6 +1228,78 @@ button.rr-comment-anchor:focus-visible {
   padding: 1px 4px;
 }
 
+.rr-minutes-page {
+  display: grid;
+  align-content: start;
+  gap: var(--polaris-spacing-sm);
+}
+
+.rr-minutes-meta {
+  margin-top: calc(var(--polaris-spacing-md) * -1);
+  color: var(--polaris-label-alternative);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.rr-minutes-list {
+  display: grid;
+  gap: var(--polaris-spacing-sm);
+}
+
+.rr-minutes-item {
+  display: grid;
+  gap: var(--polaris-spacing-xs);
+  padding: var(--polaris-spacing-sm);
+  border: 1px solid var(--polaris-line-neutral);
+  border-radius: var(--polaris-radius-sm);
+  background: var(--polaris-fill-neutral);
+}
+
+.rr-minutes-item strong {
+  color: var(--polaris-label-normal);
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 24px;
+}
+
+.rr-minutes-item p {
+  margin: 0;
+}
+
+.rr-minutes-item dl {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--polaris-spacing-xs);
+  margin: 0;
+}
+
+.rr-minutes-item div {
+  display: grid;
+  gap: var(--polaris-spacing-4xs);
+  min-width: 0;
+}
+
+.rr-minutes-item dt,
+.rr-minutes-item dd {
+  margin: 0;
+  min-width: 0;
+}
+
+.rr-minutes-item dt {
+  color: var(--polaris-label-alternative);
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 16px;
+}
+
+.rr-minutes-item dd {
+  color: var(--polaris-label-neutral);
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 20px;
+  word-break: keep-all;
+}
+
 .rr-slide-stage {
   display: grid;
   grid-template-columns: 96px minmax(0, 1fr);
@@ -1963,6 +2035,7 @@ button.rr-comment-anchor:focus-visible {
 .career-pass > .career-tabs,
 .career-pass > .career-card,
 .career-pass > .final-review-card,
+.career-pass > .final-room-layout,
 .career-pass > .experience-workspace,
 .career-pass > .essay-editor-workspace {
   margin-right: var(--polaris-spacing-md);
@@ -1975,6 +2048,7 @@ button.rr-comment-anchor:focus-visible {
 
 .career-pass > .career-card,
 .career-pass > .final-review-card,
+.career-pass > .final-room-layout,
 .career-pass > .experience-workspace,
 .career-pass > .essay-editor-workspace {
   margin-top: var(--polaris-spacing-sm);
@@ -2182,9 +2256,118 @@ button.rr-comment-anchor:focus-visible {
   grid-template-rows: auto minmax(0, 1fr);
 }
 
-.final-room > .final-review-card {
+.final-room-layout {
+  display: grid;
+  grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+  gap: var(--polaris-spacing-sm);
+  align-items: stretch;
+  min-width: 0;
+  min-height: 0;
+}
+
+.final-room-layout > .final-review-card {
   align-self: stretch;
-  margin-top: var(--polaris-spacing-xs);
+}
+
+.final-application-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--polaris-spacing-xs);
+  min-width: 0;
+  min-height: calc(100vh - 176px);
+  padding: var(--polaris-spacing-sm);
+  border: 1px solid var(--polaris-line-neutral);
+  border-radius: var(--polaris-radius-sm);
+  background: var(--polaris-background-base);
+  box-shadow: var(--polaris-shadow-sm);
+}
+
+.final-application-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--polaris-spacing-xs);
+  min-width: 0;
+}
+
+.final-application-panel-head strong {
+  color: var(--polaris-label-normal);
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 24px;
+}
+
+.final-application-panel-head span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 24px;
+  padding: 0 var(--polaris-spacing-2xs);
+  border-radius: var(--polaris-radius-pill);
+  color: var(--polaris-accent-brand-normal);
+  background: var(--polaris-accent-brand-normal-subtle);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.final-application-list {
+  display: grid;
+  gap: var(--polaris-spacing-2xs);
+  min-width: 0;
+}
+
+.final-application-item {
+  display: grid;
+  gap: var(--polaris-spacing-4xs);
+  width: 100%;
+  min-width: 0;
+  padding: var(--polaris-spacing-xs);
+  border: 1px solid var(--polaris-line-neutral);
+  border-radius: var(--polaris-radius-sm);
+  color: var(--polaris-label-neutral);
+  background: var(--polaris-background-base);
+  text-align: left;
+}
+
+.final-application-item:hover {
+  border-color: var(--polaris-accent-brand-bg-hover);
+  background: var(--polaris-fill-normal);
+}
+
+.final-application-item-active {
+  border-color: var(--polaris-accent-brand-bg-hover);
+  color: var(--polaris-accent-brand-normal);
+  background: var(--polaris-accent-brand-normal-subtle);
+}
+
+.final-application-company,
+.final-application-meta,
+.final-application-detail {
+  overflow: hidden;
+  min-width: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.final-application-company {
+  color: var(--polaris-label-normal);
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 21px;
+}
+
+.final-application-meta {
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 18px;
+}
+
+.final-application-detail {
+  color: var(--polaris-label-alternative);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 16px;
 }
 
 .final-review-card {
@@ -7479,6 +7662,14 @@ button.rr-comment-anchor:focus-visible {
   }
 
   .final-review-card {
+    min-height: auto;
+  }
+
+  .final-room-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .final-application-panel {
     min-height: auto;
   }
 

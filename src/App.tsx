@@ -19,7 +19,7 @@ import {
   UserRound,
   X
 } from 'lucide-react';
-import { CareerPass } from './CareerPass';
+import { CareerPass, initialSupportTracks, type SupportTrack } from './CareerPass';
 import { ClusterOneStart, ClusterOneWorkspace } from './ClusterOne';
 import { FinalRoom, type FinalRoomHandoff } from './FinalRoom';
 import { PolarisButton } from './polaris-controls';
@@ -117,6 +117,7 @@ export function App() {
   const [showClusterOneStart, setShowClusterOneStart] = useState(startsOnCompanyA);
   const [clusterOneResetKey, setClusterOneResetKey] = useState(0);
   const [reviewRoomDocument, setReviewRoomDocument] = useState(defaultReviewRoomDocument);
+  const [supportTracks, setSupportTracks] = useState<SupportTrack[]>(initialSupportTracks);
   const [finalRoomHandoff, setFinalRoomHandoff] = useState<FinalRoomHandoff | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
@@ -307,9 +308,13 @@ export function App() {
           aria-label={`${activeItem.label} 화면`}
         >
           {isCareerPassView ? (
-            <CareerPass onFinalReview={openFinalRoomWithFile} />
+            <CareerPass
+              supportTracks={supportTracks}
+              setSupportTracks={setSupportTracks}
+              onFinalReview={openFinalRoomWithFile}
+            />
           ) : activeId === 'final-room' ? (
-            <FinalRoom handoff={finalRoomHandoff} />
+            <FinalRoom applications={supportTracks} handoff={finalRoomHandoff} />
           ) : activeId === 'cluster-one' ? (
             <ClusterOneWorkspace key={clusterOneResetKey} />
           ) : activeId === 'review-room' ? (
