@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { FileSearch, X } from 'lucide-react';
+import { Archive, FileSearch, X } from 'lucide-react';
 import { PolarisButton, PolarisFileDrop } from './polaris-controls';
 import type { SupportTrack } from './CareerPass';
 
@@ -39,6 +39,14 @@ type FinalFileState = {
   restrictionValues: Record<RestrictionId, string>;
   submissionChecks: SubmissionCheck[];
   reviewStarted: boolean;
+};
+
+type FinalProject = {
+  id: string;
+  title: string;
+  status: string;
+  detail: string;
+  fileName: string;
 };
 
 const commonRestrictionOptions: RestrictionOption[] = [
@@ -133,6 +141,29 @@ const restrictionOptionsByType: Record<FinalFileType, RestrictionOption[]> = {
 };
 
 const currentDocumentCharacterCount = 862;
+const finalProjects: FinalProject[] = [
+  {
+    id: 'portfolio-package',
+    title: '포트폴리오 제출 패키지',
+    status: '최종 검수 중',
+    detail: 'PDF 포트폴리오와 DOCX 자기소개서를 함께 점검',
+    fileName: 'portfolio_package.pdf'
+  },
+  {
+    id: 'interview-deck',
+    title: '면접 발표 자료',
+    status: '제출 전 확인',
+    detail: 'PPT 발표본, 발표 노트, 회사 템플릿 조건 검수',
+    fileName: 'interview_presentation.pptx'
+  },
+  {
+    id: 'application-docs',
+    title: '입사지원 문서 묶음',
+    status: '조건 입력 필요',
+    detail: '지원서, 경력기술서, PDF 변환본 검수',
+    fileName: 'application_documents.docx'
+  }
+];
 const emptyRestrictionValues = {
   length: '',
   questions: '',
@@ -246,7 +277,9 @@ export function FinalRoom({
         <FinalApplicationsPanel
           applications={applications}
           activeFileName={activeFileName}
+          projects={finalProjects}
           onSelectApplication={selectApplicationForReview}
+          onSelectProject={(project) => addFiles([project.fileName])}
         />
         <FinalReviewCard
           activeFile={activeFile}
@@ -266,37 +299,74 @@ export function FinalRoom({
 function FinalApplicationsPanel({
   applications,
   activeFileName,
-  onSelectApplication
+  projects,
+  onSelectApplication,
+  onSelectProject
 }: {
   applications: SupportTrack[];
   activeFileName: string;
+  projects: FinalProject[];
   onSelectApplication: (application: SupportTrack) => void;
+  onSelectProject: (project: FinalProject) => void;
 }) {
+  const [showApplications, setShowApplications] = useState(false);
+
   return (
-    <aside className="final-application-panel" aria-label="지원 현황 기업 목록">
+    <aside className="final-application-panel" aria-label="진행 중인 프로젝트 목록">
       <div className="final-application-panel-head">
-        <strong>지원 현황</strong>
-        <span>{applications.length}</span>
+        <strong>진행 중인 프로젝트</strong>
+        <span>{projects.length}</span>
       </div>
       <div className="final-application-list">
-        {applications.map((application) => {
-          const fileName = buildApplicationFileName(application);
-          const active = activeFileName === fileName;
+        {projects.map((project) => {
+          const active = activeFileName === project.fileName;
 
           return (
             <PolarisButton
-              key={application.id}
+              key={project.id}
               className={`final-application-item ${active ? 'final-application-item-active' : ''}`}
               aria-current={active ? 'true' : undefined}
-              onClick={() => onSelectApplication(application)}
+              onClick={() => onSelectProject(project)}
             >
-              <span className="final-application-company">{application.company}</span>
-              <span className="final-application-meta">{application.role} · {application.deadline}</span>
-              <span className="final-application-detail">{application.detail}</span>
+              <span className="final-application-company">{project.title}</span>
+              <span className="final-application-meta">{project.status}</span>
+              <span className="final-application-detail">{project.detail}</span>
             </PolarisButton>
           );
         })}
       </div>
+
+      <PolarisButton className="secondary-action compact-action final-load-applications" onClick={() => setShowApplications((visible) => !visible)}>
+        지원현황 불러오기
+      </PolarisButton>
+
+      {showApplications && (
+        <div className="final-support-panel" aria-label="불러온 지원 현황">
+          <div className="final-support-panel-head">
+            <strong>지원 현황</strong>
+            <span>{applications.length}</span>
+          </div>
+          <div className="final-application-list">
+            {applications.map((application) => {
+              const fileName = buildApplicationFileName(application);
+              const active = activeFileName === fileName;
+
+              return (
+                <PolarisButton
+                  key={application.id}
+                  className={`final-application-item final-support-item ${active ? 'final-application-item-active' : ''}`}
+                  aria-current={active ? 'true' : undefined}
+                  onClick={() => onSelectApplication(application)}
+                >
+                  <span className="final-application-company">{application.company}</span>
+                  <span className="final-application-meta">{application.role} · {application.deadline}</span>
+                  <span className="final-application-detail">{application.detail}</span>
+                </PolarisButton>
+              );
+            })}
+          </div>
+        </div>
+      )}
     </aside>
   );
 }
@@ -439,10 +509,17 @@ function FinalReviewCard({
 
       {activeFile && (
         <div className="modal-actions final-review-actions">
-          <PolarisButton className="primary-action" disabled={!canStartReview} onClick={onStartReview}>
-            <FileSearch size={16} aria-hidden="true" />
-            검수 시작
-          </PolarisButton>
+          {activeFile.reviewStarted ? (
+            <PolarisButton className="primary-action">
+              <Archive size={16} aria-hidden="true" />
+              zip 파일로 내보내기
+            </PolarisButton>
+          ) : (
+            <PolarisButton className="primary-action" disabled={!canStartReview} onClick={onStartReview}>
+              <FileSearch size={16} aria-hidden="true" />
+              검수 시작
+            </PolarisButton>
+          )}
         </div>
       )}
     </section>

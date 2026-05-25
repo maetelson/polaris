@@ -386,22 +386,17 @@ button {
 }
 
 .keep-tag-inverse {
-  border-color: color-mix(in srgb, var(--polaris-label-inverse) 36%, transparent);
-  color: var(--polaris-label-inverse);
-  background: color-mix(in srgb, var(--polaris-label-inverse) 18%, transparent);
+  border-color: var(--polaris-line-neutral);
+  color: var(--polaris-label-neutral);
+  background: var(--polaris-fill-neutral);
 }
 
 .keep-carousel-card {
-  overflow: hidden;
-  border-color: color-mix(in srgb, var(--polaris-accent-brand-normal) 18%, var(--polaris-line-neutral));
-  background:
-    linear-gradient(
-      135deg,
-      color-mix(in srgb, var(--polaris-accent-brand-normal-subtle) 62%, var(--polaris-background-base)) 0%,
-      var(--polaris-background-base) 48%,
-      color-mix(in srgb, var(--polaris-state-warning-bg) 50%, var(--polaris-background-base)) 100%
-    );
-  box-shadow: var(--polaris-shadow-xs, var(--polaris-shadow-sm));
+  padding: 0;
+  overflow: visible;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
 .keep-deadline-alert {
@@ -452,16 +447,10 @@ button {
   min-height: 238px;
   padding: var(--polaris-spacing-md);
   overflow: hidden;
-  border: 1px solid color-mix(in srgb, var(--polaris-label-inverse) 18%, transparent);
+  border: 1px solid var(--polaris-line-neutral);
   border-radius: var(--polaris-radius-sm);
-  color: var(--polaris-label-inverse);
-  background:
-    linear-gradient(
-      135deg,
-      var(--polaris-accent-brand-normal) 0%,
-      color-mix(in srgb, var(--polaris-accent-brand-normal) 58%, var(--polaris-state-success)) 54%,
-      color-mix(in srgb, var(--polaris-state-warning) 38%, var(--polaris-accent-brand-normal)) 100%
-    );
+  color: var(--polaris-label-normal);
+  background: var(--polaris-background-base);
   box-shadow: none;
   cursor: pointer;
   text-align: left;
@@ -483,14 +472,14 @@ button {
 }
 
 .keep-upcoming-kicker {
-  color: color-mix(in srgb, var(--polaris-label-inverse) 76%, transparent);
+  color: var(--polaris-label-alternative);
   font-size: 12px;
   font-weight: 800;
   line-height: 18px;
 }
 
 .keep-upcoming-copy strong {
-  color: var(--polaris-label-inverse);
+  color: var(--polaris-label-normal);
   font-size: 26px;
   font-weight: 800;
   line-height: 34px;
@@ -499,7 +488,7 @@ button {
 
 .keep-upcoming-copy p {
   margin: 0;
-  color: color-mix(in srgb, var(--polaris-label-inverse) 84%, transparent);
+  color: var(--polaris-label-neutral);
   font-size: 14px;
   line-height: 22px;
   word-break: keep-all;
@@ -514,10 +503,10 @@ button {
   justify-content: center;
   min-width: 72px;
   min-height: 72px;
-  border: 1px solid color-mix(in srgb, var(--polaris-label-inverse) 30%, transparent);
+  border: 1px solid var(--polaris-line-neutral);
   border-radius: var(--polaris-radius-pill);
-  color: var(--polaris-label-inverse);
-  background: color-mix(in srgb, var(--polaris-label-inverse) 14%, transparent);
+  color: var(--polaris-label-neutral);
+  background: var(--polaris-fill-neutral);
   font-size: 18px;
   font-style: normal;
   font-weight: 800;
@@ -534,10 +523,9 @@ button {
 .keep-upcoming-next {
   display: grid;
   min-width: 0;
-  border: 1px solid color-mix(in srgb, var(--polaris-label-inverse) 18%, transparent);
-  color: var(--polaris-label-inverse);
-  background: color-mix(in srgb, var(--polaris-label-inverse) 12%, transparent);
-  backdrop-filter: blur(8px);
+  border: 1px solid var(--polaris-line-neutral);
+  color: var(--polaris-label-normal);
+  background: var(--polaris-fill-neutral);
 }
 
 .keep-upcoming-details span {
@@ -548,13 +536,13 @@ button {
 }
 
 .keep-upcoming-details svg {
-  color: color-mix(in srgb, var(--polaris-label-inverse) 88%, transparent);
+  color: var(--polaris-label-alternative);
 }
 
 .keep-upcoming-details small,
 .keep-upcoming-next span {
   overflow: hidden;
-  color: color-mix(in srgb, var(--polaris-label-inverse) 72%, transparent);
+  color: var(--polaris-label-alternative);
   font-size: 11px;
   font-weight: 800;
   line-height: 16px;
@@ -564,7 +552,7 @@ button {
 
 .keep-upcoming-details b {
   overflow: hidden;
-  color: var(--polaris-label-inverse);
+  color: var(--polaris-label-normal);
   font-size: 13px;
   font-weight: 800;
   line-height: 19px;
@@ -583,7 +571,7 @@ button {
 
 .keep-upcoming-next strong {
   overflow: hidden;
-  color: var(--polaris-label-inverse);
+  color: var(--polaris-label-normal);
   font-size: 14px;
   font-weight: 800;
   line-height: 21px;
@@ -4030,6 +4018,40 @@ button.rr-comment-anchor:focus-visible {
   min-width: 0;
 }
 
+.final-load-applications {
+  width: 100%;
+}
+
+.final-support-panel {
+  display: grid;
+  gap: var(--polaris-spacing-2xs);
+  min-width: 0;
+  padding-top: var(--polaris-spacing-xs);
+  border-top: 1px solid var(--polaris-line-neutral);
+}
+
+.final-support-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--polaris-spacing-xs);
+  min-width: 0;
+}
+
+.final-support-panel-head strong {
+  color: var(--polaris-label-neutral);
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 20px;
+}
+
+.final-support-panel-head span {
+  color: var(--polaris-label-alternative);
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 18px;
+}
+
 .final-application-item {
   display: grid;
   gap: var(--polaris-spacing-4xs);
@@ -4041,6 +4063,10 @@ button.rr-comment-anchor:focus-visible {
   color: var(--polaris-label-neutral);
   background: var(--polaris-background-base);
   text-align: left;
+}
+
+.final-support-item {
+  background: var(--polaris-fill-neutral);
 }
 
 .final-application-item:hover {
