@@ -88,6 +88,9 @@ export function FinalRoom({
       : '수정 필요'
     : '검수 대기';
 
+  void finalNotice;
+  void completionRate;
+
   const updateRestrictionValue = (restrictionId: RestrictionId, value: string) => {
     setRestrictionValues((values) => ({ ...values, [restrictionId]: value }));
     setReviewStarted(false);
@@ -125,9 +128,8 @@ export function FinalRoom({
       <div className="career-pass-heading">
         <div className="career-pass-heading-copy">
           <h1 id="final-room-title">파이널룸</h1>
-          <p>첨부 파일과 제출 조건을 한 번에 확인하세요.</p>
+          <p>새로운 프로젝트와 제출 조건을 한 번에 확인하세요.</p>
         </div>
-        <span className="status-pill">{finalNotice} · {completionRate}%</span>
       </div>
 
       <div className="final-room-layout">
@@ -223,7 +225,7 @@ function FinalReviewCard({
       <div className="final-review-input-grid">
         <section className="final-flow-section final-file-section" aria-labelledby="final-file-field-title">
           <div className="final-section-heading">
-            <h2 id="final-file-field-title">첨부 파일</h2>
+            <h2 id="final-file-field-title">새로운 프로젝트</h2>
             <p>{hasFile ? '선택된 파일을 기준으로 제출 조건을 검수합니다.' : '검수할 최종본을 먼저 선택하세요.'}</p>
           </div>
           <PolarisFileDrop
