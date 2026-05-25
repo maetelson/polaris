@@ -203,12 +203,12 @@ const generatedEvidence: EvidenceCardData[] = [
 const evidenceTags: TagFilter[] = ['전체', '시장 분석', '소비자 분석', '경쟁사 분석', '문제 정의', '솔루션 근거'];
 
 const workflowSteps = [
-  { label: '자료', view: 'sources' as ResearchView },
-  { label: '근거', view: 'evidence' as ResearchView },
-  { label: '검증', view: 'verification' as ResearchView },
+  { label: '자료 수집', view: 'sources' as ResearchView },
+  { label: '근거 추출', view: 'evidence' as ResearchView },
+  { label: '출처 검증', view: 'verification' as ResearchView },
   { label: '아웃라인', view: 'outline' as ResearchView },
-  { label: '초안', view: 'draft' as ResearchView },
-  { label: '문서화', view: 'editor' as ResearchView }
+  { label: '초안 작성', view: 'draft' as ResearchView },
+  { label: '문서 연동', view: 'editor' as ResearchView }
 ];
 
 const boardNav = [
@@ -383,13 +383,12 @@ export function WorkBoard() {
         {activeView === 'home' ? (
           <>
             <div>
-              <p className="research-kicker">AI 리서치 보드</p>
-              <h1 id="research-board-title">자료를 검증 가능한 근거로 바꾸는 문서 작성 전 작업 공간</h1>
-              <p>PDF, URL, 인터뷰, 회의록을 모으면 AI가 쓸 만한 근거와 인용 후보로 정리하고 초안까지 연결합니다.</p>
+              <h1 id="research-board-title">AI 리서치 보드</h1>
             </div>
             <div className="research-topbar-actions">
-              <PolarisButton className="primary-action compact-action" onClick={() => selectProject(projects[0])}>
-                자료부터 시작
+              <PolarisButton className="primary-action compact-action">
+                <Plus size={16} aria-hidden="true" />
+                새 프로젝트 시작
               </PolarisButton>
             </div>
           </>
@@ -408,14 +407,8 @@ export function WorkBoard() {
         <ProjectHome onSelectProject={selectProject} />
       ) : (
         <div className="research-workspace">
-          <aside className="research-rail" aria-label="AI 리서치 보드 메뉴">
-            <div className="research-rail-project">
-              <span>{currentProject.due}</span>
-              <strong>{currentProject.title}</strong>
-              <small>{currentProject.nextAction}</small>
-            </div>
-
-            <nav>
+          <nav className="research-tabbar" aria-label="AI 리서치 보드 메뉴">
+            <div role="tablist" aria-label="AI 리서치 보드 단계">
               {boardNav.map((item) => {
                 const Icon = item.icon;
 
@@ -423,7 +416,8 @@ export function WorkBoard() {
                   <PolarisButton
                     className={`research-nav-item ${activeView === item.id ? 'research-nav-item-active' : ''}`}
                     key={item.id}
-                    aria-pressed={activeView === item.id}
+                    role="tab"
+                    aria-selected={activeView === item.id}
                     onClick={() => setActiveView(item.id)}
                   >
                     <Icon size={16} aria-hidden="true" />
@@ -431,8 +425,8 @@ export function WorkBoard() {
                   </PolarisButton>
                 );
               })}
-            </nav>
-          </aside>
+            </div>
+          </nav>
 
           <main className="research-main">
             {activeView === 'dashboard' && (
@@ -482,19 +476,11 @@ export function WorkBoard() {
 function ProjectHome({ onSelectProject }: { onSelectProject: (project: ResearchProject) => void }) {
   return (
     <div className="research-home">
-      <section className="research-home-intro">
-        <div>
-          <p className="research-kicker">프로젝트 홈</p>
-          <h2>작성할 문서의 자료를 먼저 모으고, 검증 가능한 근거로 바꿉니다.</h2>
-          <p>프로젝트를 열면 자료 보관함부터 초안·Polaris 문서 편집기까지 하나의 흐름으로 이어집니다.</p>
-        </div>
-        <PolarisButton className="primary-action">
-          <Plus size={16} aria-hidden="true" />
-          새 프로젝트 생성
-        </PolarisButton>
-      </section>
+      <h2 className="research-list-label" id="research-project-list-title">
+        프로젝트 리스트
+      </h2>
 
-      <div className="research-project-grid" aria-label="프로젝트 목록">
+      <div className="research-project-grid" aria-labelledby="research-project-list-title">
         {projects.map((project) => (
           <PolarisButton className="research-project-card" key={project.id} onClick={() => onSelectProject(project)}>
             <span>{project.due}</span>
@@ -537,6 +523,8 @@ function DashboardView({
   statusCounts: { usable: number; review: number; blocked: number; duplicate: number };
   setActiveView: (view: ResearchView) => void;
 }) {
+  const currentWorkflowStepIndex = 3;
+
   return (
     <div className="research-view">
       <section className="research-dashboard-hero">
@@ -551,7 +539,16 @@ function DashboardView({
         <ol className="research-flow" aria-label="리서치 진행 단계">
           {workflowSteps.map((step, index) => (
             <li key={step.label}>
-              <PolarisButton onClick={() => setActiveView(step.view)}>
+              <PolarisButton
+                className={
+                  index < currentWorkflowStepIndex
+                    ? 'research-flow-complete'
+                    : index === currentWorkflowStepIndex
+                      ? 'research-flow-current'
+                      : undefined
+                }
+                onClick={() => setActiveView(step.view)}
+              >
                 <span>{index + 1}</span>
                 <strong>{step.label}</strong>
               </PolarisButton>

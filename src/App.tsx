@@ -201,30 +201,32 @@ export function App() {
               <span>오피스 작업대</span>
             </span>
           </a>
-          <PolarisButton className="icon-button mobile-only" aria-label="메뉴 닫기" onClick={() => setMobileOpen(false)}>
-            <X size={18} aria-hidden="true" />
-          </PolarisButton>
+          <div className="sidebar-header-actions">
+            <PolarisButton
+              className="icon-button sidebar-collapse-button"
+              aria-label="사이드바 접기"
+              onClick={() => {
+                setSidebarCollapsed(true);
+                setMobileOpen(false);
+              }}
+            >
+              <PanelLeftClose size={17} aria-hidden="true" />
+            </PolarisButton>
+            <PolarisButton className="icon-button mobile-only" aria-label="메뉴 닫기" onClick={() => setMobileOpen(false)}>
+              <X size={18} aria-hidden="true" />
+            </PolarisButton>
+          </div>
         </div>
 
         <nav className="sidebar-body" aria-label="DECK A팀 작업 영역">
           <NavSection items={workspaceNav} activeId={activeId} title="작업 영역" onSelect={selectItem} />
         </nav>
 
-        <div className="sidebar-footer">
-          <div>
-            <span className="footer-label">PolarisDesign</span>
-            <strong>v0.8.0-rc.8</strong>
-          </div>
-          <PolarisButton
-            className="icon-button"
-            aria-label="사이드바 접기"
-            onClick={() => {
-              setSidebarCollapsed(true);
-              setMobileOpen(false);
-            }}
-          >
-            <PanelLeftClose size={17} aria-hidden="true" />
-          </PolarisButton>
+        <div className="sidebar-credit">
+          made by{' '}
+          <a href="https://github.com/maetelson" target="_blank" rel="noreferrer">
+            maetelson
+          </a>
         </div>
       </aside>
 
