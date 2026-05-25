@@ -136,6 +136,7 @@ export function ReviewRoom({ onDocumentChange }: ReviewRoomProps) {
   const [isReviewPanelOpen, setReviewPanelOpen] = useState(false);
   const [isVersionPanelOpen, setVersionPanelOpen] = useState(false);
   const [isVersionModalOpen, setVersionModalOpen] = useState(false);
+  const [selectedVersionId, setSelectedVersionId] = useState<string | null>(null);
   const [draftVersionName, setDraftVersionName] = useState('');
   const [draftVersionMemo, setDraftVersionMemo] = useState('');
   const [toastMessage, setToastMessage] = useState('');
@@ -167,6 +168,7 @@ export function ReviewRoom({ onDocumentChange }: ReviewRoomProps) {
     return source?.documentId === activeDocumentId;
   });
   const documentVersions = versions.filter((version) => version.documentId === activeDocumentId);
+  const selectedVersion = documentVersions.find((version) => version.id === selectedVersionId) ?? null;
   const openDocumentComments = documentComments.filter((comment) => comment.status !== '해결 완료');
   const openCommentIds = new Set(openDocumentComments.map((comment) => comment.id));
   const selectedComment = openDocumentComments.find((comment) => comment.id === selectedCommentId) ?? openDocumentComments[0];
@@ -332,6 +334,7 @@ export function ReviewRoom({ onDocumentChange }: ReviewRoomProps) {
     saveVersion();
     setReviewPanelOpen(false);
     setVersionModalOpen(false);
+    setSelectedVersionId(null);
     setVersionPanelOpen(true);
   };
 
@@ -345,12 +348,26 @@ export function ReviewRoom({ onDocumentChange }: ReviewRoomProps) {
     setVersionModalOpen(false);
   };
 
+  const restoreSelectedVersion = () => {
+    setSelectedVersionId(null);
+    setVersionPanelOpen(false);
+    if (toastTimerRef.current) {
+      window.clearTimeout(toastTimerRef.current);
+    }
+    setToastMessage('복원이 완료되었어요');
+    toastTimerRef.current = window.setTimeout(() => {
+      setToastMessage('');
+      toastTimerRef.current = null;
+    }, 2200);
+  };
+
   const saveDraftVersion = () => {
     const versionName = draftVersionName.trim() || getDefaultVersionName();
     const versionMemo = draftVersionMemo.trim() || '사용자 설명 없음';
 
     saveVersion(versionName, '수동 저장', versionMemo, true);
     setVersionModalOpen(false);
+    setSelectedVersionId(null);
     setVersionPanelOpen(true);
   };
 
@@ -378,6 +395,27 @@ export function ReviewRoom({ onDocumentChange }: ReviewRoomProps) {
       window.removeEventListener('review-room:confirm-final', handleConfirmFinal);
     };
   }, [confirmFinal, openVersionSavePanel]);
+
+  if (selectedVersion) {
+    return (
+      <section className="review-room rr-version-compare-page" aria-label="버전 비교">
+        <VersionComparePanel
+          activeDocument={activeDocument}
+          comments={documentComments}
+          minutes={documentMinutes}
+          unresolvedCount={unresolvedCount}
+          version={selectedVersion}
+          onBack={() => setSelectedVersionId(null)}
+          onRestore={restoreSelectedVersion}
+        />
+        {toastMessage && (
+          <div className="rr-toast" role="status" aria-live="polite">
+            {toastMessage}
+          </div>
+        )}
+      </section>
+    );
+  }
 
   return (
     <section className="review-room" aria-label="리뷰룸">
@@ -587,14 +625,14 @@ export function ReviewRoom({ onDocumentChange }: ReviewRoomProps) {
             >
               <div className="rr-list">
                 {documentVersions.map((version) => (
-                  <article className="rr-item" key={version.id}>
+                  <PolarisButton className="rr-item rr-version-item" key={version.id} onClick={() => setSelectedVersionId(version.id)}>
                     <span>
                       <strong>{version.name}</strong>
                       <em className="rr-chip">{version.tag}</em>
                     </span>
                     <p>{version.memo}</p>
                     <small>{version.createdAt}</small>
-                  </article>
+                  </PolarisButton>
                 ))}
               </div>
             </PanelBlock>
@@ -674,6 +712,131 @@ function PanelBlock({
         children
       )}
     </section>
+  );
+}
+
+function VersionComparePanel({
+  activeDocument,
+  comments,
+  minutes,
+  unresolvedCount,
+  version,
+  onBack,
+  onRestore
+}: {
+  activeDocument: ReviewDocument;
+  comments: ReviewComment[];
+  minutes: MeetingMinute[];
+  unresolvedCount: number;
+  version: ReviewVersion;
+  onBack: () => void;
+  onRestore: () => void;
+}) {
+  const currentSummary = buildCurrentVersionSummary(activeDocument, comments, minutes, unresolvedCount);
+
+  return (
+    <section className="rr-version-compare-panel">
+      <div className="rr-panel-head">
+        <h2>버전 비교</h2>
+        <div className="rr-panel-action">
+          <PolarisButton className="secondary-action compact-action" onClick={onBack}>
+            취소
+          </PolarisButton>
+        </div>
+      </div>
+      <div className="rr-version-split-view">
+        <section className="rr-version-side-card" aria-label="왼쪽 이전 버전">
+          <div className="rr-version-side-toolbar">
+            <label className="rr-version-select">
+              <span>왼쪽 (이전 버전)</span>
+              <select value={version.id} onChange={() => undefined}>
+                <option>{version.name} ({version.createdAt})</option>
+              </select>
+            </label>
+            <PolarisButton className="primary-action compact-action" onClick={onRestore}>
+              전체 복원
+            </PolarisButton>
+          </div>
+          <VersionDocumentPane
+            variant="saved"
+            showLegend
+            lines={[
+              '본 보고서는 단순중첩 실험을 위한 추진 전략을 제안합니다.',
+              '기업의 지속 가능한 성장을 위해 핵심 역량을 확대합니다.',
+              '사회적 가치를 창출하는 방안을 중심으로 구성하였습니다.',
+              version.memo
+            ]}
+          />
+        </section>
+        <section className="rr-version-side-card" aria-label="오른쪽 현재 버전">
+          <label className="rr-version-select">
+            <span>오른쪽 (현재 버전)</span>
+            <select value="current" onChange={() => undefined}>
+              <option value="current">{activeDocument.label} 현재 문서</option>
+            </select>
+          </label>
+          <VersionDocumentPane
+            variant="current"
+            lines={[
+              '본 보고서는 단순중첩 실험을 위한 추진 전략을 제안합니다.',
+              '기업의 지속 가능한 성장을 위해 필수적 역할을 하며,',
+              '사회적 가치를 창출하는 방안을 중심으로 구체화하였습니다.',
+              currentSummary.memo
+            ]}
+          />
+        </section>
+      </div>
+    </section>
+  );
+}
+
+function VersionDocumentPane({
+  variant,
+  showLegend = false,
+  lines
+}: {
+  variant: 'saved' | 'current';
+  showLegend?: boolean;
+  lines: string[];
+}) {
+  return (
+    <article className="rr-version-doc-pane">
+      <div className="rr-version-doc-body">
+        <h3>1. 서론</h3>
+        {lines.map((line, index) => (
+          <p key={`${variant}-${index}`}>
+            {index === 1 && variant === 'current' ? (
+              <>
+                기업의 지속 가능한 성장을 위해 <mark className="rr-diff-add">필수적</mark> 역할을 하며,
+              </>
+            ) : index === 2 ? (
+              <>
+                사회적 가치를 창출하는 방안을 중심으로
+                {variant === 'current' ? (
+                  <>
+                    {' '}
+                    <mark className="rr-diff-add">구체화하였습니다.</mark>
+                  </>
+                ) : (
+                  <>
+                    {' '}
+                    <mark className="rr-diff-remove">구성하였습니다.</mark>
+                  </>
+                )}
+              </>
+            ) : (
+              line
+            )}
+          </p>
+        ))}
+      </div>
+      {showLegend && (
+        <div className="rr-diff-legend" aria-label="비교 색상 범례">
+          <span><i className="rr-diff-remove" aria-hidden="true" />삭제</span>
+          <span><i className="rr-diff-add" aria-hidden="true" />추가</span>
+        </div>
+      )}
+    </article>
   );
 }
 
@@ -1104,6 +1267,27 @@ function getCommentAnchorClass(commentId: string, selectedComment: ReviewComment
   }
 
   return `rr-comment-anchor ${selectedComment?.id === commentId ? 'rr-comment-anchor-active' : ''}`;
+}
+
+function buildCurrentVersionSummary(
+  activeDocument: ReviewDocument,
+  comments: ReviewComment[],
+  minutes: MeetingMinute[],
+  unresolvedCount: number
+) {
+  const analyzedCount = comments.filter((comment) => comment.importance).length;
+  const status = unresolvedCount > 0 ? '검토 중' : '정리 완료';
+  const memo =
+    activeDocument.id === 'minutes'
+      ? `AI 회의록 항목 ${minutes.length}개가 현재 문서에 반영되어 있습니다.`
+      : `댓글 ${comments.length}개 중 ${analyzedCount}개가 AI 정리되어 있고 ${unresolvedCount}개가 남아 있습니다.`;
+
+  return {
+    status,
+    memo,
+    analyzedCount,
+    minutesCount: minutes.length
+  };
 }
 
 function EmptyLine({ label }: { label: string }) {
