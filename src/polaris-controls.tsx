@@ -64,7 +64,8 @@ type PolarisFileDropProps = Omit<InputHTMLAttributes<HTMLInputElement>, 'type' |
   label: string;
   description: string;
   fileName?: string;
-  onFileSelect: (fileName: string) => void;
+  onFileSelect?: (fileName: string) => void;
+  onFilesSelect?: (fileNames: string[]) => void;
 };
 
 export function PolarisFileDrop({
@@ -73,6 +74,7 @@ export function PolarisFileDrop({
   description,
   fileName,
   onFileSelect,
+  onFilesSelect,
   accept,
   className,
   ...props
@@ -81,10 +83,12 @@ export function PolarisFileDrop({
   const inputId = id ?? generatedId;
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      onFileSelect(file.name);
+    const fileNames = Array.from(event.target.files ?? []).map((file) => file.name);
+    if (fileNames.length > 0) {
+      onFilesSelect?.(fileNames);
+      onFileSelect?.(fileNames[0]);
     }
+    event.target.value = '';
   };
 
   return (

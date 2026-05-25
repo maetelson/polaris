@@ -1,9 +1,20 @@
 import { useEffect, useState } from 'react';
-import { FileSearch } from 'lucide-react';
+import { FileSearch, X } from 'lucide-react';
 import { PolarisButton, PolarisFileDrop } from './polaris-controls';
 import type { SupportTrack } from './CareerPass';
 
-type RestrictionId = 'length' | 'questions' | 'attachments' | 'filename';
+type RestrictionId =
+  | 'length'
+  | 'questions'
+  | 'attachments'
+  | 'filename'
+  | 'slideCount'
+  | 'template'
+  | 'speakerNotes'
+  | 'pdfPages'
+  | 'pdfSecurity'
+  | 'docxStyle'
+  | 'docxTrackChanges';
 
 type SubmissionCheck = {
   id: string;
@@ -19,36 +30,122 @@ type RestrictionOption = {
   placeholder: string;
 };
 
-const restrictionOptions: RestrictionOption[] = [
-  {
-    id: 'length',
-    label: '글자 수 제한',
-    placeholder: '예: 1,000자 이내'
-  },
-  {
-    id: 'questions',
-    label: '필수 문항',
-    placeholder: '예: 지원 동기, 협업 경험, 입사 후 포부'
-  },
-  {
-    id: 'attachments',
-    label: '첨부 파일 조건',
-    placeholder: '예: 포트폴리오 PDF 필수, 20MB 이하'
-  },
+type FinalFileType = 'ppt' | 'docx' | 'pdf' | 'other';
+
+type FinalFileState = {
+  id: string;
+  fileName: string;
+  selectedRestrictionIds: RestrictionId[];
+  restrictionValues: Record<RestrictionId, string>;
+  submissionChecks: SubmissionCheck[];
+  reviewStarted: boolean;
+};
+
+const commonRestrictionOptions: RestrictionOption[] = [
   {
     id: 'filename',
     label: '파일명 규칙',
     placeholder: '예: 이름_직무_지원서.pdf'
+  },
+  {
+    id: 'attachments',
+    label: '첨부 파일 조건',
+    placeholder: '예: PDF 필수, 20MB 이하'
   }
 ];
 
+const restrictionOptionsByType: Record<FinalFileType, RestrictionOption[]> = {
+  ppt: [
+    {
+      id: 'slideCount',
+      label: '슬라이드 수',
+      placeholder: '예: 20장 이하'
+    },
+    {
+      id: 'template',
+      label: '템플릿 준수',
+      placeholder: '예: 회사 양식, 16:9 비율, 폰트 포함'
+    },
+    {
+      id: 'speakerNotes',
+      label: '발표 노트',
+      placeholder: '예: 핵심 슬라이드 발표 노트 포함'
+    },
+    ...commonRestrictionOptions
+  ],
+  docx: [
+    {
+      id: 'length',
+      label: '글자 수 제한',
+      placeholder: '예: 1,000자 이내'
+    },
+    {
+      id: 'questions',
+      label: '필수 문항',
+      placeholder: '예: 지원 동기, 직무 경험, 입사 후 계획'
+    },
+    {
+      id: 'docxStyle',
+      label: '문서 서식',
+      placeholder: '예: 맑은 고딕 11pt, 줄간격 160%'
+    },
+    {
+      id: 'docxTrackChanges',
+      label: '변경 내용 정리',
+      placeholder: '예: 메모/변경 내용 제거'
+    },
+    ...commonRestrictionOptions
+  ],
+  pdf: [
+    {
+      id: 'pdfPages',
+      label: '페이지 수',
+      placeholder: '예: 5페이지 이하'
+    },
+    {
+      id: 'pdfSecurity',
+      label: 'PDF 보안',
+      placeholder: '예: 암호 없음, 복사 가능'
+    },
+    {
+      id: 'attachments',
+      label: '첨부 파일 조건',
+      placeholder: '예: PDF 단일 파일, 20MB 이하'
+    },
+    {
+      id: 'filename',
+      label: '파일명 규칙',
+      placeholder: '예: 이름_직무_최종본.pdf'
+    }
+  ],
+  other: [
+    {
+      id: 'filename',
+      label: '파일명 규칙',
+      placeholder: '예: 이름_직무_최종본'
+    },
+    {
+      id: 'attachments',
+      label: '첨부 파일 조건',
+      placeholder: '예: 제출 가능 확장자, 20MB 이하'
+    }
+  ]
+};
+
 const currentDocumentCharacterCount = 862;
-const emptyRestrictionValues: Record<RestrictionId, string> = {
+const emptyRestrictionValues = {
   length: '',
   questions: '',
   attachments: '',
-  filename: ''
-};
+  filename: '',
+  slideCount: '',
+  template: '',
+  speakerNotes: '',
+  pdfPages: '',
+  pdfSecurity: '',
+  docxStyle: '',
+  docxTrackChanges: ''
+} satisfies Record<RestrictionId, string>;
 
 export type FinalRoomHandoff = {
   fileName: string;
@@ -62,65 +159,78 @@ export function FinalRoom({
   applications: SupportTrack[];
   handoff?: FinalRoomHandoff | null;
 }) {
-  const [finalFileName, setFinalFileName] = useState(handoff?.fileName ?? '');
-  const [selectedRestrictionIds, setSelectedRestrictionIds] = useState<RestrictionId[]>([]);
-  const [restrictionValues, setRestrictionValues] = useState<Record<RestrictionId, string>>(emptyRestrictionValues);
-  const [submissionChecks, setSubmissionChecks] = useState<SubmissionCheck[]>([]);
-  const [reviewStarted, setReviewStarted] = useState(false);
+  const [files, setFiles] = useState<FinalFileState[]>(() => (handoff?.fileName ? [createFinalFileState(handoff.fileName)] : []));
+  const [activeFileId, setActiveFileId] = useState(files[0]?.id ?? '');
 
   useEffect(() => {
     if (!handoff?.fileName) {
       return;
     }
 
-    setFinalFileName(handoff.fileName);
-    setSelectedRestrictionIds([]);
-    setRestrictionValues(emptyRestrictionValues);
-    setSubmissionChecks([]);
-    setReviewStarted(false);
+    const file = createFinalFileState(handoff.fileName);
+    setFiles([file]);
+    setActiveFileId(file.id);
   }, [handoff?.fileName, handoff?.submittedAt]);
 
-  const completedChecks = submissionChecks.filter((check) => check.status === 'complete').length;
-  const completionRate = submissionChecks.length > 0 ? Math.round((completedChecks / submissionChecks.length) * 100) : 0;
-  const finalNotice = reviewStarted
-    ? completedChecks === submissionChecks.length
-      ? '검수 완료'
-      : '수정 필요'
-    : '검수 대기';
+  const activeFile = files.find((file) => file.id === activeFileId) ?? files[0] ?? null;
+  const activeFileName = activeFile?.fileName ?? '';
 
-  void finalNotice;
-  void completionRate;
+  const addFiles = (fileNames: string[]) => {
+    const incomingFiles = fileNames.map(createFinalFileState);
+
+    setFiles((currentFiles) => [...currentFiles, ...incomingFiles]);
+
+    if (incomingFiles[0]) {
+      setActiveFileId(incomingFiles[0].id);
+    }
+  };
+
+  const removeFile = (fileId: string) => {
+    setFiles((currentFiles) => {
+      const nextFiles = currentFiles.filter((file) => file.id !== fileId);
+      if (activeFileId === fileId) {
+        setActiveFileId(nextFiles[0]?.id ?? '');
+      }
+      return nextFiles;
+    });
+  };
+
+  const updateActiveFile = (updater: (file: FinalFileState) => FinalFileState) => {
+    if (!activeFile) {
+      return;
+    }
+
+    setFiles((currentFiles) => currentFiles.map((file) => (file.id === activeFile.id ? updater(file) : file)));
+  };
 
   const updateRestrictionValue = (restrictionId: RestrictionId, value: string) => {
-    setRestrictionValues((values) => ({ ...values, [restrictionId]: value }));
-    setReviewStarted(false);
+    updateActiveFile((file) => ({
+      ...file,
+      restrictionValues: { ...file.restrictionValues, [restrictionId]: value },
+      reviewStarted: false
+    }));
   };
 
   const toggleRestrictionSelection = (restrictionId: RestrictionId) => {
-    setSelectedRestrictionIds((restrictionIds) =>
-      restrictionIds.includes(restrictionId)
-        ? restrictionIds.filter((id) => id !== restrictionId)
-        : [...restrictionIds, restrictionId]
-    );
-    setReviewStarted(false);
-  };
-
-  const updateFinalFileName = (fileName: string) => {
-    setFinalFileName(fileName);
-    setReviewStarted(false);
+    updateActiveFile((file) => ({
+      ...file,
+      selectedRestrictionIds: file.selectedRestrictionIds.includes(restrictionId)
+        ? file.selectedRestrictionIds.filter((id) => id !== restrictionId)
+        : [...file.selectedRestrictionIds, restrictionId],
+      reviewStarted: false
+    }));
   };
 
   const selectApplicationForReview = (application: SupportTrack) => {
-    setFinalFileName(buildApplicationFileName(application));
-    setSelectedRestrictionIds([]);
-    setRestrictionValues(emptyRestrictionValues);
-    setSubmissionChecks([]);
-    setReviewStarted(false);
+    addFiles([buildApplicationFileName(application)]);
   };
 
   const startReview = () => {
-    setSubmissionChecks(buildSubmissionChecks(finalFileName, selectedRestrictionIds, restrictionValues));
-    setReviewStarted(true);
+    updateActiveFile((file) => ({
+      ...file,
+      submissionChecks: buildSubmissionChecks(file),
+      reviewStarted: true
+    }));
   };
 
   return (
@@ -135,16 +245,15 @@ export function FinalRoom({
       <div className="final-room-layout">
         <FinalApplicationsPanel
           applications={applications}
-          activeFileName={finalFileName}
+          activeFileName={activeFileName}
           onSelectApplication={selectApplicationForReview}
         />
         <FinalReviewCard
-          checks={submissionChecks}
-          fileName={finalFileName}
-          selectedRestrictionIds={selectedRestrictionIds}
-          restrictionValues={restrictionValues}
-          reviewStarted={reviewStarted}
-          onFileSelect={updateFinalFileName}
+          activeFile={activeFile}
+          files={files}
+          onFilesSelect={addFiles}
+          onFileSelect={setActiveFileId}
+          onFileRemove={removeFile}
           onRestrictionToggle={toggleRestrictionSelection}
           onRestrictionValueChange={updateRestrictionValue}
           onStartReview={startReview}
@@ -193,32 +302,32 @@ function FinalApplicationsPanel({
 }
 
 function FinalReviewCard({
-  checks,
-  fileName,
-  selectedRestrictionIds,
-  restrictionValues,
-  reviewStarted,
+  activeFile,
+  files,
+  onFilesSelect,
   onFileSelect,
+  onFileRemove,
   onRestrictionToggle,
   onRestrictionValueChange,
   onStartReview
 }: {
-  checks: SubmissionCheck[];
-  fileName: string;
-  selectedRestrictionIds: RestrictionId[];
-  restrictionValues: Record<RestrictionId, string>;
-  reviewStarted: boolean;
-  onFileSelect: (fileName: string) => void;
+  activeFile: FinalFileState | null;
+  files: FinalFileState[];
+  onFilesSelect: (fileNames: string[]) => void;
+  onFileSelect: (fileId: string) => void;
+  onFileRemove: (fileId: string) => void;
   onRestrictionToggle: (restrictionId: RestrictionId) => void;
   onRestrictionValueChange: (restrictionId: RestrictionId, value: string) => void;
   onStartReview: () => void;
 }) {
-  const selectedRestrictionCount = selectedRestrictionIds.length;
-  const hasFile = Boolean(fileName);
-  const canStartReview =
-    hasFile &&
-    selectedRestrictionIds.length > 0 &&
-    selectedRestrictionIds.every((restrictionId) => restrictionValues[restrictionId].trim());
+  const hasFile = Boolean(activeFile);
+  const fileType = activeFile ? getFinalFileType(activeFile.fileName) : 'other';
+  const restrictionOptions = restrictionOptionsByType[fileType];
+  const selectedRestrictionCount = activeFile?.selectedRestrictionIds.length ?? 0;
+  const canStartReview = activeFile
+    ? selectedRestrictionCount > 0 &&
+      activeFile.selectedRestrictionIds.every((restrictionId) => activeFile.restrictionValues[restrictionId].trim())
+    : false;
 
   return (
     <section className={`final-review-card ${hasFile ? 'final-review-card-ready' : 'final-review-card-empty'}`} aria-label="최종 검수">
@@ -226,36 +335,60 @@ function FinalReviewCard({
         <section className="final-flow-section final-file-section" aria-labelledby="final-file-field-title">
           <div className="final-section-heading">
             <h2 id="final-file-field-title">새로운 프로젝트</h2>
-            <p>{hasFile ? '선택된 파일을 기준으로 제출 조건을 검수합니다.' : '검수할 최종본을 먼저 선택하세요.'}</p>
+            <p>{hasFile ? '파일을 선택하면 해당 파일 전용 검수 조건을 설정합니다.' : '검수할 최종본을 먼저 선택하세요.'}</p>
           </div>
           <PolarisFileDrop
             label="파일 선택"
-            description="pdf · pptx · docx"
-            fileName={fileName}
+            description="pdf · pptx · docx 여러 개 선택 가능"
+            fileName={files.length > 0 ? `${files.length}개 파일` : undefined}
             accept=".pdf,.ppt,.pptx,.doc,.docx"
-            onFileSelect={onFileSelect}
+            multiple
+            onFilesSelect={onFilesSelect}
           />
-          {hasFile && (
-            <div className="final-file-summary">
-              <span>선택됨</span>
-              <strong>{fileName}</strong>
+          {files.length > 0 && (
+            <div className="final-file-list" aria-label="검수 파일 목록">
+              {files.map((file) => {
+                const active = activeFile?.id === file.id;
+                const type = getFinalFileType(file.fileName).toUpperCase();
+
+                return (
+                  <div className={`final-file-item ${active ? 'final-file-item-active' : ''}`} key={file.id}>
+                    <PolarisButton
+                      className="final-file-select"
+                      aria-pressed={active}
+                      onClick={() => onFileSelect(file.id)}
+                    >
+                      <span>{type}</span>
+                      <strong>{file.fileName}</strong>
+                      <small>{file.reviewStarted ? `${file.submissionChecks.filter((check) => check.status === 'complete').length}/${file.submissionChecks.length} 통과` : '검수 대기'}</small>
+                    </PolarisButton>
+                    <PolarisButton
+                      className="icon-button final-file-remove"
+                      aria-label={`${file.fileName} 삭제`}
+                      onClick={() => onFileRemove(file.id)}
+                    >
+                      <X size={15} aria-hidden="true" />
+                    </PolarisButton>
+                  </div>
+                );
+              })}
             </div>
           )}
         </section>
 
-        {hasFile && (
+        {activeFile && (
           <section className="final-flow-section final-condition-section" aria-labelledby="final-restriction-field-title">
             <div className="final-section-heading final-section-heading-row">
               <div>
-                <h2 id="final-restriction-field-title">점검사항</h2>
-                <p>검수할 조건을 체크하면 기준 입력란이 열립니다.</p>
+                <h2 id="final-restriction-field-title">{getFinalFileTypeLabel(fileType)} 검수 목록</h2>
+                <p>{activeFile.fileName}에만 적용되는 검수 조건입니다.</p>
               </div>
               <span>{selectedRestrictionCount}개 적용</span>
             </div>
 
             <div className="final-condition-list">
               {restrictionOptions.map((option) => {
-                const checked = selectedRestrictionIds.includes(option.id);
+                const checked = activeFile.selectedRestrictionIds.includes(option.id);
 
                 return (
                   <div className={`final-condition-row ${checked ? 'final-condition-row-active' : ''}`} key={option.id}>
@@ -272,7 +405,7 @@ function FinalReviewCard({
                         className="text-field final-condition-input"
                         aria-label={`${option.label} 입력`}
                         placeholder={option.placeholder}
-                        value={restrictionValues[option.id]}
+                        value={activeFile.restrictionValues[option.id]}
                         onChange={(event) => onRestrictionValueChange(option.id, event.target.value)}
                       />
                     )}
@@ -284,14 +417,14 @@ function FinalReviewCard({
         )}
       </div>
 
-      {hasFile && reviewStarted && (
+      {activeFile?.reviewStarted && (
         <div className="final-review-result-panel" aria-label="최종 검수 결과">
           <div className="final-result-heading">
-            <strong>검수 결과</strong>
-            <span>{checks.filter((check) => check.status === 'complete').length}/{checks.length}</span>
+            <strong>{activeFile.fileName} 검수 결과</strong>
+            <span>{activeFile.submissionChecks.filter((check) => check.status === 'complete').length}/{activeFile.submissionChecks.length}</span>
           </div>
           <div className="final-result-list">
-            {checks.map((check) => (
+            {activeFile.submissionChecks.map((check) => (
               <div key={check.id} className="final-result-row">
                 <div>
                   <span>{check.label}</span>
@@ -304,31 +437,36 @@ function FinalReviewCard({
         </div>
       )}
 
-      {hasFile && (
+      {activeFile && (
         <div className="modal-actions final-review-actions">
-        <PolarisButton className="primary-action" disabled={!canStartReview} onClick={onStartReview}>
-          <FileSearch size={16} aria-hidden="true" />
-          검수 시작
-        </PolarisButton>
+          <PolarisButton className="primary-action" disabled={!canStartReview} onClick={onStartReview}>
+            <FileSearch size={16} aria-hidden="true" />
+            검수 시작
+          </PolarisButton>
         </div>
       )}
     </section>
   );
 }
 
-function buildSubmissionChecks(
-  fileName: string,
-  selectedRestrictionIds: RestrictionId[],
-  restrictionValues: Record<RestrictionId, string>
-): SubmissionCheck[] {
-  const selectedRestrictions = restrictionOptions.filter((option) => selectedRestrictionIds.includes(option.id));
+function buildSubmissionChecks(file: FinalFileState): SubmissionCheck[] {
+  const fileType = getFinalFileType(file.fileName);
+  const options = restrictionOptionsByType[fileType];
+  const selectedRestrictions = options.filter((option) => file.selectedRestrictionIds.includes(option.id));
   const checks: SubmissionCheck[] = [
     {
       id: 'file',
       label: '첨부 파일',
-      status: fileName ? 'complete' : 'warning',
-      text: fileName ? '선택 완료' : '파일 필요',
-      detail: fileName || '검수할 파일을 먼저 첨부하세요.'
+      status: file.fileName ? 'complete' : 'warning',
+      text: file.fileName ? '선택 완료' : '파일 필요',
+      detail: file.fileName || '검수할 파일을 먼저 첨부하세요.'
+    },
+    {
+      id: 'file-type',
+      label: '파일 유형',
+      status: fileType === 'other' ? 'warning' : 'complete',
+      text: getFinalFileTypeLabel(fileType),
+      detail: `${file.fileName} · ${getFinalFileTypeLabel(fileType)} 전용 검수 목록 적용`
     }
   ];
 
@@ -337,10 +475,10 @@ function buildSubmissionChecks(
       ...checks,
       {
         id: 'restriction-empty',
-        label: '제한 사항',
+        label: '검수 조건',
         status: 'warning',
         text: '선택 필요',
-        detail: '검수할 제한 사항을 하나 이상 선택하세요.'
+        detail: '검수할 조건을 하나 이상 선택하세요.'
       }
     ];
   }
@@ -348,7 +486,7 @@ function buildSubmissionChecks(
   return [
     ...checks,
     ...selectedRestrictions.map((restriction) => {
-      const restrictionValue = restrictionValues[restriction.id].trim();
+      const restrictionValue = file.restrictionValues[restriction.id].trim();
 
       if (!restrictionValue) {
         return {
@@ -360,7 +498,7 @@ function buildSubmissionChecks(
         };
       }
 
-      return buildRestrictionCheck(restriction, restrictionValue, fileName);
+      return buildRestrictionCheck(restriction, restrictionValue, file.fileName);
     })
   ];
 }
@@ -382,7 +520,7 @@ function buildRestrictionCheck(restriction: RestrictionOption, value: string, fi
   }
 
   if (restriction.id === 'questions') {
-    const questionCount = value.split(/[,，\n]/).map((item) => item.trim()).filter(Boolean).length;
+    const questionCount = value.split(/[,·\n]/).map((item) => item.trim()).filter(Boolean).length;
 
     return {
       id: restriction.id,
@@ -397,28 +535,59 @@ function buildRestrictionCheck(restriction: RestrictionOption, value: string, fi
     const fileExtension = getFileExtension(fileName);
     const requiresPdf = value.toLowerCase().includes('pdf');
     const formatMatches = !requiresPdf || fileExtension === 'pdf';
-    const passes = Boolean(fileName && formatMatches);
+
+    return {
+      id: restriction.id,
+      label: restriction.label,
+      status: formatMatches ? 'complete' : 'warning',
+      text: formatMatches ? '통과' : '형식 확인',
+      detail: `${fileName} · ${value}`
+    };
+  }
+
+  if (restriction.id === 'filename') {
+    const requiresUnderscore = value.includes('_');
+    const hasNoSpaces = Boolean(fileName && !/\s/.test(fileName));
+    const hasRequiredSeparator = !requiresUnderscore || fileName.includes('_');
+    const passes = hasNoSpaces && hasRequiredSeparator;
 
     return {
       id: restriction.id,
       label: restriction.label,
       status: passes ? 'complete' : 'warning',
-      text: !fileName ? '파일 필요' : formatMatches ? '통과' : '형식 확인',
-      detail: fileName ? `${fileName} · ${value}` : `${value} · 첨부 파일을 선택하세요.`
+      text: passes ? '통과' : '수정 필요',
+      detail: `${fileName} · 기준: ${value}`
     };
   }
 
-  const requiresUnderscore = value.includes('_');
-  const hasNoSpaces = Boolean(fileName && !/\s/.test(fileName));
-  const hasRequiredSeparator = !requiresUnderscore || fileName.includes('_');
-  const passes = hasNoSpaces && hasRequiredSeparator;
+  if (restriction.id === 'slideCount' || restriction.id === 'pdfPages') {
+    const limit = parseFirstNumber(value);
+    return {
+      id: restriction.id,
+      label: restriction.label,
+      status: limit ? 'complete' : 'warning',
+      text: limit ? '기준 등록' : '기준 확인',
+      detail: limit ? `${limit}개 이하 기준 적용` : `${value} · 숫자 기준을 포함해 주세요.`
+    };
+  }
 
   return {
     id: restriction.id,
     label: restriction.label,
-    status: passes ? 'complete' : 'warning',
-    text: !fileName ? '파일 필요' : passes ? '통과' : '수정 필요',
-    detail: fileName ? `${fileName} · 기준: ${value}` : `${value} · 파일명 확인을 위해 파일을 첨부하세요.`
+    status: value ? 'complete' : 'warning',
+    text: value ? '기준 등록' : '입력 필요',
+    detail: `${fileName} · ${value}`
+  };
+}
+
+function createFinalFileState(fileName: string): FinalFileState {
+  return {
+    id: `${Date.now()}-${Math.random().toString(36).slice(2)}-${fileName}`,
+    fileName,
+    selectedRestrictionIds: [],
+    restrictionValues: { ...emptyRestrictionValues },
+    submissionChecks: [],
+    reviewStarted: false
   };
 }
 
@@ -429,6 +598,40 @@ function parseFirstNumber(value: string) {
 
 function getFileExtension(fileName: string) {
   return fileName.split('.').pop()?.toLowerCase() ?? '';
+}
+
+function getFinalFileType(fileName: string): FinalFileType {
+  const extension = getFileExtension(fileName);
+
+  if (extension === 'ppt' || extension === 'pptx') {
+    return 'ppt';
+  }
+
+  if (extension === 'doc' || extension === 'docx') {
+    return 'docx';
+  }
+
+  if (extension === 'pdf') {
+    return 'pdf';
+  }
+
+  return 'other';
+}
+
+function getFinalFileTypeLabel(fileType: FinalFileType) {
+  if (fileType === 'ppt') {
+    return 'PPT';
+  }
+
+  if (fileType === 'docx') {
+    return 'DOCX';
+  }
+
+  if (fileType === 'pdf') {
+    return 'PDF';
+  }
+
+  return '기타 파일';
 }
 
 function buildApplicationFileName(application: SupportTrack) {
