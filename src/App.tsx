@@ -35,9 +35,11 @@ type NavItem = {
   icon: React.ElementType;
   badge?: string;
   ai?: boolean;
+  externalHref?: string;
 };
 
 const defaultReviewRoomDocument = { title: '팀 프로젝트 제안서.docx', unit: '문단' };
+const deckHomeUrl = 'https://www.deck-ewha.com/';
 const companyARoute = '/company-A';
 const workCardDetailRoute = '/work-card/job-application';
 const workspaceRoutes: Record<string, string> = {
@@ -59,7 +61,8 @@ const workspaceNav: NavItem[] = [
     id: 'home',
     label: '홈',
     description: '킵 투 폴라리스 작업 현황과 최근 문서',
-    icon: Home
+    icon: Home,
+    externalHref: deckHomeUrl
   },
   {
     id: 'career-pass',
@@ -127,9 +130,15 @@ export function App() {
     [activeId]
   );
   const isCareerPassView = activeId === 'career-pass' || isCareerPassRoute();
+  const isFinalRoomView = activeId === 'final-room' || isFinalRoomRoute();
   const isKeepToPolarisView = activeId === 'cluster-one' || activeId === 'home';
 
   const selectItem = (itemId: string) => {
+    if (itemId === 'home') {
+      window.location.assign(deckHomeUrl);
+      return;
+    }
+
     setActiveId(itemId);
     setShowClusterOneStart(false);
     if (itemId === 'cluster-one') {
@@ -232,7 +241,7 @@ export function App() {
       {mobileOpen && <PolarisButton className="scrim" aria-label="메뉴 닫기" onClick={() => setMobileOpen(false)} />}
 
       <div className="main-column">
-        {!isCareerPassView && !isKeepToPolarisView && (
+        {!isCareerPassView && !isFinalRoomView && !isKeepToPolarisView && (
         <header className="gnb">
           <div className="gnb-left">
             <PolarisButton
@@ -302,7 +311,7 @@ export function App() {
         )}
 
         <main
-          className={`content-shell ${isCareerPassView || activeId === 'final-room' ? 'content-shell-career' : ''} ${isKeepToPolarisView ? 'content-shell-cl1' : ''} ${activeId === 'review-room' ? 'content-shell-review' : ''} ${activeId === 'work-board' ? 'content-shell-workboard' : ''}`}
+          className={`content-shell ${isCareerPassView || isFinalRoomView ? 'content-shell-career' : ''} ${isKeepToPolarisView ? 'content-shell-cl1' : ''} ${activeId === 'review-room' ? 'content-shell-review' : ''} ${activeId === 'work-board' ? 'content-shell-workboard' : ''}`}
           aria-label={`${activeItem.label} 화면`}
         >
           {isCareerPassView ? (
@@ -570,15 +579,26 @@ function NavSection({
 
           return (
             <li key={item.id}>
-              <PolarisButton
-                className={`nav-item ${active ? 'nav-item-active' : ''} ${item.ai ? 'nav-item-ai' : ''}`}
-                aria-current={active ? 'page' : undefined}
-                onClick={() => onSelect(item.id)}
-              >
-                <Icon size={18} aria-hidden="true" />
-                <span>{item.label}</span>
-                {item.badge && <strong>{item.badge}</strong>}
-              </PolarisButton>
+              {item.externalHref ? (
+                <a
+                  className={`nav-item ${active ? 'nav-item-active' : ''} ${item.ai ? 'nav-item-ai' : ''}`}
+                  href={item.externalHref}
+                >
+                  <Icon size={18} aria-hidden="true" />
+                  <span>{item.label}</span>
+                  {item.badge && <strong>{item.badge}</strong>}
+                </a>
+              ) : (
+                <PolarisButton
+                  className={`nav-item ${active ? 'nav-item-active' : ''} ${item.ai ? 'nav-item-ai' : ''}`}
+                  aria-current={active ? 'page' : undefined}
+                  onClick={() => onSelect(item.id)}
+                >
+                  <Icon size={18} aria-hidden="true" />
+                  <span>{item.label}</span>
+                  {item.badge && <strong>{item.badge}</strong>}
+                </PolarisButton>
+              )}
             </li>
           );
         })}

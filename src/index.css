@@ -1717,6 +1717,7 @@ button {
   color: var(--polaris-label-neutral);
   background: transparent;
   cursor: pointer;
+  text-decoration: none;
   text-align: left;
 }
 
@@ -3962,7 +3963,7 @@ button.rr-comment-anchor:focus-visible {
 
 .final-room {
   box-sizing: border-box;
-  min-height: calc(100vh - 56px);
+  min-height: 100vh;
   padding-bottom: var(--polaris-spacing-md);
   grid-template-rows: auto minmax(0, 1fr);
 }
@@ -3986,7 +3987,7 @@ button.rr-comment-anchor:focus-visible {
   flex-direction: column;
   gap: var(--polaris-spacing-xs);
   min-width: 0;
-  min-height: calc(100vh - 208px);
+  min-height: calc(100vh - 152px);
   padding: var(--polaris-spacing-sm);
   border: 1px solid var(--polaris-line-neutral);
   border-radius: var(--polaris-radius-sm);
@@ -4088,7 +4089,7 @@ button.rr-comment-anchor:focus-visible {
   gap: var(--polaris-spacing-sm);
   width: auto;
   min-width: 0;
-  min-height: calc(100vh - 208px);
+  min-height: calc(100vh - 152px);
   padding: var(--polaris-spacing-sm);
   border: 1px solid var(--polaris-line-neutral);
   border-radius: var(--polaris-radius-sm);
