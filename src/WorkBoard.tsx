@@ -1,9 +1,18 @@
 import { useMemo, useState } from 'react';
 import { FileIcon, type FileType } from '@polaris/ui';
-import { Ribbon, RibbonButton, RibbonContent, RibbonGroup, RibbonTab, RibbonTabList, RibbonTabs } from '@polaris/ui/ribbon';
-import { AiWriteIcon, BoldIcon, BulletIcon, PasteIcon } from '@polaris/ui/ribbon-icons';
+import { Ribbon, RibbonButton, RibbonGroup, RibbonRow, RibbonSeparator, RibbonStack } from '@polaris/ui/ribbon';
 import {
-  Archive,
+  AiChatIcon,
+  AiWriteIcon,
+  AlignCenterIcon,
+  AlignLeftIcon,
+  BoldIcon,
+  ItalicIcon,
+  PasteIcon,
+  Underline01Icon,
+  WordCountIcon
+} from '@polaris/ui/ribbon-icons';
+import {
   ArrowLeft,
   BarChart3,
   BookOpenCheck,
@@ -218,8 +227,7 @@ const boardNav = [
   { id: 'verification' as ResearchView, label: '출처 검증 센터', icon: ShieldCheck },
   { id: 'outline' as ResearchView, label: '아웃라인 보드', icon: ListChecks },
   { id: 'draft' as ResearchView, label: 'AI 초안 생성', icon: Sparkles },
-  { id: 'editor' as ResearchView, label: '문서 편집 연동', icon: PanelRightOpen },
-  { id: 'export' as ResearchView, label: '최종 점검 / 내보내기', icon: Archive }
+  { id: 'editor' as ResearchView, label: '문서 편집 연동', icon: PanelRightOpen }
 ];
 
 const outlineSections: OutlineSection[] = [
@@ -258,9 +266,7 @@ export function WorkBoard() {
   const [evidence, setEvidence] = useState<EvidenceCardData[]>(baseEvidence);
   const [verificationRan, setVerificationRan] = useState(false);
   const [activeOutlineSection, setActiveOutlineSection] = useState(outlineSections[0].id);
-  const [editorSent, setEditorSent] = useState(false);
   const [tagFilter, setTagFilter] = useState<TagFilter>('전체');
-  const [activityMessage, setActivityMessage] = useState('프로젝트를 선택하면 리서치 흐름을 시작할 수 있습니다.');
 
   const currentProject = selectedProject ?? projects[0];
   const activeSection = outlineSections.find((section) => section.id === activeOutlineSection) ?? outlineSections[0];
@@ -291,18 +297,15 @@ export function WorkBoard() {
     setSelectedProject(project);
     setSelectedSource(null);
     setActiveView('dashboard');
-    setActivityMessage(`${project.title} 프로젝트의 자료-근거-초안 흐름을 열었습니다.`);
   };
 
   const openSourceDetail = (source: ResearchSource) => {
     setSelectedSource(source);
     setActiveView('source-detail');
-    setActivityMessage(`${source.title} 자료 상세를 열었습니다.`);
   };
 
   const addDummySource = () => {
     if (sources.some((source) => source.id === 'added-stat')) {
-      setActivityMessage('이미 추가된 더미 자료가 자료 리스트에 있습니다.');
       return;
     }
 
@@ -318,19 +321,16 @@ export function WorkBoard() {
       },
       ...items
     ]);
-    setActivityMessage('더미 자료가 추가되었습니다. 분석 상태가 자료 보관함에 반영되었습니다.');
   };
 
   const addGeneratedEvidence = () => {
     const missing = generatedEvidence.filter((item) => !evidence.some((current) => current.id === item.id));
 
     if (missing.length === 0) {
-      setActivityMessage('AI가 추출한 근거 카드가 이미 근거 보관함에 정리되어 있습니다.');
       return;
     }
 
     setEvidence((items) => [...items, ...missing]);
-    setActivityMessage('AI가 출처 확인이 가능한 근거 카드 2개를 새로 만들었습니다.');
   };
 
   const runVerification = () => {
@@ -345,25 +345,20 @@ export function WorkBoard() {
           : item
       )
     );
-    setActivityMessage('검증을 실행했습니다. 사용 가능 근거와 중복 감지 수치가 업데이트되었습니다.');
   };
 
   const updateEvidenceStatus = (id: string, status: EvidenceStatus) => {
     setEvidence((items) => items.map((item) => (item.id === id ? { ...item, status } : item)));
-    setActivityMessage(`근거 상태를 '${status}'로 변경했습니다.`);
   };
 
   const sendToEditor = () => {
-    setEditorSent(true);
     setActiveView('editor');
-    setActivityMessage('초안을 Polaris 문서 편집기 미리보기로 보냈습니다.');
   };
 
   const goProjectHome = () => {
     setActiveView('home');
     setSelectedProject(null);
     setSelectedSource(null);
-    setActivityMessage('프로젝트 홈으로 돌아왔습니다.');
   };
 
   const goPreviousFromTopbar = () => {
@@ -460,13 +455,10 @@ export function WorkBoard() {
               />
             )}
             {activeView === 'draft' && <DraftView evidence={evidence} onSendToEditor={sendToEditor} />}
-            {activeView === 'editor' && <EditorView evidence={evidence} editorSent={editorSent} onBackToDraft={() => setActiveView('draft')} />}
+            {activeView === 'editor' && <EditorView />}
             {activeView === 'export' && <ExportView project={currentProject} statusCounts={statusCounts} />}
           </main>
 
-          <aside className="research-summary" aria-label="작업 요약">
-            <SummaryPanel project={currentProject} sources={sources} evidence={evidence} statusCounts={statusCounts} activityMessage={activityMessage} />
-          </aside>
         </div>
       )}
     </section>
@@ -579,37 +571,39 @@ function SourcesView({
   return (
     <div className="research-view">
       <ViewHeader
-        kicker="자료 보관함"
+        kicker="자료 업로드/자료 리스트"
         title="PDF, URL, 인터뷰, 회의록을 한 프로젝트에 모읍니다."
         description="자료는 유형별로 분류되고, AI 분석 상태가 함께 표시됩니다."
       />
 
-      <div className="research-source-actions">
-        <section className="research-upload-card">
-          <span className="research-upload-icons" aria-hidden="true">
-            <FileIcon type="pdf" size={24} />
-            <FileIcon type="docx" size={24} />
-            <FileIcon type="hwp" size={24} />
-          </span>
-          <div>
-            <strong>PDF / DOCX / HWP 업로드</strong>
-            <p>보고서, 논문, 과제 자료를 올리면 핵심 문장과 수치 근거를 추출합니다.</p>
-          </div>
-          <PolarisButton className="primary-action compact-action" onClick={onAddSource}>
-            <Upload size={15} aria-hidden="true" />
-            자료 업로드
-          </PolarisButton>
-        </section>
+      <section className="research-source-action-card" aria-label="자료 추가">
+        <div className="research-source-actions">
+          <section className="research-upload-card">
+            <span className="research-upload-icons" aria-hidden="true">
+              <FileIcon type="pdf" size={24} />
+              <FileIcon type="docx" size={24} />
+              <FileIcon type="hwp" size={24} />
+            </span>
+            <div>
+              <strong>PDF / DOCX / HWP 업로드</strong>
+              <p>보고서, 논문, 과제 자료를 올리면 핵심 문장과 수치 근거를 추출합니다.</p>
+            </div>
+            <PolarisButton className="primary-action compact-action" onClick={onAddSource}>
+              <Upload size={15} aria-hidden="true" />
+              자료 업로드
+            </PolarisButton>
+          </section>
 
-        <section className="research-upload-card">
-          <Link2 size={22} aria-hidden="true" />
-          <div>
-            <strong>URL 저장</strong>
-            <p>웹 리포트, 기사, 경쟁사 분석 링크를 저장하고 최신성을 함께 확인합니다.</p>
-          </div>
-          <PolarisButton className="secondary-action compact-action">URL 추가</PolarisButton>
-        </section>
-      </div>
+          <section className="research-upload-card">
+            <Link2 size={22} aria-hidden="true" />
+            <div>
+              <strong>URL 저장</strong>
+              <p>웹 리포트, 기사, 경쟁사 분석 링크를 저장하고 최신성을 함께 확인합니다.</p>
+            </div>
+            <PolarisButton className="secondary-action compact-action">URL 추가</PolarisButton>
+          </section>
+        </div>
+      </section>
 
       <section className="research-card">
         <div className="research-section-head">
@@ -880,64 +874,29 @@ function DraftView({ evidence, onSendToEditor }: { evidence: EvidenceCardData[];
   );
 }
 
-function EditorView({
-  evidence,
-  editorSent,
-  onBackToDraft
-}: {
-  evidence: EvidenceCardData[];
-  editorSent: boolean;
-  onBackToDraft: () => void;
-}) {
-  const usedEvidence = evidence.filter((item) => ['research-fatigue', 'ai-adoption', 'writing-time', 'source-burden'].includes(item.id));
-
+function EditorView() {
   return (
-    <div className="research-view">
-      <ViewHeader
-        kicker="문서 편집 연동"
-        title="Polaris 문서 편집기 안에서도 사용된 근거를 확인합니다."
-        description="초안 문단과 근거 패널이 동기화되어 출처 검증 맥락을 잃지 않습니다."
-        action={
-          <PolarisButton className="secondary-action compact-action" onClick={onBackToDraft}>
-            초안으로 돌아가기
-          </PolarisButton>
-        }
-      />
-
-      <div className="research-editor-layout">
-        <section className="research-document-preview" aria-label="Polaris 문서 편집기 미리보기">
-          <EditorRibbon />
-          <article className="research-page-preview">
-            <h2>DECK A팀 최종발표</h2>
-            <h3>AI 리서치 보드를 활용한 근거 기반 문서 작성</h3>
-            <p>
-              사용자는 문서 작성 전에 다양한 자료를 수집하지만, 실제 작성 단계에서 인용 가능한 근거와 출처를 다시 확인하는 데 큰 시간을 사용한다.
-              AI 리서치 보드는 이 과정을 자료 보관, 근거 추출, 출처 검증, 초안 생성의 흐름으로 연결한다.
-            </p>
-            <p>
-              생성형 AI 활용이 확대될수록 초안 생성보다 중요한 것은 생성 문장이 어떤 원자료와 연결되는지 확인하는 일이다.
-              따라서 초안의 각 문단은 검증된 근거와 출처 상태를 함께 유지해야 한다.
-            </p>
-          </article>
-        </section>
-
-        <aside className="research-evidence-panel">
-          <div className="research-section-head">
-            <div>
-              <h3>편집기 내 근거 패널</h3>
-              <p>{editorSent ? '초안에서 사용된 근거가 동기화되었습니다.' : '초안을 보내면 사용 근거가 이곳에 표시됩니다.'}</p>
-            </div>
-          </div>
-          <div className="research-used-list">
-            {usedEvidence.map((item) => (
-              <article key={item.id}>
-                <StatusBadge status={item.status} />
-                <strong>{item.title}</strong>
-                <span>{item.source}</span>
-              </article>
-            ))}
-          </div>
-        </aside>
+    <div className="research-editor-workspace" aria-label="Polaris 문서 편집기">
+      <EditorRibbon />
+      <div className="research-page-stage">
+        <article className="research-page-preview">
+          <h2>DECK A팀 최종발표</h2>
+          <h3>AI 리서치 보드를 활용한 근거 기반 문서 작성</h3>
+          <p>
+            사용자는 문서 작성 전에 다양한 자료를 수집하지만, 실제 작성 단계에서 인용 가능한 근거와 출처를 다시 확인하는 데 큰 시간을 사용한다.
+            AI 리서치 보드는 이 과정을 자료 보관, 근거 추출, 출처 검증, 초안 생성의 흐름으로 연결한다.
+          </p>
+          <p>
+            생성형 AI 활용이 확대될수록 초안 생성보다 중요한 것은 생성 문장이 어떤 원자료와 연결되는지 확인하는 일이다.
+            따라서 초안의 각 문단은 검증된 근거와 출처 상태를 함께 유지해야 한다.
+          </p>
+        </article>
+      </div>
+      <div className="research-editor-submit">
+        <PolarisButton className="primary-action">
+          <CheckCircle2 size={16} aria-hidden="true" />
+          최종 제출 검수
+        </PolarisButton>
       </div>
     </div>
   );
@@ -945,48 +904,44 @@ function EditorView({
 
 function EditorRibbon() {
   return (
-    <Ribbon className="research-editor-ribbon">
-      <RibbonTabs defaultValue="home">
-        <RibbonTabList>
-          <RibbonTab value="home">홈</RibbonTab>
-          <RibbonTab value="insert">삽입</RibbonTab>
-          <RibbonTab value="review">검토</RibbonTab>
-        </RibbonTabList>
-        <RibbonContent value="home">
-          <RibbonGroup label="클립보드">
-            <RibbonButton size="lg" icon={<PasteIcon />}>
-              붙여넣기
-            </RibbonButton>
-          </RibbonGroup>
-          <RibbonGroup label="서식">
-            <RibbonButton size="md" icon={<BoldIcon />}>
-              굵게
-            </RibbonButton>
-            <RibbonButton size="md" icon={<BulletIcon />}>
-              목록
-            </RibbonButton>
-          </RibbonGroup>
-          <RibbonGroup label="AI 근거">
-            <RibbonButton size="lg" icon={<AiWriteIcon />}>
-              근거 패널
-            </RibbonButton>
-          </RibbonGroup>
-        </RibbonContent>
-        <RibbonContent value="insert">
-          <RibbonGroup label="리서치">
-            <RibbonButton size="lg" icon={<AiWriteIcon />}>
-              인용 삽입
-            </RibbonButton>
-          </RibbonGroup>
-        </RibbonContent>
-        <RibbonContent value="review">
-          <RibbonGroup label="검토">
-            <RibbonButton size="lg" icon={<AiWriteIcon />}>
-              출처 점검
-            </RibbonButton>
-          </RibbonGroup>
-        </RibbonContent>
-      </RibbonTabs>
+    <Ribbon className="essay-ribbon research-editor-ribbon" aria-label="문서 편집 리본">
+      <RibbonGroup label="AI">
+        <RibbonButton size="lg" icon={<AiWriteIcon />}>
+          근거 작성
+        </RibbonButton>
+        <RibbonButton size="lg" icon={<AiChatIcon />}>
+          문장 다듬기
+        </RibbonButton>
+      </RibbonGroup>
+      <RibbonSeparator />
+      <RibbonGroup label="클립보드">
+        <RibbonButton size="lg" icon={<PasteIcon />}>
+          붙여넣기
+        </RibbonButton>
+      </RibbonGroup>
+      <RibbonSeparator />
+      <RibbonGroup label="서식">
+        <RibbonStack>
+          <RibbonRow>
+            <RibbonButton size="sm" icon={<BoldIcon />} aria-label="굵게" />
+            <RibbonButton size="sm" icon={<ItalicIcon />} aria-label="기울임" />
+            <RibbonButton size="sm" icon={<Underline01Icon />} aria-label="밑줄" />
+          </RibbonRow>
+          <RibbonRow>
+            <RibbonButton size="sm" icon={<AlignLeftIcon />} aria-label="왼쪽 정렬" />
+            <RibbonButton size="sm" icon={<AlignCenterIcon />} aria-label="가운데 정렬" />
+          </RibbonRow>
+        </RibbonStack>
+      </RibbonGroup>
+      <RibbonSeparator />
+      <RibbonGroup label="검토">
+        <RibbonButton size="lg" icon={<WordCountIcon />}>
+          문서 통계
+        </RibbonButton>
+        <RibbonButton size="lg" icon={<SearchCheck size={18} aria-hidden="true" />}>
+          출처 점검
+        </RibbonButton>
+      </RibbonGroup>
     </Ribbon>
   );
 }
@@ -1042,65 +997,8 @@ function ExportView({
   );
 }
 
-function SummaryPanel({
-  project,
-  sources,
-  evidence,
-  statusCounts,
-  activityMessage
-}: {
-  project: ResearchProject;
-  sources: ResearchSource[];
-  evidence: EvidenceCardData[];
-  statusCounts: { usable: number; review: number; blocked: number; duplicate: number };
-  activityMessage: string;
-}) {
-  return (
-    <div className="research-summary-inner">
-      <section>
-        <p className="research-kicker">작업 요약</p>
-        <h2>{project.title}</h2>
-        <div className="research-progress-bar">
-          <i style={{ width: `${project.progress}%` }} />
-        </div>
-      </section>
-
-      <dl className="research-summary-list">
-        <div>
-          <dt>자료</dt>
-          <dd>{sources.length}건</dd>
-        </div>
-        <div>
-          <dt>근거</dt>
-          <dd>{evidence.length}개</dd>
-        </div>
-        <div>
-          <dt>검증 필요</dt>
-          <dd>{statusCounts.review}건</dd>
-        </div>
-        <div>
-          <dt>문서 활용 가능</dt>
-          <dd>{statusCounts.usable}개</dd>
-        </div>
-      </dl>
-
-      <section className="research-next-panel">
-        <strong>다음 작업</strong>
-        <p>{project.nextAction}</p>
-      </section>
-
-      <section className="research-activity">
-        <strong>최근 반응</strong>
-        <p>{activityMessage}</p>
-      </section>
-    </div>
-  );
-}
-
 function ViewHeader({
   kicker,
-  title,
-  description,
   action
 }: {
   kicker: string;
@@ -1110,11 +1008,7 @@ function ViewHeader({
 }) {
   return (
     <header className="research-view-header">
-      <div>
-        <p className="research-kicker">{kicker}</p>
-        <h2>{title}</h2>
-        <p>{description}</p>
-      </div>
+      <h2 className="research-view-label">{kicker}</h2>
       {action && <div className="research-view-action">{action}</div>}
     </header>
   );
