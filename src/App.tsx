@@ -20,7 +20,7 @@ import {
   X
 } from 'lucide-react';
 import { CareerPass, initialSupportTracks, type SupportTrack } from './CareerPass';
-import { ClusterOneStart, ClusterOneWorkspace } from './ClusterOne';
+import { ClusterOneStart, ClusterOneWorkspace, type KeepToPolarisView } from './ClusterOne';
 import { FinalRoom, type FinalRoomHandoff } from './FinalRoom';
 import { PolarisButton } from './polaris-controls';
 import { ReviewRoom } from './ReviewRoom';
@@ -37,7 +37,6 @@ type NavItem = {
   ai?: boolean;
 };
 
-const POLARIS_HOME_URL = 'https://www.polarisoffice.com/ko';
 const defaultReviewRoomDocument = { title: '팀 프로젝트 제안서.docx', unit: '문단' };
 const companyARoute = '/company-A';
 const workCardDetailRoute = '/work-card/job-application';
@@ -59,7 +58,7 @@ const workspaceNav: NavItem[] = [
   {
     id: 'home',
     label: '홈',
-    description: '작업 현황과 최근 문서',
+    description: '킵 투 폴라리스 작업 현황과 최근 문서',
     icon: Home
   },
   {
@@ -76,8 +75,8 @@ const workspaceNav: NavItem[] = [
   },
   {
     id: 'cluster-one',
-    label: '작업 카드',
-    description: '외부 공고를 Polaris 작업 카드로 전환',
+    label: '킵 투 폴라리스',
+    description: '외부 문서를 저장하고 작업 카드와 완료 기록으로 연결',
     icon: ListChecks
   },
   {
@@ -116,6 +115,7 @@ export function App() {
   );
   const [showClusterOneStart, setShowClusterOneStart] = useState(startsOnCompanyA);
   const [clusterOneResetKey, setClusterOneResetKey] = useState(0);
+  const [clusterOneEntryView, setClusterOneEntryView] = useState<KeepToPolarisView>('home');
   const [reviewRoomDocument, setReviewRoomDocument] = useState(defaultReviewRoomDocument);
   const [supportTracks, setSupportTracks] = useState<SupportTrack[]>(initialSupportTracks);
   const [finalRoomHandoff, setFinalRoomHandoff] = useState<FinalRoomHandoff | null>(null);
@@ -127,16 +127,13 @@ export function App() {
     [activeId]
   );
   const isCareerPassView = activeId === 'career-pass' || isCareerPassRoute();
+  const isKeepToPolarisView = activeId === 'cluster-one' || activeId === 'home';
 
   const selectItem = (itemId: string) => {
-    if (itemId === 'home') {
-      window.location.assign(POLARIS_HOME_URL);
-      return;
-    }
-
     setActiveId(itemId);
     setShowClusterOneStart(false);
     if (itemId === 'cluster-one') {
+      setClusterOneEntryView('home');
       setClusterOneResetKey((key) => key + 1);
     }
     setMobileOpen(false);
@@ -146,6 +143,7 @@ export function App() {
   const enterClusterOneWorkspace = () => {
     setActiveId('cluster-one');
     setShowClusterOneStart(false);
+    setClusterOneEntryView('purpose');
     setClusterOneResetKey((key) => key + 1);
     syncRouteTo(workspaceRoutes['cluster-one']);
   };
@@ -234,7 +232,7 @@ export function App() {
       {mobileOpen && <PolarisButton className="scrim" aria-label="메뉴 닫기" onClick={() => setMobileOpen(false)} />}
 
       <div className="main-column">
-        {!isCareerPassView && (
+        {!isCareerPassView && !isKeepToPolarisView && (
         <header className="gnb">
           <div className="gnb-left">
             <PolarisButton
@@ -304,7 +302,7 @@ export function App() {
         )}
 
         <main
-          className={`content-shell ${isCareerPassView || activeId === 'final-room' ? 'content-shell-career' : ''} ${activeId === 'cluster-one' ? 'content-shell-cl1' : ''} ${activeId === 'review-room' ? 'content-shell-review' : ''} ${activeId === 'work-board' ? 'content-shell-workboard' : ''}`}
+          className={`content-shell ${isCareerPassView || activeId === 'final-room' ? 'content-shell-career' : ''} ${isKeepToPolarisView ? 'content-shell-cl1' : ''} ${activeId === 'review-room' ? 'content-shell-review' : ''} ${activeId === 'work-board' ? 'content-shell-workboard' : ''}`}
           aria-label={`${activeItem.label} 화면`}
         >
           {isCareerPassView ? (
@@ -316,11 +314,13 @@ export function App() {
           ) : activeId === 'final-room' ? (
             <FinalRoom applications={supportTracks} handoff={finalRoomHandoff} />
           ) : activeId === 'cluster-one' ? (
-            <ClusterOneWorkspace key={clusterOneResetKey} />
+            <ClusterOneWorkspace key={clusterOneResetKey} initialView={clusterOneEntryView} />
           ) : activeId === 'review-room' ? (
             <ReviewRoom onDocumentChange={setReviewRoomDocument} />
           ) : activeId === 'work-board' ? (
             <WorkBoard />
+          ) : activeId === 'home' ? (
+            <ClusterOneWorkspace initialView="home" />
           ) : (
             <>
               <section className="page-heading">
