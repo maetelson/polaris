@@ -4,7 +4,7 @@ import { Ribbon, RibbonButton, RibbonContent, RibbonGroup, RibbonTab, RibbonTabL
 import { AiWriteIcon, BoldIcon, BulletIcon, PasteIcon } from '@polaris/ui/ribbon-icons';
 import {
   Archive,
-  ArrowRight,
+  ArrowLeft,
   BarChart3,
   BookOpenCheck,
   CheckCircle2,
@@ -23,7 +23,7 @@ import {
 } from 'lucide-react';
 import { PolarisButton } from './polaris-controls';
 
-type ResearchView = 'home' | 'dashboard' | 'sources' | 'evidence' | 'verification' | 'outline' | 'draft' | 'editor' | 'export';
+type ResearchView = 'home' | 'dashboard' | 'sources' | 'source-detail' | 'evidence' | 'verification' | 'outline' | 'draft' | 'editor' | 'export';
 type SourceStatus = '분석 완료' | '분석 중' | '검토 필요';
 type EvidenceStatus = '사용 가능' | '검토 필요' | '사용 비추천';
 type EvidenceTag = '시장 분석' | '소비자 분석' | '경쟁사 분석' | '문제 정의' | '솔루션 근거';
@@ -252,6 +252,7 @@ const outlineSections: OutlineSection[] = [
 
 export function WorkBoard() {
   const [selectedProject, setSelectedProject] = useState<ResearchProject | null>(null);
+  const [selectedSource, setSelectedSource] = useState<ResearchSource | null>(null);
   const [activeView, setActiveView] = useState<ResearchView>('home');
   const [sources, setSources] = useState<ResearchSource[]>(initialSources);
   const [evidence, setEvidence] = useState<EvidenceCardData[]>(baseEvidence);
@@ -288,8 +289,15 @@ export function WorkBoard() {
 
   const selectProject = (project: ResearchProject) => {
     setSelectedProject(project);
+    setSelectedSource(null);
     setActiveView('dashboard');
     setActivityMessage(`${project.title} 프로젝트의 자료-근거-초안 흐름을 열었습니다.`);
+  };
+
+  const openSourceDetail = (source: ResearchSource) => {
+    setSelectedSource(source);
+    setActiveView('source-detail');
+    setActivityMessage(`${source.title} 자료 상세를 열었습니다.`);
   };
 
   const addDummySource = () => {
@@ -354,25 +362,46 @@ export function WorkBoard() {
   const goProjectHome = () => {
     setActiveView('home');
     setSelectedProject(null);
+    setSelectedSource(null);
     setActivityMessage('프로젝트 홈으로 돌아왔습니다.');
   };
 
+  const goPreviousFromTopbar = () => {
+    if (activeView === 'source-detail') {
+      setActiveView('sources');
+      return;
+    }
+
+    goProjectHome();
+  };
+
+  const topbarTitle = activeView === 'source-detail' && selectedSource ? selectedSource.title : currentProject.title;
+
   return (
     <section className="research-board-page" aria-labelledby="research-board-title">
-      <header className="research-topbar">
-        <div>
-          <p className="research-kicker">AI 리서치 보드</p>
-          <h1 id="research-board-title">자료를 검증 가능한 근거로 바꾸는 문서 작성 전 작업 공간</h1>
-          <p>PDF, URL, 인터뷰, 회의록을 모으면 AI가 쓸 만한 근거와 인용 후보로 정리하고 초안까지 연결합니다.</p>
-        </div>
-        <div className="research-topbar-actions">
-          <PolarisButton className="secondary-action compact-action" onClick={goProjectHome}>
-            프로젝트 홈
-          </PolarisButton>
-          <PolarisButton className="primary-action compact-action" onClick={() => selectedProject ? setActiveView('sources') : selectProject(projects[0])}>
-            자료부터 시작
-          </PolarisButton>
-        </div>
+      <header className={`research-topbar ${activeView !== 'home' ? 'research-project-topbar' : ''}`}>
+        {activeView === 'home' ? (
+          <>
+            <div>
+              <p className="research-kicker">AI 리서치 보드</p>
+              <h1 id="research-board-title">자료를 검증 가능한 근거로 바꾸는 문서 작성 전 작업 공간</h1>
+              <p>PDF, URL, 인터뷰, 회의록을 모으면 AI가 쓸 만한 근거와 인용 후보로 정리하고 초안까지 연결합니다.</p>
+            </div>
+            <div className="research-topbar-actions">
+              <PolarisButton className="primary-action compact-action" onClick={() => selectProject(projects[0])}>
+                자료부터 시작
+              </PolarisButton>
+            </div>
+          </>
+        ) : (
+          <>
+            <PolarisButton className="secondary-action compact-action" onClick={goPreviousFromTopbar}>
+              <ArrowLeft size={15} aria-hidden="true" />
+              이전
+            </PolarisButton>
+            <h1 id="research-board-title">{topbarTitle}</h1>
+          </>
+        )}
       </header>
 
       {activeView === 'home' ? (
@@ -409,7 +438,8 @@ export function WorkBoard() {
             {activeView === 'dashboard' && (
               <DashboardView project={currentProject} sources={sources} evidence={evidence} statusCounts={statusCounts} setActiveView={setActiveView} />
             )}
-            {activeView === 'sources' && <SourcesView sources={sources} onAddSource={addDummySource} />}
+            {activeView === 'sources' && <SourcesView sources={sources} onAddSource={addDummySource} onSelectSource={openSourceDetail} />}
+            {activeView === 'source-detail' && selectedSource && <SourceDetailView source={selectedSource} />}
             {activeView === 'evidence' && (
               <EvidenceView
                 evidence={visibleEvidence}
@@ -509,18 +539,6 @@ function DashboardView({
 }) {
   return (
     <div className="research-view">
-      <ViewHeader
-        kicker="프로젝트 대시보드"
-        title={project.title}
-        description="현재 프로젝트의 자료 수집, 근거 정리, 출처 검증, 초안 생성 흐름을 한눈에 봅니다."
-        action={
-          <PolarisButton className="primary-action compact-action" onClick={() => setActiveView('sources')}>
-            다음 작업 열기
-            <ArrowRight size={15} aria-hidden="true" />
-          </PolarisButton>
-        }
-      />
-
       <section className="research-dashboard-hero">
         <div>
           <span>{project.due}</span>
@@ -552,7 +570,15 @@ function DashboardView({
   );
 }
 
-function SourcesView({ sources, onAddSource }: { sources: ResearchSource[]; onAddSource: () => void }) {
+function SourcesView({
+  sources,
+  onAddSource,
+  onSelectSource
+}: {
+  sources: ResearchSource[];
+  onAddSource: () => void;
+  onSelectSource: (source: ResearchSource) => void;
+}) {
   return (
     <div className="research-view">
       <ViewHeader
@@ -598,7 +624,7 @@ function SourcesView({ sources, onAddSource }: { sources: ResearchSource[]; onAd
         </div>
         <div className="research-source-list">
           {sources.map((source) => (
-            <article className="research-source-row" key={source.id}>
+            <PolarisButton className="research-source-row" key={source.id} onClick={() => onSelectSource(source)}>
               <FileIcon type={source.icon} size={24} aria-hidden="true" />
               <div>
                 <strong>{source.title}</strong>
@@ -607,8 +633,40 @@ function SourcesView({ sources, onAddSource }: { sources: ResearchSource[]; onAd
               <small>{source.type}</small>
               <StatusBadge status={source.status} />
               <p>{source.analyzedAt}</p>
-            </article>
+            </PolarisButton>
           ))}
+        </div>
+      </section>
+    </div>
+  );
+}
+
+function SourceDetailView({ source }: { source: ResearchSource }) {
+  return (
+    <div className="research-view">
+      <section className="research-card research-source-detail">
+        <div className="research-section-head">
+          <div>
+            <h3>{source.title}</h3>
+            <p>{source.origin}</p>
+          </div>
+          <StatusBadge status={source.status} />
+        </div>
+
+        <div className="research-source-detail-grid">
+          <MetricCard label="자료 유형" value={source.type} note="받은 자료 분류" />
+          <MetricCard label="분석 상태" value={source.status} note={source.analyzedAt} />
+          <MetricCard label="연결 근거" value="3개" note="초안에 사용할 후보" tone="success" />
+        </div>
+
+        <div className="research-source-preview">
+          <FileIcon type={source.icon} size={32} aria-hidden="true" />
+          <div>
+            <strong>핵심 내용 미리보기</strong>
+            <p>
+              이 자료에서 추출한 핵심 문장, 수치 근거, 인용 후보를 검토하고 다음 단계에서 근거 카드로 연결할 수 있습니다.
+            </p>
+          </div>
         </div>
       </section>
     </div>

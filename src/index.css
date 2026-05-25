@@ -8517,6 +8517,16 @@ button.rr-comment-anchor:focus-visible {
   word-break: keep-all;
 }
 
+.research-project-topbar {
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--polaris-spacing-sm);
+}
+
+.research-project-topbar h1 {
+  margin-top: 0;
+}
+
 .research-topbar p:last-child,
 .research-view-header > div > p,
 .research-section-head p,
@@ -9065,10 +9075,13 @@ button.rr-comment-anchor:focus-visible {
   align-items: center;
   gap: var(--polaris-spacing-2xs);
   min-width: 0;
+  width: 100%;
   padding: var(--polaris-spacing-xs);
   border: 1px solid var(--polaris-line-neutral);
   border-radius: var(--polaris-radius-sm);
   background: color-mix(in srgb, var(--polaris-fill-neutral) 48%, var(--polaris-background-base));
+  cursor: pointer;
+  text-align: left;
 }
 
 .research-source-row svg {
@@ -9099,6 +9112,50 @@ button.rr-comment-anchor:focus-visible {
   line-height: 18px;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.research-source-row:focus-visible {
+  outline: none;
+  box-shadow: var(--polaris-shadow-focus);
+}
+
+.research-source-detail {
+  display: grid;
+  gap: var(--polaris-spacing-md);
+}
+
+.research-source-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--polaris-spacing-sm);
+  min-width: 0;
+}
+
+.research-source-preview {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr);
+  align-items: start;
+  gap: var(--polaris-spacing-sm);
+  min-width: 0;
+  padding: var(--polaris-spacing-sm);
+  border: 1px solid var(--polaris-line-neutral);
+  border-radius: var(--polaris-radius-sm);
+  background: color-mix(in srgb, var(--polaris-fill-neutral) 54%, var(--polaris-background-base));
+}
+
+.research-source-preview strong {
+  color: var(--polaris-label-normal);
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 21px;
+}
+
+.research-source-preview p {
+  margin-top: var(--polaris-spacing-4xs);
+  color: var(--polaris-label-neutral);
+  font-size: 13px;
+  line-height: 20px;
+  word-break: keep-all;
 }
 
 .research-badge {
