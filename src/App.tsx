@@ -87,8 +87,8 @@ const workspaceNav: NavItem[] = [
   },
   {
     id: 'work-board',
-    label: '작업 보드',
-    description: '근거 검증부터 인용 점검까지 이어지는 진행 현황',
+    label: 'AI 리서치 보드',
+    description: '자료를 검증 가능한 근거로 정리하고 문서 초안으로 연결',
     icon: Kanban
   }
 ];

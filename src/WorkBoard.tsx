@@ -1,382 +1,1177 @@
 import { useMemo, useState } from 'react';
+import { FileIcon, type FileType } from '@polaris/ui';
+import { Ribbon, RibbonButton, RibbonContent, RibbonGroup, RibbonTab, RibbonTabList, RibbonTabs } from '@polaris/ui/ribbon';
+import { AiWriteIcon, BoldIcon, BulletIcon, PasteIcon } from '@polaris/ui/ribbon-icons';
 import {
-  AlertTriangle,
+  Archive,
+  ArrowRight,
+  BarChart3,
   BookOpenCheck,
   CheckCircle2,
-  FileText,
-  FolderArchive,
+  FolderOpen,
   Link2,
-  PenLine,
+  ListChecks,
+  PanelRightOpen,
+  Plus,
   Quote,
-  Target
+  SearchCheck,
+  Send,
+  ShieldCheck,
+  Sparkles,
+  TriangleAlert,
+  Upload
 } from 'lucide-react';
 import { PolarisButton } from './polaris-controls';
 
-type FilterId = 'all' | 'mine' | 'review';
-type WorkStage = '자료 수집' | '근거 검증' | '초안 작성' | '최종 점검';
-type WorkTone = 'default' | 'source' | 'review' | 'writing' | 'done';
+type ResearchView = 'home' | 'dashboard' | 'sources' | 'evidence' | 'verification' | 'outline' | 'draft' | 'editor' | 'export';
+type SourceStatus = '분석 완료' | '분석 중' | '검토 필요';
+type EvidenceStatus = '사용 가능' | '검토 필요' | '사용 비추천';
+type EvidenceTag = '시장 분석' | '소비자 분석' | '경쟁사 분석' | '문제 정의' | '솔루션 근거';
+type TagFilter = EvidenceTag | '전체';
 
-type WorkItem = {
+type ResearchProject = {
   id: string;
-  stage: WorkStage;
   title: string;
-  description: string;
-  source: string;
-  claim: string;
-  status: string;
-  tag: string;
   due: string;
-  owner: string;
-  tone: WorkTone;
-  review?: boolean;
-  mine?: boolean;
+  progress: number;
+  sourceCount: number;
+  reviewNeeded: number;
+  description: string;
+  nextAction: string;
 };
 
-const filters: Array<{ id: FilterId; label: string }> = [
-  { id: 'all', label: '전체' },
-  { id: 'mine', label: '내 작업' },
-  { id: 'review', label: '검토 필요' }
-];
+type ResearchSource = {
+  id: string;
+  title: string;
+  type: string;
+  icon: FileType;
+  origin: string;
+  status: SourceStatus;
+  analyzedAt: string;
+};
 
-const stages: WorkStage[] = ['자료 수집', '근거 검증', '초안 작성', '최종 점검'];
+type EvidenceCardData = {
+  id: string;
+  title: string;
+  summary: string;
+  quote: string;
+  source: string;
+  tag: EvidenceTag;
+  status: EvidenceStatus;
+};
 
-const workItems: WorkItem[] = [
+type OutlineSection = {
+  id: string;
+  title: string;
+  claim: string;
+  evidenceIds: string[];
+  warning?: string;
+};
+
+const projects: ResearchProject[] = [
   {
-    id: 'ref-nature',
-    stage: '자료 수집',
-    title: 'Nature Research 자료 추가',
-    description: '13-14쪽 핵심 문장 표시',
-    source: 'Nature Research',
-    claim: '자료 후보',
-    status: '수집 중',
-    tag: '자료',
-    due: '오늘',
-    owner: '민지',
-    tone: 'source',
-    mine: true
+    id: 'deck-a',
+    title: 'DECK A팀 최종발표',
+    due: 'D-14',
+    progress: 62,
+    sourceCount: 24,
+    reviewNeeded: 5,
+    description: '팀플 발표자료용 시장·사용자 근거를 모아 초안으로 연결합니다.',
+    nextAction: '출처 불명확 근거 2건 확인'
   },
   {
-    id: 'tag-trend',
-    stage: '자료 수집',
-    title: '트렌드 아티클 태그 정리',
-    description: '인공지능 활용, 생산성, 검증 태그 연결',
-    source: '트렌드 아티클',
-    claim: '태그 후보',
-    status: '분류 대기',
-    tag: '태그',
-    due: '내일',
-    owner: '수빈',
-    tone: 'default'
+    id: 'thesis',
+    title: '졸업논문',
+    due: 'D-3',
+    progress: 84,
+    sourceCount: 42,
+    reviewNeeded: 3,
+    description: '논문 본문에 들어갈 선행연구와 수치 근거를 검증합니다.',
+    nextAction: '최신성 부족 근거 교체'
   },
   {
-    id: 'claim-source',
-    stage: '근거 검증',
-    title: '핵심 주장 [2] 원문 대조',
-    description: '원문 의미와 생성 문장 차이 확인',
-    source: 'Nature Research 13쪽',
-    claim: '문장 [2]',
-    status: '검토 필요',
-    tag: '검토',
-    due: '우선',
-    owner: '준호',
-    tone: 'review',
-    review: true,
-    mine: true
-  },
-  {
-    id: 'similarity',
-    stage: '근거 검증',
-    title: '유사도 92% 문장 확인',
-    description: '인용 가능한 문장만 편집기에 고정',
-    source: 'Nature Research 14쪽',
-    claim: '문장 [2]',
-    status: '출처 연결',
-    tag: '출처',
-    due: '오늘',
-    owner: '민지',
-    tone: 'done'
-  },
-  {
-    id: 'report-page',
-    stage: '근거 검증',
-    title: 'McKinsey Report 22쪽 검토',
-    description: '시장 맥락 문단에 사용할 수치 확인',
-    source: 'McKinsey Report 22쪽',
-    claim: '문장 [3]',
-    status: '검토 필요',
-    tag: '리포트',
-    due: '대기',
-    owner: '수빈',
-    tone: 'default',
-    review: true
-  },
-  {
-    id: 'intro-draft',
-    stage: '초안 작성',
-    title: '서론 문단 확장',
-    description: '문제 제기와 사용자 어려움 연결',
-    source: '편집기 초안',
-    claim: '초안 블록 04',
-    status: '작성 중',
-    tag: '작성',
-    due: '오늘',
-    owner: '준호',
-    tone: 'writing',
-    mine: true
-  },
-  {
-    id: 'citation-format',
-    stage: '초안 작성',
-    title: '참고문헌 형식 맞추기',
-    description: 'APA 형식으로 인용 패널 반영',
-    source: '인용 패널',
-    claim: '참고문헌',
-    status: '검증 완료',
-    tag: '인용',
-    due: '진행',
-    owner: '민지',
-    tone: 'done'
-  },
-  {
-    id: 'missing-cite',
-    stage: '최종 점검',
-    title: '인용 누락 2건 처리',
-    description: '본문 번호와 참고문헌 목록 동기화',
-    source: '인용 패널',
-    claim: '문장 [1], [3]',
-    status: '검토 필요',
-    tag: '필수',
-    due: '마감 전',
-    owner: '준호',
-    tone: 'review',
-    review: true,
-    mine: true
+    id: 'ai-report',
+    title: '생성형 AI 활용 보고서',
+    due: 'D-10',
+    progress: 45,
+    sourceCount: 17,
+    reviewNeeded: 8,
+    description: '보고서 초안 전에 자료를 근거 카드와 인용 후보로 정리합니다.',
+    nextAction: 'AI 근거 추출 실행'
   }
 ];
 
-const quickActions = [
-  { label: '출처 대조 열기', icon: Link2 },
-  { label: '편집기에 삽입', icon: PenLine },
-  { label: '참고문헌 생성', icon: FileText }
+const initialSources: ResearchSource[] = [
+  {
+    id: 'mckinsey',
+    title: 'McKinsey AI Report.pdf',
+    type: 'PDF',
+    icon: 'pdf',
+    origin: '업로드 문서',
+    status: '분석 완료',
+    analyzedAt: '핵심 문장 18개 추출'
+  },
+  {
+    id: 'stanford',
+    title: 'Stanford AI Index',
+    type: 'URL',
+    icon: 'unknown',
+    origin: '저장된 웹 리포트',
+    status: '분석 완료',
+    analyzedAt: '수치 근거 9개 추출'
+  },
+  {
+    id: 'interview-03',
+    title: '사용자 인터뷰 #03',
+    type: '인터뷰',
+    icon: 'txt',
+    origin: '음성 전사본',
+    status: '분석 완료',
+    analyzedAt: '사용자 발화 12개 추출'
+  },
+  {
+    id: 'competitor-link',
+    title: '경쟁사 분석 링크',
+    type: 'URL',
+    icon: 'unknown',
+    origin: '외부 링크',
+    status: '검토 필요',
+    analyzedAt: '게시일 확인 필요'
+  },
+  {
+    id: 'meeting-note',
+    title: '팀 회의록',
+    type: 'DOCX',
+    icon: 'docx',
+    origin: '회의록 업로드',
+    status: '분석 중',
+    analyzedAt: '요약 생성 중'
+  }
 ];
 
-const knowledgeStats = [
-  { label: '참고자료', value: '38' },
-  { label: '인사이트', value: '74' },
-  { label: '인용', value: '26' },
-  { label: '초안 블록', value: '19' }
+const baseEvidence: EvidenceCardData[] = [
+  {
+    id: 'ai-adoption',
+    title: '생성형 AI 활용률 증가',
+    summary: '생성형 AI 도구 사용이 학습·업무 문서 작성 영역까지 빠르게 확산되고 있습니다.',
+    quote: 'Organizations are moving from pilot use to daily workflow adoption.',
+    source: 'McKinsey AI Report.pdf · p.12',
+    tag: '시장 분석',
+    status: '사용 가능'
+  },
+  {
+    id: 'writing-time',
+    title: '반복 문서 작성 시간 절감',
+    summary: '반복적인 초안 작성과 요약 업무에서 AI 보조가 가장 먼저 체감되는 효율을 만듭니다.',
+    quote: 'Document drafting and summarization are among the highest-frequency use cases.',
+    source: 'Stanford AI Index · 2025',
+    tag: '솔루션 근거',
+    status: '사용 가능'
+  },
+  {
+    id: 'research-fatigue',
+    title: '자료 탐색 피로도 증가',
+    summary: '사용자는 자료를 찾는 일보다 다시 찾고 정리하는 과정에서 더 큰 피로를 느낍니다.',
+    quote: '자료는 많은데 어디에 쓸 수 있는 문장인지 다시 찾는 시간이 제일 길어요.',
+    source: '사용자 인터뷰 #03 · 14:21',
+    tag: '문제 정의',
+    status: '검토 필요'
+  }
+];
+
+const generatedEvidence: EvidenceCardData[] = [
+  {
+    id: 'source-burden',
+    title: '출처 확인 부담',
+    summary: 'AI 초안을 신뢰하지 못하는 가장 큰 이유는 원자료와 생성 문장의 연결이 끊기기 때문입니다.',
+    quote: 'AI가 쓴 문장이 어디에서 온 건지 확인하려면 결국 원문을 다시 열어봐야 한다.',
+    source: '사용자 인터뷰 #03 · 18:04',
+    tag: '소비자 분석',
+    status: '검토 필요'
+  },
+  {
+    id: 'merge-inefficiency',
+    title: '팀플 문서 병합 과정의 비효율',
+    summary: '팀원이 각자 모은 자료와 문단을 병합할 때 근거 중복과 출처 누락이 반복됩니다.',
+    quote: '마지막에 문서를 합치면 같은 자료가 두 번 들어가거나 출처가 빠지는 일이 생긴다.',
+    source: '팀 회의록 · 3차 회의',
+    tag: '경쟁사 분석',
+    status: '사용 가능'
+  }
+];
+
+const evidenceTags: TagFilter[] = ['전체', '시장 분석', '소비자 분석', '경쟁사 분석', '문제 정의', '솔루션 근거'];
+
+const workflowSteps = [
+  { label: '자료', view: 'sources' as ResearchView },
+  { label: '근거', view: 'evidence' as ResearchView },
+  { label: '검증', view: 'verification' as ResearchView },
+  { label: '아웃라인', view: 'outline' as ResearchView },
+  { label: '초안', view: 'draft' as ResearchView },
+  { label: '문서화', view: 'editor' as ResearchView }
+];
+
+const boardNav = [
+  { id: 'dashboard' as ResearchView, label: '프로젝트 대시보드', icon: BarChart3 },
+  { id: 'sources' as ResearchView, label: '자료 보관함', icon: FolderOpen },
+  { id: 'evidence' as ResearchView, label: '근거 보관함', icon: Quote },
+  { id: 'verification' as ResearchView, label: '출처 검증 센터', icon: ShieldCheck },
+  { id: 'outline' as ResearchView, label: '아웃라인 보드', icon: ListChecks },
+  { id: 'draft' as ResearchView, label: 'AI 초안 생성', icon: Sparkles },
+  { id: 'editor' as ResearchView, label: '문서 편집 연동', icon: PanelRightOpen },
+  { id: 'export' as ResearchView, label: '최종 점검 / 내보내기', icon: Archive }
+];
+
+const outlineSections: OutlineSection[] = [
+  {
+    id: 'problem',
+    title: '1. 문제 정의',
+    claim: '자료 수집 이후 근거를 다시 찾고 출처를 확인하는 시간이 문서 작성 병목입니다.',
+    evidenceIds: ['research-fatigue', 'source-burden']
+  },
+  {
+    id: 'market',
+    title: '2. 시장 변화',
+    claim: '생성형 AI 활용은 확산되고 있지만, 신뢰 가능한 문서 작성 흐름은 아직 분리되어 있습니다.',
+    evidenceIds: ['ai-adoption', 'writing-time']
+  },
+  {
+    id: 'competition',
+    title: '3. 경쟁 환경',
+    claim: '기존 AI 작성 도구는 출처 검증과 팀 문서 병합을 한 흐름에서 다루지 못합니다.',
+    evidenceIds: ['merge-inefficiency'],
+    warning: '경쟁사 직접 비교 근거 1건 부족'
+  },
+  {
+    id: 'solution',
+    title: '4. 솔루션 제안',
+    claim: 'AI 리서치 보드는 자료를 검증 가능한 근거로 바꾸고 초안의 문장 단위까지 연결합니다.',
+    evidenceIds: ['writing-time', 'source-burden']
+  }
 ];
 
 export function WorkBoard() {
-  const [activeFilter, setActiveFilter] = useState<FilterId>('all');
-  const [selectedAction, setSelectedAction] = useState('출처 대조 대기');
+  const [selectedProject, setSelectedProject] = useState<ResearchProject | null>(null);
+  const [activeView, setActiveView] = useState<ResearchView>('home');
+  const [sources, setSources] = useState<ResearchSource[]>(initialSources);
+  const [evidence, setEvidence] = useState<EvidenceCardData[]>(baseEvidence);
+  const [verificationRan, setVerificationRan] = useState(false);
+  const [activeOutlineSection, setActiveOutlineSection] = useState(outlineSections[0].id);
+  const [editorSent, setEditorSent] = useState(false);
+  const [tagFilter, setTagFilter] = useState<TagFilter>('전체');
+  const [activityMessage, setActivityMessage] = useState('프로젝트를 선택하면 리서치 흐름을 시작할 수 있습니다.');
 
-  const visibleItems = useMemo(() => {
-    if (activeFilter === 'mine') {
-      return workItems.filter((item) => item.mine);
+  const currentProject = selectedProject ?? projects[0];
+  const activeSection = outlineSections.find((section) => section.id === activeOutlineSection) ?? outlineSections[0];
+  const activeEvidenceIds = new Set(activeSection.evidenceIds);
+
+  const visibleEvidence = useMemo(() => {
+    if (tagFilter === '전체') {
+      return evidence;
     }
 
-    if (activeFilter === 'review') {
-      return workItems.filter((item) => item.review);
+    return evidence.filter((item) => item.tag === tagFilter);
+  }, [evidence, tagFilter]);
+
+  const statusCounts = useMemo(() => {
+    const usable = evidence.filter((item) => item.status === '사용 가능').length;
+    const review = evidence.filter((item) => item.status === '검토 필요').length;
+    const blocked = evidence.filter((item) => item.status === '사용 비추천').length;
+
+    return {
+      usable: verificationRan ? usable + 1 : usable,
+      review: Math.max(verificationRan ? review - 1 : review, 0),
+      blocked,
+      duplicate: verificationRan ? 1 : 0
+    };
+  }, [evidence, verificationRan]);
+
+  const selectProject = (project: ResearchProject) => {
+    setSelectedProject(project);
+    setActiveView('dashboard');
+    setActivityMessage(`${project.title} 프로젝트의 자료-근거-초안 흐름을 열었습니다.`);
+  };
+
+  const addDummySource = () => {
+    if (sources.some((source) => source.id === 'added-stat')) {
+      setActivityMessage('이미 추가된 더미 자료가 자료 리스트에 있습니다.');
+      return;
     }
 
-    return workItems;
-  }, [activeFilter]);
+    setSources((items) => [
+      {
+        id: 'added-stat',
+        title: 'AI 도입 설문 통계.xlsx',
+        type: 'XLSX',
+        icon: 'xlsx',
+        origin: '파일 업로드',
+        status: '분석 중',
+        analyzedAt: '수치 근거 추출 대기'
+      },
+      ...items
+    ]);
+    setActivityMessage('더미 자료가 추가되었습니다. 분석 상태가 자료 보관함에 반영되었습니다.');
+  };
 
-  const reviewCount = workItems.filter((item) => item.review).length;
-  const focusItem = workItems.find((item) => item.id === 'claim-source') ?? workItems[0];
+  const addGeneratedEvidence = () => {
+    const missing = generatedEvidence.filter((item) => !evidence.some((current) => current.id === item.id));
+
+    if (missing.length === 0) {
+      setActivityMessage('AI가 추출한 근거 카드가 이미 근거 보관함에 정리되어 있습니다.');
+      return;
+    }
+
+    setEvidence((items) => [...items, ...missing]);
+    setActivityMessage('AI가 출처 확인이 가능한 근거 카드 2개를 새로 만들었습니다.');
+  };
+
+  const runVerification = () => {
+    setVerificationRan(true);
+    setEvidence((items) =>
+      items.map((item) =>
+        item.id === 'source-burden'
+          ? {
+              ...item,
+              status: '사용 가능'
+            }
+          : item
+      )
+    );
+    setActivityMessage('검증을 실행했습니다. 사용 가능 근거와 중복 감지 수치가 업데이트되었습니다.');
+  };
+
+  const updateEvidenceStatus = (id: string, status: EvidenceStatus) => {
+    setEvidence((items) => items.map((item) => (item.id === id ? { ...item, status } : item)));
+    setActivityMessage(`근거 상태를 '${status}'로 변경했습니다.`);
+  };
+
+  const sendToEditor = () => {
+    setEditorSent(true);
+    setActiveView('editor');
+    setActivityMessage('초안을 Polaris 문서 편집기 미리보기로 보냈습니다.');
+  };
+
+  const goProjectHome = () => {
+    setActiveView('home');
+    setSelectedProject(null);
+    setActivityMessage('프로젝트 홈으로 돌아왔습니다.');
+  };
 
   return (
-    <section className="work-board-page" aria-labelledby="work-board-title">
-      <div className="wb-project-hero">
+    <section className="research-board-page" aria-labelledby="research-board-title">
+      <header className="research-topbar">
         <div>
-          <p className="eyebrow">검증 작업공간</p>
-          <h1 id="work-board-title">
-            생성형 인공지능 활용 보고서
-          </h1>
-          <p>출처 검증, 초안 작성, 참고문헌 생성을 한 흐름에서 관리합니다.</p>
+          <p className="research-kicker">AI 리서치 보드</p>
+          <h1 id="research-board-title">자료를 검증 가능한 근거로 바꾸는 문서 작성 전 작업 공간</h1>
+          <p>PDF, URL, 인터뷰, 회의록을 모으면 AI가 쓸 만한 근거와 인용 후보로 정리하고 초안까지 연결합니다.</p>
         </div>
-
-        <div className="wb-project-status" aria-label="프로젝트 상태">
-          <span>마감 D-3</span>
-          <strong>72%</strong>
-          <div className="wb-progress" aria-hidden="true">
-            <i />
-          </div>
-          <small>근거 검증 후 편집기 반영 단계</small>
+        <div className="research-topbar-actions">
+          <PolarisButton className="secondary-action compact-action" onClick={goProjectHome}>
+            프로젝트 홈
+          </PolarisButton>
+          <PolarisButton className="primary-action compact-action" onClick={() => selectedProject ? setActiveView('sources') : selectProject(projects[0])}>
+            자료부터 시작
+          </PolarisButton>
         </div>
-      </div>
+      </header>
 
-      <div className="wb-metric-list" aria-label="리서치 상태 지표">
-        <MetricCard label="출처 연결률" value="92%" tone="done" />
-        <MetricCard label="검토 필요" value={`${reviewCount}건`} tone="warning" />
-        <MetricCard label="작성 중 문단" value="8개" />
-        <MetricCard label="저장된 인사이트" value="74개" />
-      </div>
-
-      <div className="wb-verification" aria-label="오늘의 우선 검증">
-        <div className="wb-verify-head">
-          <div>
-            <p className="eyebrow">우선 검증</p>
-            <h2>오늘의 우선 검증</h2>
-          </div>
-          <span>{focusItem.status}</span>
-        </div>
-
-        <div className="wb-verify-grid">
-          <section className="wb-verify-card">
-            <div>
-              <BookOpenCheck size={17} aria-hidden="true" />
-              <strong>원문 출처</strong>
-            </div>
-            <p>Participants reported that organizing information was more difficult than locating it.</p>
-            <small>{focusItem.source}</small>
-          </section>
-
-          <section className="wb-verify-card">
-            <div>
-              <Quote size={17} aria-hidden="true" />
-              <strong>생성 문장</strong>
-            </div>
-            <p>사용자는 정보를 찾는 것보다 정리하고 구조화하는 과정에서 더 큰 어려움을 경험한다.</p>
-            <small>{focusItem.claim}</small>
-          </section>
-
-          <section className="wb-verify-card wb-verify-card-status">
-            <div>
-              <CheckCircle2 size={17} aria-hidden="true" />
-              <strong>검증 상태</strong>
-            </div>
-            <p>의미 유사도 92%</p>
-            <ul>
-              <li>출처 연결 완료</li>
-              <li>의미 일치 검토 중</li>
-              <li>인용 가능 여부 확인 필요</li>
-            </ul>
-          </section>
-        </div>
-      </div>
-
-      <div className="wb-board-section">
-        <div className="wb-board-head">
-          <div>
-            <p className="eyebrow">작업 보드</p>
-            <h2>작업 단계</h2>
-          </div>
-          <div className="wb-filter" aria-label="작업 필터">
-            {filters.map((filter) => (
-              <PolarisButton
-                className={`secondary-action compact-action ${activeFilter === filter.id ? 'wb-filter-active' : ''}`}
-                key={filter.id}
-                aria-pressed={activeFilter === filter.id}
-                onClick={() => setActiveFilter(filter.id)}
-              >
-                {filter.label}
-              </PolarisButton>
-            ))}
-          </div>
-        </div>
-
-        <div className="wb-layout">
-        <div className="wb-kanban" aria-label="작업 단계">
-          {stages.map((stage, stageIndex) => {
-            const stageItems = visibleItems.filter((item) => item.stage === stage);
-            const stageTitleId = `wb-stage-${stageIndex + 1}`;
-
-            return (
-              <section className="wb-column" key={stage} aria-labelledby={stageTitleId}>
-                <div className="wb-column-head">
-                  <strong id={stageTitleId}>{stage}</strong>
-                  <span>{stageItems.length}</span>
-                </div>
-
-                <div className="wb-card-list">
-                  {stageItems.map((item) => (
-                    <WorkCard item={item} key={item.id} />
-                  ))}
-                  {stageItems.length === 0 && <div className="wb-empty">표시할 작업이 없습니다.</div>}
-                </div>
-              </section>
-            );
-          })}
-        </div>
-
-        <aside className="wb-side" aria-label="작업 도우미">
-          <section className="wb-panel">
-            <div className="wb-panel-head">
-              <div>
-                <FolderArchive size={17} aria-hidden="true" />
-                <h2>지식 보관함</h2>
-              </div>
-              <span>재사용</span>
+      {activeView === 'home' ? (
+        <ProjectHome onSelectProject={selectProject} />
+      ) : (
+        <div className="research-workspace">
+          <aside className="research-rail" aria-label="AI 리서치 보드 메뉴">
+            <div className="research-rail-project">
+              <span>{currentProject.due}</span>
+              <strong>{currentProject.title}</strong>
+              <small>{currentProject.nextAction}</small>
             </div>
 
-            <div className="wb-vault-grid">
-              {knowledgeStats.map((stat) => (
-                <div key={stat.label}>
-                  <strong>{stat.value}</strong>
-                  <span>{stat.label}</span>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          <section className="wb-panel">
-            <div className="wb-panel-head">
-              <div>
-                <AlertTriangle size={17} aria-hidden="true" />
-                <h2>빠른 실행</h2>
-              </div>
-            </div>
-
-            <div className="wb-action-list">
-              {quickActions.map((action) => {
-                const Icon = action.icon;
+            <nav>
+              {boardNav.map((item) => {
+                const Icon = item.icon;
 
                 return (
-                  <PolarisButton className="wb-quick-action" key={action.label} onClick={() => setSelectedAction(action.label)}>
+                  <PolarisButton
+                    className={`research-nav-item ${activeView === item.id ? 'research-nav-item-active' : ''}`}
+                    key={item.id}
+                    aria-pressed={activeView === item.id}
+                    onClick={() => setActiveView(item.id)}
+                  >
                     <Icon size={16} aria-hidden="true" />
-                    <span>{action.label}</span>
+                    <span>{item.label}</span>
                   </PolarisButton>
                 );
               })}
-            </div>
+            </nav>
+          </aside>
 
-            <p className="wb-action-feedback">{selectedAction}</p>
-          </section>
-        </aside>
+          <main className="research-main">
+            {activeView === 'dashboard' && (
+              <DashboardView project={currentProject} sources={sources} evidence={evidence} statusCounts={statusCounts} setActiveView={setActiveView} />
+            )}
+            {activeView === 'sources' && <SourcesView sources={sources} onAddSource={addDummySource} />}
+            {activeView === 'evidence' && (
+              <EvidenceView
+                evidence={visibleEvidence}
+                tagFilter={tagFilter}
+                setTagFilter={setTagFilter}
+                onExtract={addGeneratedEvidence}
+              />
+            )}
+            {activeView === 'verification' && (
+              <VerificationView
+                evidence={evidence}
+                statusCounts={statusCounts}
+                verificationRan={verificationRan}
+                onRunVerification={runVerification}
+                onUpdateStatus={updateEvidenceStatus}
+              />
+            )}
+            {activeView === 'outline' && (
+              <OutlineView
+                evidence={evidence}
+                activeSection={activeSection}
+                activeEvidenceIds={activeEvidenceIds}
+                onSelectSection={setActiveOutlineSection}
+              />
+            )}
+            {activeView === 'draft' && <DraftView evidence={evidence} onSendToEditor={sendToEditor} />}
+            {activeView === 'editor' && <EditorView evidence={evidence} editorSent={editorSent} onBackToDraft={() => setActiveView('draft')} />}
+            {activeView === 'export' && <ExportView project={currentProject} statusCounts={statusCounts} />}
+          </main>
+
+          <aside className="research-summary" aria-label="작업 요약">
+            <SummaryPanel project={currentProject} sources={sources} evidence={evidence} statusCounts={statusCounts} activityMessage={activityMessage} />
+          </aside>
         </div>
+      )}
+    </section>
+  );
+}
+
+function ProjectHome({ onSelectProject }: { onSelectProject: (project: ResearchProject) => void }) {
+  return (
+    <div className="research-home">
+      <section className="research-home-intro">
+        <div>
+          <p className="research-kicker">프로젝트 홈</p>
+          <h2>작성할 문서의 자료를 먼저 모으고, 검증 가능한 근거로 바꿉니다.</h2>
+          <p>프로젝트를 열면 자료 보관함부터 초안·Polaris 문서 편집기까지 하나의 흐름으로 이어집니다.</p>
+        </div>
+        <PolarisButton className="primary-action">
+          <Plus size={16} aria-hidden="true" />
+          새 프로젝트 생성
+        </PolarisButton>
+      </section>
+
+      <div className="research-project-grid" aria-label="프로젝트 목록">
+        {projects.map((project) => (
+          <PolarisButton className="research-project-card" key={project.id} onClick={() => onSelectProject(project)}>
+            <span>{project.due}</span>
+            <strong>{project.title}</strong>
+            <p>{project.description}</p>
+            <div className="research-project-progress" aria-label={`${project.title} 진행률 ${project.progress}%`}>
+              <i style={{ width: `${project.progress}%` }} />
+            </div>
+            <dl>
+              <div>
+                <dt>진행률</dt>
+                <dd>{project.progress}%</dd>
+              </div>
+              <div>
+                <dt>자료 수</dt>
+                <dd>{project.sourceCount}</dd>
+              </div>
+              <div>
+                <dt>검증 필요</dt>
+                <dd>{project.reviewNeeded}</dd>
+              </div>
+            </dl>
+          </PolarisButton>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function DashboardView({
+  project,
+  sources,
+  evidence,
+  statusCounts,
+  setActiveView
+}: {
+  project: ResearchProject;
+  sources: ResearchSource[];
+  evidence: EvidenceCardData[];
+  statusCounts: { usable: number; review: number; blocked: number; duplicate: number };
+  setActiveView: (view: ResearchView) => void;
+}) {
+  return (
+    <div className="research-view">
+      <ViewHeader
+        kicker="프로젝트 대시보드"
+        title={project.title}
+        description="현재 프로젝트의 자료 수집, 근거 정리, 출처 검증, 초안 생성 흐름을 한눈에 봅니다."
+        action={
+          <PolarisButton className="primary-action compact-action" onClick={() => setActiveView('sources')}>
+            다음 작업 열기
+            <ArrowRight size={15} aria-hidden="true" />
+          </PolarisButton>
+        }
+      />
+
+      <section className="research-dashboard-hero">
+        <div>
+          <span>{project.due}</span>
+          <strong>{project.progress}%</strong>
+          <p>전체 진행률 · 근거 검증 후 아웃라인 매칭 단계</p>
+          <div className="research-progress-bar">
+            <i style={{ width: `${project.progress}%` }} />
+          </div>
+        </div>
+        <ol className="research-flow" aria-label="리서치 진행 단계">
+          {workflowSteps.map((step, index) => (
+            <li key={step.label}>
+              <PolarisButton onClick={() => setActiveView(step.view)}>
+                <span>{index + 1}</span>
+                <strong>{step.label}</strong>
+              </PolarisButton>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <div className="research-metric-grid">
+        <MetricCard label="수집 자료" value={`${sources.length}건`} note="PDF · URL · 인터뷰 · 회의록" />
+        <MetricCard label="근거 카드" value={`${evidence.length}개`} note="태그별 분류 완료" />
+        <MetricCard label="검증 필요" value={`${statusCounts.review}건`} note="출처 또는 최신성 확인" tone="warning" />
+        <MetricCard label="문서 활용 가능" value={`${statusCounts.usable}개`} note="초안 연결 가능" tone="success" />
+      </div>
+    </div>
+  );
+}
+
+function SourcesView({ sources, onAddSource }: { sources: ResearchSource[]; onAddSource: () => void }) {
+  return (
+    <div className="research-view">
+      <ViewHeader
+        kicker="자료 보관함"
+        title="PDF, URL, 인터뷰, 회의록을 한 프로젝트에 모읍니다."
+        description="자료는 유형별로 분류되고, AI 분석 상태가 함께 표시됩니다."
+      />
+
+      <div className="research-source-actions">
+        <section className="research-upload-card">
+          <span className="research-upload-icons" aria-hidden="true">
+            <FileIcon type="pdf" size={24} />
+            <FileIcon type="docx" size={24} />
+            <FileIcon type="hwp" size={24} />
+          </span>
+          <div>
+            <strong>PDF / DOCX / HWP 업로드</strong>
+            <p>보고서, 논문, 과제 자료를 올리면 핵심 문장과 수치 근거를 추출합니다.</p>
+          </div>
+          <PolarisButton className="primary-action compact-action" onClick={onAddSource}>
+            <Upload size={15} aria-hidden="true" />
+            자료 업로드
+          </PolarisButton>
+        </section>
+
+        <section className="research-upload-card">
+          <Link2 size={22} aria-hidden="true" />
+          <div>
+            <strong>URL 저장</strong>
+            <p>웹 리포트, 기사, 경쟁사 분석 링크를 저장하고 최신성을 함께 확인합니다.</p>
+          </div>
+          <PolarisButton className="secondary-action compact-action">URL 추가</PolarisButton>
+        </section>
+      </div>
+
+      <section className="research-card">
+        <div className="research-section-head">
+          <div>
+            <h3>자료 리스트</h3>
+            <p>자료 유형과 분석 상태를 기준으로 다음 작업을 결정합니다.</p>
+          </div>
+          <span>{sources.length}건</span>
+        </div>
+        <div className="research-source-list">
+          {sources.map((source) => (
+            <article className="research-source-row" key={source.id}>
+              <FileIcon type={source.icon} size={24} aria-hidden="true" />
+              <div>
+                <strong>{source.title}</strong>
+                <span>{source.origin}</span>
+              </div>
+              <small>{source.type}</small>
+              <StatusBadge status={source.status} />
+              <p>{source.analyzedAt}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+    </div>
+  );
+}
+
+function EvidenceView({
+  evidence,
+  tagFilter,
+  setTagFilter,
+  onExtract
+}: {
+  evidence: EvidenceCardData[];
+  tagFilter: TagFilter;
+  setTagFilter: (tag: TagFilter) => void;
+  onExtract: () => void;
+}) {
+  return (
+    <div className="research-view">
+      <ViewHeader
+        kicker="근거 보관함"
+        title="AI가 핵심 문장, 수치 근거, 사용자 발화, 사례 요약을 카드로 정리합니다."
+        description="각 근거는 원문 일부와 출처를 유지해 초안에서 다시 확인할 수 있습니다."
+        action={
+          <PolarisButton className="primary-action compact-action" onClick={onExtract}>
+            <Sparkles size={15} aria-hidden="true" />
+            AI 근거 추출
+          </PolarisButton>
+        }
+      />
+
+      <div className="research-filter-row" aria-label="태그 필터">
+        {evidenceTags.map((tag) => (
+          <PolarisButton
+            className={`secondary-action compact-action ${tagFilter === tag ? 'research-filter-active' : ''}`}
+            key={tag}
+            aria-pressed={tagFilter === tag}
+            onClick={() => setTagFilter(tag)}
+          >
+            {tag}
+          </PolarisButton>
+        ))}
+      </div>
+
+      <div className="research-evidence-grid">
+        {evidence.map((item) => (
+          <EvidenceCard item={item} key={item.id} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function VerificationView({
+  evidence,
+  statusCounts,
+  verificationRan,
+  onRunVerification,
+  onUpdateStatus
+}: {
+  evidence: EvidenceCardData[];
+  statusCounts: { usable: number; review: number; blocked: number; duplicate: number };
+  verificationRan: boolean;
+  onRunVerification: () => void;
+  onUpdateStatus: (id: string, status: EvidenceStatus) => void;
+}) {
+  const staleItems = evidence.filter((item) => item.id === 'ai-adoption' || item.id === 'merge-inefficiency');
+  const unclearItems = evidence.filter((item) => item.status === '검토 필요');
+
+  return (
+    <div className="research-view">
+      <ViewHeader
+        kicker="출처 검증 센터"
+        title="신뢰도, 최신성, 중복, 출처 누락을 확인합니다."
+        description="초안에 들어갈 수 있는 근거와 검토해야 할 근거를 분리합니다."
+        action={
+          <PolarisButton className="primary-action compact-action" onClick={onRunVerification}>
+            <SearchCheck size={15} aria-hidden="true" />
+            검증 실행
+          </PolarisButton>
+        }
+      />
+
+      <div className="research-metric-grid research-metric-grid-three">
+        <MetricCard label="검증 완료" value={`${statusCounts.usable}건`} note={verificationRan ? '방금 검증 반영' : '검증 실행 전'} tone="success" />
+        <MetricCard label="검토 필요" value={`${statusCounts.review}건`} note="출처 또는 맥락 확인" tone="warning" />
+        <MetricCard label="중복 감지" value={`${statusCounts.duplicate}건`} note="유사 주장 병합 후보" />
+      </div>
+
+      <div className="research-verify-grid">
+        <VerificationList
+          title="최신성 부족 근거"
+          description="작성 시점이 오래되었거나 게시일 확인이 필요한 근거입니다."
+          items={staleItems}
+          onUpdateStatus={onUpdateStatus}
+        />
+        <VerificationList
+          title="출처 불명확 근거"
+          description="원문 위치 또는 발화 맥락 확인이 필요한 근거입니다."
+          items={unclearItems}
+          onUpdateStatus={onUpdateStatus}
+        />
+      </div>
+    </div>
+  );
+}
+
+function OutlineView({
+  evidence,
+  activeSection,
+  activeEvidenceIds,
+  onSelectSection
+}: {
+  evidence: EvidenceCardData[];
+  activeSection: OutlineSection;
+  activeEvidenceIds: Set<string>;
+  onSelectSection: (id: string) => void;
+}) {
+  return (
+    <div className="research-view research-outline-view">
+      <ViewHeader
+        kicker="아웃라인 보드"
+        title="목차마다 주장과 근거가 연결되어 있는지 확인합니다."
+        description="근거 부족 섹션은 초안 생성 전에 보강 대상으로 표시됩니다."
+      />
+
+      <div className="research-outline-layout">
+        <section className="research-card">
+          <div className="research-section-head">
+            <div>
+              <h3>문서 목차</h3>
+              <p>섹션을 클릭하면 연결된 근거가 강조됩니다.</p>
+            </div>
+          </div>
+          <div className="research-outline-list">
+            {outlineSections.map((section) => (
+              <PolarisButton
+                className={`research-outline-item ${activeSection.id === section.id ? 'research-outline-item-active' : ''}`}
+                key={section.id}
+                onClick={() => onSelectSection(section.id)}
+              >
+                <strong>{section.title}</strong>
+                <span>{section.claim}</span>
+                {section.warning && (
+                  <small>
+                    <TriangleAlert size={13} aria-hidden="true" />
+                    {section.warning}
+                  </small>
+                )}
+              </PolarisButton>
+            ))}
+          </div>
+        </section>
+
+        <section className="research-card">
+          <div className="research-section-head">
+            <div>
+              <h3>연결된 근거</h3>
+              <p>{activeSection.title}에 연결된 근거 카드입니다.</p>
+            </div>
+            <span>{activeSection.evidenceIds.length}개</span>
+          </div>
+          <div className="research-evidence-grid research-evidence-grid-compact">
+            {evidence.map((item) => (
+              <EvidenceCard item={item} key={item.id} highlighted={activeEvidenceIds.has(item.id)} muted={!activeEvidenceIds.has(item.id)} />
+            ))}
+          </div>
+        </section>
+      </div>
+    </div>
+  );
+}
+
+function DraftView({ evidence, onSendToEditor }: { evidence: EvidenceCardData[]; onSendToEditor: () => void }) {
+  const citation = (id: string) => evidence.find((item) => item.id === id);
+
+  return (
+    <div className="research-view">
+      <ViewHeader
+        kicker="AI 초안 생성"
+        title="선택된 아웃라인과 검증된 근거를 기준으로 초안을 만듭니다."
+        description="문단 옆에서 어떤 근거와 출처가 연결되었는지 바로 확인할 수 있습니다."
+        action={
+          <PolarisButton className="primary-action compact-action" onClick={onSendToEditor}>
+            <Send size={15} aria-hidden="true" />
+            Polaris 문서로 보내기
+          </PolarisButton>
+        }
+      />
+
+      <section className="research-draft">
+        <div className="research-draft-meta">
+          <span>초안 v0.3</span>
+          <strong>DECK A팀 최종발표 리서치 초안</strong>
+          <small>검증된 근거 기반 문장 생성 · 인용 자동 삽입</small>
+        </div>
+        <DraftParagraph
+          title="문제 정의"
+          body="보고서와 발표자료를 작성하는 사용자는 문서 작성 전에 PDF, 웹 리포트, 인터뷰, 회의록을 따로 모은다. 하지만 실제 작성 단계에서는 어떤 문장을 근거로 쓸 수 있는지 다시 찾고, 출처를 확인하는 데 많은 시간을 사용한다."
+          evidenceItem={citation('research-fatigue')}
+        />
+        <DraftParagraph
+          title="시장 변화"
+          body="생성형 AI는 문서 초안과 요약 업무에서 빠르게 확산되고 있다. 다만 AI가 생성한 문장이 어떤 원자료에 근거했는지 확인하기 어렵다면, 사용자는 초안을 그대로 신뢰하기보다 원문을 다시 열어 검증하게 된다."
+          evidenceItem={citation('ai-adoption')}
+        />
+        <DraftParagraph
+          title="솔루션 제안"
+          body="AI 리서치 보드는 자료를 단순 보관하지 않고, 문서에 바로 활용 가능한 근거 카드로 바꾼다. 각 문단은 연결 근거와 출처를 함께 유지하므로 Polaris 문서 편집기로 이동한 뒤에도 검증 흐름이 끊기지 않는다."
+          evidenceItem={citation('writing-time')}
+        />
+      </section>
+    </div>
+  );
+}
+
+function EditorView({
+  evidence,
+  editorSent,
+  onBackToDraft
+}: {
+  evidence: EvidenceCardData[];
+  editorSent: boolean;
+  onBackToDraft: () => void;
+}) {
+  const usedEvidence = evidence.filter((item) => ['research-fatigue', 'ai-adoption', 'writing-time', 'source-burden'].includes(item.id));
+
+  return (
+    <div className="research-view">
+      <ViewHeader
+        kicker="문서 편집 연동"
+        title="Polaris 문서 편집기 안에서도 사용된 근거를 확인합니다."
+        description="초안 문단과 근거 패널이 동기화되어 출처 검증 맥락을 잃지 않습니다."
+        action={
+          <PolarisButton className="secondary-action compact-action" onClick={onBackToDraft}>
+            초안으로 돌아가기
+          </PolarisButton>
+        }
+      />
+
+      <div className="research-editor-layout">
+        <section className="research-document-preview" aria-label="Polaris 문서 편집기 미리보기">
+          <EditorRibbon />
+          <article className="research-page-preview">
+            <h2>DECK A팀 최종발표</h2>
+            <h3>AI 리서치 보드를 활용한 근거 기반 문서 작성</h3>
+            <p>
+              사용자는 문서 작성 전에 다양한 자료를 수집하지만, 실제 작성 단계에서 인용 가능한 근거와 출처를 다시 확인하는 데 큰 시간을 사용한다.
+              AI 리서치 보드는 이 과정을 자료 보관, 근거 추출, 출처 검증, 초안 생성의 흐름으로 연결한다.
+            </p>
+            <p>
+              생성형 AI 활용이 확대될수록 초안 생성보다 중요한 것은 생성 문장이 어떤 원자료와 연결되는지 확인하는 일이다.
+              따라서 초안의 각 문단은 검증된 근거와 출처 상태를 함께 유지해야 한다.
+            </p>
+          </article>
+        </section>
+
+        <aside className="research-evidence-panel">
+          <div className="research-section-head">
+            <div>
+              <h3>편집기 내 근거 패널</h3>
+              <p>{editorSent ? '초안에서 사용된 근거가 동기화되었습니다.' : '초안을 보내면 사용 근거가 이곳에 표시됩니다.'}</p>
+            </div>
+          </div>
+          <div className="research-used-list">
+            {usedEvidence.map((item) => (
+              <article key={item.id}>
+                <StatusBadge status={item.status} />
+                <strong>{item.title}</strong>
+                <span>{item.source}</span>
+              </article>
+            ))}
+          </div>
+        </aside>
+      </div>
+    </div>
+  );
+}
+
+function EditorRibbon() {
+  return (
+    <Ribbon className="research-editor-ribbon">
+      <RibbonTabs defaultValue="home">
+        <RibbonTabList>
+          <RibbonTab value="home">홈</RibbonTab>
+          <RibbonTab value="insert">삽입</RibbonTab>
+          <RibbonTab value="review">검토</RibbonTab>
+        </RibbonTabList>
+        <RibbonContent value="home">
+          <RibbonGroup label="클립보드">
+            <RibbonButton size="lg" icon={<PasteIcon />}>
+              붙여넣기
+            </RibbonButton>
+          </RibbonGroup>
+          <RibbonGroup label="서식">
+            <RibbonButton size="md" icon={<BoldIcon />}>
+              굵게
+            </RibbonButton>
+            <RibbonButton size="md" icon={<BulletIcon />}>
+              목록
+            </RibbonButton>
+          </RibbonGroup>
+          <RibbonGroup label="AI 근거">
+            <RibbonButton size="lg" icon={<AiWriteIcon />}>
+              근거 패널
+            </RibbonButton>
+          </RibbonGroup>
+        </RibbonContent>
+        <RibbonContent value="insert">
+          <RibbonGroup label="리서치">
+            <RibbonButton size="lg" icon={<AiWriteIcon />}>
+              인용 삽입
+            </RibbonButton>
+          </RibbonGroup>
+        </RibbonContent>
+        <RibbonContent value="review">
+          <RibbonGroup label="검토">
+            <RibbonButton size="lg" icon={<AiWriteIcon />}>
+              출처 점검
+            </RibbonButton>
+          </RibbonGroup>
+        </RibbonContent>
+      </RibbonTabs>
+    </Ribbon>
+  );
+}
+
+function ExportView({
+  project,
+  statusCounts
+}: {
+  project: ResearchProject;
+  statusCounts: { usable: number; review: number; blocked: number; duplicate: number };
+}) {
+  return (
+    <div className="research-view">
+      <ViewHeader
+        kicker="최종 점검 / 내보내기"
+        title="출처 누락과 근거 부족을 마지막으로 확인합니다."
+        description="완성도 요약을 확인한 뒤 PDF, DOCX, PPT로 내보내거나 프로젝트를 아카이브합니다."
+      />
+
+      <div className="research-export-layout">
+        <section className="research-card">
+          <div className="research-section-head">
+            <div>
+              <h3>문서 완성도 요약</h3>
+              <p>{project.title}의 최종 점검 상태입니다.</p>
+            </div>
+            <span>{project.progress + 18}%</span>
+          </div>
+          <div className="research-check-list">
+            <CheckRow label="출처 누락 점검" value={`${statusCounts.review}건 확인 필요`} tone="warning" />
+            <CheckRow label="근거 부족 점검" value="경쟁 환경 섹션 1건 보강 권장" tone="warning" />
+            <CheckRow label="사용 가능 근거" value={`${statusCounts.usable}개 연결됨`} tone="success" />
+            <CheckRow label="문서 완성도" value="발표 초안으로 사용 가능" tone="success" />
+          </div>
+        </section>
+
+        <section className="research-card">
+          <div className="research-section-head">
+            <div>
+              <h3>내보내기</h3>
+              <p>발표 준비 단계에 맞춰 문서 형식을 선택합니다.</p>
+            </div>
+          </div>
+          <div className="research-export-actions">
+            <PolarisButton className="secondary-action">PDF 내보내기</PolarisButton>
+            <PolarisButton className="secondary-action">DOCX 내보내기</PolarisButton>
+            <PolarisButton className="secondary-action">PPT 내보내기</PolarisButton>
+            <PolarisButton className="primary-action">프로젝트 아카이브</PolarisButton>
+          </div>
+        </section>
+      </div>
+    </div>
+  );
+}
+
+function SummaryPanel({
+  project,
+  sources,
+  evidence,
+  statusCounts,
+  activityMessage
+}: {
+  project: ResearchProject;
+  sources: ResearchSource[];
+  evidence: EvidenceCardData[];
+  statusCounts: { usable: number; review: number; blocked: number; duplicate: number };
+  activityMessage: string;
+}) {
+  return (
+    <div className="research-summary-inner">
+      <section>
+        <p className="research-kicker">작업 요약</p>
+        <h2>{project.title}</h2>
+        <div className="research-progress-bar">
+          <i style={{ width: `${project.progress}%` }} />
+        </div>
+      </section>
+
+      <dl className="research-summary-list">
+        <div>
+          <dt>자료</dt>
+          <dd>{sources.length}건</dd>
+        </div>
+        <div>
+          <dt>근거</dt>
+          <dd>{evidence.length}개</dd>
+        </div>
+        <div>
+          <dt>검증 필요</dt>
+          <dd>{statusCounts.review}건</dd>
+        </div>
+        <div>
+          <dt>문서 활용 가능</dt>
+          <dd>{statusCounts.usable}개</dd>
+        </div>
+      </dl>
+
+      <section className="research-next-panel">
+        <strong>다음 작업</strong>
+        <p>{project.nextAction}</p>
+      </section>
+
+      <section className="research-activity">
+        <strong>최근 반응</strong>
+        <p>{activityMessage}</p>
+      </section>
+    </div>
+  );
+}
+
+function ViewHeader({
+  kicker,
+  title,
+  description,
+  action
+}: {
+  kicker: string;
+  title: string;
+  description: string;
+  action?: React.ReactNode;
+}) {
+  return (
+    <header className="research-view-header">
+      <div>
+        <p className="research-kicker">{kicker}</p>
+        <h2>{title}</h2>
+        <p>{description}</p>
+      </div>
+      {action && <div className="research-view-action">{action}</div>}
+    </header>
+  );
+}
+
+function MetricCard({ label, value, note, tone = 'default' }: { label: string; value: string; note: string; tone?: 'default' | 'warning' | 'success' }) {
+  return (
+    <article className={`research-metric-card research-metric-${tone}`}>
+      <span>{label}</span>
+      <strong>{value}</strong>
+      <p>{note}</p>
+    </article>
+  );
+}
+
+function EvidenceCard({ item, highlighted = false, muted = false }: { item: EvidenceCardData; highlighted?: boolean; muted?: boolean }) {
+  return (
+    <article className={`research-evidence-card ${highlighted ? 'research-evidence-highlighted' : ''} ${muted ? 'research-evidence-muted' : ''}`}>
+      <div className="research-evidence-head">
+        <span>{item.tag}</span>
+        <StatusBadge status={item.status} />
+      </div>
+      <h3>{item.title}</h3>
+      <p>{item.summary}</p>
+      <blockquote>{item.quote}</blockquote>
+      <div className="research-source-link">
+        <BookOpenCheck size={14} aria-hidden="true" />
+        <span>{item.source}</span>
+      </div>
+    </article>
+  );
+}
+
+function VerificationList({
+  title,
+  description,
+  items,
+  onUpdateStatus
+}: {
+  title: string;
+  description: string;
+  items: EvidenceCardData[];
+  onUpdateStatus: (id: string, status: EvidenceStatus) => void;
+}) {
+  return (
+    <section className="research-card">
+      <div className="research-section-head">
+        <div>
+          <h3>{title}</h3>
+          <p>{description}</p>
+        </div>
+        <span>{items.length}건</span>
+      </div>
+      <div className="research-verification-list">
+        {items.map((item) => (
+          <article key={item.id}>
+            <div>
+              <strong>{item.title}</strong>
+              <span>{item.source}</span>
+            </div>
+            <div className="research-status-actions">
+              <PolarisButton className="secondary-action compact-action" onClick={() => onUpdateStatus(item.id, '사용 가능')}>
+                사용 가능
+              </PolarisButton>
+              <PolarisButton className="secondary-action compact-action" onClick={() => onUpdateStatus(item.id, '검토 필요')}>
+                검토 필요
+              </PolarisButton>
+              <PolarisButton className="secondary-action compact-action" onClick={() => onUpdateStatus(item.id, '사용 비추천')}>
+                사용 비추천
+              </PolarisButton>
+            </div>
+          </article>
+        ))}
       </div>
     </section>
   );
 }
 
-function MetricCard({ label, value, tone = 'default' }: { label: string; value: string; tone?: 'default' | 'warning' | 'done' }) {
+function DraftParagraph({ title, body, evidenceItem }: { title: string; body: string; evidenceItem?: EvidenceCardData }) {
   return (
-    <div className={`wb-metric wb-metric-${tone}`}>
+    <article className="research-draft-row">
+      <div>
+        <h3>{title}</h3>
+        <p>{body}</p>
+      </div>
+      <aside>
+        <span>연결 근거</span>
+        {evidenceItem ? (
+          <>
+            <strong>{evidenceItem.title}</strong>
+            <small>{evidenceItem.source}</small>
+          </>
+        ) : (
+          <strong>근거 연결 필요</strong>
+        )}
+      </aside>
+    </article>
+  );
+}
+
+function CheckRow({ label, value, tone }: { label: string; value: string; tone: 'warning' | 'success' }) {
+  return (
+    <div className={`research-check-row research-check-${tone}`}>
+      {tone === 'success' ? <CheckCircle2 size={16} aria-hidden="true" /> : <TriangleAlert size={16} aria-hidden="true" />}
       <span>{label}</span>
       <strong>{value}</strong>
     </div>
   );
 }
 
-function WorkCard({ item }: { item: WorkItem }) {
-  return (
-    <article className={`wb-card wb-card-${item.tone}`}>
-      <div className="wb-card-title">
-        <strong>{item.title}</strong>
-      </div>
-      <p>{item.description}</p>
-      <div className="wb-card-link">
-        <span>{item.source}</span>
-        <span>{item.claim}</span>
-      </div>
-      <div className="wb-card-meta">
-        <span className={`wb-pill wb-pill-${item.tone}`}>{item.tag}</span>
-        <span>{item.status}</span>
-        <span>{item.owner}</span>
-        <span>{item.due}</span>
-      </div>
-    </article>
-  );
+function StatusBadge({ status }: { status: SourceStatus | EvidenceStatus }) {
+  const tone = status === '분석 완료' || status === '사용 가능' ? 'success' : status === '분석 중' ? 'progress' : status === '사용 비추천' ? 'danger' : 'warning';
+
+  return <span className={`research-badge research-badge-${tone}`}>{status}</span>;
 }
