@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FileSearch } from 'lucide-react';
 import { PolarisButton, PolarisFileDrop } from './polaris-controls';
 
@@ -49,12 +49,29 @@ const emptyRestrictionValues: Record<RestrictionId, string> = {
   filename: ''
 };
 
-export function FinalRoom() {
-  const [finalFileName, setFinalFileName] = useState('');
+export type FinalRoomHandoff = {
+  fileName: string;
+  submittedAt: number;
+};
+
+export function FinalRoom({ handoff }: { handoff?: FinalRoomHandoff | null }) {
+  const [finalFileName, setFinalFileName] = useState(handoff?.fileName ?? '');
   const [selectedRestrictionIds, setSelectedRestrictionIds] = useState<RestrictionId[]>([]);
   const [restrictionValues, setRestrictionValues] = useState<Record<RestrictionId, string>>(emptyRestrictionValues);
   const [submissionChecks, setSubmissionChecks] = useState<SubmissionCheck[]>([]);
   const [reviewStarted, setReviewStarted] = useState(false);
+
+  useEffect(() => {
+    if (!handoff?.fileName) {
+      return;
+    }
+
+    setFinalFileName(handoff.fileName);
+    setSelectedRestrictionIds([]);
+    setRestrictionValues(emptyRestrictionValues);
+    setSubmissionChecks([]);
+    setReviewStarted(false);
+  }, [handoff?.fileName, handoff?.submittedAt]);
 
   const completedChecks = submissionChecks.filter((check) => check.status === 'complete').length;
   const completionRate = submissionChecks.length > 0 ? Math.round((completedChecks / submissionChecks.length) * 100) : 0;
@@ -136,6 +153,10 @@ function FinalReviewCard({
 }) {
   const selectedRestrictionCount = selectedRestrictionIds.length;
   const hasFile = Boolean(fileName);
+  const canStartReview =
+    hasFile &&
+    selectedRestrictionIds.length > 0 &&
+    selectedRestrictionIds.every((restrictionId) => restrictionValues[restrictionId].trim());
 
   return (
     <section className={`final-review-card ${hasFile ? 'final-review-card-ready' : 'final-review-card-empty'}`} aria-label="최종 검수">
@@ -164,7 +185,7 @@ function FinalReviewCard({
           <section className="final-flow-section final-condition-section" aria-labelledby="final-restriction-field-title">
             <div className="final-section-heading final-section-heading-row">
               <div>
-                <h2 id="final-restriction-field-title">제한 사항</h2>
+                <h2 id="final-restriction-field-title">점검사항</h2>
                 <p>검수할 조건을 체크하면 기준 입력란이 열립니다.</p>
               </div>
               <span>{selectedRestrictionCount}개 적용</span>
@@ -223,7 +244,7 @@ function FinalReviewCard({
 
       {hasFile && (
         <div className="modal-actions final-review-actions">
-        <PolarisButton className="primary-action" onClick={onStartReview}>
+        <PolarisButton className="primary-action" disabled={!canStartReview} onClick={onStartReview}>
           <FileSearch size={16} aria-hidden="true" />
           검수 시작
         </PolarisButton>

@@ -3,8 +3,10 @@ import {
   ArrowLeft,
   ArrowUpDown,
   BriefcaseBusiness,
+  ChevronDown,
   ChevronLeft,
   ChevronRight,
+  ChevronUp,
   Eye,
   FileText,
   PenLine,
@@ -75,6 +77,8 @@ const careerPassSections: CareerPassSection[] = [
   { id: 'track', label: '지원 현황', icon: BriefcaseBusiness },
   { id: 'experience', label: '경험 카드', icon: Puzzle }
 ];
+
+const experienceLabelOptions = ['협업 경험', '문제 해결', '전략 기획', '성과 중심', '리더십', '리서치', '커뮤니케이션', '운영 경험'];
 
 const initialTracks: SupportTrack[] = [
   {
@@ -220,8 +224,8 @@ const initialExperienceCards: ExperienceCard[] = [
 const initialEssay =
   '프로젝트 진행 과정에서 팀원 간 전략 방향성에 대한 의견 충돌이 발생했습니다. 초기에는 각자의 아이디어를 중심으로 논의가 이어지며 의사결정이 지연되었습니다. 저는 사용자 인터뷰 데이터를 다시 정리하여 객관적인 기준을 제시했고, 이를 기반으로 우선순위를 재조정하는 회의 구조를 제안했습니다. 이후 팀원들의 의견을 시각적으로 정리해 합의 과정을 단순화했고, 최종적으로 전략 방향을 빠르게 통합할 수 있었습니다. 그 결과 프로젝트 완성도를 높일 수 있었고, 최종 발표에서 우수상을 수상했습니다.';
 
-export function CareerPass() {
-  const [activeSection, setActiveSection] = useState<CareerPassSectionId>('track');
+export function CareerPass({ onFinalReview }: { onFinalReview?: (fileName: string) => void }) {
+  const [activeSection, setActiveSection] = useState<CareerPassSectionId | null>(null);
   const [trackModalOpen, setTrackModalOpen] = useState(false);
   const [applicationsExpanded, setApplicationsExpanded] = useState(false);
   const [selectedApplicationId, setSelectedApplicationId] = useState<string | null>(null);
@@ -232,9 +236,13 @@ export function CareerPass() {
   const [trackNotice, setTrackNotice] = useState('지원 관리 중');
   const [supportTracks, setSupportTracks] = useState<SupportTrack[]>(initialTracks);
   const [essayCardsPanelOpen, setEssayCardsPanelOpen] = useState(true);
+  const [essayGuideOpen, setEssayGuideOpen] = useState(true);
   const [experienceModalOpen, setExperienceModalOpen] = useState(false);
   const [activityName, setActivityName] = useState('');
-  const [activityDescription, setActivityDescription] = useState('');
+  const [activityLabel, setActivityLabel] = useState(experienceLabelOptions[0]);
+  const [activityRole, setActivityRole] = useState('');
+  const [activityAction, setActivityAction] = useState('');
+  const [activityResult, setActivityResult] = useState('');
   const [experienceSortMode, setExperienceSortMode] = useState<ExperienceSortMode>('recent');
   const [experienceCards, setExperienceCards] = useState<ExperienceCard[]>(initialExperienceCards);
   const [selectedExperienceCardId, setSelectedExperienceCardId] = useState<string | null>(initialExperienceCards[0]?.id ?? null);
@@ -274,7 +282,7 @@ export function CareerPass() {
     setTrackLink('');
     setTrackQuestions([{ id: `question-${Date.now()}`, text: '' }]);
     setTrackFileName('');
-    setActiveSection('track');
+    setActiveSection(null);
     setSelectedApplicationId(null);
     setSelectedQuestionIndex(0);
     setTrackModalOpen(false);
@@ -302,29 +310,34 @@ export function CareerPass() {
 
   const createExperienceCard = () => {
     const trimmedTitle = activityName.trim();
-    const trimmedDescription = activityDescription.trim();
+    const trimmedRole = activityRole.trim();
+    const trimmedAction = activityAction.trim();
+    const trimmedResult = activityResult.trim();
 
-    if (!trimmedTitle && !trimmedDescription) {
+    if (!trimmedTitle && !trimmedRole && !trimmedAction && !trimmedResult) {
       return;
     }
 
     const title = trimmedTitle || '신규 활동 경험';
-    const description = trimmedDescription || '역할, 문제 해결 과정, 성과';
+    const description = [trimmedAction, trimmedResult, trimmedRole].find(Boolean) || '역할, 행동, 성과를 정리해 주세요.';
 
     const card: ExperienceCard = {
       id: `experience-${Date.now()}`,
       title,
       summary: `${description.slice(0, 72)}${description.length > 72 ? '...' : ''}`,
-      tags: ['신규 경험', '직접 입력', 'STAR'],
-      role: '핵심 역할 입력 필요',
-      action: '문제 해결 과정 입력 필요',
-      result: '성과 입력 필요'
+      tags: [activityLabel, '직접 입력', 'STAR'],
+      role: trimmedRole || '핵심 역할 입력 필요',
+      action: trimmedAction || '문제 해결 과정 입력 필요',
+      result: trimmedResult || '성과 입력 필요'
     };
 
     setExperienceCards((cards) => [card, ...cards]);
     setSelectedExperienceCardId(card.id);
     setActivityName('');
-    setActivityDescription('');
+    setActivityLabel(experienceLabelOptions[0]);
+    setActivityRole('');
+    setActivityAction('');
+    setActivityResult('');
     setExperienceModalOpen(false);
   };
 
@@ -357,6 +370,9 @@ export function CareerPass() {
 
   const applyFinalEssay = () => {
     setEssayDraft((draft) => ({ ...draft, status: '최종 검수', finalApplied: true }));
+    if (selectedApplication) {
+      onFinalReview?.(`${selectedApplication.company}_${selectedApplication.role}.docx`);
+    }
   };
 
   const toggleExperienceSort = () => {
@@ -364,7 +380,20 @@ export function CareerPass() {
   };
 
   const selectSection = (sectionId: CareerPassSectionId) => {
+    if (sectionId === 'track') {
+      setActiveSection(null);
+      setSelectedApplicationId(null);
+      setSelectedQuestionIndex(0);
+      return;
+    }
+
     setActiveSection(sectionId);
+    setSelectedApplicationId(null);
+    setSelectedQuestionIndex(0);
+  };
+
+  const backToTabs = () => {
+    setActiveSection(null);
     setSelectedApplicationId(null);
     setSelectedQuestionIndex(0);
   };
@@ -394,37 +423,53 @@ export function CareerPass() {
   const selectedApplication = supportTracks.find((application) => application.id === selectedApplicationId) ?? null;
   const selectedExperienceCard =
     experienceCards.find((card) => card.id === selectedExperienceCardId) ?? experienceCards[0] ?? null;
+  const currentSection = activeSection ?? 'track';
 
   return (
-    <section className="career-pass" aria-labelledby="career-pass-title">
+    <section className="career-pass" aria-label="커리어 패스">
       <div className="career-pass-heading">
-        <h1 id="career-pass-title">Career Pass</h1>
+        {selectedApplication ? (
+          <div className="career-detail-heading">
+            <PolarisButton className="secondary-action compact-action career-heading-back" onClick={backToTabs}>
+              <ArrowLeft size={16} aria-hidden="true" />
+              이전
+            </PolarisButton>
+            <div className="career-detail-title">
+              <h1>{selectedApplication.company} 자소서</h1>
+              <p>{selectedApplication.role} · {selectedApplication.deadline}</p>
+            </div>
+          </div>
+        ) : (
+          <h1 id="career-pass-title">커리어 패스</h1>
+        )}
         <PolarisButton className="primary-action" onClick={() => setTrackModalOpen(true)}>
           <Plus size={16} aria-hidden="true" />
           지원 추가
         </PolarisButton>
       </div>
 
-      <nav className="career-tabs" aria-label="Career Pass">
-        {careerPassSections.map((section) => {
-          const Icon = section.icon;
-          const active = activeSection === section.id;
-          const badge = getSectionBadge(section.id);
+      {!selectedApplication && (
+        <nav className="career-tabs" aria-label="커리어 패스">
+          {careerPassSections.map((section) => {
+            const Icon = section.icon;
+            const badge = getSectionBadge(section.id);
+            const active = section.id === currentSection;
 
-          return (
-            <PolarisButton
-              key={section.id}
-              className={`career-tab ${active ? 'career-tab-active' : ''}`}
-              aria-current={active ? 'page' : undefined}
-              onClick={() => selectSection(section.id)}
-            >
-              <Icon size={16} aria-hidden="true" />
-              <span>{section.label}</span>
-              <strong>{badge}</strong>
-            </PolarisButton>
-          );
-        })}
-      </nav>
+            return (
+              <PolarisButton
+                key={section.id}
+                className={`career-tab ${active ? 'career-tab-active' : ''}`}
+                aria-current={active ? 'page' : undefined}
+                onClick={() => selectSection(section.id)}
+              >
+                <Icon size={16} aria-hidden="true" />
+                <span>{section.label}</span>
+                <strong>{badge}</strong>
+              </PolarisButton>
+            );
+          })}
+        </nav>
+      )}
 
       {activeSection === 'track' && selectedApplication && (
         <WritingSection
@@ -435,7 +480,8 @@ export function CareerPass() {
           characterCount={essayCharacterCount}
           selectedQuestionIndex={selectedQuestionIndex}
           cardsPanelOpen={essayCardsPanelOpen}
-          onBack={() => setSelectedApplicationId(null)}
+          contextOpen={essayGuideOpen}
+          onToggleContext={() => setEssayGuideOpen((open) => !open)}
           onQuestionSelect={setSelectedQuestionIndex}
           onToggleCardsPanel={() => setEssayCardsPanelOpen((open) => !open)}
           onBodyChange={(body) => setEssayDraft((draft) => ({ ...draft, body, status: '작성 중', finalApplied: false }))}
@@ -447,35 +493,42 @@ export function CareerPass() {
         />
       )}
 
-      {activeSection === 'track' && !selectedApplication && (
+      {currentSection === 'track' && !selectedApplication && (
         <TrackSection
           trackNotice={trackNotice}
           tracks={supportTracks}
           showAll={applicationsExpanded}
+          showBackToTabs={false}
+          onBackToTabs={backToTabs}
           onToggleList={() => setApplicationsExpanded((expanded) => !expanded)}
           onOpenEssay={openEssayEditor}
         />
       )}
 
-      {activeSection === 'experience' && (
+      {currentSection === 'experience' && !selectedApplication && (
         <ExperienceSection
           cards={experienceCards}
           sortMode={experienceSortMode}
           onToggleSort={toggleExperienceSort}
           onOpenInput={() => setExperienceModalOpen(true)}
-          onOpenEditor={openEditorWithExperience}
         />
       )}
 
       {experienceModalOpen && (
         <ExperienceCreateModal
           activityName={activityName}
-          activityDescription={activityDescription}
+          activityLabel={activityLabel}
+          activityRole={activityRole}
+          activityAction={activityAction}
+          activityResult={activityResult}
           onNameChange={setActivityName}
-          onDescriptionChange={setActivityDescription}
+          onLabelChange={setActivityLabel}
+          onRoleChange={setActivityRole}
+          onActionChange={setActivityAction}
+          onResultChange={setActivityResult}
           onCreateCard={createExperienceCard}
           onClose={() => setExperienceModalOpen(false)}
-          canSave={Boolean(activityName.trim() || activityDescription.trim())}
+          canSave={Boolean(activityName.trim() || activityRole.trim() || activityAction.trim() || activityResult.trim())}
         />
       )}
 
@@ -501,12 +554,16 @@ function TrackSection({
   trackNotice,
   tracks,
   showAll,
+  showBackToTabs,
+  onBackToTabs,
   onToggleList,
   onOpenEssay
 }: {
   trackNotice: string;
   tracks: SupportTrack[];
   showAll: boolean;
+  showBackToTabs: boolean;
+  onBackToTabs: () => void;
   onToggleList: () => void;
   onOpenEssay: (applicationId: string) => void;
 }) {
@@ -514,6 +571,14 @@ function TrackSection({
 
   return (
     <section className="career-card track-board">
+      {showBackToTabs && (
+        <div className="section-back-row">
+          <PolarisButton className="secondary-action compact-action" onClick={onBackToTabs}>
+            <ArrowLeft size={16} aria-hidden="true" />
+            이전
+          </PolarisButton>
+        </div>
+      )}
       <div className="section-card-header">
         <h3>지원 목록</h3>
         <div className="button-row">
@@ -654,14 +719,12 @@ function ExperienceSection({
   cards,
   sortMode,
   onToggleSort,
-  onOpenInput,
-  onOpenEditor
+  onOpenInput
 }: {
   cards: ExperienceCard[];
   sortMode: ExperienceSortMode;
   onToggleSort: () => void;
   onOpenInput: () => void;
-  onOpenEditor: (cardId: string) => void;
 }) {
   const sortedCards =
     sortMode === 'title'
@@ -688,11 +751,10 @@ function ExperienceSection({
         </div>
         <div className="experience-stack case-card-grid">
           {sortedCards.map((card) => (
-            <PolarisButton className="case-card experience-case-card" key={card.id} onClick={() => onOpenEditor(card.id)}>
+            <article className="case-card experience-case-card" key={card.id}>
               <div className="case-card-visual experience-case-visual">
                 <span className="case-card-kicker">{card.tags[0]}</span>
                 <strong>{card.title}</strong>
-                <span>{card.tags[1] ?? '경험 소재'}</span>
               </div>
               <div className="case-card-body">
                 <p className="case-card-copy">{card.summary}</p>
@@ -701,17 +763,8 @@ function ExperienceSection({
                   <CaseCardDetail title="행동" text={card.action} />
                   <CaseCardDetail title="성과" text={card.result} />
                 </dl>
-                <div className="case-card-footer">
-                  <span>{card.tags[0]}</span>
-                  <strong>{card.tags[1] ?? card.tags[2]}</strong>
-                </div>
-                <div className="case-card-action">
-                  <PenLine size={15} aria-hidden="true" />
-                  편집기로 연결
-                  <ChevronRight size={15} aria-hidden="true" />
-                </div>
               </div>
-            </PolarisButton>
+            </article>
           ))}
         </div>
       </section>
@@ -721,17 +774,29 @@ function ExperienceSection({
 
 function ExperienceCreateModal({
   activityName,
-  activityDescription,
+  activityLabel,
+  activityRole,
+  activityAction,
+  activityResult,
   onNameChange,
-  onDescriptionChange,
+  onLabelChange,
+  onRoleChange,
+  onActionChange,
+  onResultChange,
   onCreateCard,
   onClose,
   canSave
 }: {
   activityName: string;
-  activityDescription: string;
+  activityLabel: string;
+  activityRole: string;
+  activityAction: string;
+  activityResult: string;
   onNameChange: (value: string) => void;
-  onDescriptionChange: (value: string) => void;
+  onLabelChange: (value: string) => void;
+  onRoleChange: (value: string) => void;
+  onActionChange: (value: string) => void;
+  onResultChange: (value: string) => void;
   onCreateCard: () => void;
   onClose: () => void;
   canSave: boolean;
@@ -753,12 +818,36 @@ function ExperienceCreateModal({
             value={activityName}
             onChange={(event) => onNameChange(event.target.value)}
           />
+          <label className="field-control">
+            <span>상단 라벨</span>
+            <select className="text-field" value={activityLabel} onChange={(event) => onLabelChange(event.target.value)}>
+              {experienceLabelOptions.map((label) => (
+                <option key={label} value={label}>
+                  {label}
+                </option>
+              ))}
+            </select>
+          </label>
           <PolarisTextarea
-            label="활동 내용"
-            rows={6}
-            placeholder="배경, 역할, 행동, 성과"
-            value={activityDescription}
-            onChange={(event) => onDescriptionChange(event.target.value)}
+            label="역할"
+            rows={3}
+            placeholder="예: 브랜드 전략 방향 수정 및 발표 구조 설계"
+            value={activityRole}
+            onChange={(event) => onRoleChange(event.target.value)}
+          />
+          <PolarisTextarea
+            label="행동"
+            rows={4}
+            placeholder="예: 사용자 조사 데이터를 기반으로 방향성을 재정리하고 의견 충돌을 조율"
+            value={activityAction}
+            onChange={(event) => onActionChange(event.target.value)}
+          />
+          <PolarisTextarea
+            label="성과"
+            rows={3}
+            placeholder="예: 최종 발표 우수상 수상 및 전략 완성도 개선"
+            value={activityResult}
+            onChange={(event) => onResultChange(event.target.value)}
           />
         </div>
 
@@ -784,7 +873,8 @@ function WritingSection({
   characterCount,
   selectedQuestionIndex,
   cardsPanelOpen,
-  onBack,
+  contextOpen,
+  onToggleContext,
   onQuestionSelect,
   onToggleCardsPanel,
   onBodyChange,
@@ -801,7 +891,8 @@ function WritingSection({
   characterCount: number;
   selectedQuestionIndex: number;
   cardsPanelOpen: boolean;
-  onBack: () => void;
+  contextOpen: boolean;
+  onToggleContext: () => void;
   onQuestionSelect: (index: number) => void;
   onToggleCardsPanel: () => void;
   onBodyChange: (value: string) => void;
@@ -818,26 +909,22 @@ function WritingSection({
 
   return (
     <div className={`essay-editor-workspace ${cardsPanelOpen ? 'essay-editor-split' : ''}`}>
-      <section className="career-card essay-card document-editor">
-        <div className="section-card-header">
-          <div>
-            <h3>{application.company} 자소서</h3>
-            <p>{application.role} · {application.deadline}</p>
-          </div>
-          <div className="button-row">
-            <span className="status-pill">{draft.status}</span>
-            <PolarisButton className="secondary-action compact-action experience-panel-toggle" onClick={onToggleCardsPanel}>
-              <Puzzle size={16} aria-hidden="true" />
-              {cardsPanelOpen ? '경험 카드 닫기' : '경험 카드 열기'}
-            </PolarisButton>
-            <PolarisButton className="secondary-action compact-action" onClick={onBack}>
-              <ArrowLeft size={16} aria-hidden="true" />
-              지원 현황
+      <section className="essay-card document-editor">
+        <div className="editor-guide-panel">
+          <div className="editor-guide-header">
+            <strong>가이드</strong>
+            <PolarisButton
+              className="secondary-action compact-action editor-context-toggle"
+              aria-expanded={contextOpen}
+              onClick={onToggleContext}
+            >
+              {contextOpen ? <ChevronUp size={16} aria-hidden="true" /> : <ChevronDown size={16} aria-hidden="true" />}
+              {contextOpen ? '가이드 접기' : '가이드 열기'}
             </PolarisButton>
           </div>
-        </div>
 
-        <div className="editor-context-grid">
+          {contextOpen && (
+          <div className="editor-context-grid" aria-label="작성 가이드">
           <div className="question-box">
             <div className="question-box-header">
               <strong>문항</strong>
@@ -899,7 +986,24 @@ function WritingSection({
               <StarGuideStep label="R" title="결과" description="우수상" />
             </div>
           </div>
+          </div>
+          )}
         </div>
+
+        <div className="essay-file-stage">
+          <article className="essay-file-page" aria-label="자소서 문서 편집기">
+            <div className="essay-file-head">
+              <strong>{application.company}_{application.role}.docx</strong>
+              {!cardsPanelOpen && (
+                <PolarisButton
+                  className="secondary-action compact-action experience-panel-toggle"
+                  onClick={onToggleCardsPanel}
+                >
+                  <Puzzle size={16} aria-hidden="true" />
+                  경험 카드 열기
+                </PolarisButton>
+              )}
+            </div>
 
         <Ribbon className="essay-ribbon" aria-label="자소서 편집 리본">
           <RibbonGroup label="AI">
@@ -954,6 +1058,8 @@ function WritingSection({
               최종 검수
             </PolarisButton>
           </div>
+        </div>
+          </article>
         </div>
       </section>
 

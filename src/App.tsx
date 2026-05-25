@@ -12,6 +12,7 @@ import {
   MessageSquareText,
   PackageCheck,
   PanelLeftClose,
+  PanelLeftOpen,
   Search,
   Settings,
   ShieldCheck,
@@ -20,7 +21,7 @@ import {
 } from 'lucide-react';
 import { CareerPass } from './CareerPass';
 import { ClusterOneStart, ClusterOneWorkspace } from './ClusterOne';
-import { FinalRoom } from './FinalRoom';
+import { FinalRoom, type FinalRoomHandoff } from './FinalRoom';
 import { PolarisButton } from './polaris-controls';
 import { ReviewRoom } from './ReviewRoom';
 import { WorkBoard } from './WorkBoard';
@@ -116,12 +117,15 @@ export function App() {
   const [showClusterOneStart, setShowClusterOneStart] = useState(startsOnCompanyA);
   const [clusterOneResetKey, setClusterOneResetKey] = useState(0);
   const [reviewRoomDocument, setReviewRoomDocument] = useState(defaultReviewRoomDocument);
+  const [finalRoomHandoff, setFinalRoomHandoff] = useState<FinalRoomHandoff | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   const activeItem = useMemo(
     () => workspaceNav.find((item) => item.id === activeId) ?? workspaceNav[0],
     [activeId]
   );
+  const isCareerPassView = activeId === 'career-pass' || isCareerPassRoute();
 
   const selectItem = (itemId: string) => {
     if (itemId === 'home') {
@@ -143,6 +147,14 @@ export function App() {
     setShowClusterOneStart(false);
     setClusterOneResetKey((key) => key + 1);
     syncRouteTo(workspaceRoutes['cluster-one']);
+  };
+
+  const openFinalRoomWithFile = (fileName: string) => {
+    setFinalRoomHandoff({ fileName, submittedAt: Date.now() });
+    setActiveId('final-room');
+    setShowClusterOneStart(false);
+    setMobileOpen(false);
+    syncRouteForNav('final-room');
   };
 
   useEffect(() => {
@@ -169,7 +181,7 @@ export function App() {
   }
 
   return (
-    <div className="app-shell">
+    <div className={`app-shell ${isCareerPassView ? 'app-shell-career-pass' : ''} ${sidebarCollapsed ? 'app-shell-sidebar-collapsed' : ''}`}>
       <aside className={`sidebar ${mobileOpen ? 'sidebar-open' : ''}`} aria-label="주요 메뉴">
         <div className="sidebar-header">
           <a className="brand-link" href="https://www.polarisoffice.com/ko" aria-label="Polaris Office 홈페이지">
@@ -195,18 +207,43 @@ export function App() {
             <span className="footer-label">PolarisDesign</span>
             <strong>v0.8.0-rc.8</strong>
           </div>
-          <PolarisButton className="icon-button" aria-label="사이드바 접기">
+          <PolarisButton
+            className="icon-button"
+            aria-label="사이드바 접기"
+            onClick={() => {
+              setSidebarCollapsed(true);
+              setMobileOpen(false);
+            }}
+          >
             <PanelLeftClose size={17} aria-hidden="true" />
           </PolarisButton>
         </div>
       </aside>
 
+      {sidebarCollapsed && (
+        <PolarisButton
+          className="icon-button sidebar-restore-button"
+          aria-label="사이드바 열기"
+          onClick={() => setSidebarCollapsed(false)}
+        >
+          <PanelLeftOpen size={17} aria-hidden="true" />
+        </PolarisButton>
+      )}
+
       {mobileOpen && <PolarisButton className="scrim" aria-label="메뉴 닫기" onClick={() => setMobileOpen(false)} />}
 
       <div className="main-column">
+        {!isCareerPassView && (
         <header className="gnb">
           <div className="gnb-left">
-            <PolarisButton className="icon-button mobile-only" aria-label="메뉴 열기" onClick={() => setMobileOpen(true)}>
+            <PolarisButton
+              className="icon-button mobile-only"
+              aria-label="메뉴 열기"
+              onClick={() => {
+                setSidebarCollapsed(false);
+                setMobileOpen(true);
+              }}
+            >
               <Menu size={18} aria-hidden="true" />
             </PolarisButton>
             {activeId === 'review-room' ? (
@@ -263,15 +300,16 @@ export function App() {
             </div>
           )}
         </header>
+        )}
 
         <main
-          className={`content-shell ${activeId === 'career-pass' || activeId === 'final-room' ? 'content-shell-career' : ''} ${activeId === 'cluster-one' ? 'content-shell-cl1' : ''} ${activeId === 'review-room' ? 'content-shell-review' : ''} ${activeId === 'work-board' ? 'content-shell-workboard' : ''}`}
+          className={`content-shell ${isCareerPassView || activeId === 'final-room' ? 'content-shell-career' : ''} ${activeId === 'cluster-one' ? 'content-shell-cl1' : ''} ${activeId === 'review-room' ? 'content-shell-review' : ''} ${activeId === 'work-board' ? 'content-shell-workboard' : ''}`}
           aria-label={`${activeItem.label} 화면`}
         >
-          {activeId === 'career-pass' ? (
-            <CareerPass />
+          {isCareerPassView ? (
+            <CareerPass onFinalReview={openFinalRoomWithFile} />
           ) : activeId === 'final-room' ? (
-            <FinalRoom />
+            <FinalRoom handoff={finalRoomHandoff} />
           ) : activeId === 'cluster-one' ? (
             <ClusterOneWorkspace key={clusterOneResetKey} />
           ) : activeId === 'review-room' ? (
