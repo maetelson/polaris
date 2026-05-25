@@ -1,6 +1,5 @@
 import { createElement, useEffect, useMemo, useReducer, useState, type ChangeEvent } from 'react';
 import { FileIcon, type FileType } from '@polaris/ui';
-import { Ribbon, RibbonButton, RibbonContent, RibbonGroup, RibbonRow, RibbonTab, RibbonTabList, RibbonTabs } from '@polaris/ui/ribbon';
 import {
   ArrowLeft,
   ArrowRight,
@@ -378,8 +377,7 @@ const flowSteps: Array<{ view: KeepToPolarisView; label: string }> = [
   { view: 'purpose', label: '목적 선택' },
   { view: 'candidates', label: '후보 확인' },
   { view: 'task', label: '작업 카드' },
-  { view: 'document', label: '문서 작성' },
-  { view: 'records', label: '완료 기록' }
+  { view: 'document', label: '문서 작성' }
 ];
 
 export function ClusterOneStart({ onSendToPolaris }: ClusterOneStartProps) {
@@ -1057,64 +1055,48 @@ function DocumentBoard({ task, dispatch }: { task: KeepTask; dispatch: React.Dis
           </div>
         </div>
 
-        <Ribbon className="keep-doc-ribbon" aria-label="문서 작성 도구">
-          <RibbonTabs defaultValue="home">
-            <RibbonTabList>
-              <RibbonTab value="home">홈</RibbonTab>
-              <RibbonTab value="insert">삽입</RibbonTab>
-              <RibbonTab value="review">검토</RibbonTab>
-            </RibbonTabList>
-            <RibbonContent value="home">
-              <RibbonGroup label="문서">
-                <RibbonRow>
-                  <RibbonButton size="sm" icon={<FileText size={15} aria-hidden="true" />} onClick={() => dispatch({ type: 'prime-doc' })}>
-                    목차
-                  </RibbonButton>
-                  <RibbonButton size="sm" icon={<Upload size={15} aria-hidden="true" />} onClick={() => dispatch({ type: 'open-export' })}>
-                    내보내기
-                  </RibbonButton>
-                </RibbonRow>
-              </RibbonGroup>
-              <RibbonGroup label="검토">
-                <RibbonRow>
-                  <RibbonButton size="sm" icon={<Eye size={15} aria-hidden="true" />} onClick={() => dispatch({ type: 'open-original' })}>
-                    원본
-                  </RibbonButton>
-                  <RibbonButton size="sm" icon={<CheckCircle2 size={15} aria-hidden="true" />} onClick={() => dispatch({ type: 'save-completion' })}>
-                    완료 기록
-                  </RibbonButton>
-                </RibbonRow>
-              </RibbonGroup>
-            </RibbonContent>
-            <RibbonContent value="insert">
-              <RibbonGroup label="자료">
-                <RibbonRow>
-                  <RibbonButton size="sm" icon={<FolderInput size={15} aria-hidden="true" />} onClick={() => dispatch({ type: 'navigate', view: 'inbox' })}>
-                    받은 자료
-                  </RibbonButton>
-                </RibbonRow>
-              </RibbonGroup>
-            </RibbonContent>
-            <RibbonContent value="review">
-              <RibbonGroup label="조건">
-                <RibbonRow>
-                  <RibbonButton size="sm" icon={<FileCheck2 size={15} aria-hidden="true" />} onClick={() => dispatch({ type: 'navigate', view: 'task' })}>
-                    작업 카드
-                  </RibbonButton>
-                </RibbonRow>
-              </RibbonGroup>
-            </RibbonContent>
-          </RibbonTabs>
-        </Ribbon>
+        <div className="keep-doc-toolbar" aria-label="문서 작성 도구">
+          <div className="keep-doc-toolbar-group">
+            <span>문서</span>
+            <div>
+              <PolarisButton className="keep-doc-tool-button" onClick={() => dispatch({ type: 'prime-doc' })}>
+                <FileText size={15} aria-hidden="true" />
+                목차
+              </PolarisButton>
+              <PolarisButton className="keep-doc-tool-button" onClick={() => dispatch({ type: 'open-export' })}>
+                <Upload size={15} aria-hidden="true" />
+                내보내기
+              </PolarisButton>
+            </div>
+          </div>
+          <div className="keep-doc-toolbar-group">
+            <span>참고 자료</span>
+            <div>
+              <PolarisButton className="keep-doc-tool-button" onClick={() => dispatch({ type: 'open-original' })}>
+                <Eye size={15} aria-hidden="true" />
+                원본
+              </PolarisButton>
+              <PolarisButton className="keep-doc-tool-button" onClick={() => dispatch({ type: 'navigate', view: 'task' })}>
+                <FileCheck2 size={15} aria-hidden="true" />
+                작업 카드
+              </PolarisButton>
+            </div>
+          </div>
+        </div>
 
-        <PolarisTextarea
-          label="본문"
-          className="keep-doc-editor"
-          rows={18}
-          value={content}
-          onFocus={() => dispatch({ type: 'prime-doc' })}
-          onChange={(event) => dispatch({ type: 'update-doc', content: event.target.value })}
-        />
+        <div className="keep-document-canvas">
+          <div className="keep-document-ruler" aria-hidden="true" />
+          <div className="keep-document-page">
+            <PolarisTextarea
+              label="본문"
+              className="keep-doc-editor"
+              rows={18}
+              value={content}
+              onFocus={() => dispatch({ type: 'prime-doc' })}
+              onChange={(event) => dispatch({ type: 'update-doc', content: event.target.value })}
+            />
+          </div>
+        </div>
       </section>
 
       <aside className="keep-document-side">

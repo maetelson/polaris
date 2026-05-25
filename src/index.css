@@ -1088,20 +1088,149 @@ button {
 .keep-document-editor {
   display: grid;
   gap: var(--polaris-spacing-sm);
+  min-width: 0;
+  padding: 0;
+  overflow: hidden;
 }
 
-.keep-doc-ribbon {
+.keep-document-titlebar {
+  padding: var(--polaris-spacing-md) var(--polaris-spacing-md) 0;
+}
+
+.keep-doc-toolbar {
+  display: flex;
+  align-items: stretch;
+  gap: var(--polaris-spacing-xs);
+  min-width: 0;
+  margin: 0 var(--polaris-spacing-md);
+  padding: var(--polaris-spacing-xs);
+  border: 1px solid var(--polaris-line-neutral);
+  border-radius: var(--polaris-radius-sm);
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--polaris-fill-neutral) 58%, var(--polaris-background-base)),
+      var(--polaris-background-base)
+    );
+  overflow-x: auto;
+}
+
+.keep-doc-toolbar-group {
+  display: grid;
+  gap: var(--polaris-spacing-3xs);
+  min-width: max-content;
+  padding-right: var(--polaris-spacing-xs);
+  border-right: 1px solid var(--polaris-line-neutral);
+}
+
+.keep-doc-toolbar-group:last-child {
+  padding-right: 0;
+  border-right: 0;
+}
+
+.keep-doc-toolbar-group > span {
+  color: var(--polaris-label-alternative);
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 16px;
+}
+
+.keep-doc-toolbar-group > div {
+  display: flex;
+  gap: var(--polaris-spacing-3xs);
+}
+
+.keep-doc-tool-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 34px;
+  gap: var(--polaris-spacing-3xs);
+  padding: 0 var(--polaris-spacing-2xs);
+  border: 1px solid var(--polaris-line-neutral);
+  border-radius: var(--polaris-radius-sm);
+  color: var(--polaris-label-neutral);
+  background: var(--polaris-background-base);
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 18px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.keep-doc-tool-button:hover {
+  border-color: var(--polaris-accent-brand-normal);
+  color: var(--polaris-accent-brand-normal);
+  background: color-mix(in srgb, var(--polaris-accent-brand-normal-subtle) 58%, var(--polaris-background-base));
+}
+
+.keep-document-canvas {
+  display: grid;
+  gap: 0;
+  min-width: 0;
+  margin: 0 var(--polaris-spacing-md) var(--polaris-spacing-md);
   overflow: hidden;
   border: 1px solid var(--polaris-line-neutral);
   border-radius: var(--polaris-radius-sm);
-  background: var(--polaris-background-base);
+  background: color-mix(in srgb, var(--polaris-fill-neutral) 72%, var(--polaris-background-base));
 }
 
-.keep-doc-editor {
-  min-height: 520px;
+.keep-document-ruler {
+  height: 32px;
+  border-bottom: 1px solid var(--polaris-line-neutral);
+  background:
+    repeating-linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--polaris-line-normal) 58%, transparent) 0,
+      color-mix(in srgb, var(--polaris-line-normal) 58%, transparent) 1px,
+      transparent 1px,
+      transparent 48px
+    ),
+    var(--polaris-fill-neutral);
+}
+
+.keep-document-page {
+  width: min(100%, 760px);
+  min-height: 720px;
+  margin: var(--polaris-spacing-md) auto;
+  padding: var(--polaris-spacing-lg);
+  border: 1px solid var(--polaris-line-neutral);
+  border-radius: var(--polaris-radius-xs);
+  background: var(--polaris-background-base);
+  box-shadow: var(--polaris-shadow-sm);
+}
+
+.keep-document-page .field-control {
+  height: 100%;
+}
+
+.keep-document-page .field-control > span {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+.keep-doc-editor.textarea-field {
+  min-height: 640px;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  color: var(--polaris-label-normal);
+  background: transparent;
+  box-shadow: none;
+  font-family: var(--polaris-font-sans);
   font-size: 15px;
-  line-height: 1.7;
+  font-weight: 500;
+  line-height: 1.78;
+  outline: 0;
+  resize: none;
   white-space: pre-wrap;
+}
+
+.keep-document-page .keep-doc-editor.textarea-field:focus-visible {
+  box-shadow: none;
 }
 
 .keep-document-side {
@@ -1439,6 +1568,26 @@ button {
 
   .keep-upcoming-details {
     grid-template-columns: 1fr;
+  }
+
+  .keep-document-titlebar {
+    padding: var(--polaris-spacing-sm) var(--polaris-spacing-sm) 0;
+  }
+
+  .keep-doc-toolbar,
+  .keep-document-canvas {
+    margin-right: var(--polaris-spacing-sm);
+    margin-left: var(--polaris-spacing-sm);
+  }
+
+  .keep-document-page {
+    min-height: 560px;
+    margin: var(--polaris-spacing-sm);
+    padding: var(--polaris-spacing-md);
+  }
+
+  .keep-doc-editor.textarea-field {
+    min-height: 500px;
   }
 
   .keep-source-drawer {
