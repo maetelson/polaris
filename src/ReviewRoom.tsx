@@ -604,9 +604,6 @@ export function ReviewRoom({ onDocumentChange }: ReviewRoomProps) {
       </div>
       {isVersionPanelOpen && (
         <aside className="rr-version-drawer" aria-label="버전 저장 패널">
-          <div className="rr-version-drawer-tab" aria-hidden="true">
-            버전 저장
-          </div>
           <div className="rr-version-drawer-head">
             <strong>버전 저장</strong>
             <PolarisButton className="rr-panel-close" aria-label="버전 저장 패널 닫기" onClick={() => setVersionPanelOpen(false)}>
@@ -623,16 +620,26 @@ export function ReviewRoom({ onDocumentChange }: ReviewRoomProps) {
               }
               scrollable
             >
-              <div className="rr-list">
-                {documentVersions.map((version) => (
-                  <PolarisButton className="rr-item rr-version-item" key={version.id} onClick={() => setSelectedVersionId(version.id)}>
-                    <span>
-                      <strong>{version.name}</strong>
-                      <em className="rr-chip">{version.tag}</em>
-                    </span>
-                    <p>{version.memo}</p>
-                    <small>{version.createdAt}</small>
-                  </PolarisButton>
+              <div className="rr-list rr-version-list">
+                {documentVersions.map((version, index) => (
+                  <article className={`rr-item rr-version-card ${index === 0 ? 'rr-item-selected' : ''}`} key={version.id}>
+                    <button className="rr-version-main" type="button" onClick={() => setSelectedVersionId(version.id)}>
+                      <span>
+                        <strong>{version.name}</strong>
+                        <em className="rr-chip">{version.tag}</em>
+                      </span>
+                      <p>{version.memo}</p>
+                      <small>{version.createdAt}</small>
+                    </button>
+                    <PolarisButton
+                      aria-label={`${version.name} 버전 비교`}
+                      className="rr-version-open"
+                      title="버전 비교"
+                      onClick={() => setSelectedVersionId(version.id)}
+                    >
+                      <Check size={14} aria-hidden="true" />
+                    </PolarisButton>
+                  </article>
                 ))}
               </div>
             </PanelBlock>
