@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Archive, FileSearch, X } from 'lucide-react';
+import { Archive, FileSearch, Menu, X } from 'lucide-react';
 import { PolarisButton, PolarisFileDrop } from './polaris-controls';
 import type { SupportTrack } from './CareerPass';
 
@@ -185,10 +185,12 @@ export type FinalRoomHandoff = {
 
 export function FinalRoom({
   applications,
-  handoff
+  handoff,
+  onOpenSidebar
 }: {
   applications: SupportTrack[];
   handoff?: FinalRoomHandoff | null;
+  onOpenSidebar?: () => void;
 }) {
   const [files, setFiles] = useState<FinalFileState[]>(() => (handoff?.fileName ? [createFinalFileState(handoff.fileName)] : []));
   const [activeFileId, setActiveFileId] = useState(files[0]?.id ?? '');
@@ -267,9 +269,16 @@ export function FinalRoom({
   return (
     <section className="career-pass final-room" aria-labelledby="final-room-title">
       <div className="career-pass-heading">
-        <div className="career-pass-heading-copy">
-          <h1 id="final-room-title">파이널룸</h1>
-          <p>새로운 프로젝트와 제출 조건을 한 번에 확인하세요.</p>
+        <div className="workspace-heading-leading">
+          {onOpenSidebar && (
+            <PolarisButton className="icon-button mobile-only page-sidebar-toggle" aria-label="메뉴 열기" onClick={onOpenSidebar}>
+              <Menu size={18} aria-hidden="true" />
+            </PolarisButton>
+          )}
+          <div className="career-pass-heading-copy">
+            <h1 id="final-room-title">파이널룸</h1>
+            <p>새로운 프로젝트와 제출 조건을 한 번에 확인하세요.</p>
+          </div>
         </div>
       </div>
 

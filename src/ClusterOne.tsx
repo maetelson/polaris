@@ -15,6 +15,7 @@ import {
   Inbox,
   Link2,
   Mail,
+  Menu,
   MoreHorizontal,
   Search,
   Send,
@@ -491,7 +492,13 @@ export function ClusterOneStart({ onSendToPolaris }: ClusterOneStartProps) {
   );
 }
 
-export function ClusterOneWorkspace({ initialView = 'home' }: { initialView?: KeepToPolarisView }) {
+export function ClusterOneWorkspace({
+  initialView = 'home',
+  onOpenSidebar
+}: {
+  initialView?: KeepToPolarisView;
+  onOpenSidebar?: () => void;
+}) {
   const [state, dispatch] = useReducer(keepReducer, initialView, createInitialKeepState);
 
   const selectedFile = state.files.find((file) => file.id === state.selectedFileId) ?? state.files[0];
@@ -533,6 +540,11 @@ export function ClusterOneWorkspace({ initialView = 'home' }: { initialView?: Ke
     <section className="keep-workbench" aria-labelledby="keep-workbench-title">
       <header className="keep-command-bar">
         <div className="keep-command-leading">
+          {onOpenSidebar && (
+            <PolarisButton className="icon-button mobile-only page-sidebar-toggle" aria-label="메뉴 열기" onClick={onOpenSidebar}>
+              <Menu size={18} aria-hidden="true" />
+            </PolarisButton>
+          )}
           {!isTopLevelTab && (
             <PolarisButton className="secondary-action compact-action keep-command-back" onClick={() => dispatch({ type: 'navigate', view: backTarget })}>
               <ArrowLeft size={16} aria-hidden="true" />

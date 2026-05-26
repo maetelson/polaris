@@ -9,6 +9,7 @@ import {
   ChevronUp,
   Eye,
   FileText,
+  Menu,
   PenLine,
   Plus,
   Puzzle,
@@ -227,11 +228,13 @@ const initialEssay =
 export function CareerPass({
   supportTracks,
   setSupportTracks,
-  onFinalReview
+  onFinalReview,
+  onOpenSidebar
 }: {
   supportTracks: SupportTrack[];
   setSupportTracks: Dispatch<SetStateAction<SupportTrack[]>>;
   onFinalReview?: (fileName: string) => void;
+  onOpenSidebar?: () => void;
 }) {
   const [activeSection, setActiveSection] = useState<CareerPassSectionId | null>(null);
   const [trackModalOpen, setTrackModalOpen] = useState(false);
@@ -435,20 +438,27 @@ export function CareerPass({
   return (
     <section className="career-pass" aria-label="커리어 패스">
       <div className="career-pass-heading">
-        {selectedApplication ? (
-          <div className="career-detail-heading">
-            <PolarisButton className="secondary-action compact-action career-heading-back" onClick={backToTabs}>
-              <ArrowLeft size={16} aria-hidden="true" />
-              이전
+        <div className="workspace-heading-leading">
+          {onOpenSidebar && (
+            <PolarisButton className="icon-button mobile-only page-sidebar-toggle" aria-label="메뉴 열기" onClick={onOpenSidebar}>
+              <Menu size={18} aria-hidden="true" />
             </PolarisButton>
-            <div className="career-detail-title">
-              <h1>{selectedApplication.company} 자소서</h1>
-              <p>{selectedApplication.role} · {selectedApplication.deadline}</p>
+          )}
+          {selectedApplication ? (
+            <div className="career-detail-heading">
+              <PolarisButton className="secondary-action compact-action career-heading-back" onClick={backToTabs}>
+                <ArrowLeft size={16} aria-hidden="true" />
+                이전
+              </PolarisButton>
+              <div className="career-detail-title">
+                <h1>{selectedApplication.company} 자소서</h1>
+                <p>{selectedApplication.role} · {selectedApplication.deadline}</p>
+              </div>
             </div>
-          </div>
-        ) : (
-          <h1 id="career-pass-title">커리어 패스</h1>
-        )}
+          ) : (
+            <h1 id="career-pass-title">커리어 패스</h1>
+          )}
+        </div>
         <PolarisButton className="primary-action" onClick={() => setTrackModalOpen(true)}>
           <Plus size={16} aria-hidden="true" />
           지원 추가

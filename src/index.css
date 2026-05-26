@@ -3707,6 +3707,24 @@ button.rr-comment-anchor:focus-visible {
   gap: var(--polaris-spacing-xs);
 }
 
+.workspace-heading-leading {
+  display: flex;
+  align-items: center;
+  flex: 1 1 auto;
+  min-width: 0;
+  gap: var(--polaris-spacing-xs);
+}
+
+.workspace-heading-leading > h1 {
+  min-width: 0;
+}
+
+.page-sidebar-toggle {
+  border: 1px solid var(--polaris-line-neutral);
+  background: var(--polaris-background-base);
+  box-shadow: var(--polaris-shadow-xs, var(--polaris-shadow-sm));
+}
+
 .career-detail-title {
   display: grid;
   flex: 0 1 auto;

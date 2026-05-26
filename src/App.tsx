@@ -133,6 +133,11 @@ export function App() {
   const isFinalRoomView = activeId === 'final-room' || isFinalRoomRoute();
   const isKeepToPolarisView = activeId === 'cluster-one' || activeId === 'home';
 
+  const openMobileSidebar = () => {
+    setSidebarCollapsed(false);
+    setMobileOpen(true);
+  };
+
   const selectItem = (itemId: string) => {
     if (itemId === 'home') {
       window.location.assign(deckHomeUrl);
@@ -249,10 +254,7 @@ export function App() {
             <PolarisButton
               className="icon-button mobile-only"
               aria-label="메뉴 열기"
-              onClick={() => {
-                setSidebarCollapsed(false);
-                setMobileOpen(true);
-              }}
+              onClick={openMobileSidebar}
             >
               <Menu size={18} aria-hidden="true" />
             </PolarisButton>
@@ -321,17 +323,18 @@ export function App() {
               supportTracks={supportTracks}
               setSupportTracks={setSupportTracks}
               onFinalReview={openFinalRoomWithFile}
+              onOpenSidebar={openMobileSidebar}
             />
           ) : activeId === 'final-room' ? (
-            <FinalRoom applications={supportTracks} handoff={finalRoomHandoff} />
+            <FinalRoom applications={supportTracks} handoff={finalRoomHandoff} onOpenSidebar={openMobileSidebar} />
           ) : activeId === 'cluster-one' ? (
-            <ClusterOneWorkspace key={clusterOneResetKey} initialView={clusterOneEntryView} />
+            <ClusterOneWorkspace key={clusterOneResetKey} initialView={clusterOneEntryView} onOpenSidebar={openMobileSidebar} />
           ) : activeId === 'review-room' ? (
             <ReviewRoom onDocumentChange={setReviewRoomDocument} />
           ) : activeId === 'work-board' ? (
             <WorkBoard />
           ) : activeId === 'home' ? (
-            <ClusterOneWorkspace initialView="home" />
+            <ClusterOneWorkspace initialView="home" onOpenSidebar={openMobileSidebar} />
           ) : (
             <>
               <section className="page-heading">
