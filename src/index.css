@@ -1862,6 +1862,24 @@ button {
   white-space: nowrap;
 }
 
+.gnb-page-title {
+  display: inline-flex;
+  align-items: center;
+  min-width: 0;
+  min-height: 36px;
+  padding: 0 var(--polaris-spacing-xs);
+  color: var(--polaris-label-normal);
+}
+
+.gnb-page-title strong {
+  overflow: hidden;
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 26px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .gnb-document-area {
   display: flex;
   align-items: center;
@@ -1981,6 +1999,192 @@ button {
   display: grid;
   gap: var(--polaris-spacing-lg);
   padding: var(--polaris-spacing-lg);
+}
+
+.content-shell-deck {
+  align-content: start;
+  background: var(--polaris-fill-neutral);
+}
+
+.deck-home-page {
+  display: grid;
+  gap: var(--polaris-spacing-lg);
+  min-width: 0;
+}
+
+.deck-home-mobile-bar {
+  display: none;
+}
+
+.deck-home-mobile-bar .page-sidebar-toggle {
+  width: 40px;
+  height: 40px;
+}
+
+.deck-home-hero {
+  display: grid;
+  justify-items: center;
+  gap: var(--polaris-spacing-sm);
+  padding: var(--polaris-spacing-xl) var(--polaris-spacing-lg);
+  border: 1px solid var(--polaris-line-neutral);
+  border-radius: var(--polaris-radius-sm);
+  background: var(--polaris-background-base);
+  box-shadow: var(--polaris-shadow-xs, var(--polaris-shadow-sm));
+  text-align: center;
+}
+
+.deck-home-hero h1 {
+  max-width: 900px;
+  margin: 0;
+  color: var(--polaris-label-normal);
+  font-size: 40px;
+  font-weight: 800;
+  line-height: 56px;
+  word-break: keep-all;
+}
+
+.deck-home-copy {
+  display: grid;
+  gap: var(--polaris-spacing-2xs);
+  max-width: 920px;
+}
+
+.deck-home-copy p {
+  margin: 0;
+  color: var(--polaris-label-normal);
+  font-size: 16px;
+  line-height: 28px;
+  word-break: keep-all;
+}
+
+.deck-home-stats {
+  display: grid;
+  grid-template-columns: minmax(200px, 0.42fr) minmax(0, 1.58fr);
+  align-items: stretch;
+  gap: var(--polaris-spacing-md);
+  min-width: 0;
+}
+
+.deck-home-stats-title,
+.deck-home-stat-card,
+.deck-home-activity-card {
+  border: 1px solid var(--polaris-line-neutral);
+  border-radius: var(--polaris-radius-sm);
+  background: var(--polaris-background-base);
+  box-shadow: var(--polaris-shadow-xs, var(--polaris-shadow-sm));
+}
+
+.deck-home-stats-title {
+  display: grid;
+  align-content: center;
+  min-width: 0;
+  padding: var(--polaris-spacing-lg);
+}
+
+.deck-home-stats-title span {
+  color: var(--polaris-label-neutral);
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 34px;
+}
+
+.deck-home-stats-title strong {
+  color: var(--polaris-label-normal);
+  font-size: 56px;
+  font-weight: 800;
+  line-height: 64px;
+}
+
+.deck-home-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--polaris-spacing-sm);
+  min-width: 0;
+}
+
+.deck-home-stat-card {
+  display: grid;
+  align-content: start;
+  gap: var(--polaris-spacing-lg);
+  min-height: 250px;
+  padding: var(--polaris-spacing-md);
+}
+
+.deck-home-stat-card > div {
+  display: grid;
+  gap: var(--polaris-spacing-3xs);
+  min-width: 0;
+}
+
+.deck-home-stat-card strong {
+  color: var(--polaris-label-normal);
+  font-size: 56px;
+  font-weight: 800;
+  line-height: 64px;
+}
+
+.deck-home-stat-card:nth-child(even) strong,
+.deck-home-stat-card:nth-child(even) span {
+  color: var(--polaris-accent-brand-normal);
+}
+
+.deck-home-stat-card span {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--polaris-spacing-4xs);
+  color: var(--polaris-label-normal);
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 21px;
+}
+
+.deck-home-stat-card p,
+.deck-home-section-head p,
+.deck-home-activity-card p {
+  margin: 0;
+  color: var(--polaris-label-neutral);
+  font-size: 14px;
+  line-height: 24px;
+  word-break: keep-all;
+}
+
+.deck-home-activity {
+  display: grid;
+  gap: var(--polaris-spacing-sm);
+}
+
+.deck-home-section-head {
+  display: grid;
+  gap: var(--polaris-spacing-4xs);
+  min-width: 0;
+}
+
+.deck-home-section-head h2 {
+  margin: 0;
+  color: var(--polaris-label-normal);
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 34px;
+}
+
+.deck-home-activity-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--polaris-spacing-sm);
+}
+
+.deck-home-activity-card {
+  display: grid;
+  gap: var(--polaris-spacing-xs);
+  min-height: 132px;
+  padding: var(--polaris-spacing-md);
+}
+
+.deck-home-activity-card strong {
+  color: var(--polaris-label-normal);
+  font-size: 17px;
+  font-weight: 800;
+  line-height: 25px;
 }
 
 .page-heading {
@@ -8685,6 +8889,11 @@ button.rr-comment-anchor:focus-visible {
   word-break: keep-all;
 }
 
+.research-home-topbar {
+  align-items: center;
+  justify-content: flex-end;
+}
+
 .research-project-topbar {
   align-items: center;
   justify-content: flex-start;
@@ -9727,6 +9936,14 @@ button.rr-comment-anchor:focus-visible {
     padding-left: 0;
   }
 
+  .deck-home-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .deck-home-stat-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .cl1-home-overview,
   .cl1-card-home-grid,
   .cl1-material-workspace {
@@ -9809,6 +10026,57 @@ button.rr-comment-anchor:focus-visible {
   .content-shell-career,
   .content-shell-workboard {
     padding: 0;
+  }
+
+  .deck-home-mobile-bar {
+    display: flex;
+    align-items: center;
+    min-height: 40px;
+  }
+
+  .deck-home-page {
+    gap: var(--polaris-spacing-md);
+  }
+
+  .deck-home-hero {
+    justify-items: start;
+    padding: var(--polaris-spacing-lg) var(--polaris-spacing-md);
+    text-align: left;
+  }
+
+  .deck-home-hero h1 {
+    font-size: 30px;
+    line-height: 42px;
+  }
+
+  .deck-home-copy p {
+    font-size: 15px;
+    line-height: 25px;
+  }
+
+  .deck-home-stats-title {
+    padding: var(--polaris-spacing-md);
+  }
+
+  .deck-home-stats-title span {
+    font-size: 20px;
+    line-height: 28px;
+  }
+
+  .deck-home-stats-title strong,
+  .deck-home-stat-card strong {
+    font-size: 44px;
+    line-height: 52px;
+  }
+
+  .deck-home-stat-grid,
+  .deck-home-activity-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .deck-home-stat-card {
+    min-height: auto;
+    gap: var(--polaris-spacing-sm);
   }
 
   .rr-hero {

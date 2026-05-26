@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import {
   Bell,
   ChevronDown,
+  ChevronRight,
   ClipboardList,
   HelpCircle,
   Home,
@@ -39,7 +40,6 @@ type NavItem = {
 };
 
 const defaultReviewRoomDocument = { title: '팀 프로젝트 제안서.docx', unit: '문단' };
-const deckHomeUrl = 'https://www.deck-ewha.com/';
 const companyARoute = '/company-A';
 const workCardDetailRoute = '/work-card/job-application';
 const workspaceRoutes: Record<string, string> = {
@@ -60,9 +60,8 @@ const workspaceNav: NavItem[] = [
   {
     id: 'home',
     label: '홈',
-    description: '킵 투 폴라리스 작업 현황과 최근 문서',
-    icon: Home,
-    externalHref: deckHomeUrl
+    description: 'DECK 소개와 주요 활동 성과',
+    icon: Home
   },
   {
     id: 'career-pass',
@@ -131,7 +130,8 @@ export function App() {
   );
   const isCareerPassView = activeId === 'career-pass' || isCareerPassRoute();
   const isFinalRoomView = activeId === 'final-room' || isFinalRoomRoute();
-  const isKeepToPolarisView = activeId === 'cluster-one' || activeId === 'home';
+  const isDeckHomeView = activeId === 'home';
+  const isKeepToPolarisView = activeId === 'cluster-one';
 
   const openMobileSidebar = () => {
     setSidebarCollapsed(false);
@@ -139,11 +139,6 @@ export function App() {
   };
 
   const selectItem = (itemId: string) => {
-    if (itemId === 'home') {
-      window.location.assign(deckHomeUrl);
-      return;
-    }
-
     setActiveId(itemId);
     setShowClusterOneStart(false);
     if (itemId === 'cluster-one') {
@@ -248,7 +243,7 @@ export function App() {
       {mobileOpen && <PolarisButton className="scrim" aria-label="메뉴 닫기" onClick={() => setMobileOpen(false)} />}
 
       <div className="main-column">
-        {!isCareerPassView && !isFinalRoomView && !isKeepToPolarisView && (
+        {!isCareerPassView && !isFinalRoomView && !isKeepToPolarisView && !isDeckHomeView && (
         <header className="gnb">
           <div className="gnb-left">
             <PolarisButton
@@ -264,6 +259,10 @@ export function App() {
                   <strong>{reviewRoomDocument.title}</strong>
                   <span>{reviewRoomDocument.unit}</span>
                 </div>
+              </div>
+            ) : activeId === 'work-board' ? (
+              <div className="gnb-page-title" aria-current="page">
+                <strong>AI 리서치 보드</strong>
               </div>
             ) : (
               <div className="search-field" role="search">
@@ -315,7 +314,7 @@ export function App() {
         )}
 
         <main
-          className={`content-shell ${isCareerPassView || isFinalRoomView ? 'content-shell-career' : ''} ${isKeepToPolarisView ? 'content-shell-cl1' : ''} ${activeId === 'review-room' ? 'content-shell-review' : ''} ${activeId === 'work-board' ? 'content-shell-workboard' : ''}`}
+          className={`content-shell ${isCareerPassView || isFinalRoomView ? 'content-shell-career' : ''} ${isKeepToPolarisView ? 'content-shell-cl1' : ''} ${isDeckHomeView ? 'content-shell-deck' : ''} ${activeId === 'review-room' ? 'content-shell-review' : ''} ${activeId === 'work-board' ? 'content-shell-workboard' : ''}`}
           aria-label={`${activeItem.label} 화면`}
         >
           {isCareerPassView ? (
@@ -334,7 +333,7 @@ export function App() {
           ) : activeId === 'work-board' ? (
             <WorkBoard />
           ) : activeId === 'home' ? (
-            <ClusterOneWorkspace initialView="home" onOpenSidebar={openMobileSidebar} />
+            <DeckHome onOpenSidebar={openMobileSidebar} />
           ) : (
             <>
               <section className="page-heading">
@@ -372,6 +371,104 @@ export function App() {
         </main>
       </div>
     </div>
+  );
+}
+
+const deckIntroStats = [
+  {
+    value: '74',
+    label: 'Companies',
+    description: '약 74개의 대기업, 외국계 기업, 스타트업과 산학협력을 진행하며 실효성 높은 전략을 제시했습니다.'
+  },
+  {
+    value: '276',
+    label: 'Alumni',
+    description: '2002년 설립 이래, 총 276명의 졸업생을 배출했으며 여성 리더 네트워크를 형성했습니다.'
+  },
+  {
+    value: '31',
+    label: 'Grand prizes',
+    description: '최근 5년 동안 진행된 40개의 프로젝트에서 총 31개의 대상을 수상하며 명성을 유지하고 있습니다.'
+  },
+  {
+    value: '4',
+    label: 'Projects',
+    description: '1년간의 DECK 활동으로 한 사람당 평균 4개의 산학협력을 진행하여 실무 경험을 쌓을 수 있습니다.'
+  }
+];
+
+const deckActivityCards = [
+  {
+    title: '전략 프로젝트',
+    text: '기업의 실제 고민을 분석하고 실행 가능한 전략 제안으로 연결합니다.'
+  },
+  {
+    title: '여성 리더 네트워크',
+    text: '학회원과 졸업생이 서로의 성장을 지지하는 DECKian 커뮤니티를 만듭니다.'
+  },
+  {
+    title: '실무형 인사이트',
+    text: '차별화된 Insight와 논리적 문제 해결로 기업 경영의 방향을 제시합니다.'
+  }
+];
+
+function DeckHome({ onOpenSidebar }: { onOpenSidebar: () => void }) {
+  return (
+    <section className="deck-home-page" aria-labelledby="deck-home-title">
+      <div className="deck-home-mobile-bar">
+        <PolarisButton className="icon-button page-sidebar-toggle" aria-label="메뉴 열기" onClick={onOpenSidebar}>
+          <Menu size={18} aria-hidden="true" />
+        </PolarisButton>
+      </div>
+
+      <section className="deck-home-hero" aria-labelledby="deck-home-title">
+        <p className="eyebrow">DECK 소개</p>
+        <h1 id="deck-home-title">Stand on DECK, Sail Beyond Limits</h1>
+        <div className="deck-home-copy">
+          <p>DECK는 2002년 설립 이래, 이화여자대학교 대표 경영전략학회로 자리매김하였습니다.</p>
+          <p>모든 학회원은 여성 경영 인재로 발전시키겠다는 DECK만의 목표 아래 성장합니다.</p>
+          <p>DECKian은 차별화된 Insight와 전략으로 기업 경영의 방향을 제시하고 있습니다.</p>
+          <p>DECK가 여러분의 자신감이 되어 드리겠습니다. DECK와 함께 변화를 주도해보세요.</p>
+        </div>
+      </section>
+
+      <section className="deck-home-stats" aria-labelledby="deck-stats-title">
+        <div className="deck-home-stats-title">
+          <span>숫자로 보는</span>
+          <strong id="deck-stats-title">DECK</strong>
+        </div>
+        <div className="deck-home-stat-grid">
+          {deckIntroStats.map((stat) => (
+            <article className="deck-home-stat-card" key={stat.label}>
+              <div>
+                <strong>{stat.value}</strong>
+                <span>
+                  {stat.label}
+                  <ChevronRight size={18} aria-hidden="true" />
+                </span>
+              </div>
+              <p>{stat.description}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="deck-home-activity" aria-labelledby="deck-activity-title">
+        <div className="deck-home-section-head">
+          <p className="eyebrow">What DECK Builds</p>
+          <h2 id="deck-activity-title">자신감이 되는 전략 경험</h2>
+          <p>산학협력, 리서치, 제안서 작성, 발표까지 이어지는 실전형 흐름으로 변화를 주도합니다.</p>
+        </div>
+        <div className="deck-home-activity-grid">
+          {deckActivityCards.map((item) => (
+            <article className="deck-home-activity-card" key={item.title}>
+              <strong>{item.title}</strong>
+              <p>{item.text}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+    </section>
   );
 }
 

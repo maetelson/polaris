@@ -373,20 +373,15 @@ export function WorkBoard() {
   const topbarTitle = activeView === 'source-detail' && selectedSource ? selectedSource.title : currentProject.title;
 
   return (
-    <section className="research-board-page" aria-labelledby="research-board-title">
-      <header className={`research-topbar ${activeView !== 'home' ? 'research-project-topbar' : ''}`}>
+    <section className="research-board-page" aria-label="AI 리서치 보드">
+      <header className={`research-topbar ${activeView === 'home' ? 'research-home-topbar' : 'research-project-topbar'}`}>
         {activeView === 'home' ? (
-          <>
-            <div>
-              <h1 id="research-board-title">AI 리서치 보드</h1>
-            </div>
-            <div className="research-topbar-actions">
-              <PolarisButton className="primary-action compact-action">
-                <Plus size={16} aria-hidden="true" />
-                새 프로젝트 시작
-              </PolarisButton>
-            </div>
-          </>
+          <div className="research-topbar-actions">
+            <PolarisButton className="primary-action compact-action">
+              <Plus size={16} aria-hidden="true" />
+              새 프로젝트 시작
+            </PolarisButton>
+          </div>
         ) : (
           <>
             <PolarisButton className="secondary-action compact-action" onClick={goPreviousFromTopbar}>
