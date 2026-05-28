@@ -1,3 +1,5 @@
+![Polaris endless](assets/polaris_endless.png)
+
 # DECK A팀 Polaris Workspace
 
 Polaris Office 톤앤매너를 기준으로 DECK A팀의 기획안, 전략 흐름, 문서 작업 시나리오를 웹 UI로 빠르게 확장하기 위한 작업 공간입니다. 이 저장소의 핵심은 **DECK의 전략적 사고를 Polaris 문서 경험으로 옮기는 것**입니다.
